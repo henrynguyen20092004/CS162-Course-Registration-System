@@ -1,4 +1,5 @@
-.vscode
+.vscode/
+[Bb]uild/
 
 *.exe
 *.o
