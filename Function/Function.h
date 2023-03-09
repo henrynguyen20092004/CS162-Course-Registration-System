@@ -3,5 +3,6 @@
 
 #include "Command/Command.h"
 #include "CreateSchoolYear/CreateSchoolYear.h"
+#include "LogIn/LogIn.h"
 
 #endif

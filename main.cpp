@@ -1,16 +1,8 @@
-#include <iostream>
-
 #include "Function/Function.h"
-#include "Function/Input/Input.h"
 
 int main() {
-    try {
-        double test = doubleInput();
-        std::cout << test;
-    } catch (std::exception &e) {
-        std::cout << e.what();
-    }
-
+    User currentUser = logIn();
+    std::cout << "Welcome, " << currentUser.username << '\n';
     system("pause");
     processCommand(STOP);
 }
