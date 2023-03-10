@@ -1,8 +1,13 @@
 #include "Function/Function.h"
 
 int main() {
-    User currentUser = logIn();
-    std::cout << "Welcome, " << currentUser.username << '\n';
+    try {
+        User currentUser = logIn();
+        std::cout << "Welcome, " << currentUser.username << '\n';
+    } catch (std::exception &error) {
+        std::cout << error.what();
+    }
+
     system("pause");
     processCommand(STOP);
 }
