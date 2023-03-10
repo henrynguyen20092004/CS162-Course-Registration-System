@@ -2,18 +2,18 @@
 #define LINKED_LIST_H
 
 template <typename T>
-struct SinglyLinkedListNode {
+struct Node {
     T data;
-    SinglyLinkedListNode *next;
+    Node *next;
 
-    SinglyLinkedListNode() : next(nullptr) {}
-    SinglyLinkedListNode(T data, SinglyLinkedListNode *next) : data(data), next(next) {}
+    Node() : next(nullptr) {}
+    Node(T data, Node *next) : data(data), next(next) {}
 };
 
 template <typename T>
-void deleteLinkedList(SinglyLinkedListNode<T> *head) {
+void deleteLinkedList(Node<T> *head) {
     for (; head;) {
-        SinglyLinkedListNode<T> *temp = head;
+        Node<T> *temp = head;
         head = head->next;
         delete temp;
     }
