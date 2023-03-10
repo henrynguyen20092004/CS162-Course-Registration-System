@@ -1,7 +1,7 @@
 #ifndef SCORE_H
 #define SCORE_H
 
-#include <string>
+#include <iostream>
 
 struct Score {
     std::string studentID, studentFullName, courseID;

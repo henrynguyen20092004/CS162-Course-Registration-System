@@ -1,7 +1,7 @@
 #ifndef SCHOOLYEAR_H
 #define SCHOOLYEAR_H
 
-#include <string>
+#include <iostream>
 
 struct SchoolYear {
     std::string name;
