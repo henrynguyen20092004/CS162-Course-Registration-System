@@ -1,8 +1,5 @@
 #include "CreateSchoolYear.h"
 
-#include <fstream>
-#include <iostream>
-
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
 
@@ -18,7 +15,7 @@ void saveSchoolYear(int startYear) {
     fout.close();
 }
 
-void CreateSchoolYear() {
+void createSchoolYear() {
     int startYear = inputSchoolStartYear();
     saveSchoolYear(startYear);
 }
