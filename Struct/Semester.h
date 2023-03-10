@@ -1,7 +1,7 @@
 #ifndef SEMESTER_H
 #define SEMESTER_H
 
-#include <string>
+#include <iostream>
 
 enum SemesterNumber {
     SEMESTER1 = 1,
