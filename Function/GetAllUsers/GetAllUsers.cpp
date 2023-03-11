@@ -8,7 +8,7 @@ Node<User> *getAllUsers() {
     User user;
     Node<User> *result = nullptr, *cur = nullptr;
 
-    while (!fin.eof()) {
+    while (fin.good()) {
         getline(fin, user.username);
         getline(fin, user.password);
 
