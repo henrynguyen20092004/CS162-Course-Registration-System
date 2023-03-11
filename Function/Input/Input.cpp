@@ -3,9 +3,14 @@
 int intInput() {
     std::string input;
     getline(std::cin, input);
+    int n = input.size();
 
-    for (char c : input) {
-        if (!isdigit(c)) {
+    if (!isdigit(input[0]) && input[0] != '-') {
+        throw std::invalid_argument("The input is not an integer!\n");
+    }
+
+    for (int i = 1; i < n; i++) {
+        if (!isdigit(input[i])) {
             throw std::invalid_argument("The input is not an integer!\n");
         }
     }
@@ -21,13 +26,18 @@ double doubleInput() {
     int numberOfDecimalPoint = 0;
     std::string input;
     getline(std::cin, input);
+    int n = input.size();
 
-    for (char c : input) {
-        if (c == '.') {
+    if (!isdigit(input[0]) && input[0] != '-') {
+        throw std::invalid_argument("The input is not an integer!\n");
+    }
+
+    for (int i = 1; i < n; i++) {
+        if (input[i] == '.') {
             if (numberOfDecimalPoint++) {
                 throw std::invalid_argument("The input is not a double!\n");
             }
-        } else if (!isdigit(c)) {
+        } else if (!isdigit(input[i])) {
             throw std::invalid_argument("The input is not a double!\n");
         }
     }
