@@ -1,21 +1,16 @@
 #include <iostream>
 
 #include "Function/Function.h"
-#include "Function/OpenFile/OpenFile.h"
+#include "Function/Input/Input.h"
 
 int main() {
-    std::ifstream fin;
     try {
-        readFile(fin, "Data/User.txt");
-        std::string test;
-        fin >> test;
+        double test = doubleInput();
         std::cout << test;
-        fin.close();
     } catch (std::exception &e) {
-        std::cerr << e.what();
+        std::cout << e.what();
     }
 
-    std::cout << "Hello, world!\n";
     system("pause");
     processCommand(STOP);
 }
