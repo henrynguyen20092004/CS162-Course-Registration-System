@@ -4,8 +4,17 @@
 #include "../OpenFile/OpenFile.h"
 
 int inputSchoolStartYear() {
-    std::cout << "Please enter the starting year of the school year: ";
-    return intInput();
+    bool valid;
+    int startYear;
+    do {
+        startYear = intInput();
+        std::cout << "Please enter the starting year (yyyy) of the school year: ";
+        valid = (startYear > 999 && startYear < 10000);
+        if (!valid) {
+            std::cout << "Invalid start year, please enter again!\n";
+        }
+    } while (!valid);
+    return startYear;
 }
 
 void saveSchoolYear(int startYear) {
