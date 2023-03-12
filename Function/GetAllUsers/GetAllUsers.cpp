@@ -21,6 +21,5 @@ Node<User> *getAllUsers() {
     }
 
     fin.close();
-
     return result;
 }

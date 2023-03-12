@@ -2,7 +2,7 @@
 
 #include <conio.h>
 
-std::string inputPassword(std::string prompt) {
+std::string inputPassword(const std::string &prompt) {
     std::string password;
     char passChar;
     std::cout << prompt;

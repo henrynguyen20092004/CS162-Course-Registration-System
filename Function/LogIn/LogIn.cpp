@@ -5,7 +5,7 @@
 #include "../GetAllUsers/GetAllUsers.h"
 #include "../InputPassword/InputPassword.h"
 
-bool userExists(Node<User> *allUsers, User user) {
+bool userExists(Node<User> *allUsers, const User &user) {
     for (; allUsers; allUsers = allUsers->next) {
         User currentUser = allUsers->data;
 
