@@ -4,7 +4,7 @@
 #include "../OpenFile/OpenFile.h"
 
 int inputSchoolStartYear() {
-    bool valid;
+    bool valid = false;
     int startYear;
     do {
         try {
@@ -17,7 +17,6 @@ int inputSchoolStartYear() {
         } catch (std::exception &error) {
             std::cout << error.what();
         }
-
     } while (!valid);
     return startYear;
 }
