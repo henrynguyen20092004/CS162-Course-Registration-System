@@ -1,36 +1,14 @@
 #include "CreateSemester.h"
 
-#include <fstream>
-#include <iostream>
-
-#include "../../Struct/LinkedList.h"
-#include "../../Struct/SchoolYear.h"
+#include "../CheckDate/CheckDate.h"
+#include "../GetAllSchoolYears/GetAllSchoolYears.h"
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
 
-Node<SchoolYear> *getSchoolYear() {
-    std::ifstream fin;
-    readFile(fin, "Data/SchoolYear.txt");
-    SchoolYear schoolYear;
-    Node<SchoolYear> *result = nullptr, *cur = nullptr;
-    while (!fin.eof()) {
-        fin >> schoolYear.name;
-        Node<SchoolYear> *tmp = new Node(schoolYear);
-        if (result == nullptr) {
-            result = tmp;
-            cur = result;
-        } else {
-            cur->next = tmp;
-            cur = cur->next;
-        }
-    }
-    fin.close();
-    return result;
-}
-
-bool exitSchoolYear(const std::string FindschoolYear, Node<SchoolYear> *allSchoolyear) {
+bool schoolYearExists(Node<std::string> *allSchoolyear,
+                      const std::string &schoolYearName) {
     while (allSchoolyear) {
-        if (allSchoolyear->data.name == FindschoolYear) {
+        if (allSchoolyear->data == schoolYearName) {
             return true;
         }
         allSchoolyear = allSchoolyear->next;
@@ -38,116 +16,71 @@ bool exitSchoolYear(const std::string FindschoolYear, Node<SchoolYear> *allSchoo
     return false;
 }
 
-bool checkLeapYear(int year) {
-    return year % 400 == 0 || ((year % 4 == 0) && (year % 100 != 0));
-}
-
-bool checkDayMonthYear(std::string date) {
-    int day = stoi(date.std::string::substr(0, 2));
-    int month = stoi(date.std::string::substr(3, 5));
-    int year = stoi(date.std::string::substr(6));
-    if (day < 1) {
+bool checkStartBeforeEnd(const std::string &startDate, const std::string &endDate) {
+    if (stoi(endDate.substr(6)) < stoi(startDate.substr(6))) {
         return false;
     }
-    switch (month) {
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 12: {
-            return day < 32;
-        }
-        case 2: {
-            return checkLeapYear(year) ? day < 30 : day < 29;
-        }
-        case 4:
-        case 6:
-        case 9:
-        case 11: {
-            return day < 31;
-        }
-    }
-    return false;
-}
-
-bool checkDate(std::string date) {
-    if (date.size() != 10) {
+    if (stoi(endDate.substr(3, 5)) < stoi(startDate.substr(3, 5))) {
         return false;
     }
-
-    if ((date[2] != '/' && date[2] != '-') || (date[5] != '/' && date[5] != '-')) {
-        return false;
-    }
-
-    for (int i = 0; i < 10; ++i) {
-        if (i == 2 || i == 5) {
-            continue;
-        }
-        if (!isdigit(date[i])) {
-            return false;
-        }
-    }
-
-    return checkDayMonthYear(date);
+    return true;
 }
 
-Semester inputSemester(Node<SchoolYear> *allSchoolyear) {
+Semester inputSemester(Node<std::string> *&allSchoolyear) {
     Semester semester;
     allSchoolyear = getSchoolYear();
-    bool checkExitSchoolyear = false;
-    do {
-        std::cout << "Enter school year: ";
-        std::cin >> semester.schoolYearName;
-        if (!exitSchoolYear(semester.schoolYearName, allSchoolyear)) {
-            std::cout << "This school year does not exist. Please enter again!\n";
-        } else {
-            checkExitSchoolyear = true;
-        }
-    } while (!checkExitSchoolyear);
 
-    bool checkStartDate = false;
+    bool checkSchoolYearExists, checkStartDate, checkEndDate, validSemesterNumber = false;
+    int inputSemesterNumber;
+
     do {
-        std::cout << "Enter the start date in (dd/mm/yyyy) of this school year: ";
-        std::cin >> semester.startDate;
-        if (!checkDate(semester.startDate)) {
+        std::cout << "Please enter school year: ";
+        getline(std::cin, semester.schoolYearName);
+        checkSchoolYearExists = schoolYearExists(allSchoolyear, semester.schoolYearName);
+        if (!checkSchoolYearExists) {
+            std::cout << "This school year does not exist. Please enter again!\n";
+        }
+    } while (!checkSchoolYearExists);
+
+    do {
+        std::cout << "Please enter the start date in (dd/mm/yyyy) of this school year: ";
+        getline(std::cin, semester.startDate);
+        checkStartDate = checkDate(semester.startDate);
+        if (!checkStartDate) {
             std::cout << "Your input is invalid. Please enter again!\n";
-        } else {
-            checkStartDate = true;
         }
     } while (!checkStartDate);
 
-    bool checkEndDate = false;
     do {
-        std::cout << "Enter the end date in (dd/mm/yyyy) of this school year: ";
-        std::cin >> semester.endDate;
-        if (!checkDate(semester.endDate)) {
+        std::cout << "Please enter the end date in (dd/mm/yyyy) of this school year: ";
+        getline(std::cin, semester.endDate);
+        checkEndDate = checkDate(semester.endDate) &&
+                       checkStartBeforeEnd(semester.startDate, semester.endDate);
+        if (!checkEndDate) {
             std::cout << "Your input is invalid. Please enter again!\n";
-        } else {
-            checkEndDate = true;
         }
     } while (!checkEndDate);
 
-    int inputSemesterNumber;
-    std::cin.ignore();
-
     do {
-        std::cout << "Please choose the semester (1-3): ";
-        inputSemesterNumber = intInput();
-        if (inputSemesterNumber > 0 && inputSemesterNumber <= 3) {
-            semester.number = static_cast<SemesterNumber>(inputSemesterNumber);
-        } else {
-            std::cout << "Invalid semester, please enter again!\n";
+        try {
+            std::cout << "Please choose the semester (1-3): ";
+            inputSemesterNumber = intInput();
+            validSemesterNumber = inputSemesterNumber > 0 && inputSemesterNumber <= 3;
+            if (validSemesterNumber) {
+                semester.number = static_cast<SemesterNumber>(inputSemesterNumber);
+            } else {
+                std::cout << "Invalid semester, please enter again!\n";
+            }
+        } catch (std::exception &error) {
+            std::cout << error.what() << '\n';
         }
-    } while (inputSemesterNumber > 3 || inputSemesterNumber <= 0);
-
+    } while (!validSemesterNumber);
     return semester;
 }
 
-void saveSemester(const Semester semester) {
+void saveSemester(const Semester &semester) {
     std::ofstream fout;
-    writeFile(fout, "Data/Semester.txt");
+    writeFile(fout, "Data/Semester.txt", std::ios::app);
     fout << semester.schoolYearName << '\n'
          << semester.startDate << '\n'
          << semester.endDate << '\n'
@@ -156,8 +89,8 @@ void saveSemester(const Semester semester) {
 }
 
 void createSemester() {
-    Node<SchoolYear> *allSchoolYear = nullptr;
+    Node<std::string> *allSchoolYear = nullptr;
     Semester semester = inputSemester(allSchoolYear);
-    saveSemester(semester);
     deleteLinkedList(allSchoolYear);
+    saveSemester(semester);
 }
