@@ -3,7 +3,8 @@
 
 #include <fstream>
 
-void readFile(std::ifstream &fin, std::string filePath);
-void writeFile(std::ofstream &fout, std::string filePath);
+void readFile(std::ifstream &fin, const std::string &filePath);
+void writeFile(std::ofstream &fout, const std::string &filePath,
+               std::ios::openmode openmode = std::ios::out);
 
 #endif

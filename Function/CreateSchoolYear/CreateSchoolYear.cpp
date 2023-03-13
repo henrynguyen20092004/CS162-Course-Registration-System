@@ -23,7 +23,7 @@ int inputSchoolStartYear() {
 
 void saveSchoolYear(int startYear) {
     std::ofstream fout;
-    writeFile(fout, "Data/SchoolYear.txt");
+    writeFile(fout, "Data/SchoolYear.txt", std::ios::app);
     fout << startYear << "-" << startYear + 1 << '\n';
     fout.close();
 }

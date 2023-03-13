@@ -1,11 +1,11 @@
 #include "OpenFile.h"
 
-std::string getFileName(std::string filePath) {
+std::string getFileName(const std::string &filePath) {
     int fileNameFinder = filePath.find_last_of('/');
     return filePath.substr(fileNameFinder + 1);
 }
 
-void readFile(std::ifstream &fin, std::string filePath) {
+void readFile(std::ifstream &fin, const std::string &filePath) {
     std::string fileName = getFileName(filePath);
 
     fin.open(filePath);
@@ -14,10 +14,11 @@ void readFile(std::ifstream &fin, std::string filePath) {
     }
 }
 
-void writeFile(std::ofstream &fout, std::string filePath) {
+void writeFile(std::ofstream &fout, const std::string &filePath,
+               std::ios::openmode openmode = std::ios::out) {
     std::string fileName = getFileName(filePath);
 
-    fout.open(filePath);
+    fout.open(filePath, openmode | std::ios::out);
     if (!fout.is_open()) {
         throw std::runtime_error("Can't open " + fileName + ", file not found!\n");
     }
