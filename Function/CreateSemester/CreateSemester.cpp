@@ -23,18 +23,18 @@ bool checkStartBeforeEnd(const std::string &startDate, const std::string &endDat
     if (stoi(endDate.substr(3, 5)) < stoi(startDate.substr(3, 5))) {
         return false;
     }
-    return true;
+    return stoi(endDate.substr(0, 2)) > stoi(startDate.substr(0, 2));
 }
 
-bool checkSemesterExists(int semesterNumber, const std::string &schoolYearName) {
+bool checkSemesterExists(const std::string &semesterNumber,
+                         const std::string &schoolYearName) {
     std::ifstream fin;
     readFile(fin, "Data/Semester.txt");
     std::string tmpSemesterNumber, tmpSchoolYearName;
     while (!fin.eof()) {
         getline(fin, tmpSchoolYearName);
         getline(fin, tmpSemesterNumber);
-        if (tmpSchoolYearName == schoolYearName &&
-            tmpSemesterNumber == std::to_string(semesterNumber)) {
+        if (tmpSchoolYearName == schoolYearName && tmpSemesterNumber == semesterNumber) {
             fin.close();
             return false;
         }
@@ -65,7 +65,9 @@ Semester inputSemester() {
             std::cout
                 << "Please enter the start date in (dd/mm/yyyy) of this school year: ";
             getline(std::cin, semester.startDate);
-            checkStartDate = checkDate(semester.startDate);
+            checkStartDate =
+                checkDate(semester.startDate) &&
+                (semester.startDate.substr(6) == semester.schoolYearName.substr(0, 4));
             if (!checkStartDate) {
                 std::cout << "Your input is invalid. Please enter again!\n";
             }
@@ -75,8 +77,12 @@ Semester inputSemester() {
             std::cout
                 << "Please enter the end date in (dd/mm/yyyy) of this school year: ";
             getline(std::cin, semester.endDate);
-            checkEndDate = checkDate(semester.endDate) &&
-                           checkStartBeforeEnd(semester.startDate, semester.endDate);
+
+            checkEndDate =
+                checkDate(semester.endDate) &&
+                checkStartBeforeEnd(semester.startDate, semester.endDate) &&
+                semester.endDate.substr(6) <= semester.schoolYearName.substr(5);
+
             if (!checkEndDate) {
                 std::cout << "Your input is invalid. Please enter again!\n";
             }
@@ -86,7 +92,9 @@ Semester inputSemester() {
             try {
                 std::cout << "Please choose the semester (1-3): ";
                 inputSemesterNumber = intInput();
+
                 validSemesterNumber = inputSemesterNumber > 0 && inputSemesterNumber <= 3;
+
                 if (validSemesterNumber) {
                     semester.number = static_cast<SemesterNumber>(inputSemesterNumber);
                 } else {
@@ -97,12 +105,12 @@ Semester inputSemester() {
             }
         } while (!validSemesterNumber);
 
-        semesterExists =
-            checkSemesterExists(inputSemesterNumber, semester.schoolYearName);
-        if (semesterExists) {
+        semesterExists = checkSemesterExists(std::to_string(inputSemesterNumber),
+                                             semester.schoolYearName);
+        if (!semesterExists) {
             std::cout << "This semester already exists, please try again!\n";
         }
-    } while (semesterExists);
+    } while (!semesterExists);
 
     deleteLinkedList(allSchoolyear);
     return semester;
