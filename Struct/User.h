@@ -4,7 +4,7 @@
 #include <iostream>
 
 struct User {
-    std::string userName, passWord;
+    std::string username, password;
 };
 
 #endif
