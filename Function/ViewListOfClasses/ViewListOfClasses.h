@@ -1,7 +1,5 @@
-#ifndef VIEWLISTOFCLASSES_H
-#define VIEWLISTOFCLASSES_H
-
-#include <iostream>
+#ifndef VIEW_LIST_OF_CLASSES_H
+#define VIEW_LIST_OF_CLASSES_H
 
 void viewListOfClasses();
 

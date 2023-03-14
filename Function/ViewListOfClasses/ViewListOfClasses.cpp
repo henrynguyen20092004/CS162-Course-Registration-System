@@ -1,12 +1,11 @@
 #include "ViewListOfClasses.h"
 
-#include <fstream>
-
 #include "../OpenFile/OpenFile.h"
+#include <iostream>
 
 void viewListOfClasses() {
     std::ifstream fin;
-    readFile(fin, "Class.txt");
+    readFile(fin, "Data/Class.txt");
 
     std::string className;
     std::cout << "This is the list of all classes: " << '\n';
