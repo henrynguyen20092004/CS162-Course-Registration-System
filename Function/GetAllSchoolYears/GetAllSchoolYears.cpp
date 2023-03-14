@@ -7,7 +7,7 @@ Node<std::string> *getSchoolYear() {
     readFile(fin, "Data/SchoolYear.txt");
     std::string schoolYearName;
     Node<std::string> *result = nullptr, *cur = nullptr;
-    while (!fin.eof()) {
+    while (fin.good()) {
         getline(fin, schoolYearName);
         if (schoolYearName == "") {
             break;

@@ -1,10 +1,11 @@
 #include "CreateSemester.h"
 
+#include <algorithm>
+
 #include "../CheckDate/CheckDate.h"
 #include "../GetAllSchoolYears/GetAllSchoolYears.h"
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
-
 bool schoolYearExists(Node<std::string> *allSchoolyear,
                       const std::string &schoolYearName) {
     while (allSchoolyear) {
@@ -25,13 +26,66 @@ bool checkStartBeforeEnd(const std::string &startDate, const std::string &endDat
     }
     return stoi(endDate.substr(0, 2)) > stoi(startDate.substr(0, 2));
 }
-
-bool checkSemesterExists(const std::string &semesterNumber,
-                         const std::string &schoolYearName) {
+void getALLSemester(Node<Semester> *&pHead) {
+    Semester semester;
     std::ifstream fin;
     readFile(fin, "Data/Semester.txt");
-    std::string tmpSemesterNumber, tmpSchoolYearName;
+    std::string tmpSemesterNumber;
+    Node<Semester> *cur = nullptr;
     while (!fin.eof()) {
+        fin >> semester.schoolYearName;
+        if (semester.schoolYearName == " ") {
+            break;
+        }
+        fin >> tmpSemesterNumber;
+        semester.number = static_cast<SemesterNumber>(std::stoi(tmpSemesterNumber));
+        fin >> semester.startDate;
+        fin >> semester.endDate;
+        Node<Semester> *tmp = new Node(semester);
+        if (pHead == nullptr) {
+            pHead = tmp;
+            cur = pHead;
+        } else {
+            cur->next = tmp;
+            cur = cur->next;
+        }
+    }
+    cur->next = NULL;
+    fin.close();
+}
+void AddtNewSemseterToSortedLinkedList(Node<Semester> *&pHead,
+                                       const Semester &NewSemester) {
+    getALLSemester(pHead);
+    if (!pHead) {
+        pHead = new Node(NewSemester);
+        return;
+    }
+    Node<Semester> *cur = pHead;
+    Node<Semester> *prev = nullptr;
+    while (cur && (cur->data.schoolYearName < NewSemester.schoolYearName)) {
+        prev = cur;
+        cur = cur->next;
+    }
+
+    while (cur && (cur->data.number < NewSemester.number)) {
+        prev = cur;
+        cur = cur->next;
+    }
+    Node<Semester> *newNode = new Node(NewSemester);
+    if (!prev) {
+        pHead = newNode;
+        pHead->next = cur;
+    } else {
+        newNode->next = cur;
+        prev->next = newNode;
+    }
+}
+bool checkSemesterExists(const std::string &semesterNumber,
+                         const std::string &schoolYearName) {
+      std::ifstream fin;
+    readFile(fin, "Data/Semester.txt");
+    std::string tmpSemesterNumber, tmpSchoolYearName;
+    while (fin.good()) {
         getline(fin, tmpSchoolYearName);
         getline(fin, tmpSemesterNumber);
         if (tmpSchoolYearName == schoolYearName && tmpSemesterNumber == semesterNumber) {
@@ -43,7 +97,7 @@ bool checkSemesterExists(const std::string &semesterNumber,
     return true;
 }
 
-Semester inputSemester() {
+Semester inputSemester(Node<Semester> *&getAllSemester) {
     Semester semester;
     Node<std::string> *allSchoolyear = getSchoolYear();
 
@@ -112,21 +166,28 @@ Semester inputSemester() {
         }
     } while (!semesterExists);
 
+    AddtNewSemseterToSortedLinkedList(getAllSemester, semester);
+
     deleteLinkedList(allSchoolyear);
     return semester;
 }
 
-void saveSemester(const Semester &semester) {
+void saveSemester(Node<Semester> *getAllSemester) {
     std::ofstream fout;
-    writeFile(fout, "Data/Semester.txt", std::ios::app);
-    fout << semester.schoolYearName << '\n'
-         << semester.number << '\n'
-         << semester.startDate << '\n'
-         << semester.endDate << '\n';
+    fout.open("Data/Semester.txt", std::ios::trunc);
+    while (getAllSemester) {
+        fout << getAllSemester->data.schoolYearName << '\n';
+        fout << getAllSemester->data.number << '\n';
+        fout << getAllSemester->data.startDate << '\n';
+        fout << getAllSemester->data.endDate << '\n';
+        getAllSemester = getAllSemester->next;
+    }
+    deleteLinkedList(getAllSemester);
     fout.close();
 }
 
 void createSemester() {
-    Semester semester = inputSemester();
-    saveSemester(semester);
+    Node<Semester> *getAllSemester = nullptr;
+    Semester semester = inputSemester(getAllSemester);
+    saveSemester(getAllSemester);
 }
