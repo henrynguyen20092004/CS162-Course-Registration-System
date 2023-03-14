@@ -1,11 +1,10 @@
 #include "CreateSemester.h"
 
-#include <algorithm>
-
 #include "../CheckDate/CheckDate.h"
 #include "../GetAllSchoolYears/GetAllSchoolYears.h"
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
+
 bool schoolYearExists(Node<std::string> *allSchoolyear,
                       const std::string &schoolYearName) {
     while (allSchoolyear) {
@@ -20,27 +19,33 @@ bool schoolYearExists(Node<std::string> *allSchoolyear,
 bool checkStartBeforeEnd(const std::string &startDate, const std::string &endDate) {
     if (stoi(endDate.substr(6)) < stoi(startDate.substr(6))) {
         return false;
+    } else if (stoi(endDate.substr(6)) > stoi(startDate.substr(6))) {
+        return true;
     }
     if (stoi(endDate.substr(3, 5)) < stoi(startDate.substr(3, 5))) {
         return false;
+    } else if (stoi(endDate.substr(3, 5)) > stoi(startDate.substr(3, 5))) {
+        return true;
     }
     return stoi(endDate.substr(0, 2)) > stoi(startDate.substr(0, 2));
 }
-void getALLSemester(Node<Semester> *&pHead) {
+
+void getAllSemester(Node<Semester> *&pHead) {
     Semester semester;
     std::ifstream fin;
     readFile(fin, "Data/Semester.txt");
     std::string tmpSemesterNumber;
     Node<Semester> *cur = nullptr;
-    while (!fin.eof()) {
+    while (fin.good()) {
         fin >> semester.schoolYearName;
-        if (semester.schoolYearName == " ") {
+        if (semester.schoolYearName == "") {
             break;
         }
         fin >> tmpSemesterNumber;
         semester.number = static_cast<SemesterNumber>(std::stoi(tmpSemesterNumber));
-        fin >> semester.startDate;
-        fin >> semester.endDate;
+        fin.ignore();
+        getline(fin, semester.startDate);
+        getline(fin, semester.endDate);
         Node<Semester> *tmp = new Node(semester);
         if (pHead == nullptr) {
             pHead = tmp;
@@ -50,39 +55,40 @@ void getALLSemester(Node<Semester> *&pHead) {
             cur = cur->next;
         }
     }
-    cur->next = NULL;
+    cur->next = nullptr;
     fin.close();
 }
-void AddtNewSemseterToSortedLinkedList(Node<Semester> *&pHead,
-                                       const Semester &NewSemester) {
-    getALLSemester(pHead);
-    if (!pHead) {
-        pHead = new Node(NewSemester);
+
+void addNewSemseterToList(Node<Semester> *&allSemester, const Semester &newSemester) {
+    getAllSemester(allSemester);
+    Node<Semester> *newNode = new Node(newSemester);
+    if (!allSemester) {
+        allSemester = newNode;
         return;
     }
-    Node<Semester> *cur = pHead;
+    Node<Semester> *cur = allSemester;
     Node<Semester> *prev = nullptr;
-    while (cur && (cur->data.schoolYearName < NewSemester.schoolYearName)) {
+    while (cur && cur->data.schoolYearName < newSemester.schoolYearName) {
         prev = cur;
         cur = cur->next;
     }
 
-    while (cur && (cur->data.number < NewSemester.number)) {
+    while (cur && cur->data.number < newSemester.number) {
         prev = cur;
         cur = cur->next;
     }
-    Node<Semester> *newNode = new Node(NewSemester);
     if (!prev) {
-        pHead = newNode;
-        pHead->next = cur;
+        allSemester = newNode;
+        allSemester->next = cur;
     } else {
         newNode->next = cur;
         prev->next = newNode;
     }
 }
+
 bool checkSemesterExists(const std::string &semesterNumber,
                          const std::string &schoolYearName) {
-      std::ifstream fin;
+    std::ifstream fin;
     readFile(fin, "Data/Semester.txt");
     std::string tmpSemesterNumber, tmpSchoolYearName;
     while (fin.good()) {
@@ -166,28 +172,31 @@ Semester inputSemester(Node<Semester> *&getAllSemester) {
         }
     } while (!semesterExists);
 
-    AddtNewSemseterToSortedLinkedList(getAllSemester, semester);
+    addNewSemseterToList(getAllSemester, semester);
 
     deleteLinkedList(allSchoolyear);
     return semester;
 }
 
-void saveSemester(Node<Semester> *getAllSemester) {
+void saveSemester(Node<Semester> *allSemester) {
     std::ofstream fout;
-    fout.open("Data/Semester.txt", std::ios::trunc);
-    while (getAllSemester) {
-        fout << getAllSemester->data.schoolYearName << '\n';
-        fout << getAllSemester->data.number << '\n';
-        fout << getAllSemester->data.startDate << '\n';
-        fout << getAllSemester->data.endDate << '\n';
-        getAllSemester = getAllSemester->next;
+    writeFile(fout, "Data/Semester.txt", std::ios::ate);
+    while (allSemester) {
+        fout << allSemester->data.schoolYearName << '\n';
+        fout << allSemester->data.number << '\n';
+        fout << allSemester->data.startDate << '\n';
+        fout << allSemester->data.endDate;
+        if (allSemester->next != NULL) {
+            fout << '\n';
+        }
+        allSemester = allSemester->next;
     }
-    deleteLinkedList(getAllSemester);
+    deleteLinkedList(allSemester);
     fout.close();
 }
 
 void createSemester() {
-    Node<Semester> *getAllSemester = nullptr;
-    Semester semester = inputSemester(getAllSemester);
-    saveSemester(getAllSemester);
+    Node<Semester> *allSemester = nullptr;
+    Semester semester = inputSemester(allSemester);
+    saveSemester(allSemester);
 }
