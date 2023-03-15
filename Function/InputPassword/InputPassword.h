@@ -3,6 +3,6 @@
 
 #include <iostream>
 
-std::string inputPassword(std::string prompt);
+std::string inputPassword(const std::string &prompt);
 
 #endif
