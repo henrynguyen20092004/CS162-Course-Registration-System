@@ -8,9 +8,11 @@ bool checkDayMonthYear(const std::string &date) {
     int day = stoi(date.std::string::substr(0, 2));
     int month = stoi(date.std::string::substr(3, 5));
     int year = stoi(date.std::string::substr(6));
+
     if (day < 1) {
         return false;
     }
+
     switch (month) {
         case 1:
         case 3:
@@ -21,16 +23,19 @@ bool checkDayMonthYear(const std::string &date) {
         case 12: {
             return day < 32;
         }
-        case 2: {
-            return checkLeapYear(year) ? day < 30 : day < 29;
-        }
+
         case 4:
         case 6:
         case 9:
         case 11: {
             return day < 31;
         }
+
+        case 2: {
+            return checkLeapYear(year) ? day < 30 : day < 29;
+        }
     }
+
     return false;
 }
 
@@ -39,7 +44,8 @@ bool checkLengthAndCharacters(const std::string &date) {
         return false;
     }
 
-    if ((date[2] != '/' && date[2] != '-') || (date[5] != '/' && date[5] != '-')) {
+    if ((date[2] != '/' && date[2] != '-') ||
+        (date[5] != '/' && date[5] != '-')) {
         return false;
     }
 
@@ -47,10 +53,12 @@ bool checkLengthAndCharacters(const std::string &date) {
         if (i == 2 || i == 5) {
             continue;
         }
+
         if (!isdigit(date[i])) {
             return false;
         }
     }
+
     return true;
 }
 
