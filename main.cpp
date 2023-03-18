@@ -1,7 +1,7 @@
 #include "Function/Function.h"
 
 int main() {
-    menu();
+    createClass();
     system("pause");
     return 0;
 }
