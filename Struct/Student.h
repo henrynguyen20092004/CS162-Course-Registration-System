@@ -11,7 +11,8 @@ enum Gender {
 };
 
 struct Student {
-    std::string id, firstName, lastName, dateOfBirth, socialID, className, schoolYearName;
+    std::string id, firstName, lastName, dateOfBirth, socialID, className,
+        schoolYearName;
     int ordinalNumber;
     Gender gender;
     SemesterNumber semesterNumber;

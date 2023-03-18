@@ -9,5 +9,5 @@ int main() {
     }
 
     system("pause");
-    processCommand(STOP);
+    return 0;
 }

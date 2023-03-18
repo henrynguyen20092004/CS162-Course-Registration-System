@@ -1,9 +1,10 @@
-#include "ViewListOfClasses.h"
+#include "ViewClasses.h"
 
-#include "../OpenFile/OpenFile.h"
 #include <iostream>
 
-void viewListOfClasses() {
+#include "../OpenFile/OpenFile.h"
+
+void viewClasses() {
     std::ifstream fin;
     readFile(fin, "Data/Class.txt");
 
