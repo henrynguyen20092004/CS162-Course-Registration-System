@@ -4,6 +4,6 @@ project(CS162-Course-Registration-System)
 
 FILE(GLOB SOURCES *.cpp Function/**/*.cpp)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ..)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
 
 add_executable(CRS ${SOURCES})

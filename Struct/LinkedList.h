@@ -7,12 +7,13 @@ struct Node {
     Node *next;
 
     Node() : next(nullptr) {}
-    Node(T data, Node *next) : data(data), next(next) {}
+    Node(const T &data) : data(data), next(nullptr) {}
+    Node(const T &data, Node *next) : data(data), next(next) {}
 };
 
 template <typename T>
 void deleteLinkedList(Node<T> *head) {
-    for (; head;) {
+    while (head) {
         Node<T> *temp = head;
         head = head->next;
         delete temp;

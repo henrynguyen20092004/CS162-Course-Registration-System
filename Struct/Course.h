@@ -3,27 +3,9 @@
 
 #include <iostream>
 
-enum DayOfWeek {
-    MON,
-    TUE,
-    WED,
-    THU,
-    FRI,
-    SAT,
-};
-
-enum SessionNumber {
-    SESSION1 = 1,
-    SESSION2 = 2,
-    SESSION3 = 3,
-    SESSION4 = 4,
-};
-
 struct Course {
-    std::string id, name, className, teacherName;
-    int credits, maxStudent;
-    DayOfWeek dayOfWeek;
-    SessionNumber sessionNumber;
+    std::string id, name, className, teacherName, dayOfWeek;
+    int credits, maxStudent, sessionNumber;
 };
 
 #endif
