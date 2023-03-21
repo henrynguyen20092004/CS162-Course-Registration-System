@@ -44,8 +44,7 @@ bool checkLengthAndCharacters(const std::string &date) {
         return false;
     }
 
-    if ((date[2] != '/' && date[2] != '-') ||
-        (date[5] != '/' && date[5] != '-')) {
+    if ((date[2] != '/' && date[2] != '-') || (date[5] != '/' && date[5] != '-')) {
         return false;
     }
 
