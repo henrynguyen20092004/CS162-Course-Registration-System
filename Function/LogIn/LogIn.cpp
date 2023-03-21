@@ -30,7 +30,7 @@ User logIn() {
         found = userExists(allUsers, user);
 
         if (!found) {
-            std::cout << "Invalid credentials, please enter again!\n";
+            std::cout << "Invalid credentials, please try again!\n";
         }
     } while (!found);
 
