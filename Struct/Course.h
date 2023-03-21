@@ -4,7 +4,7 @@
 #include <iostream>
 
 struct Course {
-    std::string id, name, className, teacherName, dayOfWeek;
+    std::string id, name, className, teacherName, dayOfWeek, schoolYearName;
     int credits, maxStudent, sessionNumber;
 };
 
