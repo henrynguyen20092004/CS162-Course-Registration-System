@@ -2,5 +2,6 @@
 
 int main() {
     createSemester();
+    system("pause");
     return 0;
 }
