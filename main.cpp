@@ -1,7 +1,7 @@
 #include "Function/Function.h"
 
 int main() {
-    createSemester();
+    createCourse();
     system("pause");
     return 0;
 }
