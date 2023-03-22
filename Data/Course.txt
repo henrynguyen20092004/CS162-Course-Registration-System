@@ -1,8 +1,20 @@
-MTH
+2022-2023
+2
+PH212
 General Physics
-APCS02
-NGUYEN HUU NHA
+22CTT2
+Nguyen Huu Nha
 4
 50
 MON
-1
+2
+2022-2023
+2
+PH213
+General Physics III
+22CTT2
+Nguyen Huu Nha
+4
+50
+FRI
+2

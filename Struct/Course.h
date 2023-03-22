@@ -5,7 +5,7 @@
 
 struct Course {
     std::string id, name, className, teacherName, dayOfWeek, schoolYearName;
-    int credits, maxStudent, sessionNumber;
+    int credits, maxStudent, sessionNumber, semesterNumber;
 };
 
 #endif

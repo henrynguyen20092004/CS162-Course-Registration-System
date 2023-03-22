@@ -2,6 +2,7 @@
 #define CREATE_SEMESTER_H
 
 #include "../../Struct/Course.h"
+#include "../../Struct/Semester.h"
+void createCourse(const Semester &semester);
 
-void createCourse();
 #endif
