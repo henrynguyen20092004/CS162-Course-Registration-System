@@ -3,6 +3,6 @@
 
 #include "../../Struct/Semester.h"
 
-void createSemester();
+Semester createSemester();
 
 #endif

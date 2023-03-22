@@ -34,6 +34,7 @@ User logIn() {
         }
     } while (!found);
 
+    std::cout << "Welcome, " << user.username << '\n';
     deleteLinkedList(allUsers);
     return user;
 }

@@ -17,7 +17,7 @@ Node<std::string> *getSchoolYear() {
 
         Node<std::string> *tmp = new Node(schoolYearName);
 
-        if (result == nullptr) {
+        if (!result) {
             result = tmp;
             cur = result;
         } else {

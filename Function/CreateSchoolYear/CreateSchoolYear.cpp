@@ -6,11 +6,13 @@
 int inputSchoolStartYear() {
     bool valid = false;
     int startYear;
+
     do {
         try {
-            startYear = intInput();
             std::cout << "Please enter the starting year (yyyy) of the school year: ";
+            startYear = intInput();
             valid = (startYear > 999 && startYear < 10000);
+
             if (!valid) {
                 std::cout << "Invalid start year, please try again!\n";
             }
@@ -18,6 +20,7 @@ int inputSchoolStartYear() {
             std::cout << error.what();
         }
     } while (!valid);
+
     return startYear;
 }
 

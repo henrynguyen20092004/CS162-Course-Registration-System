@@ -243,9 +243,10 @@ void saveSemester(Node<Semester> *allSemester) {
     fout.close();
 }
 
-void createSemester() {
+Semester createSemester() {
     Node<Semester> *allSemester = nullptr;
     Semester semester = inputSemester(allSemester);
     addSemseterToList(allSemester, semester);
     saveSemester(allSemester);
+    return semester;
 }
