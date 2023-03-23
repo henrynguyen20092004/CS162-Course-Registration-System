@@ -48,3 +48,49 @@ double doubleInput() {
         throw std::out_of_range("The input is out of double range!\n");
     }
 }
+
+std::string normalization(const std::string &str) {
+    std::string result;
+    bool capitalize = true, whitespace = false;
+    int length = str.length();
+
+    for (int i = 0; i < length; i++) {
+        if (str[i] == ' ') {
+            whitespace = true;
+            capitalize = true;
+            continue;
+        }
+
+        if (whitespace) {
+            whitespace = false;
+
+            if (result != "") {
+                result += ' ';
+            }
+        }
+
+        if (capitalize) {
+            result += toupper(str[i]);
+            capitalize = false;
+        } else {
+            result += tolower(str[i]);
+        }
+    }
+
+    return result;
+}
+
+std::string nameInput() {
+    std::string input;
+    getline(std::cin, input);
+    int length = input.length();
+
+    for (int i = 0; i < length; ++i) {
+        if (input[i] != ' ' &&
+            (input[i] < 'A' || (input[i] > 'Z' && input[i] < 'a') || input[i] > 'z')) {
+            throw std::invalid_argument("The input is not a name!\n");
+        }
+    }
+
+    return normalization(input);
+}
