@@ -2,7 +2,7 @@
 
 #include "../OpenFile/OpenFile.h"
 
-Node<std::string> *getSchoolYear() {
+Node<std::string> *getAllSchoolYears() {
     std::ifstream fin;
     readFile(fin, "Data/SchoolYear.txt");
     std::string schoolYearName;

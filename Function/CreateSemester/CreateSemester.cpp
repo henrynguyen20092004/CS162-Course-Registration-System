@@ -1,23 +1,9 @@
 #include "CreateSemester.h"
 
 #include "../CheckDate/CheckDate.h"
-#include "../GetAllSchoolYears/GetAllSchoolYears.h"
+#include "../CheckSchoolYear/CheckSchoolYear.h"
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
-
-bool schoolYearExists(
-    Node<std::string> *allSchoolyear, const std::string &schoolYearName
-) {
-    while (allSchoolyear) {
-        if (allSchoolyear->data == schoolYearName) {
-            return true;
-        }
-
-        allSchoolyear = allSchoolyear->next;
-    }
-
-    return false;
-}
 
 bool compareDate(const std::string &firstDate, const std::string &secondDate) {
     if (stoi(secondDate.substr(6)) != stoi(firstDate.substr(6))) {
@@ -31,12 +17,12 @@ bool compareDate(const std::string &firstDate, const std::string &secondDate) {
     return stoi(secondDate.substr(0, 2)) > stoi(firstDate.substr(0, 2));
 }
 
-void getAllSemester(Node<Semester> *&pHead) {
+Node<Semester> *getAllSemester() {
     Semester semester;
     std::ifstream fin;
     readFile(fin, "Data/Semester.txt");
     std::string semesterNumber;
-    Node<Semester> *cur = nullptr;
+    Node<Semester> *allSemester = nullptr, *cur = nullptr;
 
     while (fin.good()) {
         getline(fin, semester.schoolYearName);
@@ -51,9 +37,9 @@ void getAllSemester(Node<Semester> *&pHead) {
         getline(fin, semester.endDate);
         Node<Semester> *tmp = new Node(semester);
 
-        if (pHead == nullptr) {
-            pHead = tmp;
-            cur = pHead;
+        if (!allSemester) {
+            allSemester = tmp;
+            cur = allSemester;
         } else {
             cur->next = tmp;
             cur = cur->next;
@@ -61,6 +47,7 @@ void getAllSemester(Node<Semester> *&pHead) {
     }
 
     fin.close();
+    return allSemester;
 }
 
 bool checkDateBeforeAddToList(Node<Semester> *allSemester, const Semester &semester) {
@@ -148,23 +135,30 @@ bool checkSemesterExists(
 
 Semester inputSemester(Node<Semester> *&allSemester) {
     Semester semester;
-    Node<std::string> *allSchoolyear = getSchoolYear();
-    bool checkSchoolYearExists, checkStartDate, checkEndDate, validSemesterNumber = false,
-                                                              checkDateBeforeInsert;
+    bool validSchoolYear, schoolYearExists = true, checkStartDate, checkEndDate,
+                          validSemesterNumber = false, checkDateBeforeInsert;
     int inputSemesterNumber;
-    getAllSemester(allSemester);
+    allSemester = getAllSemester();
+    Node<std::string> *allSchoolYears = getAllSchoolYears();
 
     do {
         do {
-            std::cout << "Please enter the school year: ";
+            std::cout << "Please enter the school year of this semester (yyyy-yyyy): ";
             getline(std::cin, semester.schoolYearName);
-            checkSchoolYearExists =
-                schoolYearExists(allSchoolyear, semester.schoolYearName);
 
-            if (!checkSchoolYearExists) {
-                std::cout << "This school year does not exist. Please try again!\n";
+            validSchoolYear = checkValidSchoolYear(semester.schoolYearName);
+
+            if (!validSchoolYear) {
+                std::cout << "Invalid school year, please try again!\n";
+            } else {
+                schoolYearExists =
+                    checkSchoolYearExists(allSchoolYears, semester.schoolYearName);
+
+                if (!schoolYearExists) {
+                    std::cout << "This school year doesn't exist, please try again!\n";
+                }
             }
-        } while (!checkSchoolYearExists);
+        } while (!validSchoolYear || !schoolYearExists);
 
         do {
             try {
@@ -223,7 +217,7 @@ Semester inputSemester(Node<Semester> *&allSemester) {
         }
     } while (!checkDateBeforeInsert);
 
-    deleteLinkedList(allSchoolyear);
+    deleteLinkedList(allSchoolYears);
     return semester;
 }
 

@@ -12,7 +12,7 @@ void displayUserCommand() {
 void displayAdminCommand() {
     std::cout << "5. Create a school year\n"
               << "6. Create a class\n"
-              << "7. Add students to a class\n"
+              << "7. Add a student to a class\n"
               << "8. Import a list of students in a class\n"
               << "9. Create a semester\n"
               << "10. Add a course to the semester\n"
@@ -37,7 +37,7 @@ void displayStudentCommand() {
               << "6. View my scoreboard\n";
 }
 
-void processUserCommand(int commandNumber, User &currentUser, bool &loop) {
+void processUserCommand(int commandNumber, User &currentUser) {
     switch (commandNumber) {
         case 1: {
             // View profile info function
@@ -51,11 +51,6 @@ void processUserCommand(int commandNumber, User &currentUser, bool &loop) {
 
         case 3: {
             // Log out function
-            break;
-        }
-
-        case 4: {
-            loop = false;
             break;
         }
     }
@@ -74,7 +69,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 7: {
-            // Add students to class function
+            // Add a student to a class function
             break;
         }
 
@@ -182,7 +177,7 @@ void processStudentCommand(int commandNumber) {
 void menu() {
     User currentUser;
     Semester currentSemester;
-    bool loop = true;
+    int choice;
 
     do {
         try {
@@ -202,23 +197,23 @@ void menu() {
                 }
 
                 std::cout << "Enter your choice: ";
-                int input = intInput();
+                choice = intInput();
                 std::cout << '\n';
 
-                if (1 <= input && input <= 4) {
-                    processUserCommand(input, currentUser, loop);
-                } else if (5 <= input && input <= maxNumberOfCommand) {
+                if (1 <= choice && choice <= 3) {
+                    processUserCommand(choice, currentUser);
+                } else if (5 <= choice && choice <= maxNumberOfCommand) {
                     if (currentUser.username == "admin") {
-                        processAdminCommand(input, currentSemester);
+                        processAdminCommand(choice, currentSemester);
                     } else {
-                        processStudentCommand(input);
+                        processStudentCommand(choice);
                     }
-                } else {
+                } else if (choice != 4) {
                     std::cout << "Invalid option, please try again!\n";
                 }
             }
         } catch (std::exception &error) {
             std::cout << error.what();
         }
-    } while (loop);
+    } while (choice != 4);
 }
