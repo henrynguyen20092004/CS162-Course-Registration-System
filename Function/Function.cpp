@@ -124,7 +124,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 18: {
-            // View all courses function
+            viewCourses();
             break;
         }
 
