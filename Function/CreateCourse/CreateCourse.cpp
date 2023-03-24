@@ -1,151 +1,45 @@
 #include "CreateCourse.h"
 
-#include "../../Struct/LinkedList.h"
+#include "../CheckCourse/CheckCourse.h"
 #include "../CreateSemester/CreateSemester.h"
+#include "../GetAllCourse/GetAllCourse.h"
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
 
-Node<std::string> *getAllClassName() {
-    Node<std::string> *allClassName = nullptr;
-    std::ifstream fin;
-    readFile(fin, "Data/Class.txt");
-    Node<std::string> *cur = nullptr;
-    std::string className;
-    while (fin.good()) {
-        getline(fin, className);
-        if (className == "") {
-            break;
-        }
-        if (!allClassName) {
-            allClassName = new Node(className);
-            cur = allClassName;
-        } else {
-            cur->next = new Node(className);
-            cur = cur->next;
-        }
-    }
-    fin.close();
-    return allClassName;
-}
-
-bool checkClassExist(Node<std::string> *allClassName, const std::string &className) {
-    while (allClassName) {
-        if (allClassName->data == className) {
-            return true;
-        }
-        allClassName = allClassName->next;
-    }
-    return false;
-}
-
-bool checkValidDayOfWeek(const std::string &day) {
-    return day == "MON" || day == "TUE" || day == "WED" || day == "THU" || day == "FRI" ||
-           day == "SAT";
-}
-
-Node<Course> *getAllCourse() {
-    Node<Course> *allCourse = nullptr;
-    std::ifstream fin;
-    readFile(fin, "Data/Course.txt");
-    Course course;
-    Node<Course> *cur = nullptr;
-    std::string tmpSemesterNumber, tmpCredits, tmpMaximumStudent, tmpSessionNumber;
-    while (fin.good()) {
-        getline(fin, course.schoolYearName);
-        if (course.schoolYearName == "") {
-            break;
-        }
-        getline(fin, tmpSemesterNumber);
-        course.semesterNumber = stoi(tmpSemesterNumber);
-        getline(fin, course.id);
-        getline(fin, course.name);
-        getline(fin, course.className);
-        getline(fin, course.teacherName);
-        getline(fin, tmpCredits);
-        course.credits = stoi(tmpCredits);
-        getline(fin, tmpMaximumStudent);
-        course.maxStudent = stoi(tmpMaximumStudent);
-        getline(fin, course.dayOfWeek);
-        getline(fin, tmpSessionNumber);
-        course.sessionNumber = stoi(tmpSessionNumber);
-
-        Node<Course> *newCourse = new Node(course);
-
-        if (!allCourse) {
-            allCourse = newCourse;
-            cur = allCourse;
-        } else {
-            cur->next = newCourse;
-            cur = cur->next;
-        }
-    }
-    fin.close();
-    return allCourse;
-}
-
-bool checkCourseIDExist(Node<Course> *allCourse, const std::string &courseID) {
-    while (allCourse) {
-        if (allCourse->data.id == courseID) {
-            return true;
-        }
-        allCourse = allCourse->next;
-    }
-    return false;
-}
-
-bool checkCourseNameExist(
-    Node<Course> *allCourse, const std::string &courseName, const std::string &schoolYear
-) {
-    while (allCourse) {
-        if (allCourse->data.schoolYearName == schoolYear &&
-            allCourse->data.name == courseName) {
-            return true;
-        }
-        allCourse = allCourse->next;
-    }
-    return false;
-}
-
 void inputCourse(Course &course, const Semester &semester) {
-    Node<std::string> *allClassName = nullptr;
-    allClassName = getAllClassName();
-    Node<Course> *allCourse = nullptr;
-    allCourse = getAllCourse();
+    Node<std::string> *allClassName = getAllClassName();
+    Node<Course> *allCourse = getAllCourse();
 
-    bool classNameExist, courseIDExist, courseNameExist, validTeacherName,
+    bool classNameExist, courseExist, validTeacherName,
         validMaxStudentNumber = false, validDayOfWeek = false, validSessionNumber = false,
         validCredits = false;
+
     do {
-        std::cout << "Please enter course id: ";
+        do {
+            std::cout << "Please enter the class name: ";
+            getline(std::cin, course.className);
+            classNameExist = checkClassExist(allClassName, course.className);
+
+            if (!classNameExist) {
+                std::cout << "This class does not exist. Please try again!\n";
+            }
+        } while (!classNameExist);
+
+        std::cout << "Please enter the course id: ";
         getline(std::cin, course.id);
-        courseIDExist = checkCourseIDExist(allCourse, course.id);
-        if (courseIDExist) {
-            std::cout << "This course already existed. Please try again!\n";
-        }
-    } while (courseIDExist);
+        courseExist = checkCourseExist(allCourse, course.id, course.className);
 
-    do {
-        std::cout << "Please enter course name: ";
-        getline(std::cin, course.name);
-        courseNameExist =
-            checkCourseNameExist(allCourse, course.name, semester.schoolYearName);
-        if (courseNameExist) {
-            std::cout << "This course already existed. Please try again!\n";
+        if (courseExist) {
+            std::cout << "This course already exists, please try again!\n";
         }
-    } while (courseNameExist);
+    } while (courseExist);
 
-    do {
-        std::cout << "Please enter class name: ";
-        getline(std::cin, course.className);
-        classNameExist = checkClassExist(allClassName, course.className);
-        if (!classNameExist) {
-            std::cout << "This class does not exist. Please try again!\n";
-        }
-    } while (!classNameExist);
+    std::cout << "Please enter the course name: ";
+    getline(std::cin, course.name);
 
     do {
         try {
-            std::cout << "Please enter teacher name: ";
+            std::cout << "Please enter the teacher name: ";
             course.teacherName = nameInput();
             validTeacherName = true;
         } catch (std::exception &error) {
@@ -156,9 +50,10 @@ void inputCourse(Course &course, const Semester &semester) {
 
     do {
         try {
-            std::cout << "Please enter number of credits: ";
+            std::cout << "Please enter the number of credits of this course: ";
             course.credits = intInput();
-            validCredits = course.credits > 0 && course.credits <= INT_MAX;
+            validCredits = course.credits > 0;
+
             if (!validCredits) {
                 std::cout << "Invalid credits number. Please try again!\n";
             }
@@ -171,9 +66,10 @@ void inputCourse(Course &course, const Semester &semester) {
         try {
             std::cout << "Please enter the maximum number of students in the course: ";
             course.maxStudent = intInput();
-            validMaxStudentNumber = course.maxStudent >= 1 && course.maxStudent <= 50;
+            validMaxStudentNumber = course.maxStudent > 0;
+
             if (!validMaxStudentNumber) {
-                std::cout << "Your input is invalid. Please try again!\n";
+                std::cout << "Invalid maximum number of students. Please try again!\n";
             }
         } catch (std::exception &error) {
             std::cout << error.what();
@@ -181,7 +77,7 @@ void inputCourse(Course &course, const Semester &semester) {
     } while (!validMaxStudentNumber);
 
     do {
-        std::cout << "Please choose day of week that the course will be "
+        std::cout << "Please choose the day of week that the course will be "
                      "perfomed (MON/TUE/WED/THU/FRI/SAT): ";
         getline(std::cin, course.dayOfWeek);
 
@@ -197,7 +93,7 @@ void inputCourse(Course &course, const Semester &semester) {
 
     do {
         try {
-            std::cout << "Please choose session number that the course will be "
+            std::cout << "Please choose the session number that the course will be "
                          "perfomed: ";
             course.sessionNumber = intInput();
             validSessionNumber = course.sessionNumber > 0 && course.sessionNumber <= 4;
