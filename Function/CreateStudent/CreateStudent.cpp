@@ -2,16 +2,23 @@
 
 #include "../../Struct/Student.h"
 #include "../CheckDate/CheckDate.h"
+#include "../CheckStudentID/CheckStudentID.h"
+#include "../CreateStudentAccount/CreateStudentAccount.h"
+#include "../GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
 
-Student inputStudent(int ordinalNumber, const std::string &className) {
+Student inputStudent(const std::string &className) {
     Student student;
     bool validGender;
     bool validDate;
     std::cout << "Please fill information required in every box\n";
-    std::cout << "Student ID: ";
-    getline(std::cin, student.id);
+    std::cout
+        << "If any requirement is repeated, it means your entrance data is illegal\n";
+    do {
+        std::cout << "Student ID: ";
+        getline(std::cin, student.id);
+    } while (checkStudentID(student.id));
     std::cout << "First name (only one word): ";
     student.firstName = nameInput();
     std::cout << "Last name: ";
@@ -41,7 +48,6 @@ Student inputStudent(int ordinalNumber, const std::string &className) {
 
     std::cout << "Enter the social ID: ";
     getline(std::cin, student.socialID);
-    student.ordinalNumber = ordinalNumber;
     student.className = className;
     return student;
 }
@@ -56,11 +62,13 @@ void saveStudent(const Student &student) {
     fout << student.dateOfBirth << '\n';
     fout << student.socialID << '\n';
     fout << student.className << '\n';
-    fout << student.ordinalNumber << '\n';
+    fout << '\n';
     fout.close();
+    std::cout << "Add one student successfully!\n";
 }
 
-void createStudent(int ordinalNumber, const std::string &className) {
-    Student student = inputStudent(ordinalNumber, className);
+void createStudent(const std::string &className) {
+    Student student = inputStudent(className);
     saveStudent(student);
+    createStudentAccount(student);
 }

@@ -3,6 +3,6 @@
 
 #include <iostream>
 
-void createStudent(int ordinalNumber, const std::string &className);
+void createStudent(const std::string &className);
 
 #endif
