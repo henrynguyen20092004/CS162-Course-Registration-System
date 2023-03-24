@@ -1,5 +1,5 @@
-#ifndef DELETECOURSE_H
-#define DELETECOURSE_H
+#ifndef DELETE_COURSE_H
+#define DELETE_COURSE_H
 
 #include "../../Struct/Course.h"
 #include "../../Struct/LinkedList.h"

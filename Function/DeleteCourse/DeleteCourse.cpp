@@ -45,15 +45,15 @@ Node<Course> *getAllCourse() {
 }
 
 void inputCourseIDAndClassName(std::string &ID, std::string &CourseName) {
-    std::cout << "Please type in the course you want to delete: ";
-    std::cin >> ID;
+    std::cout << "Please type in the id of the course you want to delete: ";
+    getline(std::cin, id);
     std::cout << "Please specify which class you want to delete this course from: ";
-    std::cin >> CourseName;
+    getline(std::cin, className);
 }
 
 void saveAllCourses(Node<Course> *&allCourses) {
     std::ofstream fout;
-    writeFile(fout, "Data/Course.txt", std::ios::trunc);
+    writeFile(fout, "Data/Course.txt");
 
     for (; allCourses; allCourses = allCourses->next) {
         fout << allCourses->data.schoolYearName << '\n';
@@ -78,8 +78,8 @@ void deleteCourse() {
         return;
     }
 
-    std::string ID;
-    std::string ClassName;
+    std::string id;
+    std::string className;
     Node<Course> *tmpCourse = new Node<Course>();
     tmpCourse->next = allCourses;
     allCourses = tmpCourse;
@@ -94,7 +94,7 @@ void deleteCourse() {
 
             saveAllCourses(allCourses);
             deleteLinkedList(allCourses);
-            std::cout << "The course is deleted successfully!\n";
+            std::cout << "Course successfully deleted!\n";
             return;
         }
         allCourses = allCourses->next;
@@ -102,8 +102,5 @@ void deleteCourse() {
 
     std::cout << "No such course found! Please try again!\n";
 
-    tmpCourse = allCourses;
-    allCourses = allCourses->next;
-    delete tmpCourse;
     deleteLinkedList(allCourses);
 }
