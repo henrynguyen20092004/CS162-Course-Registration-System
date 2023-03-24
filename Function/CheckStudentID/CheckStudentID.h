@@ -5,6 +5,6 @@
 
 #include "../GetAllStudents/GetAllStudents.h"
 
-bool checkStudentID(const std::string& studentID);
+bool checkStudentIDExists(const std::string& studentID);
 
 #endif

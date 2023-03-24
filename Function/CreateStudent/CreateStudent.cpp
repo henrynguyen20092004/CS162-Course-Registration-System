@@ -13,12 +13,13 @@ Student inputStudent(const std::string &className) {
     bool validGender;
     bool validDate;
     std::cout << "Please fill information required in every box\n";
-    std::cout
-        << "If any requirement is repeated, it means your entrance data is illegal\n";
     do {
         std::cout << "Student ID: ";
         getline(std::cin, student.id);
-    } while (checkStudentID(student.id));
+        if (checkStudentIDExists(student.id)) {
+            std::cout << "This id has been existed, please try again!\n";
+        }
+    } while (checkStudentIDExists(student.id));
     std::cout << "First name (only one word): ";
     student.firstName = nameInput();
     std::cout << "Last name: ";
@@ -38,12 +39,18 @@ Student inputStudent(const std::string &className) {
         } else {
             validGender = false;
         }
+        if (!validGender) {
+            std::cout << "Please enter F or M\n";
+        }
     } while (!validGender);
 
     do {
-        std::cout << "Enter the date of birth: ";
+        std::cout << "Enter the date of birth (dd/mm/yyyy): ";
         getline(std::cin, student.dateOfBirth);
         validDate = checkDate(student.dateOfBirth);
+        if (!validDate) {
+            std::cout << "Please enter the valid date in the right format! \n";
+        }
     } while (!validDate);
 
     std::cout << "Enter the social ID: ";
