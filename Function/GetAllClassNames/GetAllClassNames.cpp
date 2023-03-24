@@ -17,7 +17,7 @@ Node<std::string> *getAllClassNames() {
 
         Node<std::string> *tmp = new Node(className);
 
-        if (result == nullptr) {
+        if (!result) {
             result = tmp;
             cur = result;
         } else {
