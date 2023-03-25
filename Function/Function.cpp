@@ -50,7 +50,7 @@ void processUserCommand(int commandNumber, User &currentUser) {
         }
 
         case 3: {
-            // Log out function
+            logOut(currentUser);
             break;
         }
     }

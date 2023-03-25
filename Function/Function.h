@@ -5,6 +5,7 @@
 #include "CreateSchoolYear/CreateSchoolYear.h"
 #include "CreateSemester/CreateSemester.h"
 #include "LogIn/LogIn.h"
+#include "LogOut/LogOut.h"
 #include "ViewClasses/ViewClasses.h"
 
 void menu();
