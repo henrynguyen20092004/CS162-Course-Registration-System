@@ -39,14 +39,13 @@ Node<Student> *getAllStudents() {
 
 Node<std::string> *getAllStudentsIDInClass(std::string &className) {
     Node<Student> *allStudents = getAllStudents();
-    Node<std::string> *allCourseStudents = nullptr;
-    Node<std::string> *cur = allCourseStudents;
+    Node<std::string> *allClassStudents = nullptr, *cur;
 
     while (allStudents) {
         if (className == allStudents->data.className) {
-            if (!allCourseStudents) {
-                allCourseStudents = new Node<std::string>(allStudents->data.id);
-                cur = allCourseStudents;
+            if (!allClassStudents) {
+                allClassStudents = new Node<std::string>(allStudents->data.id);
+                cur = allClassStudents;
             } else {
                 cur->next = new Node<std::string>(allStudents->data.id);
                 cur = cur->next;
@@ -56,15 +55,14 @@ Node<std::string> *getAllStudentsIDInClass(std::string &className) {
     }
 
     deleteLinkedList(allStudents);
-    return allCourseStudents;
+    return allClassStudents;
 }
 
 Node<Student_Course> *getAllStudent_Course() {
     std::ifstream fin;
     readFile(fin, "Data/Student_Course.txt");
 
-    Node<Student_Course> *allStudent_Course = nullptr;
-    Node<Student_Course> *cur = nullptr;
+    Node<Student_Course> *allStudent_Course = nullptr, *cur;
     Student_Course student_course;
 
     while (fin.good()) {
@@ -91,8 +89,7 @@ Node<Student_Course> *getAllStudentsInCourse(Course &course) {
     std::ifstream fin;
     readFile(fin, "Data/Student_Course.txt");
 
-    Node<Student_Course> *allStudentsInCourse = nullptr;
-    Node<Student_Course> *cur = nullptr;
+    Node<Student_Course> *allStudentsInCourse = nullptr, *cur;
     Student_Course student_course;
 
     while (fin.good()) {
