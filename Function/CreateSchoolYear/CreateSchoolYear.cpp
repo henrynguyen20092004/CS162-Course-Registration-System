@@ -1,34 +1,42 @@
 #include "CreateSchoolYear.h"
 
-#include "../Input/Input.h"
+#include "../CheckSchoolYear/CheckSchoolYear.h"
 #include "../OpenFile/OpenFile.h"
 
-int inputSchoolStartYear() {
-    bool valid = false;
-    int startYear;
+std::string inputSchoolYearName() {
+    bool validSchoolYear, schoolYearExists = true;
+    std::string schoolYearName;
+    Node<std::string> *allSchoolYears = getAllSchoolYears();
+
     do {
-        try {
-            startYear = intInput();
-            std::cout << "Please enter the starting year (yyyy) of the school year: ";
-            valid = (startYear > 999 && startYear < 10000);
-            if (!valid) {
-                std::cout << "Invalid start year, please try again!\n";
+        std::cout << "Please enter the school year (yyyy-yyyy): ";
+        getline(std::cin, schoolYearName);
+
+        validSchoolYear = checkValidSchoolYear(schoolYearName);
+
+        if (!validSchoolYear) {
+            std::cout << "Invalid school year, please try again!\n";
+        } else {
+            schoolYearExists = checkSchoolYearExists(allSchoolYears, schoolYearName);
+
+            if (schoolYearExists) {
+                std::cout << "This school year already exists, please try again!\n";
             }
-        } catch (std::exception &error) {
-            std::cout << error.what();
         }
-    } while (!valid);
-    return startYear;
+    } while (!validSchoolYear || schoolYearExists);
+
+    deleteLinkedList(allSchoolYears);
+    return schoolYearName;
 }
 
-void saveSchoolYear(int startYear) {
+void saveSchoolYear(const std::string &schoolYearName) {
     std::ofstream fout;
     writeFile(fout, "Data/SchoolYear.txt", std::ios::app);
-    fout << startYear << "-" << startYear + 1 << '\n';
+    fout << schoolYearName << '\n';
     fout.close();
 }
 
 void createSchoolYear() {
-    int startYear = inputSchoolStartYear();
-    saveSchoolYear(startYear);
+    std::string schoolYearName = inputSchoolYearName();
+    saveSchoolYear(schoolYearName);
 }

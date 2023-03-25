@@ -10,9 +10,13 @@ void viewClasses() {
 
     std::string className;
     std::cout << "This is the list of all classes: " << '\n';
+
     while (fin.good()) {
-        getline(std::cin, className);
-        std::cout << className << '\n';
+        getline(fin, className);
+
+        if (className != "") {
+            std::cout << className << '\n';
+        }
     }
 
     fin.close();

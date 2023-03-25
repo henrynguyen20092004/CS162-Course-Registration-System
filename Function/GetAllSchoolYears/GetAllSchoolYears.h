@@ -5,6 +5,6 @@
 
 #include "../../Struct/LinkedList.h"
 
-Node<std::string> *getSchoolYear();
+Node<std::string> *getAllSchoolYears();
 
 #endif
