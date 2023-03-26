@@ -6,6 +6,7 @@
 #include "CreateCourse/CreateCourse.h"
 #include "CreateSchoolYear/CreateSchoolYear.h"
 #include "CreateSemester/CreateSemester.h"
+#include "CreateStudent/CreateStudent.h"
 #include "LogIn/LogIn.h"
 #include "LogOut/LogOut.h"
 #include "ViewClasses/ViewClasses.h"

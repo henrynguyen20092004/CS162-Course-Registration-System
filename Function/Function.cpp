@@ -69,7 +69,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 7: {
-            // Add a student to a class function
+            createStudent();
             break;
         }
 

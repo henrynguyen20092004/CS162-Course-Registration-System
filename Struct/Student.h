@@ -6,9 +6,7 @@
 #include "Semester.h"
 
 struct Student {
-    std::string id, firstName, lastName, gender, dateOfBirth, socialID,
-        className;
-    int ordinalNumber, semesterNumber;
+    std::string id, firstName, lastName, gender, dateOfBirth, socialID, className;
 };
 
 #endif
