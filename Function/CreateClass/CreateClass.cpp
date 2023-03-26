@@ -1,33 +1,22 @@
 #include "CreateClass.h"
 
-#include "../GetAllClassNames/GetAllClassNames.h"
+#include "../CheckClass/CheckClass.h"
+#include "../GetAllClasses/GetAllClasses.h"
 #include "../OpenFile/OpenFile.h"
-
-bool checkExistedClass(Node<std::string>* allClassNames, const std::string& className) {
-    while (allClassNames) {
-        if (allClassNames->data == className) {
-            return true;
-        }
-
-        allClassNames = allClassNames->next;
-    }
-
-    return false;
-}
 
 std::string inputClassName(Node<std::string>*& allClassNames) {
     std::string className;
-    bool availableClassName;
+    bool classExists;
 
     do {
         std::cout << "Please enter the name of the class: ";
         getline(std::cin, className);
-        availableClassName = checkExistedClass(allClassNames, className);
+        classExists = checkClassExists(allClassNames, className);
 
-        if (availableClassName) {
+        if (classExists) {
             std::cout << "This class already exists, please try again!\n";
         }
-    } while (availableClassName);
+    } while (classExists);
 
     return className;
 }
@@ -41,8 +30,8 @@ void saveClassName(const std::string& className) {
 }
 
 void createClass() {
-    Node<std::string>* allClassNames = getAllClassNames();
-    std::string className = inputClassName(allClassNames);
+    Node<std::string>* allClasses = getAllClasses();
+    std::string className = inputClassName(allClasses);
     saveClassName(className);
-    deleteLinkedList(allClassNames);
+    deleteLinkedList(allClasses);
 }

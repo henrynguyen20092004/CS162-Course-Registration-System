@@ -4,7 +4,7 @@
 #include "../../Struct/Course.h"
 #include "../../Struct/LinkedList.h"
 
-bool checkCourseExist(
+bool checkCourseExists(
     Node<Course> *allCourse, const std::string &courseID, const std::string &className
 );
 

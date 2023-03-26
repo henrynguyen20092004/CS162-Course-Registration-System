@@ -21,7 +21,7 @@ void inputCourse(Course &course, const Semester &semester) {
         do {
             std::cout << "Please enter the class name of the course: ";
             getline(std::cin, course.className);
-            classNameExist = checkClassExist(allClassName, course.className);
+            classNameExist = checkClassExists(allClassName, course.className);
 
             if (!classNameExist) {
                 std::cout << "This class does not exist. Please try again!\n";
@@ -30,7 +30,7 @@ void inputCourse(Course &course, const Semester &semester) {
 
         std::cout << "Please enter the course id: ";
         getline(std::cin, course.id);
-        courseExist = checkCourseExist(allCourse, course.id, course.className);
+        courseExist = checkCourseExists(allCourse, course.id, course.className);
 
         if (courseExist) {
             std::cout << "This course already exists, please try again!\n";
