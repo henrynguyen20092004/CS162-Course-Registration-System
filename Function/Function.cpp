@@ -64,7 +64,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 6: {
-            // Create class function
+            createClass();
             break;
         }
 

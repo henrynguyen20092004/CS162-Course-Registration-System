@@ -2,6 +2,7 @@
 #define FUNCTION_H
 
 #include "ChangePassword/ChangePassword.h"
+#include "CreateClass/CreateClass.h"
 #include "CreateCourse/CreateCourse.h"
 #include "CreateSchoolYear/CreateSchoolYear.h"
 #include "CreateSemester/CreateSemester.h"
