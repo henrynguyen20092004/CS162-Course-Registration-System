@@ -38,20 +38,20 @@ Node<Student> *getAllStudents() {
 }
 
 Node<std::string> *getAllStudentsIDInClass(std::string &className) {
-    Node<Student> *allStudents = getAllStudents();
-    Node<std::string> *allClassStudents = nullptr, *cur;
+    Node<Student> *allStudents = getAllStudents(), *cur = allStudents;
+    Node<std::string> *allClassStudents = nullptr, *cur2;
 
-    while (allStudents) {
-        if (className == allStudents->data.className) {
+    while (cur) {
+        if (className == cur->data.className) {
             if (!allClassStudents) {
-                allClassStudents = new Node<std::string>(allStudents->data.id);
-                cur = allClassStudents;
+                allClassStudents = new Node<std::string>(cur->data.id);
+                cur2 = allClassStudents;
             } else {
-                cur->next = new Node<std::string>(allStudents->data.id);
-                cur = cur->next;
+                cur2->next = new Node<std::string>(cur->data.id);
+                cur2 = cur2->next;
             }
         }
-        allStudents = allStudents->next;
+        cur = cur->next;
     }
 
     deleteLinkedList(allStudents);

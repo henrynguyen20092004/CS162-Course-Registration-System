@@ -10,10 +10,9 @@ MON
 2
 2022-2023
 2
-<<<<<<< HEAD
 PH212
 General Physics II
-22CTT2
+22TT2
 Nguyen Huu Nha
 4
 50
@@ -21,8 +20,6 @@ MON
 2
 2022-2023
 2
-=======
->>>>>>> 5e7aa8e (Fix minor bugs)
 PH213
 General Physics III
 22CTT2
