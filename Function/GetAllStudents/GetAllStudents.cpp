@@ -6,7 +6,7 @@ Node<Student> *getAllStudents() {
     std::ifstream fin;
     readFile(fin, "Data/Student.txt");
     Student student;
-    Node<Student> *result = nullptr, *cur = nullptr;
+    Node<Student> *allStudents = nullptr, *cur = nullptr;
 
     while (fin.good()) {
         getline(fin, student.id);
@@ -24,9 +24,9 @@ Node<Student> *getAllStudents() {
 
         Node<Student> *tmp = new Node(student);
 
-        if (!result) {
-            result = tmp;
-            cur = result;
+        if (!allStudents) {
+            allStudents = tmp;
+            cur = allStudents;
         } else {
             cur->next = tmp;
             cur = cur->next;
@@ -34,5 +34,39 @@ Node<Student> *getAllStudents() {
     }
 
     fin.close();
-    return result;
+    return allStudents;
+}
+
+Node<Student_Course> *getAllStudent_Course() {
+    std::ifstream fin;
+    readFile(fin, "Data/Student_Course.txt");
+
+    Node<Student_Course> *allStudent_Course = nullptr, *cur = nullptr, *tmp;
+    Student_Course student_course;
+    std::string course_class;
+
+    while (fin.good()) {
+        getline(fin, student_course.studentID);
+
+        if (student_course.studentID == "") {
+            break;
+        }
+
+        getline(fin, course_class);
+        student_course.courseID = course_class.substr(0, course_class.find('-'));
+        student_course.className = course_class.substr(course_class.find('-') + 1);
+
+        tmp = new Node<Student_Course>(student_course);
+
+        if (!allStudent_Course) {
+            allStudent_Course = tmp;
+            cur = allStudent_Course;
+        } else {
+            cur->next = tmp;
+            cur = cur->next;
+        }
+    }
+
+    fin.close();
+    return allStudent_Course;
 }

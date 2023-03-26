@@ -109,7 +109,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 15: {
-            // Delete course function
+            deleteCourse();
             break;
         }
 

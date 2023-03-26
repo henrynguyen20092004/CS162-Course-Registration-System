@@ -6,6 +6,7 @@
 struct Student_Course {
     std::string studentID;
     std::string courseID;
+    std::string className;
 };
 
 #endif
