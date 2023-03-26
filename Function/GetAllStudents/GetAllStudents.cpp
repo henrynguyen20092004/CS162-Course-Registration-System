@@ -64,21 +64,17 @@ Node<Student_Course_Class> *getAllStudent_Course_Class() {
 
     Node<Student_Course_Class> *allStudent_Course_Class = nullptr, *cur;
     Student_Course_Class student_course_class;
+    std::string course_class;
 
     while (fin.good()) {
         getline(fin, student_course_class.studentID);
         if (student_course_class.studentID == "") {
             break;
         }
-        getline(fin, student_course_class.courseID);
 
-        student_course_class.className = student_course_class.courseID.substr(
-            student_course_class.courseID.find('_') + 1
-        );
-
-        student_course_class.courseID = student_course_class.courseID.substr(
-            0, student_course_class.courseID.find('_')
-        );
+        getline(fin, course_class);
+        student_course_class.courseID = course_class.substr(0, course_class.find('_'));
+        student_course_class.className = course_class.substr(course_class.find('_') + 1);
 
         if (!allStudent_Course_Class) {
             allStudent_Course_Class =
@@ -100,6 +96,7 @@ Node<Student_Course_Class> *getAllStudentsInCourse(Course &course) {
 
     Node<Student_Course_Class> *allStudentsInCourse = nullptr, *cur;
     Student_Course_Class student_course_class;
+    std::string course_class;
 
     while (fin.good()) {
         getline(fin, student_course_class.studentID);
@@ -108,13 +105,9 @@ Node<Student_Course_Class> *getAllStudentsInCourse(Course &course) {
         }
         getline(fin, student_course_class.courseID);
 
-        student_course_class.className = student_course_class.courseID.substr(
-            student_course_class.courseID.find('_') + 1
-        );
-
-        student_course_class.courseID = student_course_class.courseID.substr(
-            0, student_course_class.courseID.find('_') + 1
-        );
+        getline(fin, course_class);
+        student_course_class.courseID = course_class.substr(0, course_class.find('_'));
+        student_course_class.className = course_class.substr(course_class.find('_') + 1);
 
         if (course.id == student_course_class.courseID) {
             if (!allStudentsInCourse) {

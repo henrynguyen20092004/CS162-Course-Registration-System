@@ -9,8 +9,7 @@ Node<Course> *getAllCourse() {
     std::ifstream fin;
     readFile(fin, "Data/Course.txt");
     Course course;
-    Node<Course> *allCourse = nullptr;
-    Node<Course> *cur = nullptr;
+    Node<Course> *allCourse = nullptr, *cur;
     std::string tmpSemesterNumber, tmpCredits, tmpMaximumStudent, tmpSessionNumber;
     while (fin.good()) {
         getline(fin, course.schoolYearName);
@@ -72,7 +71,7 @@ void deleteAllStudentsInCourse(std::string &id, std::string &className) {
 }
 
 void deleteCourse() {
-    Node<Course> *allCourses = new Node<Course>, *cur = allCourses, *tmpCourse;
+    Node<Course> *allCourses = new Node<Course>, *cur, *tmpCourse;
     allCourses->next = getAllCourse();
 
     if (!allCourses->next) {
@@ -85,6 +84,7 @@ void deleteCourse() {
 
     do {
         inputCourseIDAndClassName(id, className);
+        cur = allCourses;
 
         while (cur->next) {
             if (id == cur->next->data.id && className == cur->next->data.className) {
