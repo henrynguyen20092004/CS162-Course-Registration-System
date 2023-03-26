@@ -1,29 +1,53 @@
 #include "CreateStudent.h"
 
-#include "../../Struct/Student.h"
+#include "../CheckClass/CheckClass.h"
 #include "../CheckDate/CheckDate.h"
 #include "../CheckStudentID/CheckStudentID.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"
+#include "../GetAllClasses/GetAllClasses.h"
 #include "../GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
 
-Student inputStudent(const std::string &className) {
+Student inputStudent() {
     Student student;
-    bool validGender;
-    bool validDate;
-    std::cout << "Please fill information required in every box\n";
+    bool studentExists, classExists, validFirstName, validLastName, validGender,
+        validDate;
+    Node<Student> *allStudents = getAllStudents();
+    Node<std::string> *allClasses = getAllClasses();
+    std::cout << "Please fill the information in every box\n";
+
     do {
         std::cout << "Student ID: ";
         getline(std::cin, student.id);
-        if (checkStudentIDExists(student.id)) {
-            std::cout << "This id has been existed, please try again!\n";
+        studentExists = checkStudentIDExists(allStudents, student.id);
+
+        if (studentExists) {
+            std::cout << "This student already exists, please try again!\n";
         }
-    } while (checkStudentIDExists(student.id));
-    std::cout << "First name (only one word): ";
-    student.firstName = nameInput();
-    std::cout << "Last name: ";
-    student.lastName = nameInput();
+    } while (studentExists);
+
+    do {
+        try {
+            std::cout << "First name (only one word): ";
+            student.firstName = nameInput();
+            validFirstName = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
+            validFirstName = false;
+        }
+    } while (!validFirstName);
+
+    do {
+        try {
+            std::cout << "Last name: ";
+            student.lastName = nameInput();
+            validLastName = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
+            validLastName = false;
+        }
+    } while (!validLastName);
 
     do {
         std::cout << "Gender (M: Male, F: Female): ";
@@ -37,25 +61,36 @@ Student inputStudent(const std::string &className) {
             student.gender = "F";
             validGender = true;
         } else {
+            std::cout << "Invalid gender, please enter F or M!\n";
             validGender = false;
-        }
-        if (!validGender) {
-            std::cout << "Please enter F or M\n";
         }
     } while (!validGender);
 
     do {
-        std::cout << "Enter the date of birth (dd/mm/yyyy): ";
+        std::cout << "Date of birth (dd/mm/yyyy): ";
         getline(std::cin, student.dateOfBirth);
         validDate = checkDate(student.dateOfBirth);
+
         if (!validDate) {
-            std::cout << "Please enter the valid date in the right format! \n";
+            std::cout << "Invalid date of birth, please try again! \n";
         }
     } while (!validDate);
 
-    std::cout << "Enter the social ID: ";
+    std::cout << "Social ID: ";
     getline(std::cin, student.socialID);
-    student.className = className;
+
+    do {
+        std::cout << "Class name: ";
+        getline(std::cin, student.className);
+        classExists = checkClassExists(allClasses, student.className);
+
+        if (!classExists) {
+            std::cout << "This class doesn't exists, please try again!\n";
+        }
+    } while (!classExists);
+
+    deleteLinkedList(allStudents);
+    deleteLinkedList(allClasses);
     return student;
 }
 
@@ -69,13 +104,12 @@ void saveStudent(const Student &student) {
     fout << student.dateOfBirth << '\n';
     fout << student.socialID << '\n';
     fout << student.className << '\n';
-    fout << '\n';
     fout.close();
-    std::cout << "Add one student successfully!\n";
+    std::cout << "Student successfully added!\n";
 }
 
-void createStudent(const std::string &className) {
-    Student student = inputStudent(className);
+void createStudent() {
+    Student student = inputStudent();
     saveStudent(student);
     createStudentAccount(student);
 }

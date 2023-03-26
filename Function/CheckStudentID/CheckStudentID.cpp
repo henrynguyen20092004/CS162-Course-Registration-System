@@ -1,8 +1,8 @@
 #include "CheckStudentID.h"
 
-bool checkStudentIDExists(const std::string &studentID) {
-    Node<Student> *allStudents = getAllStudents();
+#include "../GetAllStudents/GetAllStudents.h"
 
+bool checkStudentIDExists(Node<Student>* allStudents, const std::string& studentID) {
     while (allStudents) {
         if (allStudents->data.id == studentID) {
             return true;
@@ -11,6 +11,5 @@ bool checkStudentIDExists(const std::string &studentID) {
         allStudents = allStudents->next;
     }
 
-    deleteLinkedList(allStudents);
     return false;
 }

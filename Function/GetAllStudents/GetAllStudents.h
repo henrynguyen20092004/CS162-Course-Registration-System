@@ -1,8 +1,6 @@
 #ifndef GET_ALL_STUDENTS_H
 #define GET_ALL_STUDENTS_H
 
-#include <iostream>
-
 #include "../../Struct/LinkedList.h"
 #include "../../Struct/Student.h"
 

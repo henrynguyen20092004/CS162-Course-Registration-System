@@ -1,12 +1,10 @@
 #include "CreateStudentAccount.h"
 
+#include "../../Struct/User.h"
+#include "../OpenFile/OpenFile.h"
+
 std::string createPassword(const std::string &dateOfBirth) {
-    std::string passWord;
-    for (int i = 0; i < 10; ++i) {
-        if (i == 2 || i == 5) continue;
-        passWord += dateOfBirth[i];
-    }
-    return passWord;
+    return dateOfBirth.substr(0, 2) + dateOfBirth.substr(3, 2) + dateOfBirth.substr(6);
 }
 
 User createAccount(const Student &student) {
@@ -16,18 +14,15 @@ User createAccount(const Student &student) {
     return studentAccount;
 }
 
-void saveAccount(const Student &student) {
-    User studentAccount = createAccount(student);
+void saveAccount(const User &studentAccount) {
     std::ofstream fout;
     writeFile(fout, "Data/User.txt", std::ios::app);
     fout << studentAccount.username << '\n';
     fout << studentAccount.password << '\n';
-    fout << '\n';
-
     fout.close();
 }
 
 void createStudentAccount(const Student &student) {
-    createAccount(student);
-    saveAccount(student);
+    User studentAccount = createAccount(student);
+    saveAccount(studentAccount);
 }
