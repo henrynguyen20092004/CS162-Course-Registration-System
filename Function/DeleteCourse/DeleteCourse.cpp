@@ -46,38 +46,29 @@ Node<Course> *getAllCourse() {
 }
 
 void inputCourseIDAndClassName(std::string &id, std::string &className) {
-    std::cout
-        << "Please type in the id of the course you want to delete (type 0 to stop): ";
+    std::cout << "Please type in the id of the course you want to delete: ";
     getline(std::cin, id);
     std::cout << "Please specify which class you want to delete this course from: ";
     getline(std::cin, className);
 }
 
-void deleteAllStudentsInCourse(Course &course, std::string &className) {
-    Node<std::string> *allCourseStudentID = getAllStudentsIDInClass(className),
-                      *cur = allCourseStudentID;
-    Node<Student_Course> *allStudent_Course = new Node<Student_Course>, *cur2,
-                         *tempStudent_Course;
-    allStudent_Course->next = getAllStudent_Course();
+void deleteAllStudentsInCourse(std::string &id, std::string &className) {
+    Node<Student_Course_Class> *allStudent_Course_Class = new Node<Student_Course_Class>,
+                               *cur = allStudent_Course_Class, *tempStudent_Course;
+    allStudent_Course_Class->next = getAllStudent_Course_Class();
 
-    for (; cur; cur = cur->next) {
-        cur2 = allStudent_Course;
-        while (cur2->next) {
-            if (cur2->next->data.courseID == course.id &&
-                cur2->next->data.studentID == cur->data) {
-                tempStudent_Course = cur2->next;
-                cur2->next = cur2->next->next;
-                delete tempStudent_Course;
-                break;
-            } else {
-                cur2 = cur2->next;
-            }
+    while (cur->next) {
+        if (cur->next->data.courseID == id && cur->next->data.className == className) {
+            tempStudent_Course = cur->next;
+            cur->next = cur->next->next;
+            delete tempStudent_Course;
+        } else {
+            cur = cur->next;
         }
     }
 
-    saveAllStudent_Course(allStudent_Course->next);
-    deleteLinkedList(allStudent_Course);
-    deleteLinkedList(allCourseStudentID);
+    saveAllStudent_Course_Class(allStudent_Course_Class->next);
+    deleteLinkedList(allStudent_Course_Class);
 }
 
 void deleteCourse() {
@@ -97,7 +88,7 @@ void deleteCourse() {
 
         while (cur->next) {
             if (id == cur->next->data.id && className == cur->next->data.className) {
-                deleteAllStudentsInCourse(cur->next->data, className);
+                deleteAllStudentsInCourse(id, className);
 
                 tmpCourse = cur->next;
                 cur->next = cur->next->next;
@@ -105,6 +96,7 @@ void deleteCourse() {
 
                 std::cout << "Course successfully deleted!\n";
                 stopFlag = true;
+                saveAllCourses(allCourses->next);
                 break;
             } else {
                 cur = cur->next;
@@ -116,6 +108,5 @@ void deleteCourse() {
         }
     } while (!stopFlag);
 
-    saveAllCourses(allCourses->next);
     deleteLinkedList(allCourses);
 }

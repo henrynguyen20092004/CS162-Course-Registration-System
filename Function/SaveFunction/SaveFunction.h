@@ -3,9 +3,9 @@
 
 #include "../../Struct/Course.h"
 #include "../../Struct/LinkedList.h"
-#include "../../Struct/Student_Course.h"
+#include "../../Struct/Student_Course_Class.h"
 
 void saveAllCourses(Node<Course> *allCourses);
-void saveAllStudent_Course(Node<Student_Course> *allStudent_Course);
+void saveAllStudent_Course_Class(Node<Student_Course_Class> *allStudent_Course);
 
 #endif

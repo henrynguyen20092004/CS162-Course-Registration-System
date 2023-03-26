@@ -3,9 +3,10 @@
 
 #include <iostream>
 
-struct Student_Course {
+struct Student_Course_Class {
     std::string studentID;
     std::string courseID;
+    std::string className;
 };
 
 #endif

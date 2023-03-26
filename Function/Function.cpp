@@ -109,7 +109,8 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 15: {
-            // Delete course function
+            // There should be viewCourse before this
+            deleteCourse();
             break;
         }
 
