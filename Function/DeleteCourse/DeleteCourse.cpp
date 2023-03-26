@@ -1,60 +1,21 @@
 #include "DeleteCourse.h"
 
-#include "../../Function/GetAllStudents/GetAllStudents.h"
-#include "../../Function/OpenFile/OpenFile.h"
-#include "../../Function/SaveFunction/SaveFunction.h"
-
-// from feat/CRS-add-course-to-semester
-Node<Course> *getAllCourse() {
-    std::ifstream fin;
-    readFile(fin, "Data/Course.txt");
-    Course course;
-    Node<Course> *allCourse = nullptr, *cur;
-    std::string tmpSemesterNumber, tmpCredits, tmpMaximumStudent, tmpSessionNumber;
-    while (fin.good()) {
-        getline(fin, course.schoolYearName);
-        if (course.schoolYearName == "") {
-            break;
-        }
-        getline(fin, tmpSemesterNumber);
-        course.semesterNumber = stoi(tmpSemesterNumber);
-        getline(fin, course.id);
-        getline(fin, course.name);
-        getline(fin, course.className);
-        getline(fin, course.teacherName);
-        getline(fin, tmpCredits);
-        course.credits = stoi(tmpCredits);
-        getline(fin, tmpMaximumStudent);
-        course.maxStudent = stoi(tmpMaximumStudent);
-        getline(fin, course.dayOfWeek);
-        getline(fin, tmpSessionNumber);
-        course.sessionNumber = stoi(tmpSessionNumber);
-
-        Node<Course> *newCourse = new Node<Course>(course);
-
-        if (!allCourse) {
-            allCourse = newCourse;
-            cur = allCourse;
-        } else {
-            cur->next = newCourse;
-            cur = cur->next;
-        }
-    }
-    fin.close();
-    return allCourse;
-}
+#include "../GetAllCourses/GetAllCourses.h"
+#include "../GetAllStudents/GetAllStudents.h"
+#include "../OpenFile/OpenFile.h"
+#include "../SaveCourse/SaveCourse.h"
 
 void inputCourseIDAndClassName(std::string &id, std::string &className) {
-    std::cout << "Please type in the id of the course you want to delete: ";
+    std::cout << "Please enter the course's id: ";
     getline(std::cin, id);
-    std::cout << "Please specify which class you want to delete this course from: ";
+    std::cout << "Please the course's class: ";
     getline(std::cin, className);
 }
 
-void deleteAllStudentsInCourse(std::string &id, std::string &className) {
-    Node<Student_Course_Class> *allStudent_Course_Class = new Node<Student_Course_Class>,
-                               *cur = allStudent_Course_Class, *tempStudent_Course;
-    allStudent_Course_Class->next = getAllStudent_Course_Class();
+void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
+    Node<Student_Course> *allStudent_Course = new Node<Student_Course>,
+                         *cur = allStudent_Course, *tempStudent_Course;
+    allStudent_Course->next = getAllStudent_Course();
 
     while (cur->next) {
         if (cur->next->data.courseID == id && cur->next->data.className == className) {
@@ -66,16 +27,17 @@ void deleteAllStudentsInCourse(std::string &id, std::string &className) {
         }
     }
 
-    saveAllStudent_Course_Class(allStudent_Course_Class->next);
-    deleteLinkedList(allStudent_Course_Class);
+    saveAllStudent_Course(allStudent_Course->next);
+    deleteLinkedList(allStudent_Course);
 }
 
 void deleteCourse() {
-    Node<Course> *allCourses = new Node<Course>, *cur, *tmpCourse;
+    Node<Course> *allCourses = new Node<Course>, *cur = allCourses, *tmpCourse;
     allCourses->next = getAllCourse();
 
     if (!allCourses->next) {
         std::cout << "There is no course at the moment! Please try again later!\n";
+        deleteLinkedList(allCourses);
         return;
     }
 
@@ -84,7 +46,6 @@ void deleteCourse() {
 
     do {
         inputCourseIDAndClassName(id, className);
-        cur = allCourses;
 
         while (cur->next) {
             if (id == cur->next->data.id && className == cur->next->data.className) {
@@ -96,7 +57,6 @@ void deleteCourse() {
 
                 std::cout << "Course successfully deleted!\n";
                 stopFlag = true;
-                saveAllCourses(allCourses->next);
                 break;
             } else {
                 cur = cur->next;
@@ -108,5 +68,6 @@ void deleteCourse() {
         }
     } while (!stopFlag);
 
+    saveAllCourses(allCourses->next);
     deleteLinkedList(allCourses);
 }

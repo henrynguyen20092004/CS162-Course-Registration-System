@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-struct Student_Course_Class {
+struct Student_Course {
     std::string studentID;
     std::string courseID;
     std::string className;

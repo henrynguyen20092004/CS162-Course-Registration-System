@@ -37,90 +37,36 @@ Node<Student> *getAllStudents() {
     return allStudents;
 }
 
-Node<std::string> *getAllStudentsIDInClass(std::string &className) {
-    Node<Student> *allStudents = getAllStudents(), *cur = allStudents;
-    Node<std::string> *allClassStudents = nullptr, *cur2;
-
-    while (cur) {
-        if (className == cur->data.className) {
-            if (!allClassStudents) {
-                allClassStudents = new Node<std::string>(cur->data.id);
-                cur2 = allClassStudents;
-            } else {
-                cur2->next = new Node<std::string>(cur->data.id);
-                cur2 = cur2->next;
-            }
-        }
-        cur = cur->next;
-    }
-
-    deleteLinkedList(allStudents);
-    return allClassStudents;
-}
-
-Node<Student_Course_Class> *getAllStudent_Course_Class() {
+Node<Student_Course> *getAllStudent_Course() {
     std::ifstream fin;
-    readFile(fin, "Data/Student_Course_Class.txt");
+    readFile(fin, "Data/Student_Course.txt");
 
-    Node<Student_Course_Class> *allStudent_Course_Class = nullptr, *cur;
-    Student_Course_Class student_course_class;
+    Node<Student_Course> *allStudent_Course = nullptr, *cur = nullptr, *tmp;
+    Student_Course student_course;
     std::string course_class;
 
     while (fin.good()) {
-        getline(fin, student_course_class.studentID);
-        if (student_course_class.studentID == "") {
+        getline(fin, student_course.studentID);
+
+        if (student_course.studentID == "") {
             break;
         }
 
         getline(fin, course_class);
-        student_course_class.courseID = course_class.substr(0, course_class.find('_'));
-        student_course_class.className = course_class.substr(course_class.find('_') + 1);
+        student_course.courseID = course_class.substr(0, course_class.find('-'));
+        student_course.className = course_class.substr(course_class.find('-') + 1);
 
-        if (!allStudent_Course_Class) {
-            allStudent_Course_Class =
-                new Node<Student_Course_Class>(student_course_class);
-            cur = allStudent_Course_Class;
+        tmp = new Node<Student_Course>(student_course);
+
+        if (!allStudent_Course) {
+            allStudent_Course = tmp;
+            cur = allStudent_Course;
         } else {
-            cur->next = new Node<Student_Course_Class>(student_course_class);
+            cur->next = tmp;
             cur = cur->next;
         }
     }
 
     fin.close();
-    return allStudent_Course_Class;
-}
-
-Node<Student_Course_Class> *getAllStudentsInCourse(Course &course) {
-    std::ifstream fin;
-    readFile(fin, "Data/Student_Course.txt");
-
-    Node<Student_Course_Class> *allStudentsInCourse = nullptr, *cur;
-    Student_Course_Class student_course_class;
-    std::string course_class;
-
-    while (fin.good()) {
-        getline(fin, student_course_class.studentID);
-        if (student_course_class.studentID == "") {
-            break;
-        }
-        getline(fin, student_course_class.courseID);
-
-        getline(fin, course_class);
-        student_course_class.courseID = course_class.substr(0, course_class.find('_'));
-        student_course_class.className = course_class.substr(course_class.find('_') + 1);
-
-        if (course.id == student_course_class.courseID) {
-            if (!allStudentsInCourse) {
-                allStudentsInCourse =
-                    new Node<Student_Course_Class>(student_course_class);
-                cur = allStudentsInCourse;
-            } else {
-                cur->next = new Node<Student_Course_Class>(student_course_class);
-                cur = cur->next;
-            }
-        }
-    }
-
-    fin.close();
-    return allStudentsInCourse;
+    return allStudent_Course;
 }
