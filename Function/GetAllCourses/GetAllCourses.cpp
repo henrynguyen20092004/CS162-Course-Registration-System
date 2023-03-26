@@ -1,4 +1,4 @@
-#include "GetAllCourse.h"
+#include "GetAllCourses.h"
 
 #include "../OpenFile/OpenFile.h"
 
@@ -8,11 +8,14 @@ Node<Course> *getAllCourse() {
     Course course;
     Node<Course> *cur = nullptr, *allCourse = nullptr;
     std::string tmpSemesterNumber, tmpCredits, tmpMaximumStudent, tmpSessionNumber;
+
     while (fin.good()) {
         getline(fin, course.schoolYearName);
+
         if (course.schoolYearName == "") {
             break;
         }
+
         getline(fin, tmpSemesterNumber);
         course.semesterNumber = stoi(tmpSemesterNumber);
         getline(fin, course.id);
@@ -37,6 +40,7 @@ Node<Course> *getAllCourse() {
             cur = cur->next;
         }
     }
+
     fin.close();
     return allCourse;
 }

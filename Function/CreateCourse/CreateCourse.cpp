@@ -1,13 +1,16 @@
 #include "CreateCourse.h"
 
+#include "../CheckClass/CheckClass.h"
 #include "../CheckCourse/CheckCourse.h"
+#include "../CheckDate/CheckDate.h"
 #include "../CreateSemester/CreateSemester.h"
-#include "../GetAllCourse/GetAllCourse.h"
+#include "../GetAllClasses/GetAllClasses.h"
+#include "../GetAllCourses/GetAllCourses.h"
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
 
 void inputCourse(Course &course, const Semester &semester) {
-    Node<std::string> *allClassName = getAllClassName();
+    Node<std::string> *allClassName = getAllClasses();
     Node<Course> *allCourse = getAllCourse();
 
     bool classNameExist, courseExist, validTeacherName,
@@ -16,7 +19,7 @@ void inputCourse(Course &course, const Semester &semester) {
 
     do {
         do {
-            std::cout << "Please enter the class name: ";
+            std::cout << "Please enter the class name of the course: ";
             getline(std::cin, course.className);
             classNameExist = checkClassExist(allClassName, course.className);
 
@@ -86,6 +89,7 @@ void inputCourse(Course &course, const Semester &semester) {
         }
 
         validDayOfWeek = checkValidDayOfWeek(course.dayOfWeek);
+
         if (!validDayOfWeek) {
             std::cout << "Invalid day of week, please try again!\n";
         }
@@ -97,6 +101,7 @@ void inputCourse(Course &course, const Semester &semester) {
                          "perfomed: ";
             course.sessionNumber = intInput();
             validSessionNumber = course.sessionNumber > 0 && course.sessionNumber <= 4;
+
             if (!validSessionNumber) {
                 std::cout << "Invalid session number, please try again!\n";
             }
@@ -129,6 +134,11 @@ void saveCourse(Course course) {
 }
 
 void createCourse(const Semester &semester) {
+    if (semester.schoolYearName == "") {
+        std::cout << "Please create a semester first!\n";
+        return;
+    }
+
     Course course;
     inputCourse(course, semester);
     saveCourse(course);

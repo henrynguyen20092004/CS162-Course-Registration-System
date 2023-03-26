@@ -1,5 +1,5 @@
-#ifndef CREATE_SEMESTER_H
-#define CREATE_SEMESTER_H
+#ifndef CREATE_COURSE_H
+#define CREATE_COURSE_H
 
 #include "../../Struct/Semester.h"
 

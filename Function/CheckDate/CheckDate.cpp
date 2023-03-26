@@ -64,3 +64,8 @@ bool checkLengthAndCharacters(const std::string &date) {
 bool checkDate(const std::string &date) {
     return checkLengthAndCharacters(date) && checkDayMonthYear(date);
 }
+
+bool checkValidDayOfWeek(const std::string &day) {
+    return day == "MON" || day == "TUE" || day == "WED" || day == "THU" || day == "FRI" ||
+           day == "SAT";
+}

@@ -6,6 +6,8 @@
 struct Semester {
     std::string schoolYearName, startDate, endDate;
     int number;
+
+    Semester() : schoolYearName("") {}
 };
 
 #endif
