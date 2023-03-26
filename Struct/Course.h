@@ -4,8 +4,8 @@
 #include <iostream>
 
 struct Course {
-    std::string id, name, className, teacherName, dayOfWeek;
-    int credits, maxStudent, sessionNumber;
+    std::string id, name, className, teacherName, dayOfWeek, schoolYearName;
+    int credits, maxStudent, sessionNumber, semesterNumber;
 };
 
 #endif
