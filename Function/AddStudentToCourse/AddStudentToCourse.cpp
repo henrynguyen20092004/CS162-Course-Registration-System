@@ -4,50 +4,43 @@
 #include "../Check/CheckClass/CheckClass.h"
 #include "../Check/CheckCourse/CheckCourse.h"
 #include "../Check/CheckStudentID/CheckStudentID.h"
-#include "../GetAlL/GetAllStudents/GetAllStudents.h"
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
+#include "../GetAll/GetAllStudents/GetAllStudents.h"
 
-bool checkCourseIDExist(Node<Course> *course, const std::string &courseID) {
-    while (course) {
-        if (course->data.id == courseID) {
-            return true;
-        }
-        course = course->next;
-    }
-    return false;
-}
-
-void inputStudent(Student_Course &studentCourse) {
-    Node<Student> *allStudent = getAllStudents();
-    bool checkStudentExist = false, checkClassNameExist = false, checkCourseExist = false;
+void inputStudent_Course(Student_Course &studentCourse) {
+    Node<Student> *allStudents = getAllStudents();
+    Node<std::string> *allClass = getAllClasses();
+    bool checkStudentExist = false, checkClassExist = false, checkCourseExist = false;
 
     do {
         std::cout << "Please enter student id: ";
         getline(std::cin, studentCourse.studentID);
-        checkStudentExist = checkStudentIDExists(allStudent, studentCourse.studentID);
+        checkStudentExist = checkStudentIDExists(allStudents, studentCourse.studentID);
         if (!checkStudentExist) {
-            std::cout << "This student does not exist. Please try again!\n";
+            std::cout << "This student does not exist, please try again!\n";
         }
     } while (!checkStudentExist);
-    deleteLinkedList(allStudent);
+    deleteLinkedList(allStudents);
 
-    Node<std::string> *allClassName = getAllClasses();
     do {
         std::cout << "Please enter class name that he/she are learning: ";
         getline(std::cin, studentCourse.className);
-        checkClassNameExist = checkClassExists(allClassName, studentCourse.className);
-        if (!checkClassNameExist) {
-            std::cout << "This class does not exist. Please try again!\n";
+
+        checkClassExist = checkClassExists(allClass, studentCourse.className);
+        if (!checkClassExist) {
+            std::cout << "This class does not exist, please try again!\n";
         }
-    } while (!checkClassNameExist);
-    deleteLinkedList(allClassName);
+    } while (!checkClassExists);
+    deleteLinkedList(allClass);
 
     Node<Course> *allCourses = getAllCourses();
     do {
         std::cout << "Please enter course id to add he/she into: ";
         getline(std::cin, studentCourse.courseID);
-        checkCourseExist = checkCourseIDExist(allCourses, studentCourse.courseID);
+        checkCourseExist = checkCourseExists(
+            allCourses, studentCourse.courseID, studentCourse.className
+        );
         if (!checkCourseExist) {
             std::cout << "This course does not exist. Please try again!\n";
         }
@@ -65,6 +58,6 @@ void saveStudentToCourse(Student_Course studentCourse) {
 
 void addStudentToCourse() {
     Student_Course studentCourse;
-    inputStudent(studentCourse);
+    inputStudent_Course(studentCourse);
     saveStudentToCourse(studentCourse);
 }
