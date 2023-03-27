@@ -4,6 +4,6 @@
 #include "../../../Struct/Semester.h"
 #include "../GetAll.h"
 
-Node<Semester> *getAllSemester();
+Node<Semester> *getAllSemesters();
 
 #endif

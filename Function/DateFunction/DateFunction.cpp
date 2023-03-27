@@ -1,4 +1,4 @@
-#include "CheckDate.h"
+#include "DateFunction.h"
 
 bool checkLeapYear(int year) {
     return year % 400 == 0 || ((year % 4 == 0) && (year % 100 != 0));
@@ -65,7 +65,19 @@ bool checkDate(const std::string &date) {
     return checkLengthAndCharacters(date) && checkDayMonthYear(date);
 }
 
-bool checkValidDayOfWeek(const std::string &day) {
+bool checkDayOfWeek(const std::string &day) {
     return day == "MON" || day == "TUE" || day == "WED" || day == "THU" || day == "FRI" ||
            day == "SAT";
+}
+
+bool compareDate(const std::string &firstDate, const std::string &secondDate) {
+    if (stoi(secondDate.substr(6)) != stoi(firstDate.substr(6))) {
+        return stoi(secondDate.substr(6)) > stoi(firstDate.substr(6));
+    }
+
+    if (stoi(secondDate.substr(3, 5)) != stoi(firstDate.substr(3, 5))) {
+        return stoi(secondDate.substr(3, 5)) > stoi(firstDate.substr(3, 5));
+    }
+
+    return stoi(secondDate.substr(0, 2)) > stoi(firstDate.substr(0, 2));
 }

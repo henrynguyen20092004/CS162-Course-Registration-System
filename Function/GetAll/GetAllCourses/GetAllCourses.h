@@ -4,6 +4,6 @@
 #include "../../../Struct/Course.h"
 #include "../GetAll.h"
 
-Node<Course> *getAllCourse();
+Node<Course> *getAllCourses();
 
 #endif

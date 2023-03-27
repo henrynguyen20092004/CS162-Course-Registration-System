@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "../../Struct/LinkedList.h"
+#include "../../../Struct/LinkedList.h"
 
 bool checkSchoolYearExists(
     Node<std::string> *allSchoolyear, const std::string &schoolYearName

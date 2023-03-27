@@ -1,26 +1,20 @@
 #include "CreateClass.h"
 
-#include "../CheckClass/CheckClass.h"
+#include "../Check/CheckClass/CheckClass.h"
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 
-std::string inputClassName(Node<std::string>*& allClassNames) {
-    std::string className;
-    bool classExists;
-
-    do {
-        std::cout << "Please enter the name of the class: ";
-        getline(std::cin, className);
-        classExists = checkClassExists(allClassNames, className);
-
-        if (classExists) {
-            std::cout << "This class already exists, please try again!\n";
-        }
-    } while (classExists);
-
-    return className;
+void validateClass(Node<std::string>* allClasses, const std::string& className) {
+    if (checkClassExists(allClasses, className)) {
+        throw std::invalid_argument("This class already exists, please try again!\n");
+    }
 }
 
-void saveClassName(const std::string& className) {
+void inputClass(std::string& className) {
+    std::cout << "Please enter the name of the class: ";
+    getline(std::cin, className);
+}
+
+void saveClass(const std::string& className) {
     std::ofstream fout;
     writeFile(fout, "Data/Class.txt", std::ios::app);
     fout << className << '\n';
@@ -30,7 +24,19 @@ void saveClassName(const std::string& className) {
 
 void createClass() {
     Node<std::string>* allClasses = getAllClasses();
-    std::string className = inputClassName(allClasses);
-    saveClassName(className);
+    std::string className;
+    bool validClass = false;
+
+    do {
+        try {
+            inputClass(className);
+            validateClass(allClasses, className);
+            validClass = true;
+        } catch (std::exception& error) {
+            std::cout << error.what();
+        }
+    } while (!validClass);
+
+    saveClass(className);
     deleteLinkedList(allClasses);
 }

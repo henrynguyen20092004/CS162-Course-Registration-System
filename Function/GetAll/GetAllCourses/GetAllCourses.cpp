@@ -3,6 +3,11 @@
 void readCourse(std::ifstream &fin, Course &course) {
     std::string tmpSemesterNumber, tmpCredits, tmpMaximumStudent, tmpSessionNumber;
     getline(fin, course.schoolYearName);
+
+    if (!fin.good()) {
+        return;
+    }
+
     getline(fin, tmpSemesterNumber);
     course.semesterNumber = stoi(tmpSemesterNumber);
     getline(fin, course.id);
@@ -18,6 +23,6 @@ void readCourse(std::ifstream &fin, Course &course) {
     course.sessionNumber = stoi(tmpSessionNumber);
 }
 
-Node<Course> *getAllCourse() {
+Node<Course> *getAllCourses() {
     return getAll("Data/Course.txt", &readCourse);
 }

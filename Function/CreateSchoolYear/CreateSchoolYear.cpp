@@ -1,32 +1,24 @@
 #include "CreateSchoolYear.h"
 
-#include "../CheckSchoolYear/CheckSchoolYear.h"
+#include "../Check/CheckSchoolYear/CheckSchoolYear.h"
 #include "../GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
 
-std::string inputSchoolYearName() {
-    bool validSchoolYear, schoolYearExists = true;
-    std::string schoolYearName;
-    Node<std::string> *allSchoolYears = getAllSchoolYears();
+void validateSchoolYear(
+    Node<std::string> *allSchoolYears, const std::string &schoolYearName
+) {
+    if (!checkValidSchoolYear(schoolYearName)) {
+        throw std::invalid_argument("Invalid school year, please try again!\n");
+    }
 
-    do {
-        std::cout << "Please enter the school year (yyyy-yyyy): ";
-        getline(std::cin, schoolYearName);
+    if (checkSchoolYearExists(allSchoolYears, schoolYearName)) {
+        throw std::invalid_argument("This school year already exists, please try again!\n"
+        );
+    }
+}
 
-        validSchoolYear = checkValidSchoolYear(schoolYearName);
-
-        if (!validSchoolYear) {
-            std::cout << "Invalid school year, please try again!\n";
-        } else {
-            schoolYearExists = checkSchoolYearExists(allSchoolYears, schoolYearName);
-
-            if (schoolYearExists) {
-                std::cout << "This school year already exists, please try again!\n";
-            }
-        }
-    } while (!validSchoolYear || schoolYearExists);
-
-    deleteLinkedList(allSchoolYears);
-    return schoolYearName;
+void inputSchoolYear(std::string &schoolYearName) {
+    std::cout << "Please enter the school year (yyyy-yyyy): ";
+    getline(std::cin, schoolYearName);
 }
 
 void saveSchoolYear(const std::string &schoolYearName) {
@@ -38,6 +30,20 @@ void saveSchoolYear(const std::string &schoolYearName) {
 }
 
 void createSchoolYear() {
-    std::string schoolYearName = inputSchoolYearName();
+    Node<std::string> *allSchoolYears = getAllSchoolYears();
+    std::string schoolYearName;
+    bool validSchoolYear = false;
+
+    do {
+        try {
+            inputSchoolYear(schoolYearName);
+            validateSchoolYear(allSchoolYears, schoolYearName);
+            validSchoolYear = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
+        }
+    } while (!validSchoolYear);
+
     saveSchoolYear(schoolYearName);
+    deleteLinkedList(allSchoolYears);
 }

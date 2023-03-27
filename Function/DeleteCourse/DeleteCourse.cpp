@@ -13,7 +13,7 @@ void inputCourseIDAndClassName(std::string &id, std::string &className) {
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
     Node<Student_Course> *tempStudent_Course,
-        *allStudent_Course = new Node<Student_Course>(getAllStudent_Course()),
+        *allStudent_Course = new Node<Student_Course>(getAllStudent_Courses()),
         *cur = allStudent_Course;
 
     while (cur->next) {
@@ -31,7 +31,7 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
 }
 
 void deleteCourse() {
-    Node<Course> *allCourses = new Node<Course>(getAllCourse()), *cur = allCourses,
+    Node<Course> *allCourses = new Node<Course>(getAllCourses()), *cur = allCourses,
                  *tmpCourse;
 
     if (!allCourses->next) {
