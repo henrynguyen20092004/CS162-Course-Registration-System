@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "../../Struct/LinkedList.h"
+#include "../GetAll.h"
 
 Node<std::string> *getAllSchoolYears();
 

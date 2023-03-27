@@ -1,8 +1,7 @@
 #include "DeleteCourse.h"
 
-#include "../GetAllCourses/GetAllCourses.h"
-#include "../GetAllStudents/GetAllStudents.h"
-#include "../OpenFile/OpenFile.h"
+#include "../GetAll/GetAllCourses/GetAllCourses.h"
+#include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../SaveCourse/SaveCourse.h"
 
 void inputCourseIDAndClassName(std::string &id, std::string &className) {
@@ -13,9 +12,9 @@ void inputCourseIDAndClassName(std::string &id, std::string &className) {
 }
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
-    Node<Student_Course> *allStudent_Course = new Node<Student_Course>,
-                         *cur = allStudent_Course, *tempStudent_Course;
-    allStudent_Course->next = getAllStudent_Course();
+    Node<Student_Course> *tempStudent_Course,
+        *allStudent_Course = new Node<Student_Course>(getAllStudent_Course()),
+        *cur = allStudent_Course;
 
     while (cur->next) {
         if (cur->next->data.courseID == id && cur->next->data.className == className) {
@@ -32,8 +31,8 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
 }
 
 void deleteCourse() {
-    Node<Course> *allCourses = new Node<Course>, *cur = allCourses, *tmpCourse;
-    allCourses->next = getAllCourse();
+    Node<Course> *allCourses = new Node<Course>(getAllCourse()), *cur = allCourses,
+                 *tmpCourse;
 
     if (!allCourses->next) {
         std::cout << "There is no course at the moment! Please try again later!\n";

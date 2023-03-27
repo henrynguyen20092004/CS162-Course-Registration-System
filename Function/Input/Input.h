@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+std::string passwordInput(const std::string &prompt);
 int intInput();
 double doubleInput();
 std::string nameInput();

@@ -4,10 +4,9 @@
 #include "../CheckCourse/CheckCourse.h"
 #include "../CheckDate/CheckDate.h"
 #include "../CreateSemester/CreateSemester.h"
-#include "../GetAllClasses/GetAllClasses.h"
-#include "../GetAllCourses/GetAllCourses.h"
+#include "../GetAll/GetAllClasses/GetAllClasses.h"
+#include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../Input/Input.h"
-#include "../OpenFile/OpenFile.h"
 
 void inputCourse(Course &course, const Semester &semester) {
     Node<std::string> *allClassName = getAllClasses();
@@ -131,6 +130,7 @@ void saveCourse(Course course) {
     fout << course.dayOfWeek << '\n';
     fout << course.sessionNumber << '\n';
     fout.close();
+    std::cout << "Course successfully added!\n";
 }
 
 void createCourse(const Semester &semester) {
