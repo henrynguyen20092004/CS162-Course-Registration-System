@@ -22,6 +22,6 @@ void readStudent_Course(std::ifstream &fin, Student_Course &student_course) {
     student_course.className = course_class.substr(course_class.find('-') + 1);
 }
 
-Node<Student_Course> *getAllStudent_Course() {
+Node<Student_Course> *getAllStudent_Courses() {
     return getAll("Data/Student_Course.txt", &readStudent_Course);
 }

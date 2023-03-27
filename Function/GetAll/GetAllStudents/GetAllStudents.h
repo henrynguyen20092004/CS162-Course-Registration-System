@@ -6,6 +6,6 @@
 #include "../GetAll.h"
 
 Node<Student> *getAllStudents();
-Node<Student_Course> *getAllStudent_Course();
+Node<Student_Course> *getAllStudent_Courses();
 
 #endif

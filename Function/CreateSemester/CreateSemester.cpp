@@ -1,49 +1,40 @@
 #include "CreateSemester.h"
 
-#include "../CheckDate/CheckDate.h"
-#include "../CheckSchoolYear/CheckSchoolYear.h"
+#include "../Check/CheckSchoolYear/CheckSchoolYear.h"
+#include "../Check/CheckSemester/CheckSemester.h"
+#include "../DateFunction/DateFunction.h"
 #include "../GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
 #include "../GetAll/GetAllSemesters/GetAllSemesters.h"
 #include "../Input/Input.h"
 
-bool compareDate(const std::string &firstDate, const std::string &secondDate) {
-    if (stoi(secondDate.substr(6)) != stoi(firstDate.substr(6))) {
-        return stoi(secondDate.substr(6)) > stoi(firstDate.substr(6));
-    }
-
-    if (stoi(secondDate.substr(3, 5)) != stoi(firstDate.substr(3, 5))) {
-        return stoi(secondDate.substr(3, 5)) > stoi(firstDate.substr(3, 5));
-    }
-
-    return stoi(secondDate.substr(0, 2)) > stoi(firstDate.substr(0, 2));
-}
-
-bool checkDateBeforeAddToList(Node<Semester> *allSemester, const Semester &semester) {
-    if (!allSemester) {
+bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &semester) {
+    if (!allSemesters) {
         return true;
     }
 
-    Node<Semester> *tmp = allSemester;
+    Node<Semester> *tmp = allSemesters;
 
-    while (allSemester) {
-        if (allSemester->data.schoolYearName == semester.schoolYearName) {
-            if (allSemester->data.number > semester.number) {
-                return compareDate(semester.endDate, allSemester->data.startDate);
+    while (allSemesters) {
+        if (allSemesters->data.schoolYearName == semester.schoolYearName) {
+            if (allSemesters->data.number > semester.number) {
+                return compareDate(semester.endDate, allSemesters->data.startDate);
             }
 
-            while (allSemester->next &&
-                   allSemester->next->data.schoolYearName == semester.schoolYearName &&
-                   allSemester->next->data.number < semester.number) {
-                allSemester = allSemester->next;
+            while (allSemesters->next &&
+                   allSemesters->next->data.schoolYearName == semester.schoolYearName &&
+                   allSemesters->next->data.number < semester.number) {
+                allSemesters = allSemesters->next;
             }
 
-            return compareDate(allSemester->data.endDate, semester.startDate) &&
-                   (allSemester->next
-                        ? compareDate(semester.endDate, allSemester->next->data.startDate)
+            return compareDate(allSemesters->data.endDate, semester.startDate) &&
+                   (allSemesters->next
+                        ? compareDate(
+                              semester.endDate, allSemesters->next->data.startDate
+                          )
                         : true);
         }
 
-        allSemester = allSemester->next;
+        allSemesters = allSemesters->next;
     }
 
     while (tmp->next && tmp->next->data.schoolYearName < semester.schoolYearName) {
@@ -55,15 +46,15 @@ bool checkDateBeforeAddToList(Node<Semester> *allSemester, const Semester &semes
                : compareDate(semester.endDate, tmp->data.startDate);
 }
 
-void addSemseterToList(Node<Semester> *&allSemester, const Semester &newSemester) {
+void addSemseterToList(Node<Semester> *&allSemesters, const Semester &newSemester) {
     Node<Semester> *newNode = new Node(newSemester);
 
-    if (!allSemester) {
-        allSemester = newNode;
+    if (!allSemesters) {
+        allSemesters = newNode;
         return;
     }
 
-    Node<Semester> *cur = allSemester, *prev = nullptr;
+    Node<Semester> *cur = allSemesters, *prev = nullptr;
 
     while (cur && cur->data.schoolYearName < newSemester.schoolYearName) {
         prev = cur;
@@ -77,139 +68,101 @@ void addSemseterToList(Node<Semester> *&allSemester, const Semester &newSemester
     }
 
     if (!prev) {
-        allSemester = newNode;
-        allSemester->next = cur;
+        allSemesters = newNode;
+        allSemesters->next = cur;
     } else {
         newNode->next = cur;
         prev->next = newNode;
     }
 }
 
-bool checkSemesterExists(
-    Node<Semester> *allSemester, const int &semesterNumber,
-    const std::string &schoolYearName
+void validateSemester(
+    Node<Semester> *allSemesters, Node<std::string> *allSchoolYears,
+    const Semester &semester
 ) {
-    while (allSemester) {
-        if (allSemester->data.number == semesterNumber &&
-            allSemester->data.schoolYearName == schoolYearName) {
-            return true;
-        }
-
-        allSemester = allSemester->next;
+    if (!checkValidSchoolYear(semester.schoolYearName)) {
+        throw std::invalid_argument("Invalid school year, please try again!\n");
     }
 
-    return false;
+    if (!checkSchoolYearExists(allSchoolYears, semester.schoolYearName)) {
+        throw std::invalid_argument("This school year doesn't exist, please try again!\n"
+        );
+    }
+
+    if (semester.number < 1 || semester.number > 3) {
+        throw std::invalid_argument("Invalid semester, please try again!\n");
+    }
+
+    if (checkSemesterExists(allSemesters, semester.number, semester.schoolYearName)) {
+        throw std::invalid_argument("This semester already exists, please try again!\n");
+    }
+
+    if (!checkDate(semester.startDate) ||
+        semester.startDate.substr(6) < semester.schoolYearName.substr(0, 4) ||
+        semester.startDate.substr(6) > semester.schoolYearName.substr(5)) {
+        throw std::invalid_argument("Invalid start date, please try again!\n");
+    }
+
+    if (!checkDate(semester.endDate) ||
+        semester.endDate.substr(6) < semester.schoolYearName.substr(0, 4) ||
+        semester.endDate.substr(6) > semester.schoolYearName.substr(5)) {
+        throw std::invalid_argument("Invalid end date, please try again!\n");
+    }
+
+    if (!checkDateBeforeAddToList(allSemesters, semester)) {
+        throw std::invalid_argument(
+            "Your start/end date can't overlap other semesters, please try again!\n"
+        );
+    }
 }
 
-Semester inputSemester(Node<Semester> *&allSemester) {
-    Semester semester;
-    bool validSchoolYear, schoolYearExists = true, checkStartDate, checkEndDate,
-                          validSemesterNumber = false, checkDateBeforeInsert;
-    int inputSemesterNumber;
-    allSemester = getAllSemester();
-    Node<std::string> *allSchoolYears = getAllSchoolYears();
-
-    do {
-        do {
-            std::cout << "Please enter the school year of this semester (yyyy-yyyy): ";
-            getline(std::cin, semester.schoolYearName);
-
-            validSchoolYear = checkValidSchoolYear(semester.schoolYearName);
-
-            if (!validSchoolYear) {
-                std::cout << "Invalid school year, please try again!\n";
-            } else {
-                schoolYearExists =
-                    checkSchoolYearExists(allSchoolYears, semester.schoolYearName);
-
-                if (!schoolYearExists) {
-                    std::cout << "This school year doesn't exist, please try again!\n";
-                }
-            }
-        } while (!validSchoolYear || !schoolYearExists);
-
-        do {
-            try {
-                std::cout << "Please choose the semester (1-3): ";
-                inputSemesterNumber = intInput();
-
-                validSemesterNumber = inputSemesterNumber > 0 && inputSemesterNumber <= 3;
-
-                if (validSemesterNumber) {
-                    semester.number = inputSemesterNumber;
-                } else {
-                    std::cout << "Invalid semester, please try again!\n";
-                }
-            } catch (std::exception &error) {
-                std::cout << error.what() << '\n';
-            }
-        } while (!validSemesterNumber);
-
-        if (checkSemesterExists(allSemester, semester.number, semester.schoolYearName)) {
-            std::cout << "This semester already exists, please try again!\n";
-            continue;
-        }
-
-        do {
-            std::cout << "Please enter the start date (dd/mm/yyyy) of this semester: ";
-            getline(std::cin, semester.startDate);
-            checkStartDate =
-                checkDate(semester.startDate) &&
-                (semester.startDate.substr(6) >= semester.schoolYearName.substr(0, 4) &&
-                 semester.startDate.substr(6) <= semester.schoolYearName.substr(5));
-
-            if (!checkStartDate) {
-                std::cout << "Invalid start date, please try again!\n";
-            }
-        } while (!checkStartDate);
-
-        do {
-            std::cout << "Please enter the end date (dd/mm/yyyy) of this semester: ";
-            getline(std::cin, semester.endDate);
-
-            checkEndDate =
-                checkDate(semester.endDate) &&
-                compareDate(semester.startDate, semester.endDate) &&
-                semester.endDate.substr(6) <= semester.schoolYearName.substr(5);
-
-            if (!checkEndDate) {
-                std::cout << "Invalid end date, please try again!\n";
-            }
-        } while (!checkEndDate);
-
-        checkDateBeforeInsert = checkDateBeforeAddToList(allSemester, semester);
-
-        if (!checkDateBeforeInsert) {
-            std::cout << "Your start/end date can't overlap other semesters, please try "
-                         "again!\n";
-        }
-    } while (!checkDateBeforeInsert);
-
-    deleteLinkedList(allSchoolYears);
-    return semester;
+void inputSemester(Semester &semester) {
+    std::cout << "Please enter the school year of this semester (yyyy-yyyy): ";
+    getline(std::cin, semester.schoolYearName);
+    std::cout << "Please choose the semester (1-3): ";
+    semester.number = intInput();
+    std::cout << "Please enter the start date (dd/mm/yyyy) of this semester: ";
+    getline(std::cin, semester.startDate);
+    std::cout << "Please enter the end date (dd/mm/yyyy) of this semester: ";
+    getline(std::cin, semester.endDate);
 }
 
-void saveSemester(Node<Semester> *allSemester) {
+void saveSemester(Node<Semester> *allSemesters) {
     std::ofstream fout;
     writeFile(fout, "Data/Semester.txt");
 
-    while (allSemester) {
-        fout << allSemester->data.schoolYearName << '\n';
-        fout << allSemester->data.number << '\n';
-        fout << allSemester->data.startDate << '\n';
-        fout << allSemester->data.endDate << '\n';
-        allSemester = allSemester->next;
+    while (allSemesters) {
+        fout << allSemesters->data.schoolYearName << '\n';
+        fout << allSemesters->data.number << '\n';
+        fout << allSemesters->data.startDate << '\n';
+        fout << allSemesters->data.endDate << '\n';
+        allSemesters = allSemesters->next;
     }
 
-    deleteLinkedList(allSemester);
+    deleteLinkedList(allSemesters);
     fout.close();
     std::cout << "Semester successfully added!\n";
 }
 
 Semester createSemester() {
-    Node<Semester> *allSemester = nullptr;
-    Semester semester = inputSemester(allSemester);
-    addSemseterToList(allSemester, semester);
-    saveSemester(allSemester);
+    Node<Semester> *allSemesters = getAllSemesters();
+    Node<std::string> *allSchoolYears = getAllSchoolYears();
+    Semester semester;
+    bool validSemester = false;
+
+    do {
+        try {
+            inputSemester(semester);
+            validateSemester(allSemesters, allSchoolYears, semester);
+            validSemester = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
+        }
+    } while (!validSemester);
+
+    addSemseterToList(allSemesters, semester);
+    saveSemester(allSemesters);
+    deleteLinkedList(allSemesters);
+    deleteLinkedList(allSchoolYears);
     return semester;
 }

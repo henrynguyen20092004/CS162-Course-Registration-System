@@ -1,96 +1,53 @@
 #include "CreateStudent.h"
 
-#include "../CheckClass/CheckClass.h"
-#include "../CheckDate/CheckDate.h"
-#include "../CheckStudentID/CheckStudentID.h"
+#include "../Check/CheckClass/CheckClass.h"
+#include "../Check/CheckStudentID/CheckStudentID.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"
+#include "../DateFunction/DateFunction.h"
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
 
-Student inputStudent() {
-    Student student;
-    bool studentExists, classExists, validFirstName, validLastName, validGender,
-        validDate;
-    Node<Student> *allStudents = getAllStudents();
-    Node<std::string> *allClasses = getAllClasses();
+void validateStudent(
+    Node<Student> *allStudents, Node<std::string> *allClasses, Student &student
+) {
+    if (checkStudentIDExists(allStudents, student.id)) {
+        throw std::invalid_argument("This student already exists, please try again!\n");
+    }
+
+    if (student.gender == "M" || student.gender == "m") {
+        student.gender = "M";
+    } else if (student.gender == "F" || student.gender == "f") {
+        student.gender = "F";
+    } else {
+        throw std::invalid_argument("Invalid gender, please try again!\n");
+    }
+
+    if (!checkDate(student.dateOfBirth)) {
+        throw std::invalid_argument("Invalid date of birth, please try again!\n");
+    }
+
+    if (!checkClassExists(allClasses, student.className)) {
+        throw std::invalid_argument("This class doesn't exists, please try again!\n");
+    }
+}
+
+void inputStudent(Student &student) {
     std::cout << "Please fill the information in every box\n";
-
-    do {
-        std::cout << "Student ID: ";
-        getline(std::cin, student.id);
-        studentExists = checkStudentIDExists(allStudents, student.id);
-
-        if (studentExists) {
-            std::cout << "This student already exists, please try again!\n";
-        }
-    } while (studentExists);
-
-    do {
-        try {
-            std::cout << "First name (only one word): ";
-            student.firstName = nameInput();
-            validFirstName = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-            validFirstName = false;
-        }
-    } while (!validFirstName);
-
-    do {
-        try {
-            std::cout << "Last name: ";
-            student.lastName = nameInput();
-            validLastName = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-            validLastName = false;
-        }
-    } while (!validLastName);
-
-    do {
-        std::cout << "Gender (M: Male, F: Female): ";
-        std::string gender;
-        getline(std::cin, gender);
-
-        if (gender == "M" || gender == "m") {
-            student.gender = "M";
-            validGender = true;
-        } else if (gender == "F" || gender == "f") {
-            student.gender = "F";
-            validGender = true;
-        } else {
-            std::cout << "Invalid gender, please enter F or M!\n";
-            validGender = false;
-        }
-    } while (!validGender);
-
-    do {
-        std::cout << "Date of birth (dd/mm/yyyy): ";
-        getline(std::cin, student.dateOfBirth);
-        validDate = checkDate(student.dateOfBirth);
-
-        if (!validDate) {
-            std::cout << "Invalid date of birth, please try again! \n";
-        }
-    } while (!validDate);
-
+    std::cout << "Student ID: ";
+    getline(std::cin, student.id);
+    std::cout << "First name (only one word): ";
+    student.firstName = nameInput();
+    std::cout << "Last name: ";
+    student.lastName = nameInput();
+    std::cout << "Gender (M: Male, F: Female): ";
+    getline(std::cin, student.gender);
+    std::cout << "Date of birth (dd/mm/yyyy): ";
+    getline(std::cin, student.dateOfBirth);
     std::cout << "Social ID: ";
     getline(std::cin, student.socialID);
-
-    do {
-        std::cout << "Class name: ";
-        getline(std::cin, student.className);
-        classExists = checkClassExists(allClasses, student.className);
-
-        if (!classExists) {
-            std::cout << "This class doesn't exists, please try again!\n";
-        }
-    } while (!classExists);
-
-    deleteLinkedList(allStudents);
-    deleteLinkedList(allClasses);
-    return student;
+    std::cout << "Class name: ";
+    getline(std::cin, student.className);
 }
 
 void saveStudent(const Student &student) {
@@ -108,7 +65,23 @@ void saveStudent(const Student &student) {
 }
 
 void createStudent() {
-    Student student = inputStudent();
+    Node<Student> *allStudents = getAllStudents();
+    Node<std::string> *allClasses = getAllClasses();
+    Student student;
+    bool validStudent = false;
+
+    do {
+        try {
+            inputStudent(student);
+            validateStudent(allStudents, allClasses, student);
+            validStudent = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
+        }
+    } while (!validStudent);
+
     saveStudent(student);
     createStudentAccount(student);
+    deleteLinkedList(allStudents);
+    deleteLinkedList(allClasses);
 }

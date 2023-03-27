@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "../../Struct/LinkedList.h"
+#include "../../../Struct/LinkedList.h"
 
 bool checkClassExists(Node<std::string> *allClassName, const std::string &className);
 
