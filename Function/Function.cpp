@@ -40,7 +40,7 @@ void displayStudentCommand() {
 void processUserCommand(int commandNumber, User &currentUser) {
     switch (commandNumber) {
         case 1: {
-            // View profile info function
+            viewProfileInfo(currentUser);
             break;
         }
 

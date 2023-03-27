@@ -12,6 +12,7 @@
 #include "LogOut/LogOut.h"
 #include "ViewClasses/ViewClasses.h"
 #include "ViewCourses/ViewCourses.h"
+#include "ViewProfileInfo/ViewProfileInfo.h"
 
 void menu();
 
