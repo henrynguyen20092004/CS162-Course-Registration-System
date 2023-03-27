@@ -1,8 +1,7 @@
 #include "ChangePassword.h"
 
-#include "../GetAllUsers/GetAllUsers.h"
-#include "../InputPassword/InputPassword.h"
-#include "../OpenFile/OpenFile.h"
+#include "../GetAll/GetAllUsers/GetAllUsers.h"
+#include "../Input/Input.h"
 
 void updateUser(Node<User> *allUsers, const User &newUser) {
     for (; allUsers; allUsers = allUsers->next) {
@@ -28,15 +27,15 @@ void changePassword(User &currentUser) {
     Node<User> *allUsers = getAllUsers();
 
     do {
-        oldPassword = inputPassword("Please enter your old password: ");
+        oldPassword = passwordInput("Please enter your old password: ");
         if (oldPassword != currentUser.password) {
             std::cout << "Wrong password, please enter again!\n";
         }
     } while (oldPassword != currentUser.password);
 
     do {
-        newPassword = inputPassword("Please enter your new password: ");
-        confirmNewPassword = inputPassword("Please confirm your new password: ");
+        newPassword = passwordInput("Please enter your new password: ");
+        confirmNewPassword = passwordInput("Please confirm your new password: ");
         if (newPassword != confirmNewPassword) {
             std::cout << "Password mismatch, please enter again!\n";
         }

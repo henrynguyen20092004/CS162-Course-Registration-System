@@ -14,7 +14,7 @@ void viewClasses() {
     while (fin.good()) {
         getline(fin, className);
 
-        if (className != "") {
+        if (fin.good()) {
             std::cout << className << '\n';
         }
     }

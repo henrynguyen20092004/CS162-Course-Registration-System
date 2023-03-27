@@ -1,7 +1,7 @@
 #include "CreateSchoolYear.h"
 
 #include "../CheckSchoolYear/CheckSchoolYear.h"
-#include "../OpenFile/OpenFile.h"
+#include "../GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
 
 std::string inputSchoolYearName() {
     bool validSchoolYear, schoolYearExists = true;
@@ -34,6 +34,7 @@ void saveSchoolYear(const std::string &schoolYearName) {
     writeFile(fout, "Data/SchoolYear.txt", std::ios::app);
     fout << schoolYearName << '\n';
     fout.close();
+    std::cout << "School year successfully added!\n";
 }
 
 void createSchoolYear() {

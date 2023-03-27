@@ -1,6 +1,6 @@
 #include "GetAllStudentsInCourse.h"
 
-#include "../OpenFile/OpenFile.h"
+#include "../../OpenFile/OpenFile.h"
 
 Node<Student_Course> *getAllStudentsInCourse(const Course &course) {
     std::ifstream fin;
@@ -13,12 +13,11 @@ Node<Student_Course> *getAllStudentsInCourse(const Course &course) {
     while (fin.good()) {
         getline(fin, student_course.studentID);
 
-        if (student_course.studentID == "") {
+        if (!fin.good()) {
             break;
         }
 
         getline(fin, student_course.courseID);
-
         getline(fin, course_class);
         student_course.courseID = course_class.substr(0, course_class.find('-'));
         student_course.className = course_class.substr(course_class.find('-') + 1);

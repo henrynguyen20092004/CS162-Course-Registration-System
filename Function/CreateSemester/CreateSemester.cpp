@@ -2,8 +2,9 @@
 
 #include "../CheckDate/CheckDate.h"
 #include "../CheckSchoolYear/CheckSchoolYear.h"
+#include "../GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
+#include "../GetAll/GetAllSemesters/GetAllSemesters.h"
 #include "../Input/Input.h"
-#include "../OpenFile/OpenFile.h"
 
 bool compareDate(const std::string &firstDate, const std::string &secondDate) {
     if (stoi(secondDate.substr(6)) != stoi(firstDate.substr(6))) {
@@ -15,39 +16,6 @@ bool compareDate(const std::string &firstDate, const std::string &secondDate) {
     }
 
     return stoi(secondDate.substr(0, 2)) > stoi(firstDate.substr(0, 2));
-}
-
-Node<Semester> *getAllSemester() {
-    Semester semester;
-    std::ifstream fin;
-    readFile(fin, "Data/Semester.txt");
-    std::string semesterNumber;
-    Node<Semester> *allSemester = nullptr, *cur = nullptr;
-
-    while (fin.good()) {
-        getline(fin, semester.schoolYearName);
-
-        if (semester.schoolYearName == "") {
-            break;
-        }
-
-        getline(fin, semesterNumber);
-        semester.number = stoi(semesterNumber);
-        getline(fin, semester.startDate);
-        getline(fin, semester.endDate);
-        Node<Semester> *tmp = new Node(semester);
-
-        if (!allSemester) {
-            allSemester = tmp;
-            cur = allSemester;
-        } else {
-            cur->next = tmp;
-            cur = cur->next;
-        }
-    }
-
-    fin.close();
-    return allSemester;
 }
 
 bool checkDateBeforeAddToList(Node<Semester> *allSemester, const Semester &semester) {
@@ -235,6 +203,7 @@ void saveSemester(Node<Semester> *allSemester) {
 
     deleteLinkedList(allSemester);
     fout.close();
+    std::cout << "Semester successfully added!\n";
 }
 
 Semester createSemester() {

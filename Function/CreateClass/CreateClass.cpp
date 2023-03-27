@@ -1,8 +1,7 @@
 #include "CreateClass.h"
 
 #include "../CheckClass/CheckClass.h"
-#include "../GetAllClasses/GetAllClasses.h"
-#include "../OpenFile/OpenFile.h"
+#include "../GetAll/GetAllClasses/GetAllClasses.h"
 
 std::string inputClassName(Node<std::string>*& allClassNames) {
     std::string className;
@@ -25,8 +24,8 @@ void saveClassName(const std::string& className) {
     std::ofstream fout;
     writeFile(fout, "Data/Class.txt", std::ios::app);
     fout << className << '\n';
-    std::cout << "Added the class " << className << " successfully!\n";
     fout.close();
+    std::cout << "Class successfully added!\n";
 }
 
 void createClass() {

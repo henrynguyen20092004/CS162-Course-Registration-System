@@ -4,10 +4,9 @@
 #include "../CheckDate/CheckDate.h"
 #include "../CheckStudentID/CheckStudentID.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"
-#include "../GetAllClasses/GetAllClasses.h"
-#include "../GetAllStudents/GetAllStudents.h"
+#include "../GetAll/GetAllClasses/GetAllClasses.h"
+#include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
-#include "../OpenFile/OpenFile.h"
 
 Student inputStudent() {
     Student student;

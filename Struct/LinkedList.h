@@ -8,6 +8,7 @@ struct Node {
 
     Node() : next(nullptr) {}
     Node(const T &data) : data(data), next(nullptr) {}
+    Node(Node *next) : next(next) {}
     Node(const T &data, Node *next) : data(data), next(next) {}
 };
 

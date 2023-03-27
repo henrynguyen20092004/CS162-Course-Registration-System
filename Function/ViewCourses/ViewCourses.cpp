@@ -10,11 +10,14 @@ void viewCourses() {
     std::string semesterNumber, credits, maxStudentNumber, sessionNumber;
     std::cout << "This is the list of all courses: " << '\n';
     int index = 1;
+
     while (fin.good()) {
         getline(fin, course.schoolYearName);
-        if (course.schoolYearName == "") {
+
+        if (!fin.good()) {
             break;
         }
+
         getline(fin, semesterNumber);
         getline(fin, course.id);
         getline(fin, course.name);
@@ -38,5 +41,6 @@ void viewCourses() {
         std::cout << "The session that the course is performed: Session " << sessionNumber
                   << "\n\n";
     }
+
     fin.close();
 }
