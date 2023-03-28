@@ -17,7 +17,6 @@ Node<Student_Course> *getAllStudentsInCourse(const Course &course) {
             break;
         }
 
-        getline(fin, student_course.courseID);
         getline(fin, course_class);
         student_course.courseID = course_class.substr(0, course_class.find('-'));
         student_course.className = course_class.substr(course_class.find('-') + 1);
