@@ -1,6 +1,5 @@
 #include "RemoveStudentFromCourse.h"
 
-#include "../../Struct/Student_Course.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../SaveCourse/SaveCourse.h"
 
@@ -14,34 +13,28 @@ void inputStudent_Course(Student_Course &studentCourse) {
 }
 
 void removeStudent(const Student_Course &studentCourse, bool &studentExist) {
-    Node<Student_Course> *allStudentInCourse = getAllStudent_Courses();
-    Node<Student_Course> *cur = allStudentInCourse, *prev = nullptr;
+    Node<Student_Course> *allStudentInCourse =
+                             new Node<Student_Course>(getAllStudent_Courses()),
+                         *cur = allStudentInCourse;
 
-    while (cur) {
-        if (cur->data.courseID == studentCourse.courseID &&
-            cur->data.studentID == studentCourse.studentID &&
-            cur->data.className == studentCourse.className) {
-            Node<Student_Course> *tmpStudentCourse = cur;
-
-            if (!prev) {
-                allStudentInCourse = cur->next;
-            } else {
-                prev->next = cur->next;
-            }
-            std::cout << "Removing student successfully!\n";
+    while (cur->next) {
+        if (cur->next->data.courseID == studentCourse.courseID &&
+            cur->next->data.studentID == studentCourse.studentID &&
+            cur->next->data.className == studentCourse.className) {
+            Node<Student_Course> *tmpStudentCourse = cur->next;
+            cur->next = cur->next->next;
             studentExist = true;
             delete tmpStudentCourse;
             break;
         }
-        prev = cur;
         cur = cur->next;
     }
 
-    saveAllStudent_Course(allStudentInCourse);
+    saveAllStudent_Course(allStudentInCourse->next);
     deleteLinkedList(allStudentInCourse);
 }
 
-void removeAStudentInCourse() {
+void removeStudentFromCourse() {
     Student_Course studentCourse;
     bool studentExist = false;
 
