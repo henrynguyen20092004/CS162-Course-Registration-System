@@ -120,7 +120,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 17: {
-            // View students in a class function
+            viewStudentsInClass();
             break;
         }
 
