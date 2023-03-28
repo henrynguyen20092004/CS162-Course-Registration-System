@@ -1,6 +1,7 @@
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
+#include "AddStudentToCourse/AddStudentToCourse.h"
 #include "ChangePassword/ChangePassword.h"
 #include "CreateClass/CreateClass.h"
 #include "CreateCourse/CreateCourse.h"
