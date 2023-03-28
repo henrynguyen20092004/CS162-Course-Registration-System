@@ -2,7 +2,6 @@
 
 int main() {
     menu();
-    addStudentToCourse();
     system("pause");
     return 0;
 }
