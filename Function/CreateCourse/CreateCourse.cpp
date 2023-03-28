@@ -55,7 +55,7 @@ void inputCourse(Course &course) {
                  "(MON/TUE/WED/THU/FRI/SAT): ";
     getline(std::cin, course.dayOfWeek);
     std::cout << "Please choose the session number that the course will be perfomed: ";
-    course.semesterNumber = intInput();
+    course.sessionNumber = intInput();
 }
 
 void saveCourse(const Course &course) {

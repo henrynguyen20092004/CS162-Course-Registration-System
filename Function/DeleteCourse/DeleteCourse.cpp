@@ -30,7 +30,7 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
 }
 
 void deleteCourse() {
-    Node<Course> *allCourses = new Node(getAllCourses()), *cur = allCourses, *tmpCourse;
+    Node<Course> *allCourses = new Node(getAllCourses()), *cur = nullptr, *tmpCourse;
 
     if (!allCourses->next) {
         std::cout << "There is no course at the moment! Please try again later!\n";
@@ -43,6 +43,7 @@ void deleteCourse() {
 
     do {
         inputCourseIDAndClassName(id, className);
+        cur = allCourses;
 
         while (cur->next) {
             if (id == cur->next->data.id && className == cur->next->data.className) {

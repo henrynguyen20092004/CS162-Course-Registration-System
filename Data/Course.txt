@@ -1,22 +1,22 @@
 2022-2023
 2
 PH211
-General Physics I
+GPI
 22TT2
 Nguyen Huu Nha
-4
-50
-MON
-2
+5
+60
+THU
+1
 2022-2023
 2
 PH212
-General Physics II
+GP II
 22TT2
 Nguyen Huu Nha
-4
-50
-MON
+3
+60
+FRI
 2
 2022-2023
 2
