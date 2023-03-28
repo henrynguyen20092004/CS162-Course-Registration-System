@@ -1,7 +1,7 @@
 #include "GetAllStudentsInClass.h"
 
-#include "../GetAllStudents/GetAllStudents.h"
 #include "../../OpenFile/OpenFile.h"
+#include "../GetAllStudents/GetAllStudents.h"
 
 Node<Student> *getAllStudentsInClass(const std::string &className) {
     Node<Student> *allStudents = getAllStudents(), *cur = allStudents,
@@ -9,13 +9,15 @@ Node<Student> *getAllStudentsInClass(const std::string &className) {
 
     while (cur) {
         if (className == cur->data.className) {
+            Node<Student> *newNode = new Node(cur->data);
+
             if (!allClassStudents) {
-                allClassStudents = new Node<Student>(cur->data);
-                cur2 = allClassStudents;
+                allClassStudents = newNode;
             } else {
-                cur2->next = new Node<Student>(cur->data);
-                cur2 = cur2->next;
+                cur2->next = newNode;
             }
+
+            cur2 = newNode;
         }
 
         cur = cur->next;
