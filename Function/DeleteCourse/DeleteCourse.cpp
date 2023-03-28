@@ -13,17 +13,16 @@ void inputCourseIDAndClassName(std::string &id, std::string &className) {
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
     Node<Student_Course> *tempStudent_Course,
-        *allStudent_Course = new Node<Student_Course>(getAllStudent_Courses()),
-        *cur = allStudent_Course;
+        *allStudent_Course = new Node(getAllStudent_Courses()), *cur = allStudent_Course;
 
     while (cur->next) {
         if (cur->next->data.courseID == id && cur->next->data.className == className) {
             tempStudent_Course = cur->next;
             cur->next = cur->next->next;
             delete tempStudent_Course;
-        } else {
-            cur = cur->next;
         }
+
+        cur = cur->next;
     }
 
     saveAllStudent_Course(allStudent_Course->next);
@@ -31,8 +30,7 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
 }
 
 void deleteCourse() {
-    Node<Course> *allCourses = new Node<Course>(getAllCourses()), *cur = allCourses,
-                 *tmpCourse;
+    Node<Course> *allCourses = new Node(getAllCourses()), *cur = allCourses, *tmpCourse;
 
     if (!allCourses->next) {
         std::cout << "There is no course at the moment! Please try again later!\n";
@@ -57,9 +55,9 @@ void deleteCourse() {
                 std::cout << "Course successfully deleted!\n";
                 stopFlag = true;
                 break;
-            } else {
-                cur = cur->next;
             }
+
+            cur = cur->next;
         }
 
         if (!stopFlag) {

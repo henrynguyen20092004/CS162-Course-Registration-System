@@ -6,7 +6,7 @@ Node<Student_Course> *getAllStudentsInCourse(const Course &course) {
     std::ifstream fin;
     readFile(fin, "Data/Student_Course.txt");
 
-    Node<Student_Course> *allStudentsInCourse = nullptr, *cur = nullptr, *tmp;
+    Node<Student_Course> *allStudentsInCourse = nullptr, *cur = nullptr;
     Student_Course student_course;
     std::string course_class;
 
@@ -22,16 +22,16 @@ Node<Student_Course> *getAllStudentsInCourse(const Course &course) {
         student_course.courseID = course_class.substr(0, course_class.find('-'));
         student_course.className = course_class.substr(course_class.find('-') + 1);
 
-        tmp = new Node<Student_Course>(student_course);
+        Node<Student_Course> *newNode = new Node(student_course);
 
         if (course.id == student_course.courseID) {
             if (!allStudentsInCourse) {
-                allStudentsInCourse = tmp;
-                cur = allStudentsInCourse;
+                allStudentsInCourse = newNode;
             } else {
-                cur->next = tmp;
-                cur = cur->next;
+                cur->next = newNode;
             }
+
+            cur = newNode;
         }
     }
 

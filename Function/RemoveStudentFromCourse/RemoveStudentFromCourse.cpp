@@ -1,21 +1,16 @@
 #include "RemoveStudentFromCourse.h"
 
+#include "../GetAll/GetAllClasses/GetAllClasses.h"
+#include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
+#include "../InputStudentCourse/InputStudentCourse.h"
 #include "../SaveCourse/SaveCourse.h"
+#include "../ValidateStudentCourse/ValidateStudentCourse.h"
 
-void inputStudent_Course(Student_Course &studentCourse) {
-    std::cout << "Please enter the student's id: ";
-    getline(std::cin, studentCourse.studentID);
-    std::cout << "Please enter the id of the student's course: ";
-    getline(std::cin, studentCourse.courseID);
-    std::cout << "Please enter the class name of this course: ";
-    getline(std::cin, studentCourse.className);
-}
-
-void removeStudent(const Student_Course &studentCourse, bool &studentExist) {
-    Node<Student_Course> *allStudentInCourse =
-                             new Node<Student_Course>(getAllStudent_Courses()),
-                         *cur = allStudentInCourse;
+void removeStudent(
+    Node<Student_Course> *allStudent_Courses, const Student_Course &studentCourse
+) {
+    Node<Student_Course> *cur = allStudent_Courses;
 
     while (cur->next) {
         if (cur->next->data.courseID == studentCourse.courseID &&
@@ -23,26 +18,38 @@ void removeStudent(const Student_Course &studentCourse, bool &studentExist) {
             cur->next->data.className == studentCourse.className) {
             Node<Student_Course> *tmpStudentCourse = cur->next;
             cur->next = cur->next->next;
-            studentExist = true;
             delete tmpStudentCourse;
-            break;
+            saveAllStudent_Course(allStudent_Courses->next);
+            return;
         }
+
         cur = cur->next;
     }
 
-    saveAllStudent_Course(allStudentInCourse->next);
-    deleteLinkedList(allStudentInCourse);
+    throw std::invalid_argument("This student is not in the course, please try again!\n");
 }
 
 void removeStudentFromCourse() {
+    Node<Student_Course> *allStudent_Courses = new Node(getAllStudent_Courses());
+    Node<Student> *allStudents = getAllStudents();
+    Node<std::string> *allClasses = getAllClasses();
+    Node<Course> *allCourses = getAllCourses();
     Student_Course studentCourse;
     bool studentExist = false;
 
     do {
-        inputStudent_Course(studentCourse);
-        removeStudent(studentCourse, studentExist);
-        if (!studentExist) {
-            std::cout << "Removing student failed, please try again!\n";
+        try {
+            inputStudent_Course(studentCourse);
+            validateStudent_Course(allStudents, allClasses, allCourses, studentCourse);
+            removeStudent(allStudent_Courses, studentCourse);
+            studentExist = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
         }
     } while (!studentExist);
+
+    deleteLinkedList(allStudent_Courses);
+    deleteLinkedList(allStudents);
+    deleteLinkedList(allClasses);
+    deleteLinkedList(allCourses);
 }
