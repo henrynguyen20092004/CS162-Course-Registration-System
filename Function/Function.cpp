@@ -104,7 +104,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 14: {
-            // Remove a student from the course function
+            removeAStudentInCourse();
             break;
         }
 
