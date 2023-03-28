@@ -8,7 +8,7 @@ Node<Student_Course> *getAllStudentsInCourse(const Course &course) {
 
     Node<Student_Course> *allStudentsInCourse = nullptr, *cur = nullptr;
     Student_Course student_course;
-    std::string course_class;
+    std::string tmpStudent_Course;
 
     while (fin.good()) {
         getline(fin, student_course.studentID);
@@ -18,9 +18,12 @@ Node<Student_Course> *getAllStudentsInCourse(const Course &course) {
         }
 
         getline(fin, student_course.courseID);
-        getline(fin, course_class);
-        student_course.courseID = course_class.substr(0, course_class.find('-'));
-        student_course.className = course_class.substr(course_class.find('-') + 1);
+        tmpStudent_Course = student_course.courseID;
+
+        student_course.courseID =
+            tmpStudent_Course.substr(0, tmpStudent_Course.find('-'));
+        student_course.className =
+            tmpStudent_Course.substr(tmpStudent_Course.find('-') + 1);
 
         Node<Student_Course> *newNode = new Node(student_course);
 

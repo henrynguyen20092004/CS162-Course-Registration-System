@@ -11,7 +11,7 @@ void viewStudent(const Course& course) {
         for (Node<Student>* tmpAllStudent = allStudent; tmpAllStudent;
              tmpAllStudent = tmpAllStudent->next) {
             if (cur->data.studentID == tmpAllStudent->data.id) {
-                std::cout << "This is the student id: " << tmpAllStudent->data.id << '\n';
+                std::cout << "The student id: " << tmpAllStudent->data.id << '\n';
                 std::cout << "First name: " << tmpAllStudent->data.firstName << '\n';
                 std::cout << "Last name: " << tmpAllStudent->data.lastName << '\n';
                 std::cout << "Gender: " << tmpAllStudent->data.gender << '\n';
@@ -27,7 +27,7 @@ void viewStudent(const Course& course) {
     deleteLinkedList(allStudent);
 }
 
-void inputViewCourse(Course& course) {
+void inputACourse(Course& course) {
     std::cout << "Please enter the id of course: ";
     getline(std::cin, course.id);
     std::cout << "Please enter the class name of course: ";
@@ -36,6 +36,6 @@ void inputViewCourse(Course& course) {
 
 void viewStudentInCourse() {
     Course course;
-    inputViewCourse(course);
+    inputACourse(course);
     viewStudent(course);
 }
