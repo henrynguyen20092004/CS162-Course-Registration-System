@@ -2,14 +2,8 @@
 
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
+#include "../InputCourse/InputCourse.h"
 #include "../SaveCourse/SaveCourse.h"
-
-void inputCourseIDAndClassName(std::string &id, std::string &className) {
-    std::cout << "Please enter the course's id: ";
-    getline(std::cin, id);
-    std::cout << "Please the course's class: ";
-    getline(std::cin, className);
-}
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
     Node<Student_Course> *tempStudent_Course,
@@ -30,7 +24,7 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
 }
 
 void deleteCourse() {
-    Node<Course> *allCourses = new Node(getAllCourses()), *cur = nullptr, *tmpCourse;
+    Node<Course> *allCourses = new Node(getAllCourses()), *cur, *tmpCourse;
 
     if (!allCourses->next) {
         std::cout << "There is no course at the moment! Please try again later!\n";
@@ -38,16 +32,17 @@ void deleteCourse() {
         return;
     }
 
-    std::string id, className;
+    Course course;
     bool stopFlag = false;
 
     do {
-        inputCourseIDAndClassName(id, className);
+        inputCourseIDAndClassName(course);
         cur = allCourses;
 
         while (cur->next) {
-            if (id == cur->next->data.id && className == cur->next->data.className) {
-                deleteAllStudentsInCourse(id, className);
+            if (course.id == cur->next->data.id &&
+                course.className == cur->next->data.className) {
+                deleteAllStudentsInCourse(course.id, course.className);
 
                 tmpCourse = cur->next;
                 cur->next = cur->next->next;

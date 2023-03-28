@@ -34,6 +34,8 @@ void addStudentToCourse() {
         }
     } while (!validStudent_Course);
 
+    std::cout << "Student added successfully!\n";
+
     saveStudentToCourse(studentCourse);
     deleteLinkedList(allStudents);
     deleteLinkedList(allClasses);

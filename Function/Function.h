@@ -12,7 +12,7 @@
 #include "LogIn/LogIn.h"
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"
-#include "UpdateCourseInformation/UpdateCourseInformation.h"
+#include "UpdateCourse/UpdateCourse.h"
 #include "ViewClasses/ViewClasses.h"
 #include "ViewCourses/ViewCourses.h"
 #include "ViewProfileInfo/ViewProfileInfo.h"
