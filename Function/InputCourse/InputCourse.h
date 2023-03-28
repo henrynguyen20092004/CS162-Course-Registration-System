@@ -1,5 +1,5 @@
-#ifndef INPUT_COURSE_ID_AND_CLASS_NAME_H
-#define INPUT_COURSE_ID_AND_CLASS_NAME_H
+#ifndef INPUT_COURSE_H
+#define INPUT_COURSE_H
 
 #include <iostream>
 

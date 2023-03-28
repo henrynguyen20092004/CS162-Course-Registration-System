@@ -1,8 +1,10 @@
 #include "ValidateCourse.h"
 
+#include "../Check/CheckClass/CheckClass.h"
+#include "../Check/CheckCourse/CheckCourse.h"
 #include "../DateFunction/DateFunction.h"
 
-void validateCourseAndClass(
+void validateCourseIDAndClass(
     Node<Course> *allCourses, Node<std::string> *allClasses, const Course &course
 ) {
     if (!checkClassExists(allClasses, course.className)) {

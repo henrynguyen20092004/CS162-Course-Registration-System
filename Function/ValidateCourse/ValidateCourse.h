@@ -1,10 +1,10 @@
-#ifndef VALIDATE_COURSE_AND_CLASS_H
-#define VALIDATE_COURSE_AND_CLASS_H
+#ifndef VALIDATE_COURSE_H
+#define VALIDATE_COURSE_H
 
-#include "../Check/CheckClass/CheckClass.h"
-#include "../Check/CheckCourse/CheckCourse.h"
+#include "../../Struct/Course.h"
+#include "../../Struct/LinkedList.h"
 
-void validateCourseAndClass(
+void validateCourseIDAndClass(
     Node<Course> *allCourses, Node<std::string> *allClasses, const Course &course
 );
 void validateOtherInformation(const Course &course);

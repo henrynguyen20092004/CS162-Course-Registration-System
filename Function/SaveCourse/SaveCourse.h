@@ -1,5 +1,5 @@
-#ifndef SAVE_FUNCTION_H
-#define SAVE_FUNCTION_H
+#ifndef SAVE_COURSE_H
+#define SAVE_COURSE_H
 
 #include "../../Struct/Course.h"
 #include "../../Struct/LinkedList.h"

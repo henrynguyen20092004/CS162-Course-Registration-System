@@ -13,7 +13,7 @@
 void validateCourse(
     Node<Course> *allCourses, Node<std::string> *allClasses, const Course &course
 ) {
-    validateCourseAndClass(allCourses, allClasses, course);
+    validateCourseIDAndClass(allCourses, allClasses, course);
     validateOtherInformation(course);
 }
 
@@ -48,7 +48,6 @@ void createCourse(const Semester &semester) {
     Node<std::string> *allClasses = getAllClasses();
     Course course;
     bool validCourse = false;
-
     course.schoolYearName = semester.schoolYearName;
     course.semesterNumber = semester.number;
 

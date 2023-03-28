@@ -1,15 +1,15 @@
 #include "UpdateCourse.h"
 
-#include "../DateFunction/DateFunction.h"
+#include "../Check/CheckCourse/CheckCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../InputCourse/InputCourse.h"
 #include "../SaveCourse/SaveCourse.h"
-#include "../UpdateCourse/UpdateCourse.h"
 #include "../ValidateCourse/ValidateCourse.h"
 #include "../ViewCourses/ViewCourses.h"
 
 void inputChanges(Course &course) {
     bool validCourse = false;
+
     do {
         try {
             inputOtherInformation(course);
@@ -22,42 +22,39 @@ void inputChanges(Course &course) {
 }
 
 void updateCourse() {
-    Node<Course> *allCourses = getAllCourses(), *cur;
+    Node<Course> *allCourses = getAllCourses(), *cur = allCourses;
 
     if (!allCourses) {
         std::cout << "There is no course at the moment! Please try again later!\n";
         return;
     }
 
-    bool stopFlag = false;
+    bool courseExists = false;
     Course course;
-    std::string id, className;
 
     do {
         inputCourseIDAndClassName(course);
-        cur = allCourses;
+        courseExists = checkCourseExists(allCourses, course.id, course.className);
 
-        while (cur) {
-            if (course.id == cur->data.id && course.className == cur->data.className) {
-                std::cout << "\nCourse found! This is the current information of this "
-                             "course:\n\n";
-                viewACourse(cur->data);
+        if (!courseExists) {
+            std::cout << "This course does not exist. Please try again!\n";
+        }
+    } while (!courseExists);
 
-                std::cout << "Please enter new information for this course:\n";
-                inputChanges(cur->data);
+    while (cur) {
+        if (course.id == cur->data.id && course.className == cur->data.className) {
+            std::cout << "\nThis is the current information of this course:\n";
+            viewACourse(cur->data);
 
-                std::cout << "Course successfully updated!\n";
-                stopFlag = true;
-                break;
-            } else {
-                cur = cur->next;
-            }
+            std::cout << "Please enter new information for this course:\n";
+            inputChanges(cur->data);
+
+            std::cout << "Course successfully updated!\n";
+            break;
         }
 
-        if (!stopFlag) {
-            std::cout << "No such course found! Please try again!\n";
-        }
-    } while (!stopFlag);
+        cur = cur->next;
+    }
 
     saveAllCourses(allCourses);
     deleteLinkedList(allCourses);

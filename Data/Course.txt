@@ -71,10 +71,10 @@ MON
 2025-2026
 1
 MTH251
-Math
+MATH
 22TT2
-Nguyen Le Hoang Anh
+Nlha
 4
-70
-TUE
-1
+80
+MON
+4
