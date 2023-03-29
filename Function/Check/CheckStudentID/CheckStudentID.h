@@ -4,6 +4,6 @@
 #include "../../../Struct/LinkedList.h"
 #include "../../../Struct/Student.h"
 
-bool checkStudentIDExists(Node<Student>* allStudents, const std::string& studentID);
+bool checkStudentIDExists(Node<Student>* allStudent, const std::string& studentID);
 
 #endif

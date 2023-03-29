@@ -5,7 +5,7 @@
 
 std::string passwordInput(const std::string &prompt);
 int intInput();
-double doubleInput();
+double scoreInput(std::istream &in, char delimiter = '\n');
 std::string nameInput();
 
 #endif

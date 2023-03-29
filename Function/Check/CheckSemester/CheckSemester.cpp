@@ -3,13 +3,13 @@
 bool checkSemesterExists(
     Node<Semester> *allSemester, int semesterNumber, const std::string &schoolYearName
 ) {
-    while (allSemester) {
-        if (allSemester->data.number == semesterNumber &&
-            allSemester->data.schoolYearName == schoolYearName) {
+    for (; allSemester; allSemester = allSemester->next) {
+        Semester semester = allSemester->data;
+
+        if (semester.number == semesterNumber &&
+            semester.schoolYearName == schoolYearName) {
             return true;
         }
-
-        allSemester = allSemester->next;
     }
 
     return false;

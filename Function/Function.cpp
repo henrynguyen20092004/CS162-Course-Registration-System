@@ -139,7 +139,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 21: {
-            // Import scoreboard of a course function
+            downloadPrompt("Scoreboard.csv", &importScoreboard);
             break;
         }
 

@@ -3,12 +3,10 @@
 bool checkSchoolYearExists(
     Node<std::string> *allSchoolyear, const std::string &schoolYearName
 ) {
-    while (allSchoolyear) {
+    for (; allSchoolyear; allSchoolyear = allSchoolyear->next) {
         if (allSchoolyear->data == schoolYearName) {
             return true;
         }
-
-        allSchoolyear = allSchoolyear->next;
     }
 
     return false;

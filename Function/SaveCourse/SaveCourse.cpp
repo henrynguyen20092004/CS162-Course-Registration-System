@@ -7,16 +7,17 @@ void saveAllCourses(Node<Course> *allCourses) {
     writeFile(fout, "Data/Course.txt");
 
     for (; allCourses; allCourses = allCourses->next) {
-        fout << allCourses->data.schoolYearName << '\n';
-        fout << allCourses->data.semesterNumber << '\n';
-        fout << allCourses->data.id << '\n';
-        fout << allCourses->data.name << '\n';
-        fout << allCourses->data.className << '\n';
-        fout << allCourses->data.teacherName << '\n';
-        fout << allCourses->data.credits << '\n';
-        fout << allCourses->data.maxStudent << '\n';
-        fout << allCourses->data.dayOfWeek << '\n';
-        fout << allCourses->data.sessionNumber << '\n';
+        Course course = allCourses->data;
+        fout << course.schoolYearName << '\n';
+        fout << course.semesterNumber << '\n';
+        fout << course.id << '\n';
+        fout << course.name << '\n';
+        fout << course.className << '\n';
+        fout << course.teacherName << '\n';
+        fout << course.credits << '\n';
+        fout << course.maxStudent << '\n';
+        fout << course.dayOfWeek << '\n';
+        fout << course.sessionNumber << '\n';
     }
 
     fout.close();
@@ -27,9 +28,9 @@ void saveAllStudent_Course(Node<Student_Course> *allStudent_Course) {
     writeFile(fout, "Data/Student_Course.txt");
 
     for (; allStudent_Course; allStudent_Course = allStudent_Course->next) {
-        fout << allStudent_Course->data.studentID << '\n';
-        fout << allStudent_Course->data.courseID << '-'
-             << allStudent_Course->data.className << '\n';
+        Student_Course student_course = allStudent_Course->data;
+        fout << student_course.studentID << '\n';
+        fout << student_course.courseID << '-' << student_course.className << '\n';
     }
 
     fout.close();

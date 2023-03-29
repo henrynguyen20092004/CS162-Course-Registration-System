@@ -3,12 +3,12 @@
 bool checkCourseExists(
     Node<Course> *allCourse, const std::string &courseID, const std::string &className
 ) {
-    while (allCourse) {
-        if (allCourse->data.className == className && allCourse->data.id == courseID) {
+    for (; allCourse; allCourse = allCourse->next) {
+        Course course = allCourse->data;
+
+        if (course.className == className && course.id == courseID) {
             return true;
         }
-
-        allCourse = allCourse->next;
     }
 
     return false;

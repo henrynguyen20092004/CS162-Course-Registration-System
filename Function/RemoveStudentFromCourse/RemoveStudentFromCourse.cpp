@@ -10,20 +10,19 @@
 void removeStudent(
     Node<Student_Course> *allStudent_Courses, const Student_Course &studentCourse
 ) {
-    Node<Student_Course> *cur = allStudent_Courses;
+    Node<Student_Course> *cur = allStudent_Courses, *tmpStudentCourse;
 
-    while (cur->next) {
-        if (cur->next->data.courseID == studentCourse.courseID &&
-            cur->next->data.studentID == studentCourse.studentID &&
-            cur->next->data.className == studentCourse.className) {
-            Node<Student_Course> *tmpStudentCourse = cur->next;
-            cur->next = cur->next->next;
+    for (; cur->next; cur = cur->next) {
+        tmpStudentCourse = cur->next;
+
+        if (tmpStudentCourse->data.courseID == studentCourse.courseID &&
+            tmpStudentCourse->data.studentID == studentCourse.studentID &&
+            tmpStudentCourse->data.className == studentCourse.className) {
+            cur->next = tmpStudentCourse->next;
             delete tmpStudentCourse;
             saveAllStudent_Course(allStudent_Courses->next);
             return;
         }
-
-        cur = cur->next;
     }
 
     throw std::invalid_argument("This student is not in the course, please try again!\n");

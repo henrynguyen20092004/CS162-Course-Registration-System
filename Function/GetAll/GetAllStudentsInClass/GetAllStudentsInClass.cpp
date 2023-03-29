@@ -7,7 +7,7 @@ Node<Student> *getAllStudentsInClass(const std::string &className) {
     Node<Student> *allStudents = getAllStudents(), *cur = allStudents,
                   *allClassStudents = nullptr, *cur2;
 
-    while (cur) {
+    for (; cur; cur = cur->next) {
         if (className == cur->data.className) {
             Node<Student> *newNode = new Node(cur->data);
 
@@ -19,8 +19,6 @@ Node<Student> *getAllStudentsInClass(const std::string &className) {
 
             cur2 = newNode;
         }
-
-        cur = cur->next;
     }
 
     deleteLinkedList(allStudents);

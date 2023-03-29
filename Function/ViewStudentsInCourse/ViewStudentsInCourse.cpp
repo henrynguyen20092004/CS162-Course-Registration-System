@@ -18,7 +18,7 @@ void viewStudentsInCourse() {
     Node<std::string>* allClasses = getAllClasses();
     Node<Course>* allCourses = getAllCourses();
     Course course;
-    bool courseExists = false;
+    bool courseExists;
 
     do {
         inputCourseIDAndClassName(course);

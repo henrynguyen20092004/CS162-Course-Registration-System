@@ -17,8 +17,9 @@ void saveAllUsers(Node<User> *allUsers) {
     writeFile(fout, "Data/User.txt");
 
     for (; allUsers; allUsers = allUsers->next) {
-        fout << allUsers->data.username << '\n';
-        fout << allUsers->data.password << '\n';
+        User user = allUsers->data;
+        fout << user.username << '\n';
+        fout << user.password << '\n';
     }
 }
 
