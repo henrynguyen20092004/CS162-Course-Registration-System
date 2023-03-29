@@ -94,7 +94,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 12: {
-            // Update course function
+            updateCourse();
             break;
         }
 

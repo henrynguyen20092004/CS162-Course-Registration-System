@@ -7,25 +7,8 @@
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
-
-void validateCourseIDAndClass(
-    Node<std::string>* allClasses, Node<Course>* allCourses, const Course& course
-) {
-    if (!checkClassExists(allClasses, course.className)) {
-        throw std::invalid_argument("This class does not exist, please try again!\n");
-    }
-
-    if (!checkCourseExists(allCourses, course.id, course.className)) {
-        throw std::invalid_argument("This course does not exist, please try again!\n");
-    }
-}
-
-void inputCourseIDAndClass(Course& course) {
-    std::cout << "Please enter the id of course: ";
-    getline(std::cin, course.id);
-    std::cout << "Please enter the class name of course: ";
-    getline(std::cin, course.className);
-}
+#include "../InputCourse/InputCourse.h"
+#include "../ValidateCourse/ValidateCourse.h"
 
 void viewStudent(const Course& course) {
     Node<Student_Course>*allStudentsInCourse = getAllStudentsInCourse(course),
@@ -55,8 +38,8 @@ void viewStudentInCourse() {
 
     do {
         try {
-            inputCourseIDAndClass(course);
-            validateCourseIDAndClass(allClasses, allCourses, course);
+            inputCourseIDAndClassName(course);
+            validateCourseIDAndClass(allCourses, allClasses, course);
             validCourse = true;
         } catch (std::exception& error) {
             std::cout << error.what();

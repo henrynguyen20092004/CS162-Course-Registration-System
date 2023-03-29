@@ -1,19 +1,14 @@
 #include "DeleteCourse.h"
 
+#include "../Check/CheckCourse/CheckCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
+#include "../InputCourse/InputCourse.h"
 #include "../SaveCourse/SaveCourse.h"
 
-void inputCourseIDAndClassName(std::string &id, std::string &className) {
-    std::cout << "Please enter the course's id: ";
-    getline(std::cin, id);
-    std::cout << "Please the course's class: ";
-    getline(std::cin, className);
-}
-
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
-    Node<Student_Course> *tempStudent_Course,
-        *allStudent_Course = new Node(getAllStudent_Courses()), *cur = allStudent_Course;
+    Node<Student_Course> *allStudent_Course = new Node(getAllStudent_Courses()),
+                         *cur = allStudent_Course, *tempStudent_Course;
 
     while (cur->next) {
         if (cur->next->data.courseID == id && cur->next->data.className == className) {
@@ -38,32 +33,33 @@ void deleteCourse() {
         return;
     }
 
-    std::string id, className;
-    bool stopFlag = false;
+    Course course;
+    bool courseExists = false;
 
     do {
-        inputCourseIDAndClassName(id, className);
+        inputCourseIDAndClassName(course);
+        courseExists = checkCourseExists(allCourses, course.id, course.className);
 
-        while (cur->next) {
-            if (id == cur->next->data.id && className == cur->next->data.className) {
-                deleteAllStudentsInCourse(id, className);
+        if (!courseExists) {
+            std::cout << "This course does not exist. Please try again!\n";
+        }
+    } while (!courseExists);
 
-                tmpCourse = cur->next;
-                cur->next = cur->next->next;
-                delete tmpCourse;
+    while (cur->next) {
+        if (course.id == cur->next->data.id &&
+            course.className == cur->next->data.className) {
+            deleteAllStudentsInCourse(course.id, course.className);
 
-                std::cout << "Course successfully deleted!\n";
-                stopFlag = true;
-                break;
-            }
+            tmpCourse = cur->next;
+            cur->next = cur->next->next;
+            delete tmpCourse;
 
-            cur = cur->next;
+            std::cout << "Course successfully deleted!\n";
+            break;
         }
 
-        if (!stopFlag) {
-            std::cout << "No such course found! Please try again!\n";
-        }
-    } while (!stopFlag);
+        cur = cur->next;
+    }
 
     saveAllCourses(allCourses->next);
     deleteLinkedList(allCourses);
