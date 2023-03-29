@@ -129,7 +129,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 19: {
-            viewStudentInCourse();
+            viewStudentsInCourse();
             break;
         }
 

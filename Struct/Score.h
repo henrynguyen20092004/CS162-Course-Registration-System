@@ -3,10 +3,12 @@
 
 #include <iostream>
 
+#include "Student_Course.h"
+
 struct Score {
-    std::string studentID, studentFullName, courseID;
-    int ordinalNumber;
-    float otherMark, midtermMark, finalMark, totalMark;
+    Student_Course student_course;
+    std::string studentFullName;
+    double otherMark, midtermMark, finalMark, totalMark;
 };
 
 #endif

@@ -1,39 +1,42 @@
 #include "GetAllStudentsInCourse.h"
 
 #include "../../OpenFile/OpenFile.h"
+#include "../GetAllStudents/GetAllStudents.h"
 
-Node<Student_Course> *getAllStudentsInCourse(const Course &course) {
+Node<Student> *getAllStudentsInCourse(const Course &course) {
     std::ifstream fin;
     readFile(fin, "Data/Student_Course.txt");
 
-    Node<Student_Course> *allStudentsInCourse = nullptr, *cur = nullptr;
-    Student_Course student_course;
-    std::string course_class;
+    Node<Student> *allStudents = getAllStudents(), *allStudentsInCourse = nullptr, *cur;
+    std::string studentID, course_class;
 
     while (fin.good()) {
-        getline(fin, student_course.studentID);
+        getline(fin, studentID);
 
         if (!fin.good()) {
             break;
         }
 
         getline(fin, course_class);
-        student_course.courseID = course_class.substr(0, course_class.find('-'));
-        student_course.className = course_class.substr(course_class.find('-') + 1);
 
-        Node<Student_Course> *newNode = new Node(student_course);
+        if (course.id == course_class.substr(0, course_class.find('-'))) {
+            for (Node<Student> *cur2 = allStudents; cur2; cur2 = cur2->next) {
+                if (cur2->data.id == studentID) {
+                    Node<Student> *newNode = new Node(cur2->data);
 
-        if (course.id == student_course.courseID) {
-            if (!allStudentsInCourse) {
-                allStudentsInCourse = newNode;
-            } else {
-                cur->next = newNode;
+                    if (!allStudentsInCourse) {
+                        allStudentsInCourse = newNode;
+                    } else {
+                        cur->next = newNode;
+                    }
+
+                    cur = newNode;
+                }
             }
-
-            cur = newNode;
         }
     }
 
     fin.close();
+    deleteLinkedList(allStudents);
     return allStudentsInCourse;
 }
