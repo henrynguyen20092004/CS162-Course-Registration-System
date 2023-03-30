@@ -2,7 +2,6 @@
 
 #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
-#include "../ValidatePath/ValidatePath.h"
 
 void downloadTemplateCSV(const std::string &CSVName) {
     std::ifstream fin;
@@ -15,11 +14,14 @@ void downloadTemplateCSV(const std::string &CSVName) {
             std::cout
                 << "Please enter the path to the folder where you want to save the CSV: ";
             getline(std::cin, savePath);
-            validatePath(savePath);
 
-            if (savePath.back() != '\\' && savePath[savePath.size() - 2] != '\\' &&
-                savePath.back() != '/') {
-                savePath += '/';
+            if (savePath == "") {
+                std::cout << "Please enter a path!\n";
+                continue;
+            }
+
+            if (savePath.back() != '\\' && savePath.back() != '/') {
+                savePath += savePath.find('\\') != std::string::npos ? '\\' : '/';
             }
 
             readFile(fin, "TemplateCSV/" + CSVName);

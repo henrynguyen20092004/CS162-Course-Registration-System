@@ -14,6 +14,9 @@ void writeFile(
     fout.open(filePath, openmode | std::ios::out);
 
     if (!fout.is_open()) {
-        throw std::runtime_error("Can't write to " + filePath + ", folder not found!\n");
+        throw std::runtime_error(
+            "Can't write to " + filePath +
+            ", either the parent folder doesn't exists or it is inaccessible!\n"
+        );
     }
 }

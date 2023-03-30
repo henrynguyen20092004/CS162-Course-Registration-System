@@ -47,12 +47,12 @@ int intInput() {
 }
 
 double scoreInput(std::istream &in, char delimiter) {
-    int numberOfDecimalPoint = 0;
     std::string input;
     getline(in, input, delimiter);
-    int n = input.size();
+    int numberOfDecimalPoint = 0, n = input.size();
+    double score;
 
-    if (!isdigit(input[0])) {
+    if (!isdigit(input[0]) && input[0] != '-') {
         throw std::invalid_argument("The input is not a score!\n");
     }
 
@@ -67,10 +67,16 @@ double scoreInput(std::istream &in, char delimiter) {
     }
 
     try {
-        return stod(input);
+        score = stod(input);
     } catch (...) {
         throw std::out_of_range("The input is out of valid score range!\n");
     }
+
+    if (score < 0 || score > 10) {
+        throw std::out_of_range("The input is out of valid score range!\n");
+    }
+
+    return score;
 }
 
 std::string normalization(const std::string &str) {

@@ -8,7 +8,7 @@
 
 void validateStudent_Course(
     Node<Student> *allStudent, Node<std::string> *allClasses, Node<Course> *allCourse,
-    const Student_Course &studentCourse
+    const Student_Course &student_course
 );
 
 #endif

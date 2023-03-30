@@ -5,11 +5,13 @@
 #include "../../Struct/LinkedList.h"
 #include "../../Struct/Score.h"
 #include "../Check/CheckCourse/CheckCourse.h"
+#include "../Check/CheckStudentID/CheckStudentID.h"
+#include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
+#include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
 #include "../InputCourse/InputCourse.h"
 #include "../OpenFile/OpenFile.h"
-#include "../ValidatePath/ValidatePath.h"
 
 void saveScore(Node<Score> *newScores) {
     std::ofstream fout;
@@ -30,13 +32,55 @@ void saveScore(Node<Score> *newScores) {
     fout.close();
 }
 
+void getScoreFromLine(
+    Score &score, const std::string &importLine, Node<Student> *allStudents,
+    Node<Student_Course> *allStudent_Courses
+) {
+    std::string part;
+    std::istringstream importStream(importLine);
+
+    getline(importStream, part, ',');
+    getline(importStream, part, ',');
+
+    if (!checkStudentIDExists(allStudents, part) ||
+        !checkStudentInCourse(
+            allStudent_Courses, part, score.student_course.courseID,
+            score.student_course.className
+        )) {
+        throw std::invalid_argument("Invalid student ID");
+    }
+
+    score.student_course.studentID = part;
+    getline(importStream, part, ',');
+
+    for (; allStudents; allStudents = allStudents->next) {
+        Student student = allStudents->data;
+
+        if (student.id == score.student_course.studentID) {
+            std::string fullName = student.lastName + ' ' + student.firstName;
+
+            if (fullName != part) {
+                throw std::invalid_argument("Invalid student name");
+            }
+        }
+    }
+
+    score.studentFullName = part;
+    score.otherMark = scoreInput(importStream, ',');
+    score.midtermMark = scoreInput(importStream, ',');
+    score.finalMark = scoreInput(importStream, ',');
+    score.totalMark = scoreInput(importStream);
+}
+
 void importScoreboard() {
     std::ifstream fin;
-    std::string importPath, importLine, tempString;
+    std::string importPath, importLine, _;
     bool courseExists, validPath = false;
     Course course;
     Score score;
+    Node<Student_Course> *allStudent_Courses = getAllStudent_Courses();
     Node<Course> *allCourses = getAllCourses();
+    Node<Student> *allStudents = getAllStudents();
     Node<Score> *allScores = nullptr, *cur;
 
     do {
@@ -55,19 +99,27 @@ void importScoreboard() {
         try {
             std::cout << "Please enter the path to the CSV: ";
             getline(std::cin, importPath);
-            validatePath(importPath);
+
+            if (importPath == "") {
+                std::cout << "Please enter a path!\n";
+                continue;
+            }
+
             readFile(fin, importPath);
+            getline(fin, _);
 
             while (fin.good()) {
                 getline(fin, importLine);
-                std::istringstream importStream(importLine);
-                getline(importStream, tempString, ',');
-                getline(importStream, score.student_course.studentID, ',');
-                getline(importStream, score.studentFullName, ',');
-                score.otherMark = scoreInput(importStream, ',');
-                score.midtermMark = scoreInput(importStream, ',');
-                score.finalMark = scoreInput(importStream, ',');
-                score.totalMark = scoreInput(importStream, ',');
+
+                if (importLine == "") {
+                    break;
+                }
+
+                try {
+                    getScoreFromLine(score, importLine, allStudents, allStudent_Courses);
+                } catch (...) {
+                    continue;
+                }
 
                 Node<Score> *newNode = new Node(score);
 
@@ -88,7 +140,9 @@ void importScoreboard() {
     } while (!validPath);
 
     saveScore(allScores);
+    deleteLinkedList(allStudent_Courses);
     deleteLinkedList(allCourses);
+    deleteLinkedList(allStudents);
     deleteLinkedList(allScores);
     std::cout << "Scoreboard successfully imported!\n";
 }
