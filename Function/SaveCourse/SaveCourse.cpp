@@ -30,7 +30,8 @@ void saveAllStudent_Course(Node<Student_Course> *allStudent_Course) {
     for (; allStudent_Course; allStudent_Course = allStudent_Course->next) {
         Student_Course student_course = allStudent_Course->data;
         fout << student_course.studentID << '\n';
-        fout << student_course.courseID << '-' << student_course.className << '\n';
+        fout << student_course.courseID << '\n';
+        fout << student_course.className << '\n';
     }
 
     fout.close();

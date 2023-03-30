@@ -5,7 +5,7 @@
 #include "../../../Struct/Semester.h"
 
 bool checkSemesterExists(
-    Node<Semester> *allSemester, int semesterNumber, const std::string &schoolYearName
+    Node<Semester> *allSemesters, int semesterNumber, const std::string &schoolYearName
 );
 
 #endif

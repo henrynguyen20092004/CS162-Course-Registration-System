@@ -1,10 +1,10 @@
 #include "CheckSemester.h"
 
 bool checkSemesterExists(
-    Node<Semester> *allSemester, int semesterNumber, const std::string &schoolYearName
+    Node<Semester> *allSemesters, int semesterNumber, const std::string &schoolYearName
 ) {
-    for (; allSemester; allSemester = allSemester->next) {
-        Semester semester = allSemester->data;
+    for (; allSemesters; allSemesters = allSemesters->next) {
+        Semester semester = allSemesters->data;
 
         if (semester.number == semesterNumber &&
             semester.schoolYearName == schoolYearName) {

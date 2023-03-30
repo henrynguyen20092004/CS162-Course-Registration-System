@@ -17,9 +17,8 @@ Node<Student> *getAllStudents() {
 void readStudent_Course(std::ifstream &fin, Student_Course &student_course) {
     std::string course_class;
     getline(fin, student_course.studentID);
-    getline(fin, course_class);
-    student_course.courseID = course_class.substr(0, course_class.find('-'));
-    student_course.className = course_class.substr(course_class.find('-') + 1);
+    getline(fin, student_course.courseID);
+    getline(fin, student_course.className);
 }
 
 Node<Student_Course> *getAllStudent_Courses() {

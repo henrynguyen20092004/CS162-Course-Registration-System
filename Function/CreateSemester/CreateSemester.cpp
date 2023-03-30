@@ -147,6 +147,16 @@ void saveSemester(Node<Semester> *allSemesters) {
     std::cout << "Semester successfully added!\n";
 }
 
+void saveCurrentSemester(const Semester &semester) {
+    std::ofstream fout;
+    writeFile(fout, "Data/CurrentSemester.txt");
+    fout << semester.schoolYearName << '\n';
+    fout << semester.number << '\n';
+    fout << semester.startDate << '\n';
+    fout << semester.endDate << '\n';
+    fout.close();
+}
+
 Semester createSemester() {
     Node<Semester> *allSemesters = getAllSemesters();
     Node<std::string> *allSchoolYears = getAllSchoolYears();
@@ -165,6 +175,7 @@ Semester createSemester() {
 
     addSemseterToList(allSemesters, semester);
     saveSemester(allSemesters);
+    saveCurrentSemester(semester);
     deleteLinkedList(allSemesters);
     deleteLinkedList(allSchoolYears);
     return semester;

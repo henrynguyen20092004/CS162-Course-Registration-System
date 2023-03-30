@@ -1,8 +1,8 @@
 #include "CheckStudentID.h"
 
-bool checkStudentIDExists(Node<Student>* allStudent, const std::string& studentID) {
-    for (; allStudent; allStudent = allStudent->next) {
-        if (allStudent->data.id == studentID) {
+bool checkStudentIDExists(Node<Student>* allStudents, const std::string& studentID) {
+    for (; allStudents; allStudents = allStudents->next) {
+        if (allStudents->data.id == studentID) {
             return true;
         }
     }

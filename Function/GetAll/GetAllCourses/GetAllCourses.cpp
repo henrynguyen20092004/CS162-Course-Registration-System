@@ -1,26 +1,23 @@
 #include "GetAllCourses.h"
 
+#include "../../Input/Input.h"
+
 void readCourse(std::ifstream &fin, Course &course) {
-    std::string tmpSemesterNumber, tmpCredits, tmpMaximumStudent, tmpSessionNumber;
     getline(fin, course.schoolYearName);
 
     if (!fin.good()) {
         return;
     }
 
-    getline(fin, tmpSemesterNumber);
-    course.semesterNumber = stoi(tmpSemesterNumber);
+    course.semesterNumber = intInput(fin);
     getline(fin, course.id);
     getline(fin, course.name);
     getline(fin, course.className);
     getline(fin, course.teacherName);
-    getline(fin, tmpCredits);
-    course.credits = stoi(tmpCredits);
-    getline(fin, tmpMaximumStudent);
-    course.maxStudent = stoi(tmpMaximumStudent);
+    course.credits = intInput(fin);
+    course.maxStudent = intInput(fin);
     getline(fin, course.dayOfWeek);
-    getline(fin, tmpSessionNumber);
-    course.sessionNumber = stoi(tmpSessionNumber);
+    course.sessionNumber = intInput(fin);
 }
 
 Node<Course> *getAllCourses() {

@@ -24,9 +24,9 @@ std::string passwordInput(const std::string &prompt) {
     return password;
 }
 
-int intInput() {
+int intInput(std::istream &in) {
     std::string input;
-    getline(std::cin, input);
+    getline(in, input);
     int n = input.size();
 
     if (!isdigit(input[0]) && input[0] != '-') {

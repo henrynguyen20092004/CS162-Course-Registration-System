@@ -2,18 +2,61 @@
 
 #include <sstream>
 
-#include "../../Struct/LinkedList.h"
-#include "../../Struct/Score.h"
 #include "../Check/CheckCourse/CheckCourse.h"
+#include "../Check/CheckScore/CheckScore.h"
 #include "../Check/CheckStudentID/CheckStudentID.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
+#include "../GetAll/GetAllScores/GetAllScores.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
 #include "../InputCourse/InputCourse.h"
 #include "../OpenFile/OpenFile.h"
 
-void saveScore(Node<Score> *newScores) {
+void getScoreFromLine(Score &score, const std::string &importLine) {
+    std::string _;
+    std::istringstream importStream(importLine);
+    getline(importStream, _, ',');
+    getline(importStream, score.student_course.studentID, ',');
+    getline(importStream, score.studentFullName, ',');
+    score.otherMark = scoreInput(importStream, ',');
+    score.midtermMark = scoreInput(importStream, ',');
+    score.finalMark = scoreInput(importStream, ',');
+    score.totalMark = scoreInput(importStream);
+}
+
+void validateScore(
+    const Score &score, Node<Student> *allStudents,
+    Node<Student_Course> *allStudent_Courses, Node<Score> *allScores
+) {
+    Student_Course student_course = score.student_course;
+
+    if (!checkStudentIDExists(allStudents, student_course.studentID) ||
+        !checkStudentInCourse(
+            allStudent_Courses, student_course.studentID, student_course.courseID,
+            student_course.className
+        )) {
+        throw std::invalid_argument("Invalid student ID");
+    }
+
+    for (; allStudents; allStudents = allStudents->next) {
+        Student student = allStudents->data;
+
+        if (student.id == score.student_course.studentID) {
+            std::string fullName = student.lastName + ' ' + student.firstName;
+
+            if (fullName != score.studentFullName) {
+                throw std::invalid_argument("Invalid student name");
+            }
+        }
+    }
+
+    if (checkScoreExists(allScores, score)) {
+        throw std::invalid_argument("This record already exists");
+    }
+}
+
+void saveScores(Node<Score> *newScores) {
     std::ofstream fout;
     writeFile(fout, "Data/Score.txt", std::ios::app);
 
@@ -21,7 +64,8 @@ void saveScore(Node<Score> *newScores) {
         Score score = newScores->data;
         Student_Course student_course = score.student_course;
         fout << student_course.studentID << '\n';
-        fout << student_course.courseID << '-' << student_course.className << '\n';
+        fout << student_course.courseID << '\n';
+        fout << student_course.className << '\n';
         fout << score.studentFullName << '\n';
         fout << score.otherMark << '\n';
         fout << score.midtermMark << '\n';
@@ -30,46 +74,6 @@ void saveScore(Node<Score> *newScores) {
     }
 
     fout.close();
-}
-
-void getScoreFromLine(
-    Score &score, const std::string &importLine, Node<Student> *allStudents,
-    Node<Student_Course> *allStudent_Courses
-) {
-    std::string part;
-    std::istringstream importStream(importLine);
-
-    getline(importStream, part, ',');
-    getline(importStream, part, ',');
-
-    if (!checkStudentIDExists(allStudents, part) ||
-        !checkStudentInCourse(
-            allStudent_Courses, part, score.student_course.courseID,
-            score.student_course.className
-        )) {
-        throw std::invalid_argument("Invalid student ID");
-    }
-
-    score.student_course.studentID = part;
-    getline(importStream, part, ',');
-
-    for (; allStudents; allStudents = allStudents->next) {
-        Student student = allStudents->data;
-
-        if (student.id == score.student_course.studentID) {
-            std::string fullName = student.lastName + ' ' + student.firstName;
-
-            if (fullName != part) {
-                throw std::invalid_argument("Invalid student name");
-            }
-        }
-    }
-
-    score.studentFullName = part;
-    score.otherMark = scoreInput(importStream, ',');
-    score.midtermMark = scoreInput(importStream, ',');
-    score.finalMark = scoreInput(importStream, ',');
-    score.totalMark = scoreInput(importStream);
 }
 
 void importScoreboard() {
@@ -81,7 +85,7 @@ void importScoreboard() {
     Node<Student_Course> *allStudent_Courses = getAllStudent_Courses();
     Node<Course> *allCourses = getAllCourses();
     Node<Student> *allStudents = getAllStudents();
-    Node<Score> *allScores = nullptr, *cur;
+    Node<Score> *allImportedScores = nullptr, *cur, *allCurScores = getAllScores();
 
     do {
         inputCourseIDAndClassName(course);
@@ -116,15 +120,16 @@ void importScoreboard() {
                 }
 
                 try {
-                    getScoreFromLine(score, importLine, allStudents, allStudent_Courses);
+                    getScoreFromLine(score, importLine);
+                    validateScore(score, allStudents, allStudent_Courses, allCurScores);
                 } catch (...) {
                     continue;
                 }
 
                 Node<Score> *newNode = new Node(score);
 
-                if (!allScores) {
-                    allScores = newNode;
+                if (!allImportedScores) {
+                    allImportedScores = newNode;
                 } else {
                     cur->next = newNode;
                 }
@@ -139,10 +144,11 @@ void importScoreboard() {
         }
     } while (!validPath);
 
-    saveScore(allScores);
+    saveScores(allImportedScores);
     deleteLinkedList(allStudent_Courses);
     deleteLinkedList(allCourses);
     deleteLinkedList(allStudents);
-    deleteLinkedList(allScores);
+    deleteLinkedList(allImportedScores);
+    deleteLinkedList(allCurScores);
     std::cout << "Scoreboard successfully imported!\n";
 }

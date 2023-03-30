@@ -10,6 +10,12 @@
 
 void viewStudents(const Course& course) {
     Node<Student>* allStudentsInCourse = getAllStudentsInCourse(course);
+
+    if (!allStudentsInCourse) {
+        std::cout << "There's no student in this course!\n";
+        return;
+    }
+
     sortAndDisplayStudent(allStudentsInCourse);
     deleteLinkedList(allStudentsInCourse);
 }

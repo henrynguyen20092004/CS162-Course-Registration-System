@@ -1,19 +1,22 @@
 3333
-PH212-22TT2
+PH212
+22TT2
 Nguyen Vinh Hien
 6.1
 4.2
 2.5
 9.9
 4444
-PH212-22TT2
+PH212
+22TT2
 Ngo Thien Bao
 5.8
 9.2
 5.1
 10
 5555
-PH212-22TT2
+PH212
+22TT2
 Nguyen Phan Cao Tri
 7
 3.7

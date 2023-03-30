@@ -1,15 +1,15 @@
 #include "GetAllSemesters.h"
 
+#include "../../Input/Input.h"
+
 void readSemester(std::ifstream &fin, Semester &semester) {
-    std::string semesterNumber;
     getline(fin, semester.schoolYearName);
 
     if (!fin.good()) {
         return;
     }
 
-    getline(fin, semesterNumber);
-    semester.number = stoi(semesterNumber);
+    semester.number = intInput(fin);
     getline(fin, semester.startDate);
     getline(fin, semester.endDate);
 }

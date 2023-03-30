@@ -44,7 +44,7 @@ void removeStudentFromCourse() {
                     allStudent_Courses, student_course.studentID, student_course.courseID,
                     student_course.className
                 )) {
-                std::cout << "This student is not in the course, please try again!\n";
+                std::cout << "This student isn't in the course, please try again!\n";
                 continue;
             }
 

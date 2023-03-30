@@ -13,7 +13,8 @@ void saveStudentToCourse(const Student_Course &student_course) {
     std::ofstream fout;
     writeFile(fout, "Data/Student_Course.txt", std::ios::app);
     fout << student_course.studentID << '\n';
-    fout << student_course.courseID << '-' << student_course.className << '\n';
+    fout << student_course.courseID << '\n';
+    fout << student_course.className << '\n';
     fout.close();
 }
 

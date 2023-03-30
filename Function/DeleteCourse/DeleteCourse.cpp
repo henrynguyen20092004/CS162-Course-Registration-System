@@ -10,13 +10,13 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
     Node<Student_Course> *allStudent_Course = new Node(getAllStudent_Courses()),
                          *cur = allStudent_Course, *tmpStudent_Course;
 
-    for (; cur->next; cur = cur->next) {
-        tmpStudent_Course = cur->next;
-
-        if (tmpStudent_Course->data.courseID == id &&
-            tmpStudent_Course->data.className == className) {
+    while (cur->next) {
+        if (cur->next->data.courseID == id && cur->next->data.className == className) {
+            tmpStudent_Course = cur->next;
             cur->next = tmpStudent_Course->next;
             delete tmpStudent_Course;
+        } else {
+            cur = cur->next;
         }
     }
 

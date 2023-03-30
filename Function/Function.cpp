@@ -1,6 +1,7 @@
 #include "Function.h"
 
 #include "Input/Input.h"
+#include "OpenFile/OpenFile.h"
 
 void displayUserCommand() {
     std::cout << "1. View my profile info\n"
@@ -174,9 +175,21 @@ void processStudentCommand(int commandNumber) {
     }
 }
 
+Semester getCurrentSemester() {
+    std::ifstream fin;
+    readFile(fin, "Data/CurrentSemester.txt");
+    Semester semester;
+    fin >> semester.schoolYearName;
+    fin >> semester.number;
+    fin >> semester.startDate;
+    fin >> semester.endDate;
+    fin.close();
+    return semester;
+}
+
 void menu() {
     User currentUser;
-    Semester currentSemester;
+    Semester currentSemester = getCurrentSemester();
     int choice;
 
     do {
