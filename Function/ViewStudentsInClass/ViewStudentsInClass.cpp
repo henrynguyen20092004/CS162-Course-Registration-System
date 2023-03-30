@@ -1,17 +1,31 @@
 #include "ViewStudentsInClass.h"
 
-#include "../../Struct/LinkedList.h"
-#include "../DisplayStudentInfo/DisplayStudentInfo.h"
+#include "../Check/CheckClass/CheckClass.h"
+#include "../GetAll/GetAllClasses/GetAllClasses.h"
+#include "../GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
+#include "../SortAndDisplayStudent/SortAndDisplayStudent.h"
 
 void viewStudentsInClass() {
+    Node<std::string>* allClasses = getAllClasses();
     std::string className;
-    std::cout << "Enter the class you want to view students: ";
-    getline(std::cin, className);
-    Node<Student> *getAllStudents = getAllStudentsInClass(className);
-    Node<Student> *cur = getAllStudents;
-    while (cur) {
-        displayStudentInfo(cur->data);
-        cur = cur->next;
+    bool classExists;
+
+    do {
+        std::cout << "Enter the class you want to view students: ";
+        getline(std::cin, className);
+        classExists = checkClassExists(allClasses, className);
+
+        if (!classExists) {
+            std::cout << "This class doesn't exists, please try again!\n";
+        }
+    } while (!classExists);
+
+    Node<Student>* allStudentsInClass = getAllStudentsInClass(className);
+
+    if (!allStudentsInClass) {
+        std::cout << "There's no student in this class!\n";
     }
-    deleteLinkedList(getAllStudents);
+
+    sortAndDisplayStudent(allStudentsInClass);
+    deleteLinkedList(allClasses);
 }

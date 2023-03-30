@@ -8,17 +8,6 @@
 #include "../InputCourse/InputCourse.h"
 #include "../SortAndDisplayStudent/SortAndDisplayStudent.h"
 
-void viewStudents(const Course& course) {
-    Node<Student>* allStudentsInCourse = getAllStudentsInCourse(course);
-
-    if (!allStudentsInCourse) {
-        std::cout << "There's no student in this course!\n";
-        return;
-    }
-
-    sortAndDisplayStudent(allStudentsInCourse);
-}
-
 void viewStudentsInCourse() {
     Node<std::string>* allClasses = getAllClasses();
     Node<Course>* allCourses = getAllCourses();
@@ -34,7 +23,13 @@ void viewStudentsInCourse() {
         }
     } while (!courseExists);
 
-    viewStudents(course);
+    Node<Student>* allStudentsInCourse = getAllStudentsInCourse(course);
+
+    if (!allStudentsInCourse) {
+        std::cout << "There's no student in this course!\n";
+    }
+
+    sortAndDisplayStudent(allStudentsInCourse);
     deleteLinkedList(allClasses);
     deleteLinkedList(allCourses);
 }
