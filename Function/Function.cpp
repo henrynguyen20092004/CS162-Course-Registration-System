@@ -161,10 +161,12 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
     }
 }
 
-void processStudentCommand(int commandNumber) {
+void processStudentCommand(
+    int commandNumber, const Semester &currentSemester, const User &currentUser
+) {
     switch (commandNumber) {
         case 5: {
-            // View student's courses function
+            studentViewCourses(currentUser, currentSemester);
             break;
         }
 
@@ -219,7 +221,7 @@ void menu() {
                     if (currentUser.username == "admin") {
                         processAdminCommand(choice, currentSemester);
                     } else {
-                        processStudentCommand(choice);
+                        processStudentCommand(choice, currentSemester, currentUser);
                     }
                 } else if (choice != 4) {
                     std::cout << "Invalid option, please try again!\n";

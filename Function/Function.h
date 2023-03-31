@@ -14,6 +14,7 @@
 #include "LogIn/LogIn.h"
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"
+#include "StudentViewCourses/StudentViewCourses.h"
 #include "UpdateCourse/UpdateCourse.h"
 #include "ViewClasses/ViewClasses.h"
 #include "ViewCourses/ViewCourses.h"
