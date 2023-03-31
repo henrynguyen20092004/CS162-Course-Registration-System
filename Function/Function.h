@@ -18,6 +18,7 @@
 #include "ViewClasses/ViewClasses.h"
 #include "ViewCourses/ViewCourses.h"
 #include "ViewProfileInfo/ViewProfileInfo.h"
+#include "ViewStudentsInClass/ViewStudentsInClass.h"
 #include "ViewStudentsInCourse/ViewStudentsInCourse.h"
 
 void menu();
