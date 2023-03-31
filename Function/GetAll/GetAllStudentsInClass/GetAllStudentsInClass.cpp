@@ -9,15 +9,7 @@ Node<Student> *getAllStudentsInClass(const std::string &className) {
 
     for (; cur; cur = cur->next) {
         if (className == cur->data.className) {
-            Node<Student> *newNode = new Node(cur->data);
-
-            if (!allClassStudents) {
-                allClassStudents = newNode;
-            } else {
-                cur2->next = newNode;
-            }
-
-            cur2 = newNode;
+            pushToEndLinkedList(allClassStudents, cur2, cur -> data);
         }
     }
 

@@ -1,9 +1,10 @@
 #include "ImportScoreboard.h"
 
+#include <string.h>
+
 #include <sstream>
 
 #include "../Check/CheckCourse/CheckCourse.h"
-#include "../Check/CheckScore/CheckScore.h"
 #include "../Check/CheckStudentID/CheckStudentID.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
@@ -11,7 +12,6 @@
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
 #include "../InputCourse/InputCourse.h"
-#include "../OpenFile/OpenFile.h"
 
 void getScoreFromLine(Score &score, const std::string &importLine) {
     std::string _;
@@ -51,17 +51,50 @@ void validateScore(
         }
     }
 
-    if (checkScoreExists(allScores, score)) {
-        throw std::invalid_argument("This record already exists");
+    for (; allScores; allScores = allScores->next) {
+        if (allScores->data == score) {
+            throw std::invalid_argument("Duplicated record");
+        } else if (allScores->data.student_course == score.student_course) {
+            allScores->data.otherMark = score.otherMark;
+            allScores->data.midtermMark = score.midtermMark;
+            allScores->data.finalMark = score.finalMark;
+            allScores->data.totalMark = score.totalMark;
+            throw std::runtime_error("Record updated");
+        }
     }
 }
 
-void saveScores(Node<Score> *newScores) {
-    std::ofstream fout;
-    writeFile(fout, "Data/Score.txt", std::ios::app);
+void showCSVErrorLines(Node<int> *errorLines, const std::string &errorMessage) {
+    if (!errorLines) {
+        return;
+    }
 
-    for (; newScores; newScores = newScores->next) {
-        Score score = newScores->data;
+    std::cout << errorMessage;
+
+    for (; errorLines; errorLines = errorLines->next) {
+        std::cout << ' ' << errorLines->data;
+    }
+
+    std::cout << "\nPlease check them again!\n";
+}
+
+void addNewScoreToOldList(Node<Score> *&allScores, Node<Score> *newScores) {
+    if (!allScores) {
+        allScores = newScores;
+        return;
+    }
+
+    Node<Score> *cur = allScores;
+    for (; cur->next; cur = cur->next);
+    cur->next = newScores;
+}
+
+void saveScores(Node<Score> *allScores) {
+    std::ofstream fout;
+    writeFile(fout, "Data/Score.txt");
+
+    for (; allScores; allScores = allScores->next) {
+        Score score = allScores->data;
         Student_Course student_course = score.student_course;
         fout << student_course.studentID << '\n';
         fout << student_course.courseID << '\n';
@@ -80,12 +113,15 @@ void importScoreboard() {
     std::ifstream fin;
     std::string importPath, importLine, _;
     bool courseExists, validPath = false;
+    int curLine = 1;
     Course course;
     Score score;
     Node<Student_Course> *allStudent_Courses = getAllStudent_Courses();
     Node<Course> *allCourses = getAllCourses();
     Node<Student> *allStudents = getAllStudents();
-    Node<Score> *allImportedScores = nullptr, *cur, *allCurScores = getAllScores();
+    Node<Score> *newScores = nullptr, *cur, *allScores = getAllScores();
+    Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
+              *curInvalidErrors;
 
     do {
         inputCourseIDAndClassName(course);
@@ -119,22 +155,24 @@ void importScoreboard() {
                     break;
                 }
 
+                ++curLine;
+
                 try {
                     getScoreFromLine(score, importLine);
-                    validateScore(score, allStudents, allStudent_Courses, allCurScores);
+                    validateScore(score, allStudents, allStudent_Courses, allScores);
+                } catch (std::invalid_argument &error) {
+                    if (!strcmp(error.what(), "Duplicated record")) {
+                        pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
+                    } else {
+                        pushToEndLinkedList(invalidErrors, curInvalidErrors, curLine);
+                    }
+
+                    continue;
                 } catch (...) {
                     continue;
                 }
 
-                Node<Score> *newNode = new Node(score);
-
-                if (!allImportedScores) {
-                    allImportedScores = newNode;
-                } else {
-                    cur->next = newNode;
-                }
-
-                cur = newNode;
+                pushToEndLinkedList(newScores, cur, score);
             }
 
             validPath = true;
@@ -144,11 +182,15 @@ void importScoreboard() {
         }
     } while (!validPath);
 
-    saveScores(allImportedScores);
+    showCSVErrorLines(duplicateErrors, "The following line(s) are duplicated:");
+    showCSVErrorLines(invalidErrors, "The following line(s) have invalid record(s):");
+    addNewScoreToOldList(allScores, newScores);
+    saveScores(allScores);
     deleteLinkedList(allStudent_Courses);
     deleteLinkedList(allCourses);
     deleteLinkedList(allStudents);
-    deleteLinkedList(allImportedScores);
-    deleteLinkedList(allCurScores);
+    deleteLinkedList(allScores);
+    deleteLinkedList(duplicateErrors);
+    deleteLinkedList(invalidErrors);
     std::cout << "Scoreboard successfully imported!\n";
 }

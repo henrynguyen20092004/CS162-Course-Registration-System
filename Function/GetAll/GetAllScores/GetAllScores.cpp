@@ -4,6 +4,11 @@
 
 void readScore(std::ifstream &fin, Score &score) {
     getline(fin, score.student_course.studentID);
+
+    if (!fin.good()) {
+        return;
+    }
+
     getline(fin, score.student_course.courseID);
     getline(fin, score.student_course.className);
     getline(fin, score.studentFullName);

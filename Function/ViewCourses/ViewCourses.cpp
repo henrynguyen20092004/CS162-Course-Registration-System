@@ -22,7 +22,7 @@ void viewCourses() {
     readFile(fin, "Data/Course.txt");
     Course course;
     std::cout << "This is the list of all courses: " << '\n';
-    int index = 1;
+    int index = 0;
 
     while (fin.good()) {
         getline(fin, course.schoolYearName);
@@ -40,7 +40,7 @@ void viewCourses() {
         course.maxStudent = intInput(fin);
         getline(fin, course.dayOfWeek);
         course.sessionNumber = intInput(fin);
-        std::cout << "This is course number " << index++ << ":\n";
+        std::cout << "This is course number " << ++index << ":\n";
         viewACourse(course);
     }
 

@@ -19,7 +19,7 @@ bool checkValidSchoolYear(const std::string &schoolYearName) {
         return false;
     }
 
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; ++i) {
         if (i == 4) {
             if (schoolYearName[i] != '-') {
                 return false;

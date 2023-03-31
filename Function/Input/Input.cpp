@@ -33,7 +33,7 @@ int intInput(std::istream &in) {
         throw std::invalid_argument("The input is not an integer!\n");
     }
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; ++i) {
         if (!isdigit(input[i])) {
             throw std::invalid_argument("The input is not an integer!\n");
         }
@@ -42,7 +42,7 @@ int intInput(std::istream &in) {
     try {
         return stoi(input);
     } catch (...) {
-        throw std::out_of_range("The input is out of integer range!\n");
+        throw std::invalid_argument("The input is out of integer range!\n");
     }
 }
 
@@ -56,7 +56,7 @@ double scoreInput(std::istream &in, char delimiter) {
         throw std::invalid_argument("The input is not a score!\n");
     }
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; ++i) {
         if (input[i] == '.') {
             if (numberOfDecimalPoint++) {
                 throw std::invalid_argument("The input is not a score!\n");
@@ -69,11 +69,11 @@ double scoreInput(std::istream &in, char delimiter) {
     try {
         score = stod(input);
     } catch (...) {
-        throw std::out_of_range("The input is out of valid score range!\n");
+        throw std::invalid_argument("The input is out of valid score range!\n");
     }
 
     if (score < 0 || score > 10) {
-        throw std::out_of_range("The input is out of valid score range!\n");
+        throw std::invalid_argument("The input is out of valid score range!\n");
     }
 
     return score;
@@ -84,7 +84,7 @@ std::string normalization(const std::string &str) {
     bool capitalize = true, whitespace = false;
     int length = str.length();
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; ++i) {
         if (str[i] == ' ') {
             whitespace = true;
             capitalize = true;

@@ -17,7 +17,6 @@ void viewStudents(const Course& course) {
     }
 
     sortAndDisplayStudent(allStudentsInCourse);
-    deleteLinkedList(allStudentsInCourse);
 }
 
 void viewStudentsInCourse() {
