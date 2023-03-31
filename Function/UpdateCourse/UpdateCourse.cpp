@@ -2,9 +2,8 @@
 
 #include "../Check/CheckCourse/CheckCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
-#include "../InputCourse/InputCourse.h"
+#include "../InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../SaveCourse/SaveCourse.h"
-#include "../ValidateCourse/ValidateCourse.h"
 #include "../ViewCourses/ViewCourses.h"
 
 void inputChanges(Course &course) {
@@ -12,8 +11,8 @@ void inputChanges(Course &course) {
 
     do {
         try {
-            inputOtherInformation(course);
-            validateOtherInformation(course);
+            inputOtherCourseInformation(course);
+            validateOtherCourseInformation(course);
             validCourse = true;
         } catch (std::exception &error) {
             std::cout << error.what();
@@ -48,12 +47,12 @@ void updateCourse() {
             std::cout << "\nThis is the current information of this course:\n";
             viewACourse(curCourse);
             std::cout << "Please enter new information for this course:\n";
-            inputChanges(curCourse);
-            std::cout << "Course successfully updated!\n";
+            inputChanges(cur->data);
             break;
         }
     }
 
     saveAllCourses(allCourses);
     deleteLinkedList(allCourses);
+    std::cout << "Course successfully updated!\n";
 }

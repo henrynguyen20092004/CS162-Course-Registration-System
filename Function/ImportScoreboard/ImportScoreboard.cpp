@@ -11,7 +11,7 @@
 #include "../GetAll/GetAllScores/GetAllScores.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
-#include "../InputCourse/InputCourse.h"
+#include "../InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../SaveScore/SaveScore.h"
 
 void getScoreFromLine(Score &score, const std::string &importLine) {

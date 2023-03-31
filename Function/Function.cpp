@@ -4,7 +4,7 @@
 #include "OpenFile/OpenFile.h"
 
 void displayUserCommand() {
-    std::cout << "1. View my profile info\n"
+    std::cout << "1. Change the current semester\n"
               << "2. Change password\n"
               << "3. Log out\n"
               << "4. Exit the program\n";
@@ -38,10 +38,10 @@ void displayStudentCommand() {
               << "6. View my scoreboard\n";
 }
 
-void processUserCommand(int commandNumber, User &currentUser) {
+void processUserCommand(int commandNumber, Semester &currentSemester, User &currentUser) {
     switch (commandNumber) {
         case 1: {
-            viewProfileInfo(currentUser);
+            changeCurrentSemester(currentSemester);
             break;
         }
 
@@ -177,18 +177,6 @@ void processStudentCommand(
     }
 }
 
-Semester getCurrentSemester() {
-    std::ifstream fin;
-    readFile(fin, "Data/CurrentSemester.txt");
-    Semester semester;
-    fin >> semester.schoolYearName;
-    fin >> semester.number;
-    fin >> semester.startDate;
-    fin >> semester.endDate;
-    fin.close();
-    return semester;
-}
-
 void menu() {
     User currentUser;
     Semester currentSemester = getCurrentSemester();
@@ -199,7 +187,10 @@ void menu() {
             if (currentUser.username == "") {
                 currentUser = logIn();
             } else {
-                std::cout << "\nWhat do you want to do?\n";
+                std::cout << "\nThe current semester is semester "
+                          << currentSemester.number << ", "
+                          << currentSemester.schoolYearName << '\n';
+                std::cout << "What do you want to do?\n";
                 displayUserCommand();
                 int maxNumberOfCommand;
 
@@ -216,7 +207,7 @@ void menu() {
                 std::cout << '\n';
 
                 if (1 <= choice && choice <= 3) {
-                    processUserCommand(choice, currentUser);
+                    processUserCommand(choice, currentSemester, currentUser);
                 } else if (5 <= choice && choice <= maxNumberOfCommand) {
                     if (currentUser.username == "admin") {
                         processAdminCommand(choice, currentSemester);

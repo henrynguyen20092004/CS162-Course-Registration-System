@@ -5,9 +5,8 @@
 #include "../GetAll/GetAllScores/GetAllScores.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../Input/Input.h"
-#include "../InputStudentCourse/InputStudentCourse.h"
+#include "../InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 #include "../SaveScore/SaveScore.h"
-#include "../ValidateStudentCourse/ValidateStudentCourse.h"
 
 void updateResult(Node<Score> *&allScores, const Score &score) {
     for (Node<Score> *cur = allScores; cur; cur = cur->next) {
@@ -48,7 +47,7 @@ void inputScoreToUpdate(Node<Course> *allCourses, Score &score) {
 
     do {
         try {
-            inputStudent_Course(score.student_course);
+            inputStudentCourse(score.student_course);
             validateStudent_Course(
                 allStudents, allClasses, allCourses, score.student_course
             );
@@ -67,14 +66,14 @@ void updateStudentResult() {
     Node<Course> *allCourses = getAllCourses();
 
     if (!allCourses) {
-        std::cout << "No course records, please create one and try again later!\n";
+        std::cout << "No course records, please create one and try again!\n";
         return;
     }
 
     Node<Score> *allScores = getAllScores();
 
     if (!allScores) {
-        std::cout << "No score records, please import some and try again later!\n";
+        std::cout << "No score records, please import some and try again!\n";
         return;
     }
 

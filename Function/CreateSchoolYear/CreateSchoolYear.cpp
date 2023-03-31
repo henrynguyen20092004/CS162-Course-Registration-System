@@ -26,7 +26,6 @@ void saveSchoolYear(const std::string &schoolYearName) {
     writeFile(fout, "Data/SchoolYear.txt", std::ios::app);
     fout << schoolYearName << '\n';
     fout.close();
-    std::cout << "School year successfully added!\n";
 }
 
 void createSchoolYear() {
@@ -46,4 +45,5 @@ void createSchoolYear() {
 
     saveSchoolYear(schoolYearName);
     deleteLinkedList(allSchoolYears);
+    std::cout << "School year successfully added!\n";
 }

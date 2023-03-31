@@ -11,12 +11,12 @@ void viewStudentsInClass() {
     bool classExists;
 
     do {
-        std::cout << "Enter the class you want to view students: ";
+        std::cout << "Please enter the class' name: ";
         getline(std::cin, className);
         classExists = checkClassExists(allClasses, className);
 
         if (!classExists) {
-            std::cout << "This class doesn't exists, please try again!\n";
+            std::cout << "This class doesn't exists, please create it or try again!\n";
         }
     } while (!classExists);
 
