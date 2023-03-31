@@ -40,11 +40,11 @@ void studentViewCourses(const User &user, const Semester &semester) {
     Course tmpCourse;
 
     if (!allCoursesOfStudent || !allCourses) {
-        std::cout << "\nYou have no course at the moment!\n\n";
+        std::cout << "You have no course at the moment!\n";
         return;
     }
 
-    std::cout << "This is the list of your courses: \n\n";
+    std::cout << "This is the list of your courses:\n";
     for (Node<Student_Course> *cur1 = allCoursesOfStudent; cur1; cur1 = cur1->next) {
         tmpStudentCourse = cur1->data;
         for (Node<Course> *cur2 = allCourses; cur2; cur2 = cur2->next) {
