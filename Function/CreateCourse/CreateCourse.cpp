@@ -41,7 +41,8 @@ void saveCourse(const Course &course) {
 
 void createCourse(const Semester &semester) {
     if (semester.schoolYearName == "") {
-        throw std::runtime_error("Please create a semester first!\n");
+        std::cout << "Please create a semester first!\n";
+        return;
     }
 
     Node<Course> *allCourses = getAllCourses();

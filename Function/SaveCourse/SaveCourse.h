@@ -6,6 +6,6 @@
 #include "../../Struct/Student_Course.h"
 
 void saveAllCourses(Node<Course> *allCourses);
-void saveAllStudent_Course(Node<Student_Course> *allStudent_Course);
+void saveAllStudent_Courses(Node<Student_Course> *allStudent_Courses);
 
 #endif

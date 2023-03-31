@@ -23,12 +23,12 @@ void saveAllCourses(Node<Course> *allCourses) {
     fout.close();
 }
 
-void saveAllStudent_Course(Node<Student_Course> *allStudent_Course) {
+void saveAllStudent_Courses(Node<Student_Course> *allStudent_Courses) {
     std::ofstream fout;
     writeFile(fout, "Data/Student_Course.txt");
 
-    for (; allStudent_Course; allStudent_Course = allStudent_Course->next) {
-        Student_Course student_course = allStudent_Course->data;
+    for (; allStudent_Courses; allStudent_Courses = allStudent_Courses->next) {
+        Student_Course student_course = allStudent_Courses->data;
         fout << student_course.studentID << '\n';
         fout << student_course.courseID << '\n';
         fout << student_course.className << '\n';
