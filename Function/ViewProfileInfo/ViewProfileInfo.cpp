@@ -13,13 +13,13 @@ void viewProfileInfo(const User &currentUser) {
 
     Node<Student> *allStudents = getAllStudents(), *cur = allStudents;
 
-    while (cur) {
-        if (cur->data.id == currentUser.username) {
-            displayStudentInfo(cur->data);
+    for (; cur; cur = cur->next) {
+        Student student = cur->data;
+
+        if (student.id == currentUser.username) {
+            displayStudentInfo(student);
             break;
         }
-
-        cur = cur->next;
     }
 
     deleteLinkedList(allStudents);

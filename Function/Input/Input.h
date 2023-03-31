@@ -4,8 +4,8 @@
 #include <iostream>
 
 std::string passwordInput(const std::string &prompt);
-int intInput();
-double doubleInput();
+int intInput(std::istream &in = std::cin);
+double scoreInput(std::istream &in = std::cin, char delimiter = '\n');
 std::string nameInput();
 
 #endif

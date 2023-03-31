@@ -9,16 +9,17 @@
 #include "../InputStudentCourse/InputStudentCourse.h"
 #include "../ValidateStudentCourse/ValidateStudentCourse.h"
 
-void saveStudentToCourse(const Student_Course &studentCourse) {
+void saveStudentToCourse(const Student_Course &student_course) {
     std::ofstream fout;
     writeFile(fout, "Data/Student_Course.txt", std::ios::app);
-    fout << studentCourse.studentID << '\n';
-    fout << studentCourse.courseID << '-' << studentCourse.className << '\n';
+    fout << student_course.studentID << '\n';
+    fout << student_course.courseID << '\n';
+    fout << student_course.className << '\n';
     fout.close();
 }
 
 void addStudentToCourse() {
-    Student_Course studentCourse;
+    Student_Course student_course;
     Node<Student> *allStudents = getAllStudents();
     Node<std::string> *allClasses = getAllClasses();
     Node<Course> *allCourses = getAllCourses();
@@ -26,8 +27,8 @@ void addStudentToCourse() {
 
     do {
         try {
-            inputStudent_Course(studentCourse);
-            validateStudent_Course(allStudents, allClasses, allCourses, studentCourse);
+            inputStudent_Course(student_course);
+            validateStudent_Course(allStudents, allClasses, allCourses, student_course);
             validStudent_Course = true;
         } catch (std::exception &error) {
             std::cout << error.what();
@@ -36,7 +37,7 @@ void addStudentToCourse() {
 
     std::cout << "Student added successfully!\n";
 
-    saveStudentToCourse(studentCourse);
+    saveStudentToCourse(student_course);
     deleteLinkedList(allStudents);
     deleteLinkedList(allClasses);
     deleteLinkedList(allCourses);

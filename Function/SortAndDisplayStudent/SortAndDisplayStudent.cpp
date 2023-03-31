@@ -7,7 +7,7 @@
 int getLinkedListSize(Node<Student>* head) {
     int result = 0;
     for (; head; head = head->next) {
-        result++;
+        ++result;
     }
     return result;
 }

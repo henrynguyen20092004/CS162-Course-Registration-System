@@ -9,6 +9,8 @@
 #include "CreateSemester/CreateSemester.h"
 #include "CreateStudent/CreateStudent.h"
 #include "DeleteCourse/DeleteCourse.h"
+#include "DownloadTemplateCSV/DownloadTemplateCSV.h"
+#include "ImportScoreboard/ImportScoreboard.h"
 #include "LogIn/LogIn.h"
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"

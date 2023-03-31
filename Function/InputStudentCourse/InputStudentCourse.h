@@ -3,6 +3,6 @@
 
 #include "../../Struct/Student_Course.h"
 
-void inputStudent_Course(Student_Course &studentCourse);
+void inputStudent_Course(Student_Course &student_course);
 
 #endif

@@ -1,12 +1,10 @@
 #include "CheckStudentID.h"
 
 bool checkStudentIDExists(Node<Student>* allStudents, const std::string& studentID) {
-    while (allStudents) {
+    for (; allStudents; allStudents = allStudents->next) {
         if (allStudents->data.id == studentID) {
             return true;
         }
-
-        allStudents = allStudents->next;
     }
 
     return false;

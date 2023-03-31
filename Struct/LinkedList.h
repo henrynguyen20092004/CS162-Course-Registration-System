@@ -21,4 +21,17 @@ void deleteLinkedList(Node<T> *head) {
     }
 }
 
+template <typename T>
+void pushToEndLinkedList(Node<T> *&head, Node<T> *&cur, T data) {
+    Node<T> *newNode = new Node(data);
+
+    if (!head) {
+        head = newNode;
+    } else {
+        cur -> next = newNode;
+    }
+
+    cur = newNode;
+}
+
 #endif

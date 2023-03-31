@@ -8,16 +8,16 @@
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
     Node<Student_Course> *allStudent_Course = new Node(getAllStudent_Courses()),
-                         *cur = allStudent_Course, *tempStudent_Course;
+                         *cur = allStudent_Course, *tmpStudent_Course;
 
     while (cur->next) {
         if (cur->next->data.courseID == id && cur->next->data.className == className) {
-            tempStudent_Course = cur->next;
-            cur->next = cur->next->next;
-            delete tempStudent_Course;
+            tmpStudent_Course = cur->next;
+            cur->next = tmpStudent_Course->next;
+            delete tmpStudent_Course;
+        } else {
+            cur = cur->next;
         }
-
-        cur = cur->next;
     }
 
     saveAllStudent_Course(allStudent_Course->next);
@@ -34,7 +34,7 @@ void deleteCourse() {
     }
 
     Course course;
-    bool courseExists = false;
+    bool courseExists;
 
     do {
         inputCourseIDAndClassName(course);
@@ -45,20 +45,17 @@ void deleteCourse() {
         }
     } while (!courseExists);
 
-    while (cur->next) {
-        if (course.id == cur->next->data.id &&
-            course.className == cur->next->data.className) {
+    for (; cur->next; cur = cur->next) {
+        tmpCourse = cur->next;
+
+        if (course.id == tmpCourse->data.id &&
+            course.className == tmpCourse->data.className) {
             deleteAllStudentsInCourse(course.id, course.className);
-
-            tmpCourse = cur->next;
-            cur->next = cur->next->next;
+            cur->next = tmpCourse->next;
             delete tmpCourse;
-
             std::cout << "Course successfully deleted!\n";
             break;
         }
-
-        cur = cur->next;
     }
 
     saveAllCourses(allCourses->next);

@@ -24,16 +24,16 @@ std::string passwordInput(const std::string &prompt) {
     return password;
 }
 
-int intInput() {
+int intInput(std::istream &in) {
     std::string input;
-    getline(std::cin, input);
+    getline(in, input);
     int n = input.size();
 
     if (!isdigit(input[0]) && input[0] != '-') {
         throw std::invalid_argument("The input is not an integer!\n");
     }
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; ++i) {
         if (!isdigit(input[i])) {
             throw std::invalid_argument("The input is not an integer!\n");
         }
@@ -42,35 +42,41 @@ int intInput() {
     try {
         return stoi(input);
     } catch (...) {
-        throw std::out_of_range("The input is out of integer range!\n");
+        throw std::invalid_argument("The input is out of integer range!\n");
     }
 }
 
-double doubleInput() {
-    int numberOfDecimalPoint = 0;
+double scoreInput(std::istream &in, char delimiter) {
     std::string input;
-    getline(std::cin, input);
-    int n = input.size();
+    getline(in, input, delimiter);
+    int numberOfDecimalPoint = 0, n = input.size();
+    double score;
 
     if (!isdigit(input[0]) && input[0] != '-') {
-        throw std::invalid_argument("The input is not an integer!\n");
+        throw std::invalid_argument("The input is not a score!\n");
     }
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; ++i) {
         if (input[i] == '.') {
             if (numberOfDecimalPoint++) {
-                throw std::invalid_argument("The input is not a double!\n");
+                throw std::invalid_argument("The input is not a score!\n");
             }
         } else if (!isdigit(input[i])) {
-            throw std::invalid_argument("The input is not a double!\n");
+            throw std::invalid_argument("The input is not a score!\n");
         }
     }
 
     try {
-        return stod(input);
+        score = stod(input);
     } catch (...) {
-        throw std::out_of_range("The input is out of double range!\n");
+        throw std::invalid_argument("The input is out of valid score range!\n");
     }
+
+    if (score < 0 || score > 10) {
+        throw std::invalid_argument("The input is out of valid score range!\n");
+    }
+
+    return score;
 }
 
 std::string normalization(const std::string &str) {
@@ -78,7 +84,7 @@ std::string normalization(const std::string &str) {
     bool capitalize = true, whitespace = false;
     int length = str.length();
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; ++i) {
         if (str[i] == ' ') {
             whitespace = true;
             capitalize = true;

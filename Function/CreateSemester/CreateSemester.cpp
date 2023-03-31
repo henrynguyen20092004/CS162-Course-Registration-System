@@ -12,12 +12,15 @@ bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &seme
         return true;
     }
 
+    Semester curSemester;
     Node<Semester> *tmp = allSemesters;
 
-    while (allSemesters) {
-        if (allSemesters->data.schoolYearName == semester.schoolYearName) {
-            if (allSemesters->data.number > semester.number) {
-                return compareDate(semester.endDate, allSemesters->data.startDate);
+    for (; allSemesters; allSemesters = allSemesters->next) {
+        curSemester = allSemesters->data;
+
+        if (curSemester.schoolYearName == semester.schoolYearName) {
+            if (curSemester.number > semester.number) {
+                return compareDate(semester.endDate, curSemester.startDate);
             }
 
             while (allSemesters->next &&
@@ -26,24 +29,24 @@ bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &seme
                 allSemesters = allSemesters->next;
             }
 
-            return compareDate(allSemesters->data.endDate, semester.startDate) &&
+            return compareDate(curSemester.endDate, semester.startDate) &&
                    (allSemesters->next
                         ? compareDate(
                               semester.endDate, allSemesters->next->data.startDate
                           )
                         : true);
         }
-
-        allSemesters = allSemesters->next;
     }
 
     while (tmp->next && tmp->next->data.schoolYearName < semester.schoolYearName) {
         tmp = tmp->next;
     }
 
-    return tmp->data.schoolYearName < semester.schoolYearName
-               ? compareDate(tmp->data.endDate, semester.startDate)
-               : compareDate(semester.endDate, tmp->data.startDate);
+    curSemester = tmp->data;
+
+    return curSemester.schoolYearName < semester.schoolYearName
+               ? compareDate(curSemester.endDate, semester.startDate)
+               : compareDate(semester.endDate, curSemester.startDate);
 }
 
 void addSemseterToList(Node<Semester> *&allSemesters, const Semester &newSemester) {
@@ -144,6 +147,16 @@ void saveSemester(Node<Semester> *allSemesters) {
     std::cout << "Semester successfully added!\n";
 }
 
+void saveCurrentSemester(const Semester &semester) {
+    std::ofstream fout;
+    writeFile(fout, "Data/CurrentSemester.txt");
+    fout << semester.schoolYearName << '\n';
+    fout << semester.number << '\n';
+    fout << semester.startDate << '\n';
+    fout << semester.endDate << '\n';
+    fout.close();
+}
+
 Semester createSemester() {
     Node<Semester> *allSemesters = getAllSemesters();
     Node<std::string> *allSchoolYears = getAllSchoolYears();
@@ -162,6 +175,7 @@ Semester createSemester() {
 
     addSemseterToList(allSemesters, semester);
     saveSemester(allSemesters);
+    saveCurrentSemester(semester);
     deleteLinkedList(allSemesters);
     deleteLinkedList(allSchoolYears);
     return semester;

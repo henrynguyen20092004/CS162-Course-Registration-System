@@ -29,7 +29,7 @@ void updateCourse() {
         return;
     }
 
-    bool courseExists = false;
+    bool courseExists;
     Course course;
 
     do {
@@ -41,19 +41,17 @@ void updateCourse() {
         }
     } while (!courseExists);
 
-    while (cur) {
-        if (course.id == cur->data.id && course.className == cur->data.className) {
+    for (; cur; cur = cur->next) {
+        Course curCourse = cur->data;
+
+        if (course.id == curCourse.id && course.className == curCourse.className) {
             std::cout << "\nThis is the current information of this course:\n";
-            viewACourse(cur->data);
-
+            viewACourse(curCourse);
             std::cout << "Please enter new information for this course:\n";
-            inputChanges(cur->data);
-
+            inputChanges(curCourse);
             std::cout << "Course successfully updated!\n";
             break;
         }
-
-        cur = cur->next;
     }
 
     saveAllCourses(allCourses);

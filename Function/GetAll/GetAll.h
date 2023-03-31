@@ -18,15 +18,7 @@ Node<T> *getAll(const std::string &filePath, void (*readFunction)(std::ifstream 
             break;
         }
 
-        Node<T> *newNode = new Node<T>(data);
-
-        if (result) {
-            cur->next = newNode;
-        } else {
-            result = newNode;
-        }
-
-        cur = newNode;
+        pushToEndLinkedList(result, cur, data);
     }
 
     fin.close();

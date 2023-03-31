@@ -8,7 +8,7 @@ Node<Student> *getAllStudentsInCourse(const Course &course) {
     readFile(fin, "Data/Student_Course.txt");
 
     Node<Student> *allStudents = getAllStudents(), *allStudentsInCourse = nullptr, *cur;
-    std::string studentID, course_class;
+    std::string studentID, courseID, className;
 
     while (fin.good()) {
         getline(fin, studentID);
@@ -17,20 +17,13 @@ Node<Student> *getAllStudentsInCourse(const Course &course) {
             break;
         }
 
-        getline(fin, course_class);
+        getline(fin, courseID);
+        getline(fin, className);
 
-        if (course.id == course_class.substr(0, course_class.find('-'))) {
+        if (course.id == courseID && course.className == className) {
             for (Node<Student> *cur2 = allStudents; cur2; cur2 = cur2->next) {
                 if (cur2->data.id == studentID) {
-                    Node<Student> *newNode = new Node(cur2->data);
-
-                    if (!allStudentsInCourse) {
-                        allStudentsInCourse = newNode;
-                    } else {
-                        cur->next = newNode;
-                    }
-
-                    cur = newNode;
+                    pushToEndLinkedList(allStudentsInCourse, cur, cur2 -> data);
                 }
             }
         }
