@@ -21,7 +21,7 @@ void removeStudent(
             tmpStudentCourse->data.className == student_course.className) {
             cur->next = tmpStudentCourse->next;
             delete tmpStudentCourse;
-            saveAllStudent_Course(allStudent_Courses->next);
+            saveAllStudent_Courses(allStudent_Courses->next);
             return;
         }
     }

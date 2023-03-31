@@ -7,8 +7,8 @@
 #include "../SaveCourse/SaveCourse.h"
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
-    Node<Student_Course> *allStudent_Course = new Node(getAllStudent_Courses()),
-                         *cur = allStudent_Course, *tmpStudent_Course;
+    Node<Student_Course> *allStudent_Courses = new Node(getAllStudent_Courses()),
+                         *cur = allStudent_Courses, *tmpStudent_Course;
 
     while (cur->next) {
         if (cur->next->data.courseID == id && cur->next->data.className == className) {
@@ -20,15 +20,15 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
         }
     }
 
-    saveAllStudent_Course(allStudent_Course->next);
-    deleteLinkedList(allStudent_Course);
+    saveAllStudent_Courses(allStudent_Courses->next);
+    deleteLinkedList(allStudent_Courses);
 }
 
 void deleteCourse() {
     Node<Course> *allCourses = new Node(getAllCourses()), *cur = allCourses, *tmpCourse;
 
     if (!allCourses->next) {
-        std::cout << "There is no course at the moment! Please try again later!\n";
+        std::cout << "No course records, please create one and try again later!\n";
         deleteLinkedList(allCourses);
         return;
     }

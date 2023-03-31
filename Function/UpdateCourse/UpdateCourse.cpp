@@ -25,7 +25,7 @@ void updateCourse() {
     Node<Course> *allCourses = getAllCourses(), *cur = allCourses;
 
     if (!allCourses) {
-        std::cout << "There is no course at the moment! Please try again later!\n";
+        std::cout << "No course records, please create one and try again later!\n";
         return;
     }
 
