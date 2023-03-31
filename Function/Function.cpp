@@ -135,7 +135,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 20: {
-            // Export students in a course function
+            exportStudentsInCourse();
             break;
         }
 

@@ -10,6 +10,7 @@
 #include "CreateStudent/CreateStudent.h"
 #include "DeleteCourse/DeleteCourse.h"
 #include "DownloadTemplateCSV/DownloadTemplateCSV.h"
+#include "ExportStudentsInCourse/ExportStudentInCourse.h"
 #include "ImportScoreboard/ImportScoreboard.h"
 #include "LogIn/LogIn.h"
 #include "LogOut/LogOut.h"
