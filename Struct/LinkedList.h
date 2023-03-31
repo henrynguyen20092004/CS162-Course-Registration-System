@@ -28,7 +28,7 @@ void pushToEndLinkedList(Node<T> *&head, Node<T> *&cur, T data) {
     if (!head) {
         head = newNode;
     } else {
-        cur -> next = newNode;
+        cur->next = newNode;
     }
 
     cur = newNode;
