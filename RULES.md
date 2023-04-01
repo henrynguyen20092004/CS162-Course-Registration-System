@@ -10,11 +10,12 @@
 
 # Github rules
 
-1. Branches should be named like this: **feat/CRS-(task-name-with-hyphen)**.
+1. Most branches should be named like this: **feat/CRS-(task-name-with-hyphen)**.
     - For example, the branch for the task **Create a school year** should be named **feat/CRS-create-a-school-year**.
+    - The only exception are **hotfix/CRS- and refactor/CRS-** branches opened by me :d
 2. **Please, for god's sake, write sensible commit message.**
 3. Please resolve all errors and warnings before commiting.
-4. Before merging the branch, a pull request for the branch must be opened and all changes in it must be approved **by at least 3 people**.
+4. Before merging the branch, a pull request for the branch must be opened and all changes in it must be approved **by at least 2 people**.
     - A pull request can only be opened when **the code is ready for review**.
     - It can have the same name as the branch for simplicity's sake.
     - It should have a description about **what have been done in the code** and **how to use the new feature** to make review easier.

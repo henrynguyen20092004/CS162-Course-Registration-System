@@ -28,7 +28,9 @@ void validateStudent(
     }
 
     if (!checkClassExists(allClasses, student.className)) {
-        throw std::invalid_argument("This class doesn't exists, please try again!\n");
+        throw std::invalid_argument(
+            "This class doesn't exists, please create it or try again!\n"
+        );
     }
 }
 
@@ -61,7 +63,6 @@ void saveStudent(const Student &student) {
     fout << student.socialID << '\n';
     fout << student.className << '\n';
     fout.close();
-    std::cout << "Student successfully added!\n";
 }
 
 void createStudent() {
@@ -84,4 +85,5 @@ void createStudent() {
     createStudentAccount(student);
     deleteLinkedList(allStudents);
     deleteLinkedList(allClasses);
+    std::cout << "Student successfully added!\n";
 }

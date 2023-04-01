@@ -5,7 +5,7 @@
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
-#include "../InputCourse/InputCourse.h"
+#include "../InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../SortAndDisplayStudent/SortAndDisplayStudent.h"
 
 void viewStudentsInCourse() {

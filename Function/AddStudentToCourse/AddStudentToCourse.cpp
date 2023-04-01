@@ -6,8 +6,7 @@
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../InputStudentCourse/InputStudentCourse.h"
-#include "../ValidateStudentCourse/ValidateStudentCourse.h"
+#include "../InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 
 void saveStudentToCourse(const Student_Course &student_course) {
     std::ofstream fout;
@@ -27,7 +26,7 @@ void addStudentToCourse() {
 
     do {
         try {
-            inputStudent_Course(student_course);
+            inputStudentCourse(student_course);
             validateStudent_Course(allStudents, allClasses, allCourses, student_course);
             validStudent_Course = true;
         } catch (std::exception &error) {
@@ -35,10 +34,9 @@ void addStudentToCourse() {
         }
     } while (!validStudent_Course);
 
-    std::cout << "Student added successfully!\n";
-
     saveStudentToCourse(student_course);
     deleteLinkedList(allStudents);
     deleteLinkedList(allClasses);
     deleteLinkedList(allCourses);
+    std::cout << "Student successfully added!\n";
 }

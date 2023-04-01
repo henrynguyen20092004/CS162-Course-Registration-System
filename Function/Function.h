@@ -15,11 +15,11 @@
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"
 #include "StudentViewCourses/StudentViewCourses.h"
+#include "CurrentSemester/CurrentSemester.h"
 #include "UpdateCourse/UpdateCourse.h"
 #include "UpdateStudentResult/UpdateStudentResult.h"
 #include "ViewClasses/ViewClasses.h"
 #include "ViewCourses/ViewCourses.h"
-#include "ViewProfileInfo/ViewProfileInfo.h"
 #include "ViewStudentsInClass/ViewStudentsInClass.h"
 #include "ViewStudentsInCourse/ViewStudentsInCourse.h"
 

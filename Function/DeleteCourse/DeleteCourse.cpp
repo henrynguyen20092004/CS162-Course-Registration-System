@@ -3,7 +3,7 @@
 #include "../Check/CheckCourse/CheckCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../InputCourse/InputCourse.h"
+#include "../InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../SaveCourse/SaveCourse.h"
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
@@ -28,7 +28,7 @@ void deleteCourse() {
     Node<Course> *allCourses = new Node(getAllCourses()), *cur = allCourses, *tmpCourse;
 
     if (!allCourses->next) {
-        std::cout << "No course records, please create one and try again later!\n";
+        std::cout << "No course records, please create one and try again!\n";
         deleteLinkedList(allCourses);
         return;
     }
@@ -53,11 +53,11 @@ void deleteCourse() {
             deleteAllStudentsInCourse(course.id, course.className);
             cur->next = tmpCourse->next;
             delete tmpCourse;
-            std::cout << "Course successfully deleted!\n";
             break;
         }
     }
 
     saveAllCourses(allCourses->next);
     deleteLinkedList(allCourses);
+    std::cout << "Course successfully deleted!\n";
 }

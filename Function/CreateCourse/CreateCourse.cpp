@@ -7,19 +7,18 @@
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../Input/Input.h"
-#include "../InputCourse/InputCourse.h"
-#include "../ValidateCourse/ValidateCourse.h"
+#include "../InputAndValidateCourse/InputAndValidateCourse.h"
 
 void validateCourse(
     Node<Course> *allCourses, Node<std::string> *allClasses, const Course &course
 ) {
     validateCourseIDAndClass(allCourses, allClasses, course);
-    validateOtherInformation(course);
+    validateOtherCourseInformation(course);
 }
 
 void inputCourse(Course &course) {
     inputCourseIDAndClassName(course);
-    inputOtherInformation(course);
+    inputOtherCourseInformation(course);
 }
 
 void saveCourse(const Course &course) {
@@ -36,7 +35,6 @@ void saveCourse(const Course &course) {
     fout << course.dayOfWeek << '\n';
     fout << course.sessionNumber << '\n';
     fout.close();
-    std::cout << "Course successfully added!\n";
 }
 
 void createCourse(const Semester &semester) {
@@ -65,4 +63,5 @@ void createCourse(const Semester &semester) {
     saveCourse(course);
     deleteLinkedList(allCourses);
     deleteLinkedList(allClasses);
+    std::cout << "Course successfully added!\n";
 }

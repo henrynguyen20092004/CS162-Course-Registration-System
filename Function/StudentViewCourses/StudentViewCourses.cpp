@@ -38,15 +38,12 @@ void studentViewCourses(const User &user, const Semester &semester) {
     Node<Course> *allCourses = getAllCourses();
     Student_Course tmpStudentCourse;
     Course tmpCourse;
+    bool haveCourses = false;
+    int index = 0;
 
-    if (!allCoursesOfStudent || !allCourses) {
-        std::cout << "You have no course at the moment!\n";
-        return;
-    }
-
-    std::cout << "This is the list of your courses:\n";
     for (Node<Student_Course> *cur1 = allCoursesOfStudent; cur1; cur1 = cur1->next) {
         tmpStudentCourse = cur1->data;
+
         for (Node<Course> *cur2 = allCourses; cur2; cur2 = cur2->next) {
             tmpCourse = cur2->data;
 
@@ -54,9 +51,19 @@ void studentViewCourses(const User &user, const Semester &semester) {
                 tmpCourse.className == tmpStudentCourse.className &&
                 tmpCourse.schoolYearName == semester.schoolYearName &&
                 tmpCourse.semesterNumber == semester.number) {
+                if (!haveCourses) {
+                    std::cout << "This is the list of your courses:\n";
+                    haveCourses = true;
+                }
+
+                std::cout << "This is course number " << ++index << ":\n";
                 viewACourse(tmpCourse);
             }
         }
+    }
+
+    if (!haveCourses) {
+        std::cout << "You have no courses at the moment!\n";
     }
 
     deleteLinkedList(allCoursesOfStudent);

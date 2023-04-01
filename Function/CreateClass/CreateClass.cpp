@@ -19,7 +19,6 @@ void saveClass(const std::string& className) {
     writeFile(fout, "Data/Class.txt", std::ios::app);
     fout << className << '\n';
     fout.close();
-    std::cout << "Class successfully added!\n";
 }
 
 void createClass() {
@@ -39,4 +38,5 @@ void createClass() {
 
     saveClass(className);
     deleteLinkedList(allClasses);
+    std::cout << "Class successfully added!\n";
 }

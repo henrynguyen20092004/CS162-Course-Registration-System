@@ -4,9 +4,8 @@
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../InputStudentCourse/InputStudentCourse.h"
+#include "../InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 #include "../SaveCourse/SaveCourse.h"
-#include "../ValidateStudentCourse/ValidateStudentCourse.h"
 
 void removeStudent(
     Node<Student_Course> *allStudent_Courses, const Student_Course &student_course
@@ -37,7 +36,7 @@ void removeStudentFromCourse() {
 
     do {
         try {
-            inputStudent_Course(student_course);
+            inputStudentCourse(student_course);
             validateStudent_Course(allStudents, allClasses, allCourses, student_course);
 
             if (!checkStudentInCourse(
@@ -59,4 +58,5 @@ void removeStudentFromCourse() {
     deleteLinkedList(allStudents);
     deleteLinkedList(allClasses);
     deleteLinkedList(allCourses);
+    std::cout << "Student successfully removed!\n";
 }
