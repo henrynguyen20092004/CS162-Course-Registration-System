@@ -1,9 +1,17 @@
 #include "ViewStudentsInClass.h"
 
 #include "../Check/CheckClass/CheckClass.h"
+#include "../DisplayStudentInfo/DisplayStudentInfo.h"
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
-#include "../SortAndDisplayStudent/SortAndDisplayStudent.h"
+#include "../SortAndOutputStudents/SortAndOutputStudents.h"
+
+void displayStudentsInClass(std::ostream& out, Student* allStudentsArray, int arraySize) {
+    for (int i = 0; i < arraySize; ++i) {
+        out << "\nThis is the student number " << i + 1 << ":\n";
+        displayStudentInfo(allStudentsArray[i]);
+    }
+}
 
 void viewStudentsInClass() {
     Node<std::string>* allClasses = getAllClasses();
@@ -26,6 +34,6 @@ void viewStudentsInClass() {
         std::cout << "There's no student in this class!\n";
     }
 
-    sortAndDisplayStudent(allStudentsInClass);
+    sortAndOutputStudents(std::cout, allStudentsInClass, &displayStudentsInClass);
     deleteLinkedList(allClasses);
 }

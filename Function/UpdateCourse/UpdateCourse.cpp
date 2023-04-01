@@ -28,17 +28,18 @@ void updateCourse() {
         return;
     }
 
-    bool courseExists;
+    bool validCourse = false;
     Course course;
 
     do {
-        inputCourseIDAndClassName(course);
-        courseExists = checkCourseExists(allCourses, course.id, course.className);
-
-        if (!courseExists) {
-            std::cout << "This course does not exist. Please try again!\n";
+        try {
+            inputCourseIDAndClassName(course);
+            validateCourseIDAndClass(allCourses, course, false);
+            validCourse = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
         }
-    } while (!courseExists);
+    } while (!validCourse);
 
     for (; cur; cur = cur->next) {
         Course curCourse = cur->data;

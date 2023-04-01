@@ -4,8 +4,6 @@
 #include "../OpenFile/OpenFile.h"
 
 void downloadTemplateCSV(const std::string &CSVName) {
-    std::ifstream fin;
-    std::ofstream fout;
     std::string savePath, templateLine;
     bool validPath = false;
 
@@ -24,8 +22,11 @@ void downloadTemplateCSV(const std::string &CSVName) {
                 savePath += savePath.find('\\') != std::string::npos ? '\\' : '/';
             }
 
+            savePath += CSVName;
+            std::ifstream fin;
+            std::ofstream fout;
             readFile(fin, "TemplateCSV/" + CSVName);
-            writeFile(fout, savePath + CSVName);
+            writeFile(fout, savePath);
 
             while (fin.good()) {
                 getline(fin, templateLine);
@@ -40,7 +41,7 @@ void downloadTemplateCSV(const std::string &CSVName) {
         }
     } while (!validPath);
 
-    std::cout << "The template has been downloaded to " << savePath + CSVName << '\n';
+    std::cout << "Template successfully downloaded to " << savePath << '\n';
 }
 
 void downloadPrompt(const std::string &CSVName, void (*importFunction)()) {

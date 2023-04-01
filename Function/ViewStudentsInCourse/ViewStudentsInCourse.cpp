@@ -2,34 +2,42 @@
 
 #include "../Check/CheckClass/CheckClass.h"
 #include "../Check/CheckCourse/CheckCourse.h"
-#include "../GetAll/GetAllClasses/GetAllClasses.h"
+#include "../DisplayStudentInfo/DisplayStudentInfo.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
 #include "../InputAndValidateCourse/InputAndValidateCourse.h"
-#include "../SortAndDisplayStudent/SortAndDisplayStudent.h"
+#include "../SortAndOutputStudents/SortAndOutputStudents.h"
+
+void displayStudentsInCourse(
+    std::ostream& out, Student* allStudentsArray, int arraySize
+) {
+    for (int i = 0; i < arraySize; ++i) {
+        out << "\nThis is the student number " << i + 1 << ":\n";
+        displayStudentInfo(allStudentsArray[i]);
+    }
+}
 
 void viewStudentsInCourse() {
-    Node<std::string>* allClasses = getAllClasses();
     Node<Course>* allCourses = getAllCourses();
     Course course;
-    bool courseExists;
+    bool validCourse = false;
 
     do {
-        inputCourseIDAndClassName(course);
-        courseExists = checkCourseExists(allCourses, course.id, course.className);
-
-        if (!courseExists) {
-            std::cout << "This course does not exist. Please try again!\n";
+        try {
+            inputCourseIDAndClassName(course);
+            validateCourseIDAndClass(allCourses, course, false);
+            validCourse = true;
+        } catch (std::exception& error) {
+            std::cout << error.what();
         }
-    } while (!courseExists);
+    } while (!validCourse);
 
     Node<Student>* allStudentsInCourse = getAllStudentsInCourse(course);
 
     if (!allStudentsInCourse) {
-        std::cout << "There's no student in this course!\n";
+        std::cout << "There's no student in this course, please add some!\n";
     }
 
-    sortAndDisplayStudent(allStudentsInCourse);
-    deleteLinkedList(allClasses);
+    sortAndOutputStudents(std::cout, allStudentsInCourse, &displayStudentsInCourse);
     deleteLinkedList(allCourses);
 }

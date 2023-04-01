@@ -94,7 +94,7 @@ void addNewScoreToOldList(Node<Score> *&allScores, Node<Score> *newScores) {
 void importScoreboard() {
     std::ifstream fin;
     std::string importPath, importLine, _;
-    bool courseExists, validPath = false;
+    bool validCourse = false, validPath = false;
     int curLine = 1;
     Course course;
     Score score;
@@ -106,13 +106,14 @@ void importScoreboard() {
               *curInvalidErrors;
 
     do {
-        inputCourseIDAndClassName(course);
-        courseExists = checkCourseExists(allCourses, course.id, course.className);
-
-        if (!courseExists) {
-            std::cout << "This course does not exist. Please try again!\n";
+        try {
+            inputCourseIDAndClassName(course);
+            validateCourseIDAndClass(allCourses, course, false);
+            validCourse = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
         }
-    } while (!courseExists);
+    } while (!validCourse);
 
     score.student_course.courseID = course.id;
     score.student_course.className = course.className;

@@ -4,15 +4,14 @@
 #include "../Check/CheckCourse/CheckCourse.h"
 #include "../CreateSemester/CreateSemester.h"
 #include "../DateFunction/DateFunction.h"
-#include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../Input/Input.h"
 #include "../InputAndValidateCourse/InputAndValidateCourse.h"
 
 void validateCourse(
-    Node<Course> *allCourses, Node<std::string> *allClasses, const Course &course
+    Node<Course> *allCourses, const Course &course
 ) {
-    validateCourseIDAndClass(allCourses, allClasses, course);
+    validateCourseIDAndClass(allCourses, course, true);
     validateOtherCourseInformation(course);
 }
 
@@ -44,7 +43,6 @@ void createCourse(const Semester &semester) {
     }
 
     Node<Course> *allCourses = getAllCourses();
-    Node<std::string> *allClasses = getAllClasses();
     Course course;
     bool validCourse = false;
     course.schoolYearName = semester.schoolYearName;
@@ -53,7 +51,7 @@ void createCourse(const Semester &semester) {
     do {
         try {
             inputCourse(course);
-            validateCourse(allCourses, allClasses, course);
+            validateCourse(allCourses, course);
             validCourse = true;
         } catch (std::exception &error) {
             std::cout << error.what();
@@ -62,6 +60,5 @@ void createCourse(const Semester &semester) {
 
     saveCourse(course);
     deleteLinkedList(allCourses);
-    deleteLinkedList(allClasses);
     std::cout << "Course successfully added!\n";
 }
