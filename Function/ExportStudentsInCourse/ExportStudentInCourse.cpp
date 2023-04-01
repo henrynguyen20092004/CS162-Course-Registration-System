@@ -26,7 +26,7 @@ void exportStudentsInCourse() {
     std::ofstream fout;
     Node<Student> *studentInCourse = getAllStudentsInCourse(course);
     if (!studentInCourse) {
-        std::cout << "This course is blank";
+        std::cout << "This course is blank\n";
     }
     writeFile(fout, "ExportCSV/StudentInCourse.csv");
     while (studentInCourse) {
