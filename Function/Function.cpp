@@ -90,7 +90,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 11: {
-            // Import students in a course function
+            importStudents();
             break;
         }
 

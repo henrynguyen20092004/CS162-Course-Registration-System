@@ -13,6 +13,7 @@
 #include "../Input/Input.h"
 #include "../InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../SaveScore/SaveScore.h"
+#include "../ShowCSVErrorLines/ShowCSVErrorLines.h"
 
 void getScoreFromLine(Score &score, const std::string &importLine) {
     std::string _;
@@ -63,20 +64,6 @@ void validateScore(
             throw std::runtime_error("Record updated");
         }
     }
-}
-
-void showCSVErrorLines(Node<int> *errorLines, const std::string &errorMessage) {
-    if (!errorLines) {
-        return;
-    }
-
-    std::cout << errorMessage;
-
-    for (; errorLines; errorLines = errorLines->next) {
-        std::cout << ' ' << errorLines->data;
-    }
-
-    std::cout << "\nPlease check them again!\n";
 }
 
 void addNewScoreToOldList(Node<Score> *&allScores, Node<Score> *newScores) {

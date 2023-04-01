@@ -13,6 +13,7 @@
 #include "DownloadTemplateCSV/DownloadTemplateCSV.h"
 #include "ExportStudentsInCourse/ExportStudentsInCourse.h"
 #include "ImportScoreboard/ImportScoreboard.h"
+#include "ImportStudentInfo/ImportStudentInfo.h"
 #include "LogIn/LogIn.h"
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"
