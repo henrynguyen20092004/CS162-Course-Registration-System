@@ -13,9 +13,9 @@
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
-#include "../InputCourse/InputCourse.h"
-#include "../SaveAllStudents/SaveAllStudents.h"
+#include "../InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../SaveCourse/SaveCourse.h"
+#include "../SaveStudent/SaveStudent.h"
 #include "../ShowCSVErrorLines/ShowCSVErrorLines.h"
 
 void getStudentFromLine(Student &student, const std::string &importLine) {
