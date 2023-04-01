@@ -125,7 +125,7 @@ void importStudentsInCourse() {
             while (fin.good()) {
                 getline(fin, importLine);
 
-                if (!fin.good()) {
+                if (importLine == "") {
                     break;
                 }
 
@@ -169,4 +169,7 @@ void importStudentsInCourse() {
     deleteLinkedList(allCourses);
     deleteLinkedList(allClasses);
     deleteLinkedList(allStudents);
+    deleteLinkedList(duplicateErrors);
+    deleteLinkedList(invalidErrors);
+    std::cout << "Students successfully imported into course!\n";
 }
