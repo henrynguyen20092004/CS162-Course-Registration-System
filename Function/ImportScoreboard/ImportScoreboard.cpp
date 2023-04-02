@@ -70,8 +70,7 @@ void addNewScoreToOldList(Node<Score> *&allScores, Node<Score> *newScores) {
     }
 
     Node<Score> *cur = allScores;
-    for (; cur->next; cur = cur->next)
-        ;
+    for (; cur->next; cur = cur->next);
     cur->next = newScores;
 }
 

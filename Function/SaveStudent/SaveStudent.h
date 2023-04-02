@@ -4,6 +4,6 @@
 #include "../../Struct/LinkedList.h"
 #include "../../Struct/Student.h"
 
-void saveAllStudents(Node<Student>* allStudent);
+void saveAllStudents(Node<Student>* allStudents);
 
 #endif

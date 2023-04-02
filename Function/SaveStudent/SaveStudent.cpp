@@ -5,6 +5,7 @@
 void saveAllStudents(Node<Student>* allStudents) {
     std::ofstream fout;
     writeFile(fout, "Data/Student.txt");
+
     for (; allStudents; allStudents = allStudents->next) {
         Student student = allStudents->data;
         fout << student.id << '\n';
@@ -15,5 +16,6 @@ void saveAllStudents(Node<Student>* allStudents) {
         fout << student.socialID << '\n';
         fout << student.className << '\n';
     }
+
     fout.close();
 }

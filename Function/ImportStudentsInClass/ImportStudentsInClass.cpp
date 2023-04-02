@@ -13,7 +13,7 @@
 #include "../SaveStudent/SaveStudent.h"
 #include "../ShowCSVErrorLines/ShowCSVErrorLines.h"
 
-void validateImportedStudent(
+void checkImportedStudent(
     Node<Student> *allStudents, Node<std::string> *allClasses, Student &student
 ) {
     validateStudent(allClasses, student);
@@ -37,8 +37,7 @@ void addNewStudentInClassToOldList(
     }
 
     Node<Student> *cur = allStudents;
-    for (; cur->next; cur = cur->next)
-        ;
+    for (; cur->next; cur = cur->next);
     cur->next = newStudents;
 }
 
@@ -101,7 +100,7 @@ void importStudentsInClass() {
 
                 try {
                     getStudentFromLine(student, importLine);
-                    validateImportedStudent(allStudents, allClasses, student);
+                    checkImportedStudent(allStudents, allClasses, student);
                 } catch (std::invalid_argument &error) {
                     if (!strcmp(error.what(), "Duplicated record")) {
                         pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
