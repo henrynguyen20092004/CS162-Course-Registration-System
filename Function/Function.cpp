@@ -75,7 +75,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 8: {
-            downloadPrompt("StudentInClass.csv", &importStudentsInClass);
+            downloadPrompt("StudentsInClass.csv", &importStudentsInClass);
             break;
         }
 
@@ -90,7 +90,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 11: {
-            downloadPrompt("StudentInCourse.csv", importStudentsInCourse);
+            downloadPrompt("StudentsInCourse.csv", importStudentsInCourse);
             break;
         }
 

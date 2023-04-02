@@ -12,13 +12,12 @@
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
 #include "../InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../SaveCourse/SaveCourse.h"
 #include "../SaveStudent/SaveStudent.h"
 #include "../ShowCSVErrorLines/ShowCSVErrorLines.h"
 
-void getStudentFromLine(Student &student, const std::string &importLine) {
+void getStudentInCourseFromLine(Student &student, const std::string &importLine) {
     std::string _;
     std::istringstream importStream(importLine);
     getline(importStream, _, ',');
@@ -31,10 +30,9 @@ void getStudentFromLine(Student &student, const std::string &importLine) {
     getline(importStream, student.className);
 }
 
-void validateStudentRecord(
-    Student &student, Node<Student> *allStudents, Node<std::string> *allClasses,
-    Node<Student_Course> *allStudentCourse, const Course &course,
-    Node<Student> *allStudentsInCourse
+void checkImportedStudentInCourse(
+    Student &student, Node<std::string> *allClasses, Node<Student> *allStudents,
+    Node<Student_Course> *allStudentCourses, const Student_Course &student_course
 ) {
     if (student.gender == "M" || student.gender == "m") {
         student.gender = "M";
@@ -52,31 +50,42 @@ void validateStudentRecord(
         throw std::invalid_argument("This class doesn't exists, please try again!\n");
     }
 
-    for (; allStudentsInCourse; allStudentsInCourse = allStudentsInCourse->next) {
-        if (allStudentsInCourse->data == student) {
-            throw std::invalid_argument("Duplicated record");
+    for (Node<Student> *curStudent = allStudents; curStudent;
+         curStudent = curStudent->next) {
+        if (curStudent->data == student) {
+            if (checkStudentInCourse(
+                    allStudentCourses, student.id, student_course.courseID,
+                    student_course.className
+                )) {
+                throw std::invalid_argument("Duplicated record");
+            } else {
+                if (!allStudentCourses) {
+                    return;
+                }
+
+                for (; allStudentCourses->next;
+                     allStudentCourses = allStudentCourses->next);
+                allStudentCourses->next = new Node(student_course);
+                throw std::runtime_error("Record added");
+            }
+        } else if (curStudent->data.id == student.id) {
+            curStudent->data = student;
+
+            if (!checkStudentInCourse(
+                    allStudentCourses, student.id, student_course.courseID,
+                    student_course.className
+                )) {
+                if (!allStudentCourses) {
+                    return;
+                }
+
+                for (; allStudentCourses->next;
+                     allStudentCourses = allStudentCourses->next);
+                allStudentCourses->next = new Node(student_course);
+            }
+
+            throw std::runtime_error("Record added");
         }
-    }
-
-    if (!allStudents) {
-        allStudents = new Node(student);
-    }
-
-    Node<Student> *curStudent = allStudents;
-    for (; curStudent->next; curStudent = curStudent->next) {
-        Node<Student> *tmpStudent = curStudent->next;
-        if (tmpStudent->data.id == student.id) {
-            tmpStudent->data = student;
-            break;
-        }
-    }
-
-    if (!curStudent->next) {
-        curStudent->next = new Node(student);
-    }
-
-    if (checkStudentInCourse(allStudentCourse, student.id, course.id, course.className)) {
-        throw std::runtime_error("Student updated successfully!");
     }
 }
 
@@ -89,7 +98,9 @@ void importStudentsInCourse() {
     Student_Course student_course;
     Node<std::string> *allClasses = getAllClasses();
     Node<Course> *allCourses = getAllCourses();
-    Node<Student> *allStudents = getAllStudents();
+    Node<Student_Course> *newStudentCourses = nullptr, *curStudentCourse,
+                         *allStudentCourses = getAllStudent_Courses();
+    Node<Student> *newStudents = nullptr, *curStudent, *allStudents = getAllStudents();
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
 
@@ -98,15 +109,12 @@ void importStudentsInCourse() {
         courseExists = checkCourseExists(allCourses, course.id, course.className);
 
         if (!courseExists) {
-            std::cout << "This course does not exist. Please try again!\n";
+            std::cout << "This course does not exist, please try again!\n";
         }
     } while (!courseExists);
 
     student_course.courseID = course.id;
     student_course.className = course.className;
-
-    Node<Student_Course> *allStudentCourse = getAllStudent_Courses(), *cur;
-    Node<Student> *allStudentsInCourse = getAllStudentsInCourse(course);
 
     do {
         try {
@@ -132,10 +140,11 @@ void importStudentsInCourse() {
                 ++curLine;
 
                 try {
-                    getStudentFromLine(student, importLine);
-                    validateStudentRecord(
-                        student, allStudents, allClasses, allStudentCourse, course,
-                        allStudentsInCourse
+                    getStudentInCourseFromLine(student, importLine);
+                    student_course.studentID = student.id;
+                    checkImportedStudentInCourse(
+                        student, allClasses, allStudents, allStudentCourses,
+                        student_course
                     );
                 } catch (std::invalid_argument &error) {
                     if (!strcmp(error.what(), "Duplicated record")) {
@@ -149,8 +158,8 @@ void importStudentsInCourse() {
                     continue;
                 }
 
-                student_course.studentID = student.id;
-                pushToEndLinkedList(allStudentCourse, cur, student_course);
+                pushToEndLinkedList(newStudentCourses, curStudentCourse, student_course);
+                pushToEndLinkedList(newStudents, curStudent, student);
             }
 
             validPath = true;
@@ -160,16 +169,16 @@ void importStudentsInCourse() {
         }
     } while (!validPath);
 
+    showCSVErrorLines(duplicateErrors, invalidErrors);
+    addNewListToOldList(allStudents, newStudents);
+    addNewListToOldList(allStudentCourses, newStudentCourses);
     saveAllStudents(allStudents);
-    saveAllStudent_Courses(allStudentCourse);
-    showCSVErrorLines(duplicateErrors, "The following line(s) are duplicated:");
-    showCSVErrorLines(invalidErrors, "The following line(s) have invalid student ID(s):");
-    deleteLinkedList(allStudentsInCourse);
-    deleteLinkedList(allStudentCourse);
+    saveAllStudent_Courses(allStudentCourses);
+    deleteLinkedList(allStudentCourses);
     deleteLinkedList(allCourses);
     deleteLinkedList(allClasses);
     deleteLinkedList(allStudents);
     deleteLinkedList(duplicateErrors);
     deleteLinkedList(invalidErrors);
-    std::cout << "Students successfully imported into course!\n";
+    std::cout << "Student successfully imported to course!\n";
 }

@@ -1,6 +1,6 @@
 #include "ShowCSVErrorLines.h"
 
-void showCSVErrorLines(Node<int> *errorLines, const std::string &errorMessage) {
+void showErrorLines(Node<int> *errorLines, const std::string &errorMessage) {
     if (!errorLines) {
         return;
     }
@@ -11,5 +11,15 @@ void showCSVErrorLines(Node<int> *errorLines, const std::string &errorMessage) {
         std::cout << ' ' << errorLines->data;
     }
 
-    std::cout << "\nPlease check them again!\n";
+    std::cout << '\n';
+}
+
+void showCSVErrorLines(Node<int> *duplicateErrors, Node<int> *invalidErrors) {
+    if (!duplicateErrors && !invalidErrors) {
+        return;
+    }
+
+    showErrorLines(duplicateErrors, "The following line(s) are duplicated:");
+    showErrorLines(invalidErrors, "The following line(s) have invalid record(s):");
+    std::cout << "Please check them again!\n";
 }

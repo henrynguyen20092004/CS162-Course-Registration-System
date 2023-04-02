@@ -1,6 +1,7 @@
 #include "ImportStudentsInClass.h"
 
-#include <cstring>
+#include <string.h>
+
 #include <sstream>
 
 #include "../Check/CheckClass/CheckClass.h"
@@ -13,7 +14,19 @@
 #include "../SaveStudent/SaveStudent.h"
 #include "../ShowCSVErrorLines/ShowCSVErrorLines.h"
 
-void checkImportedStudent(
+void getStudentInClassFromLine(Student &student, std::string importLine) {
+    std::string _;
+    std::istringstream importStream(importLine);
+    getline(importStream, _, ',');
+    getline(importStream, student.id, ',');
+    getline(importStream, student.firstName, ',');
+    getline(importStream, student.lastName, ',');
+    getline(importStream, student.gender, ',');
+    getline(importStream, student.dateOfBirth, ',');
+    getline(importStream, student.socialID);
+}
+
+void checkImportedStudentInClass(
     Node<Student> *allStudents, Node<std::string> *allClasses, Student &student
 ) {
     validateStudent(allClasses, student);
@@ -28,37 +41,12 @@ void checkImportedStudent(
     }
 }
 
-void addNewStudentInClassToOldList(
-    Node<Student> *&allStudents, Node<Student> *newStudents
-) {
-    if (!allStudents) {
-        allStudents = newStudents;
-        return;
-    }
-
-    Node<Student> *cur = allStudents;
-    for (; cur->next; cur = cur->next);
-    cur->next = newStudents;
-}
-
-void getStudentFromLine(Student &student, std::string importLine) {
-    std::string _;
-    std::istringstream importStream(importLine);
-    getline(importStream, _, ',');
-    getline(importStream, student.id, ',');
-    getline(importStream, student.firstName, ',');
-    getline(importStream, student.lastName, ',');
-    getline(importStream, student.gender, ',');
-    getline(importStream, student.dateOfBirth, ',');
-    getline(importStream, student.socialID, '\n');
-}
-
 void importStudentsInClass() {
     std::string className, importPath, importLine, _;
     bool classExists = false, validPath = false;
     int curLine = 1;
     Student student;
-    Node<Student> *newStudent = nullptr, *cur, *allStudents = getAllStudents();
+    Node<Student> *newStudents = nullptr, *curStudent, *allStudents = getAllStudents();
     Node<std::string> *allClasses = getAllClasses();
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
@@ -99,8 +87,8 @@ void importStudentsInClass() {
                 ++curLine;
 
                 try {
-                    getStudentFromLine(student, importLine);
-                    checkImportedStudent(allStudents, allClasses, student);
+                    getStudentInClassFromLine(student, importLine);
+                    checkImportedStudentInClass(allStudents, allClasses, student);
                 } catch (std::invalid_argument &error) {
                     if (!strcmp(error.what(), "Duplicated record")) {
                         pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
@@ -113,7 +101,7 @@ void importStudentsInClass() {
                     continue;
                 }
 
-                pushToEndLinkedList(newStudent, cur, student);
+                pushToEndLinkedList(newStudents, curStudent, student);
             }
 
             validPath = true;
@@ -123,9 +111,8 @@ void importStudentsInClass() {
         }
     } while (!validPath);
 
-    showCSVErrorLines(duplicateErrors, "The following line(s) are duplicated:");
-    showCSVErrorLines(invalidErrors, "The following line(s) have invalid record(s):");
-    addNewStudentInClassToOldList(allStudents, newStudent);
+    showCSVErrorLines(duplicateErrors, invalidErrors);
+    addNewListToOldList(allStudents, newStudents);
     saveAllStudents(allStudents);
     deleteLinkedList(allStudents);
     deleteLinkedList(allClasses);
