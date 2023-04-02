@@ -13,6 +13,7 @@
 #include "../Input/Input.h"
 #include "../InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../SaveScore/SaveScore.h"
+#include "../ShowCSVErrorLines/ShowCSVErrorLines.h"
 
 void getScoreFromLine(Score &score, const std::string &importLine) {
     std::string _;
@@ -26,7 +27,7 @@ void getScoreFromLine(Score &score, const std::string &importLine) {
     score.totalMark = scoreInput(importStream);
 }
 
-void validateScore(
+void checkImportedScore(
     const Score &score, Node<Student> *allStudents,
     Node<Student_Course> *allStudent_Courses, Node<Score> *allScores
 ) {
@@ -56,27 +57,10 @@ void validateScore(
         if (allScores->data == score) {
             throw std::invalid_argument("Duplicated record");
         } else if (allScores->data.student_course == score.student_course) {
-            allScores->data.otherMark = score.otherMark;
-            allScores->data.midtermMark = score.midtermMark;
-            allScores->data.finalMark = score.finalMark;
-            allScores->data.totalMark = score.totalMark;
+            allScores->data = score;
             throw std::runtime_error("Record updated");
         }
     }
-}
-
-void showCSVErrorLines(Node<int> *errorLines, const std::string &errorMessage) {
-    if (!errorLines) {
-        return;
-    }
-
-    std::cout << errorMessage;
-
-    for (; errorLines; errorLines = errorLines->next) {
-        std::cout << ' ' << errorLines->data;
-    }
-
-    std::cout << "\nPlease check them again!\n";
 }
 
 void addNewScoreToOldList(Node<Score> *&allScores, Node<Score> *newScores) {
@@ -86,13 +70,11 @@ void addNewScoreToOldList(Node<Score> *&allScores, Node<Score> *newScores) {
     }
 
     Node<Score> *cur = allScores;
-    for (; cur->next; cur = cur->next)
-        ;
+    for (; cur->next; cur = cur->next);
     cur->next = newScores;
 }
 
 void importScoreboard() {
-    std::ifstream fin;
     std::string importPath, importLine, _;
     bool validCourse = false, validPath = false;
     int curLine = 1;
@@ -128,13 +110,14 @@ void importScoreboard() {
                 continue;
             }
 
+            std::ifstream fin;
             readFile(fin, importPath);
             getline(fin, _);
 
             while (fin.good()) {
                 getline(fin, importLine);
 
-                if (importLine == "") {
+                if (!fin.good()) {
                     break;
                 }
 
@@ -142,7 +125,7 @@ void importScoreboard() {
 
                 try {
                     getScoreFromLine(score, importLine);
-                    validateScore(score, allStudents, allStudent_Courses, allScores);
+                    checkImportedScore(score, allStudents, allStudent_Courses, allScores);
                 } catch (std::invalid_argument &error) {
                     if (!strcmp(error.what(), "Duplicated record")) {
                         pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);

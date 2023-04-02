@@ -23,7 +23,7 @@ Node<Student> *getAllStudentsInCourse(const Course &course) {
         if (course.id == courseID && course.className == className) {
             for (Node<Student> *cur2 = allStudents; cur2; cur2 = cur2->next) {
                 if (cur2->data.id == studentID) {
-                    pushToEndLinkedList(allStudentsInCourse, cur, cur2 -> data);
+                    pushToEndLinkedList(allStudentsInCourse, cur, cur2->data);
                 }
             }
         }
