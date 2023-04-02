@@ -34,4 +34,16 @@ void pushToEndLinkedList(Node<T> *&head, Node<T> *&cur, T data) {
     cur = newNode;
 }
 
+template <typename T>
+void addNewListToOldList(Node<T> *&allStudents, Node<T> *newStudents) {
+    if (!allStudents) {
+        allStudents = newStudents;
+        return;
+    }
+
+    Node<T> *cur = allStudents;
+    for (; cur->next; cur = cur->next);
+    cur->next = newStudents;
+}
+
 #endif

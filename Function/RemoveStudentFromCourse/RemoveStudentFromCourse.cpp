@@ -28,6 +28,12 @@ void removeStudent(
 
 void removeStudentFromCourse() {
     Node<Student_Course> *allStudent_Courses = new Node(getAllStudent_Courses());
+
+    if (!allStudent_Courses) {
+        std::cout << "There's no student enrolling in a course right now!\n";
+        return;
+    }
+
     Node<Student> *allStudents = getAllStudents();
     Node<std::string> *allClasses = getAllClasses();
     Node<Course> *allCourses = getAllCourses();

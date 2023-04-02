@@ -14,6 +14,7 @@
 #include "ExportStudentsInCourse/ExportStudentsInCourse.h"
 #include "ImportScoreboard/ImportScoreboard.h"
 #include "ImportStudentsInClass/ImportStudentsInClass.h"
+#include "ImportStudentsInCourse/ImportStudentInCourse.h"
 #include "LogIn/LogIn.h"
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"

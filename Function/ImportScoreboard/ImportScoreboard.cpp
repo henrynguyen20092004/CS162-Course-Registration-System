@@ -63,17 +63,6 @@ void checkImportedScore(
     }
 }
 
-void addNewScoreToOldList(Node<Score> *&allScores, Node<Score> *newScores) {
-    if (!allScores) {
-        allScores = newScores;
-        return;
-    }
-
-    Node<Score> *cur = allScores;
-    for (; cur->next; cur = cur->next);
-    cur->next = newScores;
-}
-
 void importScoreboard() {
     std::string importPath, importLine, _;
     bool validCourse = false, validPath = false;
@@ -148,9 +137,8 @@ void importScoreboard() {
         }
     } while (!validPath);
 
-    showCSVErrorLines(duplicateErrors, "The following line(s) are duplicated:");
-    showCSVErrorLines(invalidErrors, "The following line(s) have invalid record(s):");
-    addNewScoreToOldList(allScores, newScores);
+    showCSVErrorLines(duplicateErrors, invalidErrors);
+    addNewListToOldList(allScores, newScores);
     saveScores(allScores);
     deleteLinkedList(allStudent_Courses);
     deleteLinkedList(allCourses);
