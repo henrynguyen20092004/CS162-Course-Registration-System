@@ -11,10 +11,7 @@
 void updateResult(Node<Score> *&allScores, const Score &score) {
     for (Node<Score> *cur = allScores; cur; cur = cur->next) {
         if (cur->data.student_course == score.student_course) {
-            cur->data.otherMark = score.otherMark;
-            cur->data.midtermMark = score.midtermMark;
-            cur->data.finalMark = score.finalMark;
-            cur->data.totalMark = score.totalMark;
+            cur->data = score;
             return;
         }
     }
