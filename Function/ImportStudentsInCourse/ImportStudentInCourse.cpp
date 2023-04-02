@@ -36,8 +36,6 @@ void validateStudentRecord(
     Node<Student_Course> *allStudentCourse, const Course &course,
     Node<Student> *allStudentsInCourse
 ) {
-    allStudents = new Node(allStudents);
-
     if (student.gender == "M" || student.gender == "m") {
         student.gender = "M";
     } else if (student.gender == "F" || student.gender == "f") {
@@ -60,20 +58,22 @@ void validateStudentRecord(
         }
     }
 
-    for (; allStudents->next; allStudents = allStudents->next) {
-        if (allStudents->next->data.id == student.id) {
-            allStudents->next->data = student;
+    if (!allStudents) {
+        allStudents = new Node(student);
+    }
+
+    Node<Student> *curStudent = allStudents;
+    for (; curStudent->next; curStudent = curStudent->next) {
+        Node<Student> *tmpStudent = curStudent->next;
+        if (tmpStudent->data.id == student.id) {
+            tmpStudent->data = student;
             break;
         }
     }
 
-    if (!allStudents->next) {
-        allStudents->next = new Node(student);
+    if (!curStudent->next) {
+        curStudent->next = new Node(student);
     }
-
-    Node<Student> *tmpStudent = allStudents;
-    allStudents = allStudents->next;
-    delete tmpStudent;
 
     if (checkStudentInCourse(allStudentCourse, student.id, course.id, course.className)) {
         throw std::runtime_error("Student updated successfully!");
@@ -81,7 +81,6 @@ void validateStudentRecord(
 }
 
 void importStudentsInCourse() {
-    std::ifstream fin;
     std::string importPath, importLine, _;
     bool courseExists, validPath = false;
     int curLine = 1;
@@ -119,13 +118,14 @@ void importStudentsInCourse() {
                 continue;
             }
 
+            std::ifstream fin;
             readFile(fin, importPath);
             getline(fin, _);
 
             while (fin.good()) {
                 getline(fin, importLine);
 
-                if (importLine == "") {
+                if (!fin.good()) {
                     break;
                 }
 
