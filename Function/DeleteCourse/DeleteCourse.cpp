@@ -34,16 +34,17 @@ void deleteCourse() {
     }
 
     Course course;
-    bool courseExists;
+    bool validCourse = false;
 
     do {
-        inputCourseIDAndClassName(course);
-        courseExists = checkCourseExists(allCourses, course.id, course.className);
-
-        if (!courseExists) {
-            std::cout << "This course does not exist. Please try again!\n";
+        try {
+            inputCourseIDAndClassName(course);
+            validateCourseIDAndClass(allCourses, course, false);
+            validCourse = true;
+        } catch (std::exception &error) {
+            std::cout << error.what();
         }
-    } while (!courseExists);
+    } while (!validCourse);
 
     for (; cur->next; cur = cur->next) {
         tmpCourse = cur->next;

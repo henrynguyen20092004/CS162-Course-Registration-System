@@ -7,7 +7,7 @@
 void inputCourseIDAndClassName(Course &course);
 void inputOtherCourseInformation(Course &course);
 void validateCourseIDAndClass(
-    Node<Course> *allCourses, Node<std::string> *allClasses, const Course &course
+    Node<Course> *allCourses, const Course &course, bool checkCourseAlreadyExists
 );
 void validateOtherCourseInformation(const Course &course);
 

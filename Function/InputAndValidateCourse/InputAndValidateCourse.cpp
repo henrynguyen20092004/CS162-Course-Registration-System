@@ -29,16 +29,19 @@ void inputOtherCourseInformation(Course &course) {
 }
 
 void validateCourseIDAndClass(
-    Node<Course> *allCourses, Node<std::string> *allClasses, const Course &course
+    Node<Course> *allCourses, const Course &course, bool checkCourseAlreadyExists
 ) {
-    if (!checkClassExists(allClasses, course.className)) {
-        throw std::invalid_argument(
-            "This class does not exist, please create it or try again!\n"
-        );
-    }
-
-    if (checkCourseExists(allCourses, course.id, course.className)) {
-        throw std::invalid_argument("This course already exists, please try again!\n");
+    if (checkCourseExists(allCourses, course.id, course.className) ==
+        checkCourseAlreadyExists) {
+        if (checkCourseAlreadyExists) {
+            throw std::invalid_argument(
+                "This course already exists, please try again!\n"
+            );
+        } else {
+            throw std::invalid_argument(
+                "This course does not exist, please try again!\n"
+            );
+        }
     }
 }
 
