@@ -4,8 +4,8 @@
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
-#include "../SaveCourse/SaveCourse.h"
+#include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
+#include "../Save/SaveCourse/SaveCourse.h"
 
 void removeStudent(
     Node<StudentCourse> *allStudentCourses, const StudentCourse &studentCourse

@@ -3,7 +3,7 @@
 #include "../Check/CheckCourse/CheckCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
-#include "../InputAndValidateCourse/InputAndValidateCourse.h"
+#include "../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../OpenFile/OpenFile.h"
 #include "../SortAndOutputStudents/SortAndOutputStudents.h"
 

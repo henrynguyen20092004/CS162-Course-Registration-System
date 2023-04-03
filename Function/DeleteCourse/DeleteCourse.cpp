@@ -3,12 +3,12 @@
 #include "../Check/CheckCourse/CheckCourse.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../InputAndValidateCourse/InputAndValidateCourse.h"
-#include "../SaveCourse/SaveCourse.h"
+#include "../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
+#include "../Save/SaveCourse/SaveCourse.h"
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
     Node<StudentCourse> *allStudentCourses = new Node(getAllStudentCourses()),
-                         *cur = allStudentCourses, *tmpStudentCourse;
+                        *cur = allStudentCourses, *tmpStudentCourse;
 
     while (cur->next) {
         if (cur->next->data.courseID == id && cur->next->data.className == className) {

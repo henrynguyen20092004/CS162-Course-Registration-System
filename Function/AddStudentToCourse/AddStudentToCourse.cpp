@@ -6,7 +6,7 @@
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
+#include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 
 void saveStudentToCourse(const StudentCourse &studentCourse) {
     std::ofstream fout;
