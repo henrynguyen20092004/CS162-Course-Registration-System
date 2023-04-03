@@ -2,10 +2,10 @@
 #define CHECK_STUDENT_IN_COURSE_H
 
 #include "../../../Struct/LinkedList.h"
-#include "../../../Struct/Student_Course.h"
+#include "../../../Struct/StudentCourse.h"
 
 bool checkStudentInCourse(
-    Node<Student_Course>* allStudent_Courses, const std::string& studentID,
+    Node<StudentCourse>* allStudentCourses, const std::string& studentID,
     const std::string& courseID, const std::string& className
 );
 

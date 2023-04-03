@@ -2,6 +2,7 @@
 
 #include "../GetAll/GetAllUsers/GetAllUsers.h"
 #include "../Input/Input.h"
+#include "../Save/SaveUser/SaveUser.h"
 
 void updateUser(Node<User> *allUsers, const User &newUser) {
     for (; allUsers; allUsers = allUsers->next) {
@@ -9,17 +10,6 @@ void updateUser(Node<User> *allUsers, const User &newUser) {
             allUsers->data = newUser;
             return;
         }
-    }
-}
-
-void saveAllUsers(Node<User> *allUsers) {
-    std::ofstream fout;
-    writeFile(fout, "Data/User.txt");
-
-    for (; allUsers; allUsers = allUsers->next) {
-        User user = allUsers->data;
-        fout << user.username << '\n';
-        fout << user.password << '\n';
     }
 }
 

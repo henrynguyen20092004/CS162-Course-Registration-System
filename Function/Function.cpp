@@ -166,7 +166,7 @@ void processStudentCommand(
 ) {
     switch (commandNumber) {
         case 5: {
-            studentViewCourses(currentUser, currentSemester);
+            viewCoursesOfStudent(currentUser, currentSemester);
             break;
         }
 

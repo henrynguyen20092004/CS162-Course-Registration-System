@@ -10,17 +10,15 @@ void readStudent(std::ifstream &fin, Student &student) {
     getline(fin, student.className);
 }
 
-Node<Student> *getAllStudents() {
-    return getAll("Data/Student.txt", &readStudent);
-}
+Node<Student> *getAllStudents() { return getAll("Data/Student.txt", &readStudent); }
 
-void readStudent_Course(std::ifstream &fin, Student_Course &student_course) {
+void readStudentCourse(std::ifstream &fin, StudentCourse &studentCourse) {
     std::string course_class;
-    getline(fin, student_course.studentID);
-    getline(fin, student_course.courseID);
-    getline(fin, student_course.className);
+    getline(fin, studentCourse.studentID);
+    getline(fin, studentCourse.courseID);
+    getline(fin, studentCourse.className);
 }
 
-Node<Student_Course> *getAllStudent_Courses() {
-    return getAll("Data/Student_Course.txt", &readStudent_Course);
+Node<StudentCourse> *getAllStudentCourses() {
+    return getAll("Data/StudentCourse.txt", &readStudentCourse);
 }

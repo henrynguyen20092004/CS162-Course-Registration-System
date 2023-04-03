@@ -3,8 +3,8 @@
 #include "../GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
 #include "../GetAll/GetAllSemesters/GetAllSemesters.h"
 #include "../Input/Input.h"
-#include "../InputAndValidateSemester/InputAndValidateSemester.h"
-#include "../SaveCurrentSemester/SaveCurrentSemester.h"
+#include "../InputAndValidate/InputAndValidateSemester/InputAndValidateSemester.h"
+#include "../Save/SaveCurrentSemester/SaveCurrentSemester.h"
 
 Semester getCurrentSemester() {
     std::ifstream fin;

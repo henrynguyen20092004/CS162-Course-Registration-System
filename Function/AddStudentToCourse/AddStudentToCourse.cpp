@@ -6,35 +6,35 @@
 #include "../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
+#include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 
-void saveStudentToCourse(const Student_Course &student_course) {
+void saveStudentToCourse(const StudentCourse &studentCourse) {
     std::ofstream fout;
-    writeFile(fout, "Data/Student_Course.txt", std::ios::app);
-    fout << student_course.studentID << '\n';
-    fout << student_course.courseID << '\n';
-    fout << student_course.className << '\n';
+    writeFile(fout, "Data/StudentCourse.txt", std::ios::app);
+    fout << studentCourse.studentID << '\n';
+    fout << studentCourse.courseID << '\n';
+    fout << studentCourse.className << '\n';
     fout.close();
 }
 
 void addStudentToCourse() {
-    Student_Course student_course;
+    StudentCourse studentCourse;
     Node<Student> *allStudents = getAllStudents();
     Node<std::string> *allClasses = getAllClasses();
     Node<Course> *allCourses = getAllCourses();
-    bool validStudent_Course = false;
+    bool validStudentCourse = false;
 
     do {
         try {
-            inputStudentCourse(student_course);
-            validateStudent_Course(allStudents, allClasses, allCourses, student_course);
-            validStudent_Course = true;
+            inputStudentCourse(studentCourse);
+            validateStudentCourse(allStudents, allClasses, allCourses, studentCourse);
+            validStudentCourse = true;
         } catch (std::exception &error) {
             std::cout << error.what();
         }
-    } while (!validStudent_Course);
+    } while (!validStudentCourse);
 
-    saveStudentToCourse(student_course);
+    saveStudentToCourse(studentCourse);
     deleteLinkedList(allStudents);
     deleteLinkedList(allClasses);
     deleteLinkedList(allCourses);
