@@ -5,7 +5,7 @@
 
 Node<Student> *getAllStudentsInCourse(const Course &course) {
     std::ifstream fin;
-    readFile(fin, "Data/Student_Course.txt");
+    readFile(fin, "Data/StudentCourse.txt");
 
     Node<Student> *allStudents = getAllStudents(), *allStudentsInCourse = nullptr, *cur;
     std::string studentID, courseID, className;

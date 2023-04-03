@@ -8,10 +8,10 @@ void saveScores(Node<Score> *allScores) {
 
     for (; allScores; allScores = allScores->next) {
         Score score = allScores->data;
-        Student_Course student_course = score.student_course;
-        fout << student_course.studentID << '\n';
-        fout << student_course.courseID << '\n';
-        fout << student_course.className << '\n';
+        StudentCourse studentCourse = score.studentCourse;
+        fout << studentCourse.studentID << '\n';
+        fout << studentCourse.courseID << '\n';
+        fout << studentCourse.className << '\n';
         fout << score.studentFullName << '\n';
         fout << score.otherMark << '\n';
         fout << score.midtermMark << '\n';

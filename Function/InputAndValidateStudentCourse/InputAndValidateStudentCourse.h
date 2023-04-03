@@ -4,12 +4,12 @@
 #include "../../Struct/Course.h"
 #include "../../Struct/LinkedList.h"
 #include "../../Struct/Student.h"
-#include "../../Struct/Student_Course.h"
+#include "../../Struct/StudentCourse.h"
 
-void inputStudentCourse(Student_Course &student_course);
-void validateStudent_Course(
+void inputStudentCourse(StudentCourse &studentCourse);
+void validateStudentCourse(
     Node<Student> *allStudents, Node<std::string> *allClasses, Node<Course> *allCourses,
-    const Student_Course &student_course
+    const StudentCourse &studentCourse
 );
 
 #endif

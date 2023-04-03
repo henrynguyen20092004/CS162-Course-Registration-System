@@ -19,7 +19,7 @@ void getScoreFromLine(Score &score, const std::string &importLine) {
     std::string _;
     std::istringstream importStream(importLine);
     getline(importStream, _, ',');
-    getline(importStream, score.student_course.studentID, ',');
+    getline(importStream, score.studentCourse.studentID, ',');
     getline(importStream, score.studentFullName, ',');
     score.otherMark = scoreInput(importStream, ',');
     score.midtermMark = scoreInput(importStream, ',');
@@ -29,14 +29,14 @@ void getScoreFromLine(Score &score, const std::string &importLine) {
 
 void checkImportedScore(
     const Score &score, Node<Student> *allStudents,
-    Node<Student_Course> *allStudent_Courses, Node<Score> *allScores
+    Node<StudentCourse> *allStudentCourses, Node<Score> *allScores
 ) {
-    Student_Course student_course = score.student_course;
+    StudentCourse studentCourse = score.studentCourse;
 
-    if (!checkStudentIDExists(allStudents, student_course.studentID) ||
+    if (!checkStudentIDExists(allStudents, studentCourse.studentID) ||
         !checkStudentInCourse(
-            allStudent_Courses, student_course.studentID, student_course.courseID,
-            student_course.className
+            allStudentCourses, studentCourse.studentID, studentCourse.courseID,
+            studentCourse.className
         )) {
         throw std::invalid_argument("Invalid student ID");
     }
@@ -44,7 +44,7 @@ void checkImportedScore(
     for (; allStudents; allStudents = allStudents->next) {
         Student student = allStudents->data;
 
-        if (student.id == score.student_course.studentID) {
+        if (student.id == score.studentCourse.studentID) {
             std::string fullName = student.lastName + ' ' + student.firstName;
 
             if (fullName != score.studentFullName) {
@@ -56,7 +56,7 @@ void checkImportedScore(
     for (; allScores; allScores = allScores->next) {
         if (allScores->data == score) {
             throw std::invalid_argument("Duplicated record");
-        } else if (allScores->data.student_course == score.student_course) {
+        } else if (allScores->data.studentCourse == score.studentCourse) {
             allScores->data = score;
             throw std::runtime_error("Record updated");
         }
@@ -69,7 +69,7 @@ void importScoreboard() {
     int curLine = 1;
     Course course;
     Score score;
-    Node<Student_Course> *allStudent_Courses = getAllStudent_Courses();
+    Node<StudentCourse> *allStudentCourses = getAllStudentCourses();
     Node<Course> *allCourses = getAllCourses();
     Node<Student> *allStudents = getAllStudents();
     Node<Score> *newScores = nullptr, *cur, *allScores = getAllScores();
@@ -86,8 +86,8 @@ void importScoreboard() {
         }
     } while (!validCourse);
 
-    score.student_course.courseID = course.id;
-    score.student_course.className = course.className;
+    score.studentCourse.courseID = course.id;
+    score.studentCourse.className = course.className;
 
     do {
         try {
@@ -114,7 +114,7 @@ void importScoreboard() {
 
                 try {
                     getScoreFromLine(score, importLine);
-                    checkImportedScore(score, allStudents, allStudent_Courses, allScores);
+                    checkImportedScore(score, allStudents, allStudentCourses, allScores);
                 } catch (std::invalid_argument &error) {
                     if (!strcmp(error.what(), "Duplicated record")) {
                         pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
@@ -140,7 +140,7 @@ void importScoreboard() {
     showCSVErrorLines(duplicateErrors, invalidErrors);
     addNewListToOldList(allScores, newScores);
     saveScores(allScores);
-    deleteLinkedList(allStudent_Courses);
+    deleteLinkedList(allStudentCourses);
     deleteLinkedList(allCourses);
     deleteLinkedList(allStudents);
     deleteLinkedList(allScores);

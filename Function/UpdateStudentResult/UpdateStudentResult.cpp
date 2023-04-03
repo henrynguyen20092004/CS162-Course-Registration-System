@@ -10,7 +10,7 @@
 
 void updateResult(Node<Score> *&allScores, const Score &score) {
     for (Node<Score> *cur = allScores; cur; cur = cur->next) {
-        if (cur->data.student_course == score.student_course) {
+        if (cur->data.studentCourse == score.studentCourse) {
             cur->data = score;
             return;
         }
@@ -44,9 +44,9 @@ void inputScoreToUpdate(Node<Course> *allCourses, Score &score) {
 
     do {
         try {
-            inputStudentCourse(score.student_course);
-            validateStudent_Course(
-                allStudents, allClasses, allCourses, score.student_course
+            inputStudentCourse(score.studentCourse);
+            validateStudentCourse(
+                allStudents, allClasses, allCourses, score.studentCourse
             );
             inputMarks(score);
             validInput = true;

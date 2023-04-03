@@ -7,21 +7,21 @@
 #include "../SaveCourse/SaveCourse.h"
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
-    Node<Student_Course> *allStudent_Courses = new Node(getAllStudent_Courses()),
-                         *cur = allStudent_Courses, *tmpStudent_Course;
+    Node<StudentCourse> *allStudentCourses = new Node(getAllStudentCourses()),
+                         *cur = allStudentCourses, *tmpStudentCourse;
 
     while (cur->next) {
         if (cur->next->data.courseID == id && cur->next->data.className == className) {
-            tmpStudent_Course = cur->next;
-            cur->next = tmpStudent_Course->next;
-            delete tmpStudent_Course;
+            tmpStudentCourse = cur->next;
+            cur->next = tmpStudentCourse->next;
+            delete tmpStudentCourse;
         } else {
             cur = cur->next;
         }
     }
 
-    saveAllStudent_Courses(allStudent_Courses->next);
-    deleteLinkedList(allStudent_Courses);
+    saveAllStudentCourses(allStudentCourses->next);
+    deleteLinkedList(allStudentCourses);
 }
 
 void deleteCourse() {

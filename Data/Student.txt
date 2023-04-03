@@ -9,7 +9,7 @@ F
 Hien
 Nguyen Vinh
 M
-03/06/2004
+03/07/2004
 520523572
 22TT2
 2222
@@ -46,14 +46,14 @@ Nguyen Phan Cao
 M
 16/07/2004
 823884502
-22TT3
+22TT2
 6767
 Phuong
 Ngo Tuan
 M
 02/07/1980
 6439346
-22TT3
+22TT2
 6767
 Bear
 Black

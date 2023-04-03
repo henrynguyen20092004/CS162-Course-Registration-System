@@ -1,16 +1,15 @@
 #include "CreateStudentAccount.h"
 
-#include "../../Struct/User.h"
 #include "../OpenFile/OpenFile.h"
 
-std::string createPassword(const std::string &dateOfBirth) {
+std::string getPasswordFromDateOfBirth(const std::string &dateOfBirth) {
     return dateOfBirth.substr(0, 2) + dateOfBirth.substr(3, 2) + dateOfBirth.substr(6);
 }
 
 User createAccount(const Student &student) {
     User studentAccount;
     studentAccount.username = student.id;
-    studentAccount.password = createPassword(student.dateOfBirth);
+    studentAccount.password = getPasswordFromDateOfBirth(student.dateOfBirth);
     return studentAccount;
 }
 

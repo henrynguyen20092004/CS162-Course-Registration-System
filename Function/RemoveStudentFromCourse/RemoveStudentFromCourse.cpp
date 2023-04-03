@@ -8,28 +8,28 @@
 #include "../SaveCourse/SaveCourse.h"
 
 void removeStudent(
-    Node<Student_Course> *allStudent_Courses, const Student_Course &student_course
+    Node<StudentCourse> *allStudentCourses, const StudentCourse &studentCourse
 ) {
-    Node<Student_Course> *cur = allStudent_Courses, *tmpStudentCourse;
+    Node<StudentCourse> *cur = allStudentCourses, *tmpStudentCourse;
 
     for (; cur->next; cur = cur->next) {
         tmpStudentCourse = cur->next;
 
-        if (tmpStudentCourse->data.courseID == student_course.courseID &&
-            tmpStudentCourse->data.studentID == student_course.studentID &&
-            tmpStudentCourse->data.className == student_course.className) {
+        if (tmpStudentCourse->data.courseID == studentCourse.courseID &&
+            tmpStudentCourse->data.studentID == studentCourse.studentID &&
+            tmpStudentCourse->data.className == studentCourse.className) {
             cur->next = tmpStudentCourse->next;
             delete tmpStudentCourse;
-            saveAllStudent_Courses(allStudent_Courses->next);
+            saveAllStudentCourses(allStudentCourses->next);
             return;
         }
     }
 }
 
 void removeStudentFromCourse() {
-    Node<Student_Course> *allStudent_Courses = new Node(getAllStudent_Courses());
+    Node<StudentCourse> *allStudentCourses = new Node(getAllStudentCourses());
 
-    if (!allStudent_Courses) {
+    if (!allStudentCourses) {
         std::cout << "There's no student enrolling in a course right now!\n";
         return;
     }
@@ -37,30 +37,30 @@ void removeStudentFromCourse() {
     Node<Student> *allStudents = getAllStudents();
     Node<std::string> *allClasses = getAllClasses();
     Node<Course> *allCourses = getAllCourses();
-    Student_Course student_course;
+    StudentCourse studentCourse;
     bool studentExist = false;
 
     do {
         try {
-            inputStudentCourse(student_course);
-            validateStudent_Course(allStudents, allClasses, allCourses, student_course);
+            inputStudentCourse(studentCourse);
+            validateStudentCourse(allStudents, allClasses, allCourses, studentCourse);
 
             if (!checkStudentInCourse(
-                    allStudent_Courses, student_course.studentID, student_course.courseID,
-                    student_course.className
+                    allStudentCourses, studentCourse.studentID, studentCourse.courseID,
+                    studentCourse.className
                 )) {
                 std::cout << "This student isn't in the course, please try again!\n";
                 continue;
             }
 
-            removeStudent(allStudent_Courses, student_course);
+            removeStudent(allStudentCourses, studentCourse);
             studentExist = true;
         } catch (std::exception &error) {
             std::cout << error.what();
         }
     } while (!studentExist);
 
-    deleteLinkedList(allStudent_Courses);
+    deleteLinkedList(allStudentCourses);
     deleteLinkedList(allStudents);
     deleteLinkedList(allClasses);
     deleteLinkedList(allCourses);
