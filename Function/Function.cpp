@@ -187,10 +187,13 @@ void menu() {
             if (currentUser.username == "") {
                 currentUser = logIn();
             } else {
-                std::cout << "\nThe current semester is semester "
-                          << currentSemester.number << ", "
-                          << currentSemester.schoolYearName << '\n';
-                std::cout << "What do you want to do?\n";
+                if (currentSemester.schoolYearName != "") {
+                    std::cout << "\nThe current semester is semester "
+                              << currentSemester.number << ", "
+                              << currentSemester.schoolYearName;
+                }
+
+                std::cout << "\nWhat do you want to do?\n";
                 displayUserCommand();
                 int maxNumberOfCommand;
 

@@ -11,9 +11,13 @@ Semester getCurrentSemester() {
     readFile(fin, "Data/CurrentSemester.txt");
     Semester semester;
     getline(fin, semester.schoolYearName);
-    semester.number = intInput(fin);
-    getline(fin, semester.startDate);
-    getline(fin, semester.endDate);
+
+    if (fin.good()) {
+        semester.number = intInput(fin);
+        getline(fin, semester.startDate);
+        getline(fin, semester.endDate);
+    }
+
     fin.close();
     return semester;
 }
