@@ -1,7 +1,6 @@
 #include "ImportStudentInCourse.h"
 
-#include <string.h>
-
+#include <cstring>
 #include <sstream>
 
 #include "../../Check/CheckClass/CheckClass.h"
@@ -15,6 +14,7 @@
 #include "../../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../../GetAll/GetAllUsers/GetAllUsers.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
+#include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../Save/SaveStudent/SaveStudent.h"
@@ -40,21 +40,7 @@ void checkImportedStudentInCourse(
     Node<StudentCourse> *allStudentCourses, Node<User> *allUsers,
     const StudentCourse &studentCourse
 ) {
-    if (student.gender == "M" || student.gender == "m") {
-        student.gender = "M";
-    } else if (student.gender == "F" || student.gender == "f") {
-        student.gender = "F";
-    } else {
-        throw std::invalid_argument("Invalid gender, please try again!\n");
-    }
-
-    if (!checkDate(student.dateOfBirth)) {
-        throw std::invalid_argument("Invalid date of birth, please try again!\n");
-    }
-
-    if (!checkClassExists(allClasses, student.className)) {
-        throw std::invalid_argument("This class doesn't exists, please try again!\n");
-    }
+    validateStudent(allClasses, student);
 
     for (Node<Student> *curStudent = allStudents; curStudent;
          curStudent = curStudent->next) {

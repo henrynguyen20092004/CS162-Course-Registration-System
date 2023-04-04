@@ -22,8 +22,20 @@ Semester getCurrentSemester() {
     return semester;
 }
 
-void changeCurrentSemester(Semester &currentSemester) {
+void changeCurrentSemester(Semester &currentSemester, const User &currentUser) {
     Node<Semester> *allSemesters = getAllSemesters(), *cur = allSemesters;
+
+    if (!allSemesters) {
+        std::cout << "There's no semester at the moment, please ";
+
+        if (currentUser.username != "admin") {
+            std::cout << "ask the admin to ";
+        }
+
+        std::cout << "create one!\n";
+        return;
+    }
+
     Node<std::string> *allSchoolYears = getAllSchoolYears();
     bool validSemester = false;
 

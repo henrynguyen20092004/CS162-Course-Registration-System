@@ -41,7 +41,7 @@ void displayStudentCommand() {
 void processUserCommand(int commandNumber, Semester &currentSemester, User &currentUser) {
     switch (commandNumber) {
         case 1: {
-            changeCurrentSemester(currentSemester);
+            changeCurrentSemester(currentSemester, currentUser);
             break;
         }
 
@@ -191,6 +191,8 @@ void menu() {
                     std::cout << "\nThe current semester is semester "
                               << currentSemester.number << ", "
                               << currentSemester.schoolYearName;
+                } else {
+                    std::cout << "\nThere's no semester right now";
                 }
 
                 std::cout << "\nWhat do you want to do?\n";

@@ -1,7 +1,6 @@
 #include "ImportScoreboard.h"
 
-#include <string.h>
-
+#include <cstring>
 #include <sstream>
 
 #include "../../Check/CheckCourse/CheckCourse.h"

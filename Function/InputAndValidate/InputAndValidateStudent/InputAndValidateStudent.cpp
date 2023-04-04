@@ -32,7 +32,8 @@ void validateStudent(Node<std::string> *allClasses, Student &student) {
         throw std::invalid_argument("Invalid gender, please try again!\n");
     }
 
-    if (!checkDate(student.dateOfBirth)) {
+    if (!checkDate(student.dateOfBirth) ||
+        !compareDate(student.dateOfBirth, getToday())) {
         throw std::invalid_argument("Invalid date of birth, please try again!\n");
     }
 

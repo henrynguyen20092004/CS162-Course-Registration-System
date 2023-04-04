@@ -34,6 +34,12 @@ Node<StudentCourse> *getAllCoursesOfStudent(const std::string &studentID) {
 }
 
 void viewCoursesOfStudent(const User &user, const Semester &semester) {
+    if (semester.schoolYearName == "") {
+        std::cout
+            << "There's no semester at the moment, please change the current semester!\n";
+        return;
+    }
+
     Node<StudentCourse> *allCoursesOfStudent = getAllCoursesOfStudent(user.username);
     Node<Course> *allCourses = getAllCourses();
     StudentCourse tmpStudentCourse;

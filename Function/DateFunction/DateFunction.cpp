@@ -1,5 +1,7 @@
 #include "DateFunction.h"
 
+#include <ctime>
+
 bool checkLeapYear(int year) {
     return year % 400 == 0 || ((year % 4 == 0) && (year % 100 != 0));
 }
@@ -80,4 +82,22 @@ bool compareDate(const std::string &firstDate, const std::string &secondDate) {
     }
 
     return stoi(secondDate.substr(0, 2)) > stoi(firstDate.substr(0, 2));
+}
+
+std::string getToday() {
+    time_t now = time(0);
+    tm *today = localtime(&now);
+    std::string day = std::to_string(today->tm_mday),
+                month = std::to_string(1 + today->tm_mon),
+                year = std::to_string(1900 + today->tm_year);
+
+    if (day.size() == 1) {
+        day = '0' + day;
+    }
+
+    if (month.size() == 1) {
+        month = '0' + month;
+    }
+
+    return day + '/' + month + '/' + year;
 }
