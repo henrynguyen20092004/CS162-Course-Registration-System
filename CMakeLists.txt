@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION "3.26")
 
 project(CS162-Course-Registration-System)
 
-FILE(GLOB_RECURSE SOURCES FOLLOW_SYMLINKS CONFIGURE_DEPENDS main.cpp Function/*.cpp)
+FILE(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS main.cpp Function/*.cpp GUI/*.cpp)
 
-set(RAYLIB_VERSION 4.5.0)
 set(CMAKE_EXPORT_COMPILE_COMMANDS OFF)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
 
+set(RAYLIB_VERSION 4.5.0)
 find_package(raylib ${RAYLIB_VERSION} QUIET)
 if (NOT raylib_FOUND)
   include(FetchContent)
@@ -20,9 +20,28 @@ if (NOT raylib_FOUND)
     set(FETCHCONTENT_QUIET NO)
     FetchContent_Populate(raylib)
     set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    set(BUILD_GAMES    OFF CACHE BOOL "" FORCE)
     add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
+  endif()
+endif()
+
+set(RAYGUI_VERSION 3.2)
+find_package(raygui ${RAYGUI_VERSION} QUIET)
+if (NOT raygui_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    raygui
+    URL https://github.com/raysan5/raygui/archive/refs/tags/${RAYGUI_VERSION}.tar.gz
+  )
+  FetchContent_GetProperties(raygui)
+  if (NOT raygui_POPULATED)
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_Populate(raygui)
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    add_subdirectory(${raygui_SOURCE_DIR}/projects/CMake ${raygui_BINARY_DIR})
   endif()
 endif()
 
 add_executable(CRS ${SOURCES})
 target_link_libraries(CRS raylib)
+target_link_libraries(CRS raygui)
