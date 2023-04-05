@@ -1,10 +1,8 @@
 #include "Function/Function.h"
-#include "raylib.h"
+#include "GUI/MainWindow.h"
 
 int main() {
-    InitWindow(800, 450, "test");
-    CloseWindow();
+    initMainWindow();
     // menu();
-    system("pause");
     return 0;
 }
