@@ -1,5 +1,6 @@
 #include "ChangePassword.h"
 
+#include "../../Struct/Data.h"
 #include "../GetAll/GetAllUsers/GetAllUsers.h"
 #include "../Input/Input.h"
 #include "../Save/SaveUser/SaveUser.h"
@@ -15,7 +16,6 @@ void updateUser(Node<User> *allUsers, const User &newUser) {
 
 void changePassword(User &currentUser) {
     std::string oldPassword, newPassword, confirmNewPassword;
-    Node<User> *allUsers = getAllUsers();
 
     do {
         oldPassword = passwordInput("Please enter your old password: ");
@@ -33,7 +33,7 @@ void changePassword(User &currentUser) {
     } while (newPassword != confirmNewPassword);
 
     currentUser.password = newPassword;
-    updateUser(allUsers, currentUser);
-    saveAllUsers(allUsers);
+    updateUser(allData.allUsers, currentUser);
+    saveAllUsers(allData.allUsers);
     std::cout << "Password successfully changed!\n";
 }

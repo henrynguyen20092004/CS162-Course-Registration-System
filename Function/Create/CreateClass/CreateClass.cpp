@@ -1,7 +1,7 @@
 #include "CreateClass.h"
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckClass/CheckClass.h"
-#include "../../GetAll/GetAllClasses/GetAllClasses.h"
 
 void validateClass(Node<std::string>* allClasses, const std::string& className) {
     if (checkClassExists(allClasses, className)) {
@@ -19,17 +19,17 @@ void saveClass(const std::string& className) {
     writeFile(fout, "Data/Class.txt", std::ios::app);
     fout << className << '\n';
     fout.close();
+    addNewItemsToOldList(allData.allClasses, new Node(className));
 }
 
 void createClass() {
-    Node<std::string>* allClasses = getAllClasses();
     std::string className;
     bool validClass = false;
 
     do {
         try {
             inputClass(className);
-            validateClass(allClasses, className);
+            validateClass(allData.allClasses, className);
             validClass = true;
         } catch (std::exception& error) {
             std::cout << error.what();
@@ -37,6 +37,5 @@ void createClass() {
     } while (!validClass);
 
     saveClass(className);
-    deleteLinkedList(allClasses);
     std::cout << "Class successfully added!\n";
 }

@@ -1,9 +1,7 @@
 #include "RemoveStudentFromCourse.h"
 
+#include "../../Struct/Data.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
-#include "../GetAll/GetAllClasses/GetAllClasses.h"
-#include "../GetAll/GetAllCourses/GetAllCourses.h"
-#include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 #include "../Save/SaveCourse/SaveCourse.h"
 
@@ -27,23 +25,21 @@ void removeStudent(
 }
 
 void removeStudentFromCourse() {
-    Node<StudentCourse> *allStudentCourses = new Node(getAllStudentCourses());
-
-    if (!allStudentCourses) {
+    if (!allData.allStudentCourses) {
         std::cout << "There's no student enrolling in a course right now!\n";
         return;
     }
 
-    Node<Student> *allStudents = getAllStudents();
-    Node<std::string> *allClasses = getAllClasses();
-    Node<Course> *allCourses = getAllCourses();
+    Node<StudentCourse> *allStudentCourses = new Node(allData.allStudentCourses);
     StudentCourse studentCourse;
     bool studentExist = false;
 
     do {
         try {
             inputStudentCourse(studentCourse);
-            validateStudentCourse(allStudents, allClasses, allCourses, studentCourse);
+            validateStudentCourse(
+                allData.allStudents, allData.allClasses, allData.allCourses, studentCourse
+            );
 
             if (!checkStudentInCourse(
                     allStudentCourses, studentCourse.studentID, studentCourse.courseID,
@@ -60,9 +56,7 @@ void removeStudentFromCourse() {
         }
     } while (!studentExist);
 
-    deleteLinkedList(allStudentCourses);
-    deleteLinkedList(allStudents);
-    deleteLinkedList(allClasses);
-    deleteLinkedList(allCourses);
+    allData.allStudentCourses = allStudentCourses->next;
+    delete allStudentCourses;
     std::cout << "Student successfully removed!\n";
 }

@@ -44,7 +44,7 @@ void downloadTemplateCSV(const std::string &CSVName) {
     std::cout << "Template successfully downloaded to " << savePath << '\n';
 }
 
-void downloadPrompt(const std::string &CSVName, void (*importFunction)()) {
+void downloadPrompt(const std::string &CSVName, void (*importCallBack)()) {
     int choice;
     bool validChoice = false;
 
@@ -64,7 +64,7 @@ void downloadPrompt(const std::string &CSVName, void (*importFunction)()) {
                 }
 
                 case 2: {
-                    importFunction();
+                    importCallBack();
                     break;
                 }
 

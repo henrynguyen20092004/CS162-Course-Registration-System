@@ -1,6 +1,6 @@
 #include "LogIn.h"
 
-#include "../GetAll/GetAllUsers/GetAllUsers.h"
+#include "../../Struct/Data.h"
 #include "../Input/Input.h"
 
 bool userExists(Node<User> *allUsers, const User &user) {
@@ -17,7 +17,6 @@ bool userExists(Node<User> *allUsers, const User &user) {
 }
 
 User logIn() {
-    Node<User> *allUsers = getAllUsers();
     User user;
     bool found;
 
@@ -25,7 +24,7 @@ User logIn() {
         std::cout << "Please enter your username: ";
         getline(std::cin, user.username);
         user.password = passwordInput("Please enter your password: ");
-        found = userExists(allUsers, user);
+        found = userExists(allData.allUsers, user);
 
         if (!found) {
             std::cout << "Invalid credentials, please try again!\n";
@@ -33,6 +32,5 @@ User logIn() {
     } while (!found);
 
     std::cout << "Welcome, " << user.username << '\n';
-    deleteLinkedList(allUsers);
     return user;
 }

@@ -1,13 +1,12 @@
 #include "DeleteCourse.h"
 
+#include "../../Struct/Data.h"
 #include "../Check/CheckCourse/CheckCourse.h"
-#include "../GetAll/GetAllCourses/GetAllCourses.h"
-#include "../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../Save/SaveCourse/SaveCourse.h"
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
-    Node<StudentCourse> *allStudentCourses = new Node(getAllStudentCourses()),
+    Node<StudentCourse> *allStudentCourses = new Node(allData.allStudentCourses),
                         *cur = allStudentCourses, *tmpStudentCourse;
 
     while (cur->next) {
@@ -20,18 +19,19 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
         }
     }
 
-    saveAllStudentCourses(allStudentCourses->next);
-    deleteLinkedList(allStudentCourses);
+    allData.allStudentCourses = allStudentCourses->next;
+    saveAllStudentCourses(allData.allStudentCourses);
+    delete allStudentCourses;
 }
 
 void deleteCourse() {
-    Node<Course> *allCourses = new Node(getAllCourses()), *cur = allCourses, *tmpCourse;
-
-    if (!allCourses->next) {
+    if (!allData.allCourses) {
         std::cout << "No course records, please create one and try again!\n";
-        deleteLinkedList(allCourses);
         return;
     }
+
+    Node<Course> *allCourses = new Node(allData.allCourses), *cur = allCourses,
+                 *tmpCourse;
 
     Course course;
     bool validCourse = false;
@@ -58,7 +58,8 @@ void deleteCourse() {
         }
     }
 
-    saveAllCourses(allCourses->next);
-    deleteLinkedList(allCourses);
+    allData.allCourses = allCourses->next;
+    saveAllCourses(allData.allCourses);
+    delete allCourses;
     std::cout << "Course successfully deleted!\n";
 }

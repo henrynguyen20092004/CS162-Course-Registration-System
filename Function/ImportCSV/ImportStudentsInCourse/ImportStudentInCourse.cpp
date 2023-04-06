@@ -3,16 +3,13 @@
 #include <cstring>
 #include <sstream>
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../GetAll/GetAllClasses/GetAllClasses.h"
-#include "../../GetAll/GetAllCourses/GetAllCourses.h"
-#include "../../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../../GetAll/GetAllUsers/GetAllUsers.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../../OperatorOverload/OperatorOverload.h"
@@ -36,45 +33,49 @@ void getStudentInCourseFromLine(Student &student, const std::string &importLine)
 }
 
 void checkImportedStudentInCourse(
-    Student &student, Node<std::string> *allClasses, Node<Student> *allStudents,
-    Node<StudentCourse> *allStudentCourses, Node<User> *allUsers,
+    Student &student, Node<Student> *allStudents, Node<StudentCourse> *allStudentCourses,
     const StudentCourse &studentCourse
 ) {
-    validateStudent(allClasses, student);
+    Node<StudentCourse> *newNode = new Node(studentCourse);
+    validateStudent(allData.allClasses, student);
 
-    for (Node<Student> *curStudent = allStudents; curStudent;
-         curStudent = curStudent->next) {
-        if (curStudent->data == student) {
+    for (; allStudents; allStudents = allStudents->next) {
+        if (allStudents->data == student) {
             if (checkStudentInCourse(
                     allStudentCourses, student.id, studentCourse.courseID,
                     studentCourse.className
                 )) {
+                delete newNode;
                 throw std::invalid_argument("Duplicated record");
             } else {
                 if (!allStudentCourses) {
-                    return;
+                    allStudentCourses = newNode;
+                    throw std::runtime_error("Record added");
                 }
 
                 for (; allStudentCourses->next;
                      allStudentCourses = allStudentCourses->next);
-                allStudentCourses->next = new Node(studentCourse);
+                allStudentCourses->next = newNode;
                 throw std::runtime_error("Record added");
             }
-        } else if (curStudent->data.id == student.id) {
-            updateDefaultStudentPassword(allStudents, allUsers, student);
-            curStudent->data = student;
+        } else if (allStudents->data.id == student.id) {
+            updateDefaultStudentPassword(allStudents, allData.allUsers, student);
+            allStudents->data = student;
 
             if (!checkStudentInCourse(
                     allStudentCourses, student.id, studentCourse.courseID,
                     studentCourse.className
                 )) {
                 if (!allStudentCourses) {
-                    return;
+                    allStudentCourses = newNode;
+                    throw std::runtime_error("Record added");
                 }
 
                 for (; allStudentCourses->next;
                      allStudentCourses = allStudentCourses->next);
-                allStudentCourses->next = new Node(studentCourse);
+                allStudentCourses->next = newNode;
+            } else {
+                delete newNode;
             }
 
             throw std::runtime_error("Record added");
@@ -89,18 +90,15 @@ void importStudentsInCourse() {
     Course course;
     Student student;
     StudentCourse studentCourse;
-    Node<User> *newUsers = nullptr, *curUser, *allUsers = getAllUsers();
-    Node<std::string> *allClasses = getAllClasses();
-    Node<Course> *allCourses = getAllCourses();
-    Node<StudentCourse> *newStudentCourses = nullptr, *curStudentCourse,
-                        *allStudentCourses = getAllStudentCourses();
-    Node<Student> *newStudents = nullptr, *curStudent, *allStudents = getAllStudents();
+    Node<User> *newUsers = nullptr, *curUser;
+    Node<StudentCourse> *newStudentCourses = nullptr, *curStudentCourse;
+    Node<Student> *newStudents = nullptr, *curStudent;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
 
     do {
         inputCourseIDAndClassName(course);
-        courseExists = checkCourseExists(allCourses, course.id, course.className);
+        courseExists = checkCourseExists(allData.allCourses, course.id, course.className);
 
         if (!courseExists) {
             std::cout << "This course does not exist, please try again!\n";
@@ -137,7 +135,7 @@ void importStudentsInCourse() {
                     getStudentInCourseFromLine(student, importLine);
                     studentCourse.studentID = student.id;
                     checkImportedStudentInCourse(
-                        student, allClasses, allStudents, allStudentCourses, allUsers,
+                        student, allData.allStudents, allData.allStudentCourses,
                         studentCourse
                     );
                 } catch (std::invalid_argument &error) {
@@ -166,17 +164,12 @@ void importStudentsInCourse() {
     } while (!validPath);
 
     showCSVErrorLines(duplicateErrors, invalidErrors);
-    addNewListToOldList(allStudents, newStudents);
-    addNewListToOldList(allStudentCourses, newStudentCourses);
-    addNewListToOldList(allUsers, newUsers);
-    saveAllUsers(allUsers);
-    saveAllStudents(allStudents);
-    saveAllStudentCourses(allStudentCourses);
-    deleteLinkedList(allStudentCourses);
-    deleteLinkedList(allCourses);
-    deleteLinkedList(allClasses);
-    deleteLinkedList(allStudents);
-    deleteLinkedList(allUsers);
+    addNewItemsToOldList(allData.allStudents, newStudents);
+    addNewItemsToOldList(allData.allStudentCourses, newStudentCourses);
+    addNewItemsToOldList(allData.allUsers, newUsers);
+    saveAllUsers(allData.allUsers);
+    saveAllStudents(allData.allStudents);
+    saveAllStudentCourses(allData.allStudentCourses);
     deleteLinkedList(duplicateErrors);
     deleteLinkedList(invalidErrors);
     std::cout << "Student successfully imported to course!\n";

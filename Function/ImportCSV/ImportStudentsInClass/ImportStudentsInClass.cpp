@@ -3,13 +3,11 @@
 #include <cstring>
 #include <sstream>
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../GetAll/GetAllClasses/GetAllClasses.h"
-#include "../../GetAll/GetAllStudents/GetAllStudents.h"
-#include "../../GetAll/GetAllUsers/GetAllUsers.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../../OpenFile/OpenFile.h"
 #include "../../OperatorOverload/OperatorOverload.h"
@@ -30,17 +28,14 @@ void getStudentInClassFromLine(Student &student, std::string importLine) {
     getline(importStream, student.socialID);
 }
 
-void checkImportedStudentInClass(
-    Node<Student> *allStudents, Node<std::string> *allClasses, Node<User> *allUsers,
-    Student &student
-) {
-    validateStudent(allClasses, student);
+void checkImportedStudentInClass(Node<Student> *allStudents, Student &student) {
+    validateStudent(allData.allClasses, student);
 
     for (; allStudents; allStudents = allStudents->next) {
         if (allStudents->data == student) {
             throw std::invalid_argument("Duplicated record");
         } else if (allStudents->data.id == student.id) {
-            updateDefaultStudentPassword(allStudents, allUsers, student);
+            updateDefaultStudentPassword(allStudents, allData.allUsers, student);
             allStudents->data = student;
             throw std::runtime_error("Record updated");
         }
@@ -52,16 +47,15 @@ void importStudentsInClass() {
     bool classExists = false, validPath = false;
     int curLine = 1;
     Student student;
-    Node<User> *newUsers = nullptr, *curUser, *allUsers = getAllUsers();
-    Node<Student> *newStudents = nullptr, *curStudent, *allStudents = getAllStudents();
-    Node<std::string> *allClasses = getAllClasses();
+    Node<User> *newUsers = nullptr, *curUser;
+    Node<Student> *newStudents = nullptr, *curStudent;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
 
     do {
         std::cout << "Please enter the class' name: ";
         getline(std::cin, className);
-        classExists = checkClassExists(allClasses, className);
+        classExists = checkClassExists(allData.allClasses, className);
 
         if (!classExists) {
             std::cout << "This class doesn't exists, please create it or try again!\n";
@@ -95,9 +89,7 @@ void importStudentsInClass() {
 
                 try {
                     getStudentInClassFromLine(student, importLine);
-                    checkImportedStudentInClass(
-                        allStudents, allClasses, allUsers, student
-                    );
+                    checkImportedStudentInClass(allData.allStudents, student);
                 } catch (std::invalid_argument &error) {
                     if (!strcmp(error.what(), "Duplicated record")) {
                         pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
@@ -123,13 +115,10 @@ void importStudentsInClass() {
     } while (!validPath);
 
     showCSVErrorLines(duplicateErrors, invalidErrors);
-    addNewListToOldList(allStudents, newStudents);
-    addNewListToOldList(allUsers, newUsers);
-    saveAllUsers(allUsers);
-    saveAllStudents(allStudents);
-    deleteLinkedList(allUsers);
-    deleteLinkedList(allStudents);
-    deleteLinkedList(allClasses);
+    addNewItemsToOldList(allData.allStudents, newStudents);
+    addNewItemsToOldList(allData.allUsers, newUsers);
+    saveAllUsers(allData.allUsers);
+    saveAllStudents(allData.allStudents);
     deleteLinkedList(duplicateErrors);
     deleteLinkedList(invalidErrors);
     std::cout << "Student successfully imported to class!\n";

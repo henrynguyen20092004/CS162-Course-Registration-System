@@ -1,9 +1,9 @@
 #include "CreateSemester.h"
 
+#include "../../../Struct/Data.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
-#include "../../GetAll/GetAllSemesters/GetAllSemesters.h"
 #include "../../InputAndValidate/InputAndValidateSemester/InputAndValidateSemester.h"
+#include "../../OpenFile/OpenFile.h"
 #include "../../Save/SaveCurrentSemester/SaveCurrentSemester.h"
 
 bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &semester) {
@@ -48,15 +48,15 @@ bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &seme
                : compareDate(semester.endDate, curSemester.startDate);
 }
 
-void addSemseterToList(Node<Semester> *&allSemesters, const Semester &newSemester) {
+void addSemseterToList(const Semester &newSemester) {
     Node<Semester> *newNode = new Node(newSemester);
 
-    if (!allSemesters) {
-        allSemesters = newNode;
+    if (!allData.allSemesters) {
+        allData.allSemesters = newNode;
         return;
     }
 
-    Node<Semester> *cur = allSemesters, *prev = nullptr;
+    Node<Semester> *cur = allData.allSemesters, *prev = nullptr;
 
     while (cur && cur->data.schoolYearName < newSemester.schoolYearName) {
         prev = cur;
@@ -70,8 +70,8 @@ void addSemseterToList(Node<Semester> *&allSemesters, const Semester &newSemeste
     }
 
     if (!prev) {
-        allSemesters = newNode;
-        allSemesters->next = cur;
+        newNode->next = cur;
+        allData.allSemesters = newNode;
     } else {
         newNode->next = cur;
         prev->next = newNode;
@@ -90,13 +90,10 @@ void saveSemester(Node<Semester> *allSemesters) {
         allSemesters = allSemesters->next;
     }
 
-    deleteLinkedList(allSemesters);
     fout.close();
 }
 
 Semester createSemester() {
-    Node<Semester> *allSemesters = getAllSemesters();
-    Node<std::string> *allSchoolYears = getAllSchoolYears();
     Semester semester;
     bool validSemester = false;
 
@@ -105,11 +102,11 @@ Semester createSemester() {
             inputSemesterSchoolYearAndNumber(semester);
             inputSemesterDates(semester);
             validateSemesterSchoolYearAndNumber(
-                allSemesters, allSchoolYears, semester, true
+                allData.allSemesters, allData.allSchoolYears, semester, true
             );
             validateSemesterDates(semester);
 
-            if (!checkDateBeforeAddToList(allSemesters, semester)) {
+            if (!checkDateBeforeAddToList(allData.allSemesters, semester)) {
                 std::cout << "Your start/end date can't overlap other semesters, please "
                              "try again!\n";
                 continue;
@@ -121,11 +118,9 @@ Semester createSemester() {
         }
     } while (!validSemester);
 
-    addSemseterToList(allSemesters, semester);
-    saveSemester(allSemesters);
+    addSemseterToList(semester);
+    saveSemester(allData.allSemesters);
     saveCurrentSemester(semester);
-    deleteLinkedList(allSemesters);
-    deleteLinkedList(allSchoolYears);
     std::cout << "Semester successfully added!\n";
     return semester;
 }

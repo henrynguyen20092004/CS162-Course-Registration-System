@@ -5,14 +5,14 @@
 #include "../OpenFile/OpenFile.h"
 
 template <typename T>
-Node<T> *getAll(const std::string &filePath, void (*readFunction)(std::ifstream &, T &)) {
+Node<T> *getAll(const std::string &filePath, void (*readCallBack)(std::ifstream &, T &)) {
     std::ifstream fin;
     readFile(fin, filePath);
     T data;
     Node<T> *result = nullptr, *cur;
 
     while (fin.good()) {
-        readFunction(fin, data);
+        readCallBack(fin, data);
 
         if (!fin.good()) {
             break;

@@ -1,7 +1,7 @@
 #include "UpdateCourse.h"
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
-#include "../../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../View/ViewCourses/ViewCourses.h"
@@ -21,9 +21,7 @@ void inputChanges(Course &course) {
 }
 
 void updateCourse() {
-    Node<Course> *allCourses = getAllCourses(), *cur = allCourses;
-
-    if (!allCourses) {
+    if (!allData.allCourses) {
         std::cout << "No course records, please create one and try again later!\n";
         return;
     }
@@ -34,14 +32,14 @@ void updateCourse() {
     do {
         try {
             inputCourseIDAndClassName(course);
-            validateCourseIDAndClass(allCourses, course, false);
+            validateCourseIDAndClass(allData.allCourses, course, false);
             validCourse = true;
         } catch (std::exception &error) {
             std::cout << error.what();
         }
     } while (!validCourse);
 
-    for (; cur; cur = cur->next) {
+    for (Node<Course> *cur = allData.allCourses; cur; cur = cur->next) {
         Course curCourse = cur->data;
 
         if (course.id == curCourse.id && course.className == curCourse.className) {
@@ -53,7 +51,6 @@ void updateCourse() {
         }
     }
 
-    saveAllCourses(allCourses);
-    deleteLinkedList(allCourses);
+    saveAllCourses(allData.allCourses);
     std::cout << "Course successfully updated!\n";
 }

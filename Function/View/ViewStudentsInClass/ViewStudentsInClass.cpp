@@ -1,7 +1,7 @@
 #include "ViewStudentsInClass.h"
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckClass/CheckClass.h"
-#include "../../GetAll/GetAllClasses/GetAllClasses.h"
 #include "../../GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
 #include "../../SortAndOutputStudents/SortAndOutputStudents.h"
 #include "../ViewStudentInfo/ViewStudentInfo.h"
@@ -14,14 +14,13 @@ void displayStudentsInClass(std::ostream& out, Student* allStudentsArray, int ar
 }
 
 void viewStudentsInClass() {
-    Node<std::string>* allClasses = getAllClasses();
     std::string className;
     bool classExists;
 
     do {
         std::cout << "Please enter the class' name: ";
         getline(std::cin, className);
-        classExists = checkClassExists(allClasses, className);
+        classExists = checkClassExists(allData.allClasses, className);
 
         if (!classExists) {
             std::cout << "This class doesn't exists, please create it or try again!\n";
@@ -35,5 +34,4 @@ void viewStudentsInClass() {
     }
 
     sortAndOutputStudents(std::cout, allStudentsInClass, &displayStudentsInClass);
-    deleteLinkedList(allClasses);
 }

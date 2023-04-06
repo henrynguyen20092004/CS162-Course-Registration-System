@@ -3,6 +3,6 @@
 
 #include <iostream>
 
-void downloadPrompt(const std::string &CSVName, void (*importFunction)());
+void downloadPrompt(const std::string &CSVName, void (*importCallBack)());
 
 #endif

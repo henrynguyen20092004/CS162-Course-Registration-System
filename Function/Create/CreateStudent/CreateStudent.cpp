@@ -1,10 +1,9 @@
 #include "CreateStudent.h"
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../GetAll/GetAllClasses/GetAllClasses.h"
-#include "../../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../../Input/Input.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"
@@ -20,11 +19,10 @@ void saveCreatedStudent(const Student &student) {
     fout << student.socialID << '\n';
     fout << student.className << '\n';
     fout.close();
+    addNewItemsToOldList(allData.allStudents, new Node(student));
 }
 
 void createStudent() {
-    Node<Student> *allStudents = getAllStudents();
-    Node<std::string> *allClasses = getAllClasses();
     Student student;
     bool validStudent = false;
 
@@ -32,12 +30,12 @@ void createStudent() {
         try {
             inputStudent(student);
 
-            if (checkStudentIDExists(allStudents, student.id)) {
+            if (checkStudentIDExists(allData.allStudents, student.id)) {
                 std::cout << "This student already exists, please try again!\n";
                 continue;
             }
 
-            validateStudent(allClasses, student);
+            validateStudent(allData.allClasses, student);
             validStudent = true;
         } catch (std::exception &error) {
             std::cout << error.what();
@@ -46,7 +44,5 @@ void createStudent() {
 
     saveCreatedStudent(student);
     createStudentAccount(student);
-    deleteLinkedList(allStudents);
-    deleteLinkedList(allClasses);
     std::cout << "Student successfully added!\n";
 }
