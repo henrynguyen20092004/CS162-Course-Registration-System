@@ -1,7 +1,7 @@
 #include "ExportStudentsInCourse.h"
 
+#include "../../Struct/Data.h"
 #include "../Check/CheckCourse/CheckCourse.h"
-#include "../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
 #include "../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../OpenFile/OpenFile.h"
@@ -23,14 +23,13 @@ void exportStudentsToFile(std::ostream &out, Student *allStudentsArray, int arra
 
 void exportStudentsInCourse() {
     Course course;
-    Node<Course> *allCourses = getAllCourses();
     bool validCourse = false, validPath = false;
     std::string exportPath;
 
     do {
         try {
             inputCourseIDAndClassName(course);
-            validateCourseIDAndClass(allCourses, course, false);
+            validateCourseIDAndClass(allData.allCourses, course, false);
             validCourse = true;
         } catch (std::exception &error) {
             std::cout << error.what();
@@ -69,7 +68,6 @@ void exportStudentsInCourse() {
         }
     } while (!validPath);
 
-    deleteLinkedList(allCourses);
     deleteLinkedList(allStudentsInCourse);
     std::cout << "Student's info successfully exported to " << exportPath << '\n';
 }

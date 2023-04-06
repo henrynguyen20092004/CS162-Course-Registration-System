@@ -7,9 +7,8 @@ struct Node {
     Node *next;
 
     Node() : next(nullptr) {}
-    Node(const T &data) : data(data), next(nullptr) {}
     Node(Node *next) : next(next) {}
-    Node(const T &data, Node *next) : data(data), next(next) {}
+    Node(const T &data, Node *next = nullptr) : data(data), next(next) {}
 };
 
 template <typename T>
@@ -35,15 +34,15 @@ void pushToEndLinkedList(Node<T> *&head, Node<T> *&cur, T data) {
 }
 
 template <typename T>
-void addNewListToOldList(Node<T> *&allStudents, Node<T> *newStudents) {
-    if (!allStudents) {
-        allStudents = newStudents;
+void addNewItemsToOldList(Node<T> *&allItems, Node<T> *newItems) {
+    if (!allItems) {
+        allItems = newItems;
         return;
     }
 
-    Node<T> *cur = allStudents;
+    Node<T> *cur = allItems;
     for (; cur->next; cur = cur->next);
-    cur->next = newStudents;
+    cur->next = newItems;
 }
 
 #endif

@@ -1,4 +1,4 @@
-#include "Function.h"
+#include "MainFunction.h"
 
 #include "Input/Input.h"
 #include "OpenFile/OpenFile.h"

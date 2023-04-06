@@ -1,8 +1,11 @@
-#include "Function/Function.h"
-#include "GUI/MainWindow.h"
+#include "Function/MainFunction.h"
+#include "GUI/MainGUI.h"
+#include "Struct/Data.h"
+
+Data allData;
 
 int main() {
-    initMainWindow();
-    // menu();
+    // mainWindow();
+    menu();
     return 0;
 }

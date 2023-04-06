@@ -6,7 +6,7 @@
 
 void sortAndOutputStudents(
     std::ostream& out, Node<Student>* allStudents,
-    void (*outputStudentsFunction
+    void (*outputStudentsCallBack
     )(std::ostream& out, Student* allStudentsArray, int arraySize)
 );
 

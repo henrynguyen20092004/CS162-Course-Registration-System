@@ -16,7 +16,7 @@ bool compareStudent(const Student& firstStudent, const Student& secondStudent) {
 
 void sortAndOutputStudents(
     std::ostream& out, Node<Student>* allStudents,
-    void (*outputStudentsFunction
+    void (*outputStudentsCallBack
     )(std::ostream& out, Student* allStudentsArray, int arraySize)
 ) {
     int arraySize = getLinkedListSize(allStudents);
@@ -28,7 +28,7 @@ void sortAndOutputStudents(
     }
 
     std::sort(allStudentsArray, allStudentsArray + arraySize, compareStudent);
-    outputStudentsFunction(out, allStudentsArray, arraySize);
+    outputStudentsCallBack(out, allStudentsArray, arraySize);
     delete[] allStudentsArray;
     deleteLinkedList(allStudents);
 }

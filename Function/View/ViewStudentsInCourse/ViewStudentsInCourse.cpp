@@ -1,8 +1,8 @@
 #include "ViewStudentsInCourse.h"
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
-#include "../../GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../SortAndOutputStudents/SortAndOutputStudents.h"
@@ -18,14 +18,13 @@ void displayStudentsInCourse(
 }
 
 void viewStudentsInCourse() {
-    Node<Course>* allCourses = getAllCourses();
     Course course;
     bool validCourse = false;
 
     do {
         try {
             inputCourseIDAndClassName(course);
-            validateCourseIDAndClass(allCourses, course, false);
+            validateCourseIDAndClass(allData.allCourses, course, false);
             validCourse = true;
         } catch (std::exception& error) {
             std::cout << error.what();
@@ -39,5 +38,4 @@ void viewStudentsInCourse() {
     }
 
     sortAndOutputStudents(std::cout, allStudentsInCourse, &displayStudentsInCourse);
-    deleteLinkedList(allCourses);
 }

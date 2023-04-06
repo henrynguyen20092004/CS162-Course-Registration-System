@@ -3,12 +3,10 @@
 #include <cstring>
 #include <sstream>
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
-#include "../../GetAll/GetAllCourses/GetAllCourses.h"
-#include "../../GetAll/GetAllScores/GetAllScores.h"
-#include "../../GetAll/GetAllStudents/GetAllStudents.h"
 #include "../../Input/Input.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../OperatorOverload/OperatorOverload.h"
@@ -28,14 +26,13 @@ void getScoreFromLine(Score &score, const std::string &importLine) {
 }
 
 void checkImportedScore(
-    const Score &score, Node<Student> *allStudents,
-    Node<StudentCourse> *allStudentCourses, Node<Score> *allScores
+    const Score &score, Node<Student> *allStudents, Node<Score> *allScores
 ) {
     StudentCourse studentCourse = score.studentCourse;
 
     if (!checkStudentIDExists(allStudents, studentCourse.studentID) ||
         !checkStudentInCourse(
-            allStudentCourses, studentCourse.studentID, studentCourse.courseID,
+            allData.allStudentCourses, studentCourse.studentID, studentCourse.courseID,
             studentCourse.className
         )) {
         throw std::invalid_argument("Invalid student ID");
@@ -69,17 +66,14 @@ void importScoreboard() {
     int curLine = 1;
     Course course;
     Score score;
-    Node<StudentCourse> *allStudentCourses = getAllStudentCourses();
-    Node<Course> *allCourses = getAllCourses();
-    Node<Student> *allStudents = getAllStudents();
-    Node<Score> *newScores = nullptr, *cur, *allScores = getAllScores();
+    Node<Score> *newScores = nullptr, *cur;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
 
     do {
         try {
             inputCourseIDAndClassName(course);
-            validateCourseIDAndClass(allCourses, course, false);
+            validateCourseIDAndClass(allData.allCourses, course, false);
             validCourse = true;
         } catch (std::exception &error) {
             std::cout << error.what();
@@ -114,7 +108,7 @@ void importScoreboard() {
 
                 try {
                     getScoreFromLine(score, importLine);
-                    checkImportedScore(score, allStudents, allStudentCourses, allScores);
+                    checkImportedScore(score, allData.allStudents, allData.allScores);
                 } catch (std::invalid_argument &error) {
                     if (!strcmp(error.what(), "Duplicated record")) {
                         pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
@@ -138,12 +132,8 @@ void importScoreboard() {
     } while (!validPath);
 
     showCSVErrorLines(duplicateErrors, invalidErrors);
-    addNewListToOldList(allScores, newScores);
-    saveScores(allScores);
-    deleteLinkedList(allStudentCourses);
-    deleteLinkedList(allCourses);
-    deleteLinkedList(allStudents);
-    deleteLinkedList(allScores);
+    addNewItemsToOldList(allData.allScores, newScores);
+    saveScores(allData.allScores);
     deleteLinkedList(duplicateErrors);
     deleteLinkedList(invalidErrors);
     std::cout << "Scoreboard successfully imported!\n";

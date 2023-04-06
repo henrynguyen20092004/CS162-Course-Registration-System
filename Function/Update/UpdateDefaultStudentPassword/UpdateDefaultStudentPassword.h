@@ -6,7 +6,7 @@
 #include "../../../Struct/User.h"
 
 void updateDefaultStudentPassword(
-    Node<Student> *allStudents, Node<User> *allUsers, const Student &student
+    Node<Student> *curStudent, Node<User> *allUsers, const Student &student
 );
 
 #endif

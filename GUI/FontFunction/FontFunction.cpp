@@ -1,15 +1,13 @@
 #include "FontFunction.h"
 
-#include "../GlobalStyle/GlobalStyle.h"
-
 Font loadFont(const char* titlePath, int titleSize) {
     return LoadFontEx(titlePath, titleSize, nullptr, 256);
 }
 
 Font loadDefaultTitleFont() {
-    return loadFont(titleFontPath, titleFontSize);
+    return loadFont(DEFAULT_TITLE_PATH, DEFAULT_TITLE_SIZE);
 }
 
 Font loadDefaultTextFont() {
-    return loadFont(textFontPath, textFontSize);
+    return loadFont(DEFAULT_TEXT_PATH, DEFAULT_TEXT_SIZE);
 }

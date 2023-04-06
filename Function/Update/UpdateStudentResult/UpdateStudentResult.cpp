@@ -1,18 +1,15 @@
 #include "UpdateStudentResult.h"
 
-#include "../../GetAll/GetAllClasses/GetAllClasses.h"
-#include "../../GetAll/GetAllCourses/GetAllCourses.h"
-#include "../../GetAll/GetAllScores/GetAllScores.h"
-#include "../../GetAll/GetAllStudents/GetAllStudents.h"
+#include "../../../Struct/Data.h"
 #include "../../Input/Input.h"
 #include "../../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveScore/SaveScore.h"
 
-void updateResult(Node<Score> *&allScores, const Score &score) {
-    for (Node<Score> *cur = allScores; cur; cur = cur->next) {
-        if (cur->data.studentCourse == score.studentCourse) {
-            cur->data = score;
+void updateResult(Node<Score> *allScores, const Score &score) {
+    for (; allScores; allScores = allScores->next) {
+        if (allScores->data.studentCourse == score.studentCourse) {
+            allScores->data = score;
             return;
         }
     }
@@ -38,16 +35,15 @@ void inputMarks(Score &score) {
     } while (!validScore);
 }
 
-void inputScoreToUpdate(Node<Course> *allCourses, Score &score) {
-    Node<std::string> *allClasses = getAllClasses();
-    Node<Student> *allStudents = getAllStudents();
+void inputScoreToUpdate(Score &score) {
     bool validInput = false;
 
     do {
         try {
             inputStudentCourse(score.studentCourse);
             validateStudentCourse(
-                allStudents, allClasses, allCourses, score.studentCourse
+                allData.allStudents, allData.allClasses, allData.allCourses,
+                score.studentCourse
             );
             inputMarks(score);
             validInput = true;
@@ -55,31 +51,22 @@ void inputScoreToUpdate(Node<Course> *allCourses, Score &score) {
             std::cout << error.what();
         }
     } while (!validInput);
-
-    deleteLinkedList(allStudents);
-    deleteLinkedList(allClasses);
 }
 
 void updateStudentResult() {
-    Node<Course> *allCourses = getAllCourses();
-
-    if (!allCourses) {
+    if (!allData.allCourses) {
         std::cout << "No course records, please create one and try again!\n";
         return;
     }
 
-    Node<Score> *allScores = getAllScores();
-
-    if (!allScores) {
+    if (!allData.allScores) {
         std::cout << "No score records, please import some and try again!\n";
         return;
     }
 
     Score score;
-    inputScoreToUpdate(allCourses, score);
-    updateResult(allScores, score);
-    saveScores(allScores);
-    deleteLinkedList(allCourses);
-    deleteLinkedList(allScores);
+    inputScoreToUpdate(score);
+    updateResult(allData.allScores, score);
+    saveScores(allData.allScores);
     std::cout << "Student's result successfully update!\n";
 }

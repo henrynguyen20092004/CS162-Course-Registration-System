@@ -1,7 +1,6 @@
 #include "CurrentSemester.h"
 
-#include "../GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
-#include "../GetAll/GetAllSemesters/GetAllSemesters.h"
+#include "../../Struct/Data.h"
 #include "../Input/Input.h"
 #include "../InputAndValidate/InputAndValidateSemester/InputAndValidateSemester.h"
 #include "../Save/SaveCurrentSemester/SaveCurrentSemester.h"
@@ -23,9 +22,7 @@ Semester getCurrentSemester() {
 }
 
 void changeCurrentSemester(Semester &currentSemester, const User &currentUser) {
-    Node<Semester> *allSemesters = getAllSemesters(), *cur = allSemesters;
-
-    if (!allSemesters) {
+    if (!allData.allSemesters) {
         std::cout << "There's no semester at the moment, please ";
 
         if (currentUser.username != "admin") {
@@ -36,14 +33,14 @@ void changeCurrentSemester(Semester &currentSemester, const User &currentUser) {
         return;
     }
 
-    Node<std::string> *allSchoolYears = getAllSchoolYears();
+    Node<Semester> *cur = allData.allSemesters;
     bool validSemester = false;
 
     do {
         try {
             inputSemesterSchoolYearAndNumber(currentSemester);
             validateSemesterSchoolYearAndNumber(
-                allSemesters, allSchoolYears, currentSemester, false
+                allData.allSemesters, allData.allSchoolYears, currentSemester, false
             );
 
             for (; cur; cur = cur->next) {
@@ -64,7 +61,5 @@ void changeCurrentSemester(Semester &currentSemester, const User &currentUser) {
     } while (!validSemester);
 
     saveCurrentSemester(currentSemester);
-    deleteLinkedList(allSemesters);
-    deleteLinkedList(allSchoolYears);
     std::cout << "Current semester successfully changed!\n";
 }

@@ -1,5 +1,5 @@
-#ifndef FUNCTION_H
-#define FUNCTION_H
+#ifndef MAIN_FUNCTION_H
+#define MAIN_FUNCTION_H
 
 #include "AddStudentToCourse/AddStudentToCourse.h"
 #include "ChangePassword/ChangePassword.h"

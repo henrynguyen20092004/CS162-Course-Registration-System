@@ -1,7 +1,6 @@
 #include "ViewCoursesOfStudent.h"
 
-#include "../../../Struct/StudentCourse.h"
-#include "../../GetAll/GetAllCourses/GetAllCourses.h"
+#include "../../../Struct/Data.h"
 #include "../ViewCourses/ViewCourses.h"
 
 Node<StudentCourse> *getAllCoursesOfStudent(const std::string &studentID) {
@@ -41,7 +40,6 @@ void viewCoursesOfStudent(const User &user, const Semester &semester) {
     }
 
     Node<StudentCourse> *allCoursesOfStudent = getAllCoursesOfStudent(user.username);
-    Node<Course> *allCourses = getAllCourses();
     StudentCourse tmpStudentCourse;
     Course tmpCourse;
     bool haveCourses = false;
@@ -50,7 +48,7 @@ void viewCoursesOfStudent(const User &user, const Semester &semester) {
     for (Node<StudentCourse> *cur1 = allCoursesOfStudent; cur1; cur1 = cur1->next) {
         tmpStudentCourse = cur1->data;
 
-        for (Node<Course> *cur2 = allCourses; cur2; cur2 = cur2->next) {
+        for (Node<Course> *cur2 = allData.allCourses; cur2; cur2 = cur2->next) {
             tmpCourse = cur2->data;
 
             if (tmpCourse.id == tmpStudentCourse.courseID &&
@@ -73,5 +71,4 @@ void viewCoursesOfStudent(const User &user, const Semester &semester) {
     }
 
     deleteLinkedList(allCoursesOfStudent);
-    deleteLinkedList(allCourses);
 }

@@ -1,7 +1,7 @@
 #include "CreateSchoolYear.h"
 
+#include "../../../Struct/Data.h"
 #include "../../Check/CheckSchoolYear/CheckSchoolYear.h"
-#include "../../GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
 
 void validateSchoolYear(
     Node<std::string> *allSchoolYears, const std::string &schoolYearName
@@ -26,17 +26,17 @@ void saveSchoolYear(const std::string &schoolYearName) {
     writeFile(fout, "Data/SchoolYear.txt", std::ios::app);
     fout << schoolYearName << '\n';
     fout.close();
+    addNewItemsToOldList(allData.allSchoolYears, new Node(schoolYearName));
 }
 
 void createSchoolYear() {
-    Node<std::string> *allSchoolYears = getAllSchoolYears();
     std::string schoolYearName;
     bool validSchoolYear = false;
 
     do {
         try {
             inputSchoolYear(schoolYearName);
-            validateSchoolYear(allSchoolYears, schoolYearName);
+            validateSchoolYear(allData.allSchoolYears, schoolYearName);
             validSchoolYear = true;
         } catch (std::exception &error) {
             std::cout << error.what();
@@ -44,6 +44,5 @@ void createSchoolYear() {
     } while (!validSchoolYear);
 
     saveSchoolYear(schoolYearName);
-    deleteLinkedList(allSchoolYears);
     std::cout << "School year successfully added!\n";
 }
