@@ -4,6 +4,8 @@
 
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
+#include "LogInPage/LogInPage.h"
+#include "Page/Page.h"
 
 Font titleFont, textFont;
 
@@ -20,9 +22,15 @@ void mainWindow() {
     GuiSetFont(textFont);
 
     // Testing
-
-    UnloadImage(windowIcon);
-    UnloadFont(titleFont);
-    UnloadFont(textFont);
-    CloseWindow();
+    try {
+        User currentUser = logInPage();
+        std::cout << "Welcome, " << currentUser.username;
+        Page tempPage;
+        tempPage.mainLoop();
+    } catch (std::runtime_error &error) {
+        UnloadImage(windowIcon);
+        UnloadFont(titleFont);
+        UnloadFont(textFont);
+        CloseWindow();
+    }
 }

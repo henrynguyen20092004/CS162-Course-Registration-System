@@ -185,7 +185,7 @@ void menu() {
     do {
         try {
             if (currentUser.username == "") {
-                currentUser = logIn();
+                // currentUser = logIn();
             } else {
                 if (currentSemester.schoolYearName != "") {
                     std::cout << "\nThe current semester is semester "
