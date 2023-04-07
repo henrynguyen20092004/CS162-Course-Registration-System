@@ -14,6 +14,13 @@
 #define SCREEN_HEIGHT 900
 #define DEFAULT_TITLE_SIZE 48
 #define DEFAULT_TEXT_SIZE 24
+#define DEFAULT_ITEM_HEIGHT 60.0f
+#define DEFAULT_PADDING \
+    (Vector2) { 20.0f, 20.0f }
+#define DEFAULT_TEXT_MARGIN \
+    (Vector2) { 6.0f, 6.0f }
+#define DEFAULT_ITEM_MARGIN \
+    (Vector2) { 20.0f, 20.0f }
 #define MAX_INPUT_CHAR 256
 #define SPACING 1.0f
 

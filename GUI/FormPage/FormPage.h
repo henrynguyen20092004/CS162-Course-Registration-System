@@ -3,6 +3,7 @@
 
 #include <raylib.h>
 
+#include "../GlobalStyle.h"
 #include "../Page/Page.h"
 
 class FormPage : public Page {
@@ -18,14 +19,14 @@ class FormPage : public Page {
     const char *errorText;
     bool *editModes;
     int numberOfInputs;
-    float childrenPosX;
+    float childrenPosX, *inputPosY;
     Vector2 mainBoxSize, mainBoxPosition, padding;
     virtual void submitCallBack() {}
 
    public:
     FormPage(
-        const char *title, int numberOfInputs, Vector2 mainBoxSize,
-        Vector2 padding = {20.0f, 20.0f}
+        const char *title, int numberOfInputs, float firstInputPosY, Vector2 mainBoxSize,
+        Vector2 padding = DEFAULT_PADDING
     );
     ~FormPage();
 };

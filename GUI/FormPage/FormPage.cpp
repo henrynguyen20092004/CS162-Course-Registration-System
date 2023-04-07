@@ -2,11 +2,11 @@
 
 #include "../Button/Button.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
-#include "../GlobalStyle.h"
 #include "../TextFunction/TextFunction.h"
 
 FormPage::FormPage(
-    const char *title, int numberOfInputs, Vector2 mainBoxSize, Vector2 padding
+    const char *title, int numberOfInputs, float firstInputPosY, Vector2 mainBoxSize,
+    Vector2 padding
 )
     : title(title),
       numberOfInputs(numberOfInputs),
@@ -17,18 +17,23 @@ FormPage::FormPage(
     childrenPosX = mainBoxPosition.x + padding.x;
     inputs = new char *[numberOfInputs];
     editModes = new bool[numberOfInputs];
+    inputPosY = new float[numberOfInputs];
 
     for (int i = 0; i < numberOfInputs; i++) {
         inputs[i] = new char[MAX_INPUT_CHAR];
         inputs[i][0] = '\0';
         editModes[i] = false;
+        inputPosY[i] = firstInputPosY + i * (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y +
+                                             DEFAULT_TEXT_SIZE + DEFAULT_TEXT_MARGIN.y);
     }
 }
 
 void FormPage::drawPage() { drawFormBox(); }
 
 void FormPage::drawFormBox() {
-    Button submitButton("Submit", mainBoxPosition.y + mainBoxSize.y - padding.y - 60.0f);
+    Button submitButton(
+        "Submit", mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT
+    );
 
     DrawRectangleV(mainBoxPosition, mainBoxSize, WHITE);
     drawDefaultTitle(titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y});
@@ -41,12 +46,10 @@ void FormPage::drawFormBox() {
 }
 
 void FormPage::drawErrorText() {
-    drawDefaultText(
-        textFont, errorText,
-        {childrenPosX,
-         mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_TEXT_SIZE - 70.0f},
-        ERROR_TEXT_COLOR
-    );
+    float posY = mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_TEXT_SIZE -
+                 DEFAULT_ITEM_HEIGHT - DEFAULT_TEXT_MARGIN.y;
+
+    drawDefaultText(textFont, errorText, {childrenPosX, posY}, ERROR_TEXT_COLOR);
 }
 
 FormPage::~FormPage() {

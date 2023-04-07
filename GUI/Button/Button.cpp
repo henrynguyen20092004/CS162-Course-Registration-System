@@ -4,8 +4,6 @@
 #include "../TextFunction/TextFunction.h"
 
 Button::Button(const char *text, float posY, float posX, float width)
-    : buttonBox({posX, posY, width, 60.0f}), text(text) {}
+    : buttonBox({posX, posY, width, DEFAULT_ITEM_HEIGHT}), text(text) {}
 
-bool Button::drawButton() {
-    return GuiButton(buttonBox, text);
-}
+bool Button::drawButton() { return GuiButton(buttonBox, text); }
