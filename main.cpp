@@ -5,7 +5,7 @@
 Data allData;
 
 int main() {
-    // mainWindow();
-    menu();
+    mainWindow();
+    // menu();
     return 0;
 }

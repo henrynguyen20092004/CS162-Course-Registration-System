@@ -15,7 +15,6 @@
 #include "ImportCSV/ImportScoreboard/ImportScoreboard.h"
 #include "ImportCSV/ImportStudentsInClass/ImportStudentsInClass.h"
 #include "ImportCSV/ImportStudentsInCourse/ImportStudentInCourse.h"
-#include "LogIn/LogIn.h"
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"
 #include "Update/UpdateCourse/UpdateCourse.h"
