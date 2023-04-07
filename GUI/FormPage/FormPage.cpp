@@ -6,11 +6,12 @@
 
 FormPage::FormPage(
     const char *title, int numberOfInputs, float firstInputPosY, Vector2 mainBoxSize,
-    Vector2 padding
+    const char *buttonText, Vector2 padding
 )
     : title(title),
       numberOfInputs(numberOfInputs),
       mainBoxSize(mainBoxSize),
+      buttonText(buttonText),
       padding(padding),
       mainBoxPosition(getCenterPosition(mainBoxSize)),
       errorText("") {
@@ -32,7 +33,7 @@ void FormPage::drawPage() { drawFormBox(); }
 
 void FormPage::drawFormBox() {
     Button submitButton(
-        "Submit", mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT
+        buttonText, mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT
     );
 
     DrawRectangleV(mainBoxPosition, mainBoxSize, WHITE);
@@ -49,7 +50,7 @@ void FormPage::drawErrorText() {
     float posY = mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_TEXT_SIZE -
                  DEFAULT_ITEM_HEIGHT - DEFAULT_TEXT_MARGIN.y;
 
-    drawDefaultText(textFont, errorText, {childrenPosX, posY}, ERROR_TEXT_COLOR);
+    drawDefaultText(textFont, errorText.c_str(), {childrenPosX, posY}, ERROR_TEXT_COLOR);
 }
 
 FormPage::~FormPage() {
@@ -59,4 +60,5 @@ FormPage::~FormPage() {
 
     delete[] inputs;
     delete[] editModes;
+    delete[] inputPosY;
 }

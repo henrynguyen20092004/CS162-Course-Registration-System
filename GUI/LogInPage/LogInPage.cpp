@@ -1,6 +1,8 @@
 #include "LogInPage.h"
 
-#include "../../Function/Check/CheckUser/CheckUser.h"
+#include <cstring>
+
+#include "../../Function/LogIn/LogIn.h"
 #include "../../Struct/Data.h"
 #include "../FormPage/FormPage.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
@@ -32,20 +34,18 @@ void LogInPage::drawFormInput() {
 }
 
 void LogInPage::submitCallBack() {
-    currentUser.username = inputs[0];
-    currentUser.password = inputs[2];
-
-    if (!checkUserExists(allData.allUsers, currentUser)) {
-        errorText = "Invalid credentials, please try again!\n";
-        return;
+    try {
+        currentUser = logIn(inputs[0], inputs[2]);
+        stopLoop = true;
+    } catch (std::exception &error) {
+        errorText = error.what();
     }
-
-    stopLoop = true;
 }
 
 User logInPage() {
     LogInPage logInPage(
-        "Log in to continue", 3, 350.0f, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f}
+        "Log in to continue", 3, 350.0f, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f},
+        "Log in"
     );
     logInPage.mainLoop();
 
