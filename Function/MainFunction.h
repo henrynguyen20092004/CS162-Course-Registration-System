@@ -16,7 +16,6 @@
 #include "ImportCSV/ImportStudentsInCourse/ImportStudentInCourse.h"
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"
-#include "Update/UpdateCourse/UpdateCourse.h"
 #include "Update/UpdateStudentResult/UpdateStudentResult.h"
 #include "View/ViewClasses/ViewClasses.h"
 #include "View/ViewCourses/ViewCourses.h"

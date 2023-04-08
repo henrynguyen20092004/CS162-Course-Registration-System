@@ -6,51 +6,39 @@
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../View/ViewCourses/ViewCourses.h"
 
-void inputChanges(Course &course) {
-    bool validCourse = false;
-
-    do {
-        try {
-            inputOtherCourseInformation(course);
-            validateOtherCourseInformation(course);
-            validCourse = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validCourse);
+void inputChanges(Course& course, char** inputs) {
+    course.id = inputs[0];
+    course.className = inputs[1];
+    course.name = inputs[2];
+    course.teacherName = inputs[3];
+    course.credits = atoi(inputs[4]);
+    course.maxStudent = atoi(inputs[5]);
+    course.dayOfWeek = inputs[6];
+    course.sessionNumber = atoi(inputs[7]);
 }
 
-void updateCourse() {
+void updateCourse(char** inputs) {
     if (!allData.allCourses) {
-        std::cout << "No course records, please create one and try again later!\n";
-        return;
+        throw std::invalid_argument(
+            "No course records, please create one and try again later!"
+        );
     }
 
-    bool validCourse = false;
     Course course;
+    inputChanges(course, inputs);
+    validateCourseIDAndClass(allData.allCourses, course, false);
+    validateOtherCourseInformation(course);
 
-    do {
-        try {
-            inputCourseIDAndClassName(course);
-            validateCourseIDAndClass(allData.allCourses, course, false);
-            validCourse = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validCourse);
-
-    for (Node<Course> *cur = allData.allCourses; cur; cur = cur->next) {
+    for (Node<Course>* cur = allData.allCourses; cur; cur = cur->next) {
         Course curCourse = cur->data;
 
         if (course.id == curCourse.id && course.className == curCourse.className) {
-            std::cout << "\nThis is the current information of this course:\n";
-            viewACourse(curCourse);
-            std::cout << "Please enter new information for this course:\n";
-            inputChanges(cur->data);
+            course.schoolYearName = curCourse.schoolYearName;
+            course.semesterNumber = curCourse.semesterNumber;
+            cur->data = course;
             break;
         }
     }
 
     saveAllCourses(allData.allCourses);
-    std::cout << "Course successfully updated!\n";
 }
