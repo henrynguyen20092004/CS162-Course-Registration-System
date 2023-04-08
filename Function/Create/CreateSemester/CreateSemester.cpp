@@ -93,34 +93,28 @@ void saveSemester(Node<Semester> *allSemesters) {
     fout.close();
 }
 
-Semester createSemester() {
+Semester createSemester(
+    char *schoolYear, char *semesterNumber, char *startDate, char *endDate
+) {
     Semester semester;
-    bool validSemester = false;
 
-    do {
-        try {
-            inputSemesterSchoolYearAndNumber(semester);
-            inputSemesterDates(semester);
-            validateSemesterSchoolYearAndNumber(
-                allData.allSemesters, allData.allSchoolYears, semester, true
-            );
-            validateSemesterDates(semester);
+    semester.schoolYearName = schoolYear;
+    semester.number = std::stoi(semesterNumber);
+    semester.startDate = startDate;
+    semester.endDate = endDate;
+    validateSemesterSchoolYearAndNumber(
+        allData.allSemesters, allData.allSchoolYears, semester, true
+    );
+    validateSemesterDates(semester);
 
-            if (!checkDateBeforeAddToList(allData.allSemesters, semester)) {
-                std::cout << "Your start/end date can't overlap other semesters, please "
-                             "try again!\n";
-                continue;
-            }
-
-            validSemester = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validSemester);
+    if (!checkDateBeforeAddToList(allData.allSemesters, semester)) {
+        throw std::invalid_argument(
+            "Your start/end date can't overlap other semesters, please try again!"
+        );
+    }
 
     addSemseterToList(semester);
     saveSemester(allData.allSemesters);
     saveCurrentSemester(semester);
-    std::cout << "Semester successfully added!\n";
     return semester;
 }

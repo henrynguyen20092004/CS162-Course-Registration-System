@@ -3,6 +3,8 @@
 
 #include "../../../Struct/Semester.h"
 
-Semester createSemester();
+Semester createSemester(
+    char *schoolYear, char *semesterNumber, char *startDate, char *endDate
+);
 
 #endif

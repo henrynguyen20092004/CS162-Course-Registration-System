@@ -4,6 +4,7 @@
 #include <raygui.h>
 #include <raylib.h>
 
+#include "../Struct/Semester.h"
 #include "../Struct/User.h"
 
 #define PRIMARY_COLOR \
