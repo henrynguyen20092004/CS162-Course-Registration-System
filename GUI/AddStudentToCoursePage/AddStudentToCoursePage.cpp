@@ -4,8 +4,6 @@
 #include "../../Struct/Data.h"
 #include "../DropDown/DropDown.h"
 #include "../FormPage/FormPage.h"
-#include "../GetCenterPosition/GetCenterPosition.h"
-#include "../GlobalStyle.h"
 #include "../TextInput/TextInput.h"
 
 class AddStudentToCoursePage : public FormPage {
@@ -26,7 +24,7 @@ void AddStudentToCoursePage::drawFormInput() {
     }
 
     courseDropDown.drawDropDown(
-        "Course", dropDownItems[0], dropdownActiveItems[0], dropdownEditModes[0]
+        "Course name", dropDownItems[0], dropdownActiveItems[0], dropdownEditModes[0]
     );
 }
 

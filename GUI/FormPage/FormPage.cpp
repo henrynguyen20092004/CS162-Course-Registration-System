@@ -17,7 +17,9 @@ FormPage::FormPage(
       columns(columns),
       mainBoxSize(mainBoxSize),
       padding(padding),
-      mainBoxPosition(getCenterPosition(mainBoxSize)),
+      mainBoxPosition(
+          {getCenterX(mainBoxSize.x), getCenterY(mainBoxSize.y) + PAGE_Y_OFFSET}
+      ),
       buttonText(buttonText),
       errorText("") {
     inputWidth =
@@ -82,13 +84,7 @@ void FormPage::drawFormBox() {
     DrawRectangleV(mainBoxPosition, mainBoxSize, WHITE);
     drawDefaultTitle(titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y});
     drawErrorText();
-
-    for (int i = 0; i < numberOfDropDowns; ++i) {
-        if (dropdownEditModes[i]) {
-            GuiLock();
-            break;
-        }
-    }
+    dropDownLockGUI();
 
     if (submitButton.drawButton()) {
         submitCallBack();
@@ -111,6 +107,17 @@ void FormPage::drawErrorText() {
     drawDefaultText(
         textFont, errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR
     );
+}
+
+void FormPage::dropDownLockGUI() {
+    for (int i = 0; i < numberOfDropDowns; ++i) {
+        if (dropdownEditModes[i]) {
+            GuiLock();
+            return;
+        }
+    }
+
+    GuiUnlock();
 }
 
 FormPage::~FormPage() {

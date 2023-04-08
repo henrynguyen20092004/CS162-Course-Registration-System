@@ -19,23 +19,25 @@
 #define SCREEN_HEIGHT 900
 #define DEFAULT_TITLE_SIZE 48
 #define DEFAULT_TEXT_SIZE 24
+#define MAX_INPUT_CHAR 256
 #define DEFAULT_ITEM_HEIGHT 60.0f
+#define DEFAULT_MENU_BUTTON_WIDTH 180.0f
+#define PAGE_Y_OFFSET 45.0f
+#define TEXT_SPACING 1.0f
 #define DEFAULT_PADDING \
     (Vector2) { 20.0f, 20.0f }
 #define DEFAULT_TEXT_MARGIN \
     (Vector2) { 6.0f, 6.0f }
 #define DEFAULT_ITEM_MARGIN \
     (Vector2) { 20.0f, 20.0f }
-#define MAX_INPUT_CHAR 256
-#define SPACING 1.0f
-#define DEFAULT_AVATAR_SIZE \
+#define AVATAR_SIZE \
     (Vector2) { 50.0f, 50.0f }
-#define DEFAULT_AVATAR_POSITION \
+#define AVATAR_POSITION \
     (Vector2) { 40.0f, 35.0f }
-#define DEFAULT_MENU_BUTTON_WIDTH 180.0f
 
 extern Font titleFont, textFont;
 extern Texture2D defaultAvatar;
 extern User currentUser;
+extern Semester currentSemester;
 
 #endif

@@ -22,18 +22,6 @@ void validateSemesterSchoolYearAndNumber(
     Node<Semester> *allSemesters, Node<std::string> *allSchoolYears,
     const Semester &semester, bool checkSemesterAlreadyExists
 ) {
-    if (!checkValidSchoolYear(semester.schoolYearName)) {
-        throw std::invalid_argument("Invalid school year, please try again!");
-    }
-
-    if (!checkSchoolYearExists(allSchoolYears, semester.schoolYearName)) {
-        throw std::invalid_argument("This school year doesn't exist, please try again!");
-    }
-
-    if (semester.number < 1 || semester.number > 3) {
-        throw std::invalid_argument("Invalid semester, please try again!");
-    }
-
     if (checkSemesterExists(allSemesters, semester.number, semester.schoolYearName) ==
         checkSemesterAlreadyExists) {
         if (checkSemesterAlreadyExists) {

@@ -1,6 +1,8 @@
 #include "CreateSemester.h"
 
 #include "../../../Struct/Data.h"
+#include "../../Check/CheckSemester/CheckSemester.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../DateFunction/DateFunction.h"
 #include "../../InputAndValidate/InputAndValidateSemester/InputAndValidateSemester.h"
 #include "../../OpenFile/OpenFile.h"
@@ -93,18 +95,22 @@ void saveSemester(Node<Semester> *allSemesters) {
     fout.close();
 }
 
-Semester createSemester(
-    char *schoolYear, char *semesterNumber, char *startDate, char *endDate
-) {
+Semester createSemester(char **inputs, char **dropDownItems) {
     Semester semester;
 
-    semester.schoolYearName = schoolYear;
-    semester.number = std::stoi(semesterNumber);
-    semester.startDate = startDate;
-    semester.endDate = endDate;
-    validateSemesterSchoolYearAndNumber(
-        allData.allSemesters, allData.allSchoolYears, semester, true
-    );
+    semester.schoolYearName =
+        checkDropDownAndConvertToString(dropDownItems[0], "school year");
+    semester.number =
+        stoi(checkDropDownAndConvertToString(dropDownItems[1], "semester number"));
+    semester.startDate = inputs[0];
+    semester.endDate = inputs[1];
+
+    if (checkSemesterExists(
+            allData.allSemesters, semester.number, semester.schoolYearName
+        )) {
+        throw std::invalid_argument("This semester already exists, please try again!");
+    }
+
     validateSemesterDates(semester);
 
     if (!checkDateBeforeAddToList(allData.allSemesters, semester)) {

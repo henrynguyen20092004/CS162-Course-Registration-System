@@ -4,13 +4,13 @@
 
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
-#include "CreateSemesterPage/CreateSemesterPage.h"
+#include "Create/CreateSemesterPage/CreateSemesterPage.h"
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
-#include "UpdateCoursePage/UpdateCoursePage.h"
+#include "Update/UpdateCoursePage/UpdateCoursePage.h"
 
 Font titleFont, textFont;
 Texture2D defaultAvatar;
@@ -41,7 +41,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        currentSemester = createSemesterPage();
+        createSemesterPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

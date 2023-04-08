@@ -1,11 +1,10 @@
 #include "UpdateCoursePage.h"
 
-#include "../../Function/Update/UpdateCourse/UpdateCourse.h"
-#include "../../Struct/Data.h"
-#include "../DropDown/DropDown.h"
-#include "../FormPage/FormPage.h"
-#include "../GlobalStyle.h"
-#include "../TextInput/TextInput.h"
+#include "../../../Function/Update/UpdateCourse/UpdateCourse.h"
+#include "../../../Struct/Data.h"
+#include "../../DropDown/DropDown.h"
+#include "../../FormPage/FormPage.h"
+#include "../../TextInput/TextInput.h"
 
 class UpdateCoursePage : public FormPage {
    private:
@@ -56,8 +55,8 @@ void UpdateCoursePage::submitCallBack() {
 
 void updateCoursePage() {
     UpdateCoursePage updateCoursePage(
-        "Update Course Information", 4, 3, 2, {SCREEN_WIDTH / 1.6f, SCREEN_HEIGHT / 1.4f},
-        "Submit"
+        "Update Course Information", 4, 3, 2,
+        {SCREEN_WIDTH / 1.6f, SCREEN_HEIGHT / 1.35f}, "Submit"
     );
     updateCoursePage.mainLoop();
 }

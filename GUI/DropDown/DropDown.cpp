@@ -44,7 +44,6 @@ void DropDown::drawDropDown(
     const char* label, char*& selectedItem, int& activeItemIndex, bool& editMode,
     Color labelColor
 ) {
-    GuiUnlock();
     drawDefaultText(
         textFont, label,
         {dropDownBox.x, dropDownBox.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y},
