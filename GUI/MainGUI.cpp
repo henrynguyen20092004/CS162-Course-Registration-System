@@ -5,6 +5,7 @@
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
 #include "Create/CreateSemesterPage/CreateSemesterPage.h"
+#include "CreateCoursePage/CreateCoursePage.h"
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
@@ -41,7 +42,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        createSemesterPage();
+        createCoursePage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

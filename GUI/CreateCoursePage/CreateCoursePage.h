@@ -3,6 +3,6 @@
 
 #include "../../Struct/Course.h"
 
-Course CreateCoursePage();
+void createCoursePage();
 
 #endif
