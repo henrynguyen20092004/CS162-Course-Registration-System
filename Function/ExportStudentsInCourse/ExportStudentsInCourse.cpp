@@ -21,52 +21,38 @@ void exportStudentsToFile(std::ostream &out, Student *allStudentsArray, int arra
     }
 }
 
-void exportStudentsInCourse() {
+void exportStudentsInCourse(
+    char *inputedCourseID, char *inputedClassName, char *inputedPath
+) {
     Course course;
-    bool validCourse = false, validPath = false;
-    std::string exportPath;
+    course.id = inputedCourseID;
+    course.className = inputedClassName;
+    std::string exportPath = inputedPath;
 
-    do {
-        try {
-            inputCourseIDAndClassName(course);
-            validateCourseIDAndClass(allData.allCourses, course, false);
-            validCourse = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validCourse);
+    validateCourseIDAndClass(allData.allCourses, course, false);
 
     Node<Student> *allStudentsInCourse = getAllStudentsInCourse(course);
 
     if (!allStudentsInCourse) {
-        std::cout << "There's no student in this course, please add some!\n";
-        return;
+        throw std::invalid_argument("There's no student in this course, please add some!"
+        );
     }
 
-    do {
-        try {
-            std::cout << "Please enter the path to the CSV: ";
-            getline(std::cin, exportPath);
+    if (exportPath == "") {
+        throw std::invalid_argument(
+            "Please enter a path to the folder you want to export!"
+        );
+    }
 
-            if (exportPath == "") {
-                std::cout << "Please enter a path to the folder you want to export: \n";
-                continue;
-            }
+    if (exportPath.back() != '\\' && exportPath.back() != '/') {
+        exportPath += exportPath.find('\\') != std::string::npos ? '\\' : '/';
+    }
 
-            if (exportPath.back() != '\\' && exportPath.back() != '/') {
-                exportPath += exportPath.find('\\') != std::string::npos ? '\\' : '/';
-            }
-
-            exportPath += "StudentsInCourse.csv";
-            std::ofstream fout;
-            writeFile(fout, exportPath);
-            sortAndOutputStudents(fout, allStudentsInCourse, &exportStudentsToFile);
-            fout.close();
-            validPath = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validPath);
+    exportPath += "StudentsInCourse.csv";
+    std::ofstream fout;
+    writeFile(fout, exportPath);
+    sortAndOutputStudents(fout, allStudentsInCourse, &exportStudentsToFile);
+    fout.close();
 
     deleteLinkedList(allStudentsInCourse);
     std::cout << "Student's info successfully exported to " << exportPath << '\n';
