@@ -4,6 +4,7 @@
 
 #include "../../Function/Update/UpdateCourse/UpdateCourse.h"
 #include "../../Struct/Data.h"
+#include "../Button/Button.h"
 #include "../FormPage/FormPage.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../GlobalStyle.h"
@@ -14,22 +15,32 @@ class UpdateCoursePage : public FormPage {
    private:
     void drawFormInput() override;
     void submitCallBack() override;
+    void drawReturnButton() override;
 
    public:
     using FormPage::FormPage;
     using Page::mainLoop;
-    User currentUser;
 };
 
+void UpdateCoursePage::drawReturnButton() {
+    Button returnButton("Return", 150, 1250, 100);
+
+    if (returnButton.drawButton()) {
+        stopLoop = true;
+    }
+}
+
 void UpdateCoursePage::drawFormInput() {
-    TextInput courseIDInput(inputs[0], inputPosY[0] + 50, 250);
-    TextInput classNameInput(inputs[1], inputPosY[1] + 50, 250);
-    TextInput courseNameInput(inputs[2], inputPosY[2] + 50, 250);
-    TextInput teacherNameInput(inputs[3], inputPosY[3] + 50, 250);
-    TextInput creditsInput(inputs[4], inputPosY[0] + 50, 800);
-    TextInput maxStudentInput(inputs[5], inputPosY[1] + 50, 800);
-    TextInput dayOfWeekInput(inputs[6], inputPosY[2] + 50, 800);
-    TextInput sessionNumberInput(inputs[7], inputPosY[3] + 50, 800);
+    TextInput courseIDInput(inputs[0], inputPosY[0], 285);
+    TextInput classNameInput(inputs[1], inputPosY[1], 285);
+    TextInput courseNameInput(inputs[2], inputPosY[2], 285);
+    TextInput teacherNameInput(inputs[3], inputPosY[3], 285);
+    TextInput creditsInput(inputs[4], inputPosY[0], 855);
+    TextInput maxStudentInput(inputs[5], inputPosY[1], 855);
+    TextInput dayOfWeekInput(inputs[6], inputPosY[2], 855);
+    TextInput sessionNumberInput(inputs[7], inputPosY[3], 855);
+
+    drawReturnButton();
 
     if (courseIDInput.drawTextInput("Course ID", editModes[0]) ||
         classNameInput.drawTextInput("Class name", editModes[1]) ||
@@ -46,8 +57,8 @@ void UpdateCoursePage::drawFormInput() {
 void UpdateCoursePage::submitCallBack() {
     try {
         updateCourse(inputs);
-        stopLoop = true;
         std::cout << "Successful!";
+        throw std::invalid_argument("Course successfully updated!");
     } catch (std::exception &error) {
         errorText = error.what();
     }
@@ -55,8 +66,8 @@ void UpdateCoursePage::submitCallBack() {
 
 void updateCoursePage() {
     UpdateCoursePage updateCoursePage(
-        "Update Course Information", 8, 200.0f,
-        {SCREEN_WIDTH / 1.3f, SCREEN_HEIGHT / 1.3f}, "Submit"
+        "Update Course Information", 8, 250.f,
+        {SCREEN_WIDTH / 1.4f, SCREEN_HEIGHT / 1.4f}, "Submit"
     );
 
     updateCoursePage.mainLoop();
