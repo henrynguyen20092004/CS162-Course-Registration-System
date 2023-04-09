@@ -3,7 +3,7 @@
 #include "MainGUI.h"
 
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
-#include "DrawMenu/DrawMenu.h"
+#include "Create/CreateClassPage/CreateClassPage.h"
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
@@ -39,9 +39,9 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        addStudentToCoursePage();
-        Page tmpPage;
-        tmpPage.mainLoop();
+        createClassPage();
+        Page tempPage;
+        tempPage.mainLoop();
     } catch (std::runtime_error &error) {
         UnloadImage(windowIcon);
         UnloadFont(titleFont);

@@ -9,11 +9,6 @@ void validateClass(Node<std::string>* allClasses, const std::string& className) 
     }
 }
 
-void inputClass(std::string& className) {
-    std::cout << "Please enter the name of the class: ";
-    getline(std::cin, className);
-}
-
 void saveClass(const std::string& className) {
     std::ofstream fout;
     writeFile(fout, "Data/Class.txt", std::ios::app);
@@ -22,20 +17,8 @@ void saveClass(const std::string& className) {
     addNewItemsToOldList(allData.allClasses, new Node(className));
 }
 
-void createClass() {
-    std::string className;
-    bool validClass = false;
-
-    do {
-        try {
-            inputClass(className);
-            validateClass(allData.allClasses, className);
-            validClass = true;
-        } catch (std::exception& error) {
-            std::cout << error.what();
-        }
-    } while (!validClass);
-
+void createClass(char* inputedClassName) {
+    std::string className = inputedClassName;
+    validateClass(allData.allClasses, className);
     saveClass(className);
-    std::cout << "Class successfully added!\n";
 }
