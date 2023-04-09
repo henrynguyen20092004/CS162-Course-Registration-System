@@ -17,13 +17,12 @@ class LogInPage : public FormPage {
 
    public:
     using FormPage::FormPage;
-    using Page::mainLoop;
     User currentUser;
 };
 
 void LogInPage::drawFormInput() {
-    TextInput usernameInput(inputs[0], inputPosY[0]);
-    TextInput passwordInput(inputs[1], inputPosY[1]);
+    TextInput usernameInput(inputs[0], inputPos[0], inputWidth);
+    TextInput passwordInput(inputs[1], inputPos[1], inputWidth);
 
     if (usernameInput.drawTextInput("Username", editModes[0]) ||
         passwordInput.drawTextInput("Password", editModes[1])) {
@@ -44,7 +43,7 @@ void LogInPage::submitCallBack() {
 
 User logInPage() {
     LogInPage logInPage(
-        "Log in to continue", 3, 350.0f, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f},
+        "Log in to continue", 3, 1, 350.0f, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f},
         "Log in"
     );
     logInPage.mainLoop();

@@ -5,35 +5,46 @@
 #include "../TextFunction/TextFunction.h"
 
 FormPage::FormPage(
-    const char *title, int numberOfInputs, float firstInputPosY, Vector2 mainBoxSize,
-    const char *buttonText, Vector2 padding
+    const char *title, int numberOfInputs, int columns, float firstInputPosY,
+    Vector2 mainBoxSize, const char *buttonText, Vector2 padding
 )
     : title(title),
       numberOfInputs(numberOfInputs),
+      columns(columns),
       mainBoxSize(mainBoxSize),
-      buttonText(buttonText),
       padding(padding),
       mainBoxPosition(getCenterPosition(mainBoxSize)),
+      buttonText(buttonText),
       errorText("") {
+    inputWidth =
+        (mainBoxSize.x - padding.x * 2 - DEFAULT_ITEM_MARGIN.x * (columns - 1)) / columns;
     childrenPosX = mainBoxPosition.x + padding.x;
     inputs = new char *[numberOfInputs];
     editModes = new bool[numberOfInputs];
-    inputPosY = new float[numberOfInputs];
+    inputPos = new Vector2[numberOfInputs];
 
     for (int i = 0; i < numberOfInputs; i++) {
         inputs[i] = new char[MAX_INPUT_CHAR];
         inputs[i][0] = '\0';
         editModes[i] = false;
-        inputPosY[i] = firstInputPosY + i * (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y +
-                                             DEFAULT_TEXT_SIZE + DEFAULT_TEXT_MARGIN.y);
+        inputPos[i] = calculateInputPos(firstInputPosY, i);
     }
+}
+
+Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
+    return {
+        childrenPosX + (inputWidth + DEFAULT_ITEM_MARGIN.x) * (index % columns),
+        firstInputPosY + (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y +
+                          DEFAULT_TEXT_SIZE + DEFAULT_TEXT_MARGIN.y) *
+                             (index / columns)};
 }
 
 void FormPage::drawPage() { drawFormBox(); }
 
 void FormPage::drawFormBox() {
     Button submitButton(
-        buttonText, mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT
+        buttonText, getCenterX(inputWidth),
+        mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT, inputWidth
     );
 
     DrawRectangleV(mainBoxPosition, mainBoxSize, WHITE);
@@ -50,7 +61,9 @@ void FormPage::drawErrorText() {
     float posY = mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_TEXT_SIZE -
                  DEFAULT_ITEM_HEIGHT - DEFAULT_TEXT_MARGIN.y;
 
-    drawDefaultText(textFont, errorText.c_str(), {childrenPosX, posY}, ERROR_TEXT_COLOR);
+    drawDefaultText(
+        textFont, errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR
+    );
 }
 
 FormPage::~FormPage() {
@@ -60,5 +73,5 @@ FormPage::~FormPage() {
 
     delete[] inputs;
     delete[] editModes;
-    delete[] inputPosY;
+    delete[] inputPos;
 }

@@ -3,8 +3,8 @@
 #include "../GlobalStyle.h"
 #include "../TextFunction/TextFunction.h"
 
-TextInput::TextInput(char *input, float posY, float posX, float width)
-    : textInputBox({posX, posY, width, DEFAULT_ITEM_HEIGHT}), input(input) {}
+TextInput::TextInput(char *input, Vector2 pos, float width)
+    : textInputBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}), input(input) {}
 
 bool TextInput::drawTextInput(const char *label, bool &editMode) {
     if (IsMouseButtonPressed(0)) {

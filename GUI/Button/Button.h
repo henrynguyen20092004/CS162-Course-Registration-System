@@ -9,7 +9,7 @@ class Button {
     const char *text;
 
    public:
-    Button(const char *text, float posY, float posX = 570.0f, float width = 460.0f);
+    Button(const char *text, float posX, float posY, float width);
     bool drawButton();
 };
 
