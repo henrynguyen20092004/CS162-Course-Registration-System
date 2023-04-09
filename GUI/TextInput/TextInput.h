@@ -9,7 +9,7 @@ class TextInput {
     char *input;
 
    public:
-    TextInput(char *input, float posY, float posX = 570.0f, float width = 460.0f);
+    TextInput(char *input, Vector2 pos, float width);
     bool drawTextInput(const char *label, bool &editMode);
 };
 
