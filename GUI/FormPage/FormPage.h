@@ -16,7 +16,6 @@ class FormPage : public Page {
     virtual void drawFormInput() {}
     void drawErrorText();
     virtual void submitCallBack() {}
-    virtual void drawReturnButton() {}
 
    protected:
     const char *title, *buttonText;
