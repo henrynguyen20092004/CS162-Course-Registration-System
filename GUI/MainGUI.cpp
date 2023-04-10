@@ -40,8 +40,8 @@ void mainWindow() {
     try {
         logInPage();
         createClassPage();
-        Page tempPage;
-        tempPage.mainLoop();
+        Page tmpPage;
+        tmpPage.mainLoop();
     } catch (std::runtime_error &error) {
         UnloadImage(windowIcon);
         UnloadFont(titleFont);

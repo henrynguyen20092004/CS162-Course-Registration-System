@@ -34,11 +34,11 @@ void UpdateCoursePage::drawFormInput() {
         submitCallBack();
     }
 
-    dayOfWeekDropDown.drawDropDown(
-        "Day of week", dropDownItems[1], dropdownActiveItems[1], dropdownEditModes[1]
-    );
     sessionDropDown.drawDropDown(
         "Session number", dropDownItems[2], dropdownActiveItems[2], dropdownEditModes[2]
+    );
+    dayOfWeekDropDown.drawDropDown(
+        "Day of week", dropDownItems[1], dropdownActiveItems[1], dropdownEditModes[1]
     );
     courseDropDown.drawDropDown(
         "Course", dropDownItems[0], dropdownActiveItems[0], dropdownEditModes[0]

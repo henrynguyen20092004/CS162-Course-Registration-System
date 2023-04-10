@@ -16,7 +16,7 @@ class CreateClassPage : public FormPage {
 void CreateClassPage::drawFormInput() {
     TextInput classNameInput(inputs[0], inputPos[0], inputWidth);
 
-    if (classNameInput.drawTextInput("New class name", editModes[0])) {
+    if (classNameInput.drawTextInput("Class name", textInputEditModes[0])) {
         submitCallBack();
     }
 }
@@ -32,7 +32,7 @@ void CreateClassPage::submitCallBack() {
 
 void createClassPage() {
     CreateClassPage createClassPage(
-        "Create new class", 1, 1, 422.f, {SCREEN_WIDTH / 3.1f, SCREEN_HEIGHT / 3.1f}
+        "Create a class", 1, 0, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 3.0f}
     );
     createClassPage.mainLoop();
 }
