@@ -1,6 +1,6 @@
 #include "MainFunction.h"
 
-#include "Input/Input.h"
+// #include "Input/Input.h"
 #include "OpenFile/OpenFile.h"
 
 void displayUserCommand() {
@@ -208,7 +208,7 @@ void menu() {
                 }
 
                 std::cout << "Enter your choice: ";
-                choice = intInput();
+                // choice = intInput();
                 std::cout << '\n';
 
                 if (1 <= choice && choice <= 3) {

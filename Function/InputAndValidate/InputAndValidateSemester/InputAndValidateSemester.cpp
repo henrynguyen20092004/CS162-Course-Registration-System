@@ -3,13 +3,13 @@
 #include "../../Check/CheckSchoolYear/CheckSchoolYear.h"
 #include "../../Check/CheckSemester/CheckSemester.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../Input/Input.h"
+// #include "../../Input/Input.h"
 
 void inputSemesterSchoolYearAndNumber(Semester &semester) {
     std::cout << "Please enter the school year of this semester (yyyy-yyyy): ";
     getline(std::cin, semester.schoolYearName);
     std::cout << "Please choose the semester (1-3): ";
-    semester.number = intInput();
+    // semester.number = intInput();
 }
 
 void inputSemesterDates(Semester &semester) {

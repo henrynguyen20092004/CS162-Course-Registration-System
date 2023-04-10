@@ -1,7 +1,7 @@
 #include "UpdateStudentResult.h"
 
 #include "../../../Struct/Data.h"
-#include "../../Input/Input.h"
+// #include "../../Input/Input.h"
 #include "../../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveScore/SaveScore.h"
@@ -21,13 +21,13 @@ void inputMarks(Score &score) {
     do {
         try {
             std::cout << "Please enter the student's other mark: ";
-            score.otherMark = scoreInput();
+            // score.otherMark = scoreInput();
             std::cout << "Please enter the student's midterm mark: ";
-            score.midtermMark = scoreInput();
+            // score.midtermMark = scoreInput();
             std::cout << "Please enter the student's final mark: ";
-            score.finalMark = scoreInput();
+            // score.finalMark = scoreInput();
             std::cout << "Please enter the student's total mark: ";
-            score.totalMark = scoreInput();
+            // score.totalMark = scoreInput();
             validScore = true;
         } catch (std::exception &error) {
             std::cout << error.what();

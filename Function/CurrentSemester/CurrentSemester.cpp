@@ -1,7 +1,7 @@
 #include "CurrentSemester.h"
 
 #include "../../Struct/Data.h"
-#include "../Input/Input.h"
+// #include "../Input/Input.h"
 #include "../InputAndValidate/InputAndValidateSemester/InputAndValidateSemester.h"
 #include "../Save/SaveCurrentSemester/SaveCurrentSemester.h"
 
@@ -12,7 +12,7 @@ Semester getCurrentSemester() {
     getline(fin, semester.schoolYearName);
 
     if (fin.good()) {
-        semester.number = intInput(fin);
+        // semester.number = intInput(fin);
         getline(fin, semester.startDate);
         getline(fin, semester.endDate);
     }

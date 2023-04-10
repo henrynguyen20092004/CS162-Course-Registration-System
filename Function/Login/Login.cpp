@@ -1,7 +1,6 @@
 #include "LogIn.h"
 
 #include "../../Struct/Data.h"
-#include "../Input/Input.h"
 
 bool checkUserExists(Node<User> *allUsers, const User &user) {
     for (; allUsers; allUsers = allUsers->next) {

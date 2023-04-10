@@ -1,6 +1,6 @@
 #include "DownloadTemplateCSV.h"
 
-#include "../Input/Input.h"
+// #include "../Input/Input.h"
 #include "../OpenFile/OpenFile.h"
 
 void downloadTemplateCSV(const std::string &CSVName) {
@@ -55,7 +55,7 @@ void downloadPrompt(const std::string &CSVName, void (*importCallBack)()) {
     do {
         try {
             std::cout << "Enter your choice: ";
-            choice = intInput();
+            // choice = intInput();
 
             switch (choice) {
                 case 1: {

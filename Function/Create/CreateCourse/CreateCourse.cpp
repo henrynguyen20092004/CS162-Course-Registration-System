@@ -4,7 +4,7 @@
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../Input/Input.h"
+// #include "../../Input/Input.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../CreateSemester/CreateSemester.h"
 

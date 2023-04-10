@@ -7,7 +7,7 @@
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
-#include "../../Input/Input.h"
+// #include "../../Input/Input.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveScore/SaveScore.h"
@@ -19,10 +19,10 @@ void getScoreFromLine(Score &score, const std::string &importLine) {
     getline(importStream, _, ',');
     getline(importStream, score.studentCourse.studentID, ',');
     getline(importStream, score.studentFullName, ',');
-    score.otherMark = scoreInput(importStream, ',');
-    score.midtermMark = scoreInput(importStream, ',');
-    score.finalMark = scoreInput(importStream, ',');
-    score.totalMark = scoreInput(importStream);
+    // score.otherMark = scoreInput(importStream, ',');
+    // score.midtermMark = scoreInput(importStream, ',');
+    // score.finalMark = scoreInput(importStream, ',');
+    // score.totalMark = scoreInput(importStream);
 }
 
 void checkImportedScore(

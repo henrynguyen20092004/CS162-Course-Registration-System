@@ -3,16 +3,16 @@
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../Input/Input.h"
+// #include "../../Input/Input.h"
 
 void inputStudent(Student &student) {
     std::cout << "Please fill the information in every box\n";
     std::cout << "Student ID: ";
     getline(std::cin, student.id);
     std::cout << "First name (only one word): ";
-    student.firstName = nameInput();
+    // student.firstName = nameInput();
     std::cout << "Last name: ";
-    student.lastName = nameInput();
+    // student.lastName = nameInput();
     std::cout << "Gender (M: Male, F: Female): ";
     getline(std::cin, student.gender);
     std::cout << "Date of birth (dd/mm/yyyy): ";

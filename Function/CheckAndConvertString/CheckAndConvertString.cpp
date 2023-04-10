@@ -1,79 +1,67 @@
-#include "Input.h"
+#include "CheckAndConvertString.h"
 
 #include <conio.h>
 
-std::string passwordInput(const std::string &prompt) {
-    std::string password;
-    char passChar;
-    std::cout << prompt;
-
-    do {
-        passChar = getch();
-        if (passChar == '\b') {
-            int currentPasswordLength = password.length();
-
-            if (currentPasswordLength != 0) {
-                password.erase(--currentPasswordLength);
-            }
-        } else if (passChar != '\r') {
-            password += passChar;
-        }
-    } while (passChar != '\r');
-
-    std::cout << '\n';
-    return password;
-}
-
-int intInput(std::istream &in) {
-    std::string input;
-    getline(in, input);
+int checkAndConvertToInt(std::string input, const std::string &fieldName) {
     int n = input.size();
 
     if (!isdigit(input[0]) && input[0] != '-') {
-        throw std::invalid_argument("The input is not an integer!\n");
+        throw std::invalid_argument(
+            "The inputted " + fieldName + " is not an integer!\n"
+        );
     }
 
     for (int i = 1; i < n; ++i) {
         if (!isdigit(input[i])) {
-            throw std::invalid_argument("The input is not an integer!\n");
+            throw std::invalid_argument(
+                "The inputted " + fieldName + " is not an integer!\n"
+            );
         }
     }
 
     try {
         return stoi(input);
     } catch (...) {
-        throw std::invalid_argument("The input is out of integer range!\n");
+        throw std::invalid_argument(
+            "The inputted " + fieldName + " is out of integer range!\n"
+        );
     }
 }
 
-double scoreInput(std::istream &in, char delimiter) {
-    std::string input;
-    getline(in, input, delimiter);
+double checkAndConvertToScore(std::string input, const std::string &fieldName) {
     int numberOfDecimalPoint = 0, n = input.size();
     double score;
 
     if (!isdigit(input[0]) && input[0] != '-') {
-        throw std::invalid_argument("The input is not a score!\n");
+        throw std::invalid_argument("The inputted " + fieldName + " is not a score!\n");
     }
 
     for (int i = 1; i < n; ++i) {
         if (input[i] == '.') {
             if (numberOfDecimalPoint++) {
-                throw std::invalid_argument("The input is not a score!\n");
+                throw std::invalid_argument(
+                    "The inputted " + fieldName + " is not a score!\n"
+                );
             }
         } else if (!isdigit(input[i])) {
-            throw std::invalid_argument("The input is not a score!\n");
+            throw std::invalid_argument(
+                "The inputted " + fieldName + " is not a score!\n"
+            );
         }
     }
 
     try {
         score = stod(input);
     } catch (...) {
-        throw std::invalid_argument("The input is out of valid score range!\n");
+        throw std::invalid_argument(
+            "The inputted " + fieldName + " is out of valid score range!\n"
+        );
     }
 
     if (score < 0 || score > 10) {
-        throw std::invalid_argument("The input is out of valid score range!\n");
+        throw std::invalid_argument(
+            "The inputted " + fieldName + " is out of valid score range!\n"
+        );
     }
 
     return score;
@@ -110,15 +98,15 @@ std::string normalization(const std::string &str) {
     return result;
 }
 
-std::string nameInput() {
-    std::string input;
-    getline(std::cin, input);
+std::string checkNameAndConvertToName(std::string input, const std::string &fieldName) {
     int length = input.length();
 
     for (int i = 0; i < length; ++i) {
         if (input[i] != ' ' &&
             (input[i] < 'A' || (input[i] > 'Z' && input[i] < 'a') || input[i] > 'z')) {
-            throw std::invalid_argument("The input is not a name!\n");
+            throw std::invalid_argument(
+                "The inputted " + fieldName + " is not a name!\n"
+            );
         }
     }
 

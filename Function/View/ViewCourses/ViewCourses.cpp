@@ -1,6 +1,6 @@
 #include "ViewCourses.h"
 
-#include "../../Input/Input.h"
+// #include "../../Input/Input.h"
 #include "../../OpenFile/OpenFile.h"
 
 void viewACourse(const Course& course) {
@@ -31,15 +31,15 @@ void viewCourses() {
             break;
         }
 
-        course.semesterNumber = intInput(fin);
+        // course.semesterNumber = intInput(fin);
         getline(fin, course.id);
         getline(fin, course.name);
         getline(fin, course.className);
         getline(fin, course.teacherName);
-        course.credits = intInput(fin);
-        course.maxStudent = intInput(fin);
+        // course.credits = intInput(fin);
+        // course.maxStudent = intInput(fin);
         getline(fin, course.dayOfWeek);
-        course.sessionNumber = intInput(fin);
+        // course.sessionNumber = intInput(fin);
         std::cout << "This is course number " << ++index << ":\n";
         viewACourse(course);
     }
