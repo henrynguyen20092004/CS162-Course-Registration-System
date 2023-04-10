@@ -3,6 +3,7 @@
 #include "MainGUI.h"
 
 #include "../Function/CurrentSemester/CurrentSemester.h"
+#include "AddStudentToClassPage/AddStudentToClassPage.h"
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
 #include "Create/CreateCoursePage/CreateCoursePage.h"
@@ -45,7 +46,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        viewStudentsInClassPage("22TT2");
+        addStudentToClassPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

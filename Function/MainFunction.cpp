@@ -70,7 +70,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 7: {
-            createStudent();
+            // createStudent();
             break;
         }
 

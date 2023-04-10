@@ -8,7 +8,7 @@
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"
 
-void saveCreatedStudent(const Student &student) {
+void saveCreatedStudent(const Student& student) {
     std::ofstream fout;
     writeFile(fout, "Data/Student.txt", std::ios::app);
     fout << student.id << '\n';
@@ -22,27 +22,25 @@ void saveCreatedStudent(const Student &student) {
     addNewItemsToOldList(allData.allStudents, new Node(student));
 }
 
-void createStudent() {
+void createStudent(
+    char* studentID, char* firstName, char* lastName, char* gender, char* dateOfBirth,
+    char* socialID, char* className
+) {
     Student student;
-    bool validStudent = false;
+    student.id = studentID;
+    if (checkStudentIDExists(allData.allStudents, student.id)) {
+        throw std::invalid_argument("This student already exists, please try again!");
+    }
 
-    do {
-        try {
-            inputStudent(student);
+    student.firstName = firstName;
+    student.lastName = lastName;
+    student.gender = gender;
+    student.dateOfBirth = dateOfBirth;
+    student.socialID = socialID;
+    student.className = className;
 
-            if (checkStudentIDExists(allData.allStudents, student.id)) {
-                std::cout << "This student already exists, please try again!\n";
-                continue;
-            }
-
-            validateStudent(allData.allClasses, student);
-            validStudent = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validStudent);
-
+    validateStudent(allData.allClasses, student);
     saveCreatedStudent(student);
     createStudentAccount(student);
-    std::cout << "Student successfully added!\n";
+    std::cout << "Student successfully added!";
 }
