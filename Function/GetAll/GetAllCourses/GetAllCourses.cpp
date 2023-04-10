@@ -1,7 +1,5 @@
 #include "GetAllCourses.h"
 
-// #include "../../Input/Input.h"
-
 void readCourse(std::ifstream &fin, Course &course) {
     getline(fin, course.schoolYearName);
 
@@ -9,15 +7,22 @@ void readCourse(std::ifstream &fin, Course &course) {
         return;
     }
 
-    // course.semesterNumber = intInput(fin);
+    std::string semesterNumber, credits, maxStudent, sessionNumber;
+    getline(fin, semesterNumber);
     getline(fin, course.id);
     getline(fin, course.name);
     getline(fin, course.className);
     getline(fin, course.teacherName);
-    // course.credits = intInput(fin);
-    // course.maxStudent = intInput(fin);
+    getline(fin, credits);
+    getline(fin, maxStudent);
     getline(fin, course.dayOfWeek);
-    // course.sessionNumber = intInput(fin);
+    getline(fin, sessionNumber);
+    course.semesterNumber = stoi(semesterNumber);
+    course.credits = stoi(credits);
+    course.maxStudent = stoi(maxStudent);
+    course.sessionNumber = stoi(sessionNumber);
 }
 
-Node<Course> *getAllCourses() { return getAll("Data/Course.txt", &readCourse); }
+Node<Course> *getAllCourses() {
+    return getAll("Data/Course.txt", &readCourse);
+}

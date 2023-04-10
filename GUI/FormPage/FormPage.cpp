@@ -5,8 +5,8 @@
 #include "../TextFunction/TextFunction.h"
 
 FormPage::FormPage(
-    const char *title, int numberOfInputs, int columns, float firstInputPosY,
-    Vector2 mainBoxSize, const char *buttonText, Vector2 padding
+    const char *title, int numberOfInputs, int columns, Vector2 mainBoxSize,
+    const char *buttonText, Vector2 padding
 )
     : title(title),
       numberOfInputs(numberOfInputs),
@@ -19,6 +19,8 @@ FormPage::FormPage(
     inputWidth =
         (mainBoxSize.x - padding.x * 2 - DEFAULT_ITEM_MARGIN.x * (columns - 1)) / columns;
     childrenPosX = mainBoxPosition.x + padding.x;
+    firstInputPosY = mainBoxPosition.y + padding.y + DEFAULT_TITLE_SIZE +
+                     DEFAULT_TEXT_MARGIN.y + DEFAULT_TEXT_SIZE + DEFAULT_ITEM_MARGIN.y;
     inputs = new char *[numberOfInputs];
     editModes = new bool[numberOfInputs];
     inputPos = new Vector2[numberOfInputs];

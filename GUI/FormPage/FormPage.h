@@ -23,15 +23,14 @@ class FormPage : public Page {
     const char *buttonText;
     bool *editModes;
     int numberOfInputs, columns;
-    float childrenPosX, inputWidth;
+    float childrenPosX, firstInputPosY, inputWidth;
     std::string errorText;
     Vector2 mainBoxSize, mainBoxPosition, padding, *inputPos;
 
    public:
     FormPage(
-        const char *title, int numberOfInputs, int columns, float firstInputPosY,
-        Vector2 mainBoxSize, const char *buttonText = "Submit",
-        Vector2 padding = DEFAULT_PADDING
+        const char *title, int numberOfInputs, int columns, Vector2 mainBoxSize,
+        const char *buttonText = "Submit", Vector2 padding = DEFAULT_PADDING
     );
     ~FormPage();
 };

@@ -43,8 +43,7 @@ void LogInPage::submitCallBack() {
 
 User logInPage() {
     LogInPage logInPage(
-        "Log in to continue", 3, 1, 350.0f, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f},
-        "Log in"
+        "Log in to continue", 3, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f}, "Log in"
     );
     logInPage.mainLoop();
 

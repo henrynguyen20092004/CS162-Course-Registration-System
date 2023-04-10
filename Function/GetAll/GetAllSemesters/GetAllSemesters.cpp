@@ -9,9 +9,13 @@ void readSemester(std::ifstream &fin, Semester &semester) {
         return;
     }
 
-    // semester.number = intInput(fin);
+    std::string semesterNumber;
+    getline(fin, semesterNumber);
     getline(fin, semester.startDate);
     getline(fin, semester.endDate);
+    semester.number = stoi(semesterNumber);
 }
 
-Node<Semester> *getAllSemesters() { return getAll("Data/Semester.txt", readSemester); }
+Node<Semester> *getAllSemesters() {
+    return getAll("Data/Semester.txt", readSemester);
+}
