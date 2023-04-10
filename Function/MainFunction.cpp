@@ -60,7 +60,7 @@ void processUserCommand(int commandNumber, Semester &currentSemester, User &curr
 void processAdminCommand(int commandNumber, Semester &currentSemester) {
     switch (commandNumber) {
         case 5: {
-            createSchoolYear();
+            // createSchoolYear();
             break;
         }
 

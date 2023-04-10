@@ -1,6 +1,6 @@
 #ifndef CREATE_SCHOOL_YEAR_H
 #define CREATE_SCHOOL_YEAR_H
 
-void createSchoolYear();
+void createSchoolYear(char *inputedSchoolYear);
 
 #endif
