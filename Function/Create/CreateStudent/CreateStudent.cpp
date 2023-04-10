@@ -42,5 +42,4 @@ void createStudent(
     validateStudent(allData.allClasses, student);
     saveCreatedStudent(student);
     createStudentAccount(student);
-    std::cout << "Student successfully added!";
 }

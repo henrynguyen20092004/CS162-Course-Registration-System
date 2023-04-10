@@ -49,7 +49,7 @@ void AddStudentToClassPage::submitCallBack() {
 
 void addStudentToClassPage() {
     AddStudentToClassPage addStudentToClassPage(
-        "Add student to class", 7, 1, {SCREEN_WIDTH / 1.6f, SCREEN_HEIGHT / 1.7f}
+        "Add student to class", 7, 2, {SCREEN_WIDTH / 1.6f, SCREEN_HEIGHT / 1.4f}
     );
     addStudentToClassPage.mainLoop();
 }
