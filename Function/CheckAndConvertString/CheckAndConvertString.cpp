@@ -101,6 +101,10 @@ std::string normalization(const std::string &str) {
 std::string checkNameAndConvertToName(std::string input, const std::string &fieldName) {
     int length = input.length();
 
+    if (length == 0) {
+        throw std::invalid_argument("The inputted " + fieldName + " is not a name!\n");
+    }
+
     for (int i = 0; i < length; ++i) {
         if (input[i] != ' ' &&
             (input[i] < 'A' || (input[i] > 'Z' && input[i] < 'a') || input[i] > 'z')) {

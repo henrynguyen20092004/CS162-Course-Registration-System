@@ -53,8 +53,8 @@ void UpdateCoursePage::submitCallBack() {
 
 void updateCoursePage() {
     UpdateCoursePage updateCoursePage(
-        "Update Course Information", 8, 2, 250.f,
-        {SCREEN_WIDTH / 1.4f, SCREEN_HEIGHT / 1.4f}, "Submit"
+        "Update Course Information", 8, 2, {SCREEN_WIDTH / 1.4f, SCREEN_HEIGHT / 1.4f},
+        "Submit"
     );
 
     updateCoursePage.mainLoop();

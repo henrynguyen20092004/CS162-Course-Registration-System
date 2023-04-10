@@ -2,6 +2,7 @@
 
 #include "../../../Struct/Data.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../View/ViewCourses/ViewCourses.h"
@@ -9,12 +10,12 @@
 void inputChanges(Course& course, char** inputs) {
     course.id = inputs[0];
     course.className = inputs[1];
-    course.name = inputs[2];
-    course.teacherName = inputs[3];
-    course.credits = atoi(inputs[4]);
-    course.maxStudent = atoi(inputs[5]);
+    course.name = checkNameAndConvertToName(inputs[2], "course name");
+    course.teacherName = checkNameAndConvertToName(inputs[3], "teacher name");
+    course.credits = checkAndConvertToInt(inputs[4], "credit");
+    course.maxStudent = checkAndConvertToInt(inputs[5], "number of students");
     course.dayOfWeek = inputs[6];
-    course.sessionNumber = atoi(inputs[7]);
+    course.sessionNumber = checkAndConvertToInt(inputs[7], "session number");
 }
 
 void updateCourse(char** inputs) {
