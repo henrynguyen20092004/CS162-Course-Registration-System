@@ -1,19 +1,10 @@
 #include "CreateCourse.h"
 
-#include <cstring>
-
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../Input/Input.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
-#include "../CreateSemester/CreateSemester.h"
-
-void validateCourse(Node<Course> *allCourses, const Course &course) {
-    validateCourseIDAndClass(allCourses, course, true);
-    validateOtherCourseInformation(course);
-}
 
 void saveCourse(const Course &course) {
     std::ofstream fout;
@@ -32,20 +23,7 @@ void saveCourse(const Course &course) {
     addNewItemsToOldList(allData.allCourses, new Node(course));
 }
 
-int convertStringToInteger(char *&str) {
-    int res{0};
-
-    for (int i = 0; i < strlen(str); ++i) {
-        res = res * 10 + str[i] - '0';
-    }
-    return res;
-}
-
-void createCourse(
-    const Semester &semester, char *&courseID, char *&className, char *&courseName,
-    char *&teacherName, char *&credits, char *&maxStudent, char *&dayOfWeek,
-    char *&sessionNumber
-) {
+void createCourse(const Semester &semester, char **inputs, char **dropDownItems) {
     if (semester.schoolYearName == "") {
         throw std::runtime_error("Please create a semester first!");
     }
@@ -53,16 +31,19 @@ void createCourse(
     Course course;
     course.schoolYearName = semester.schoolYearName;
     course.semesterNumber = semester.number;
+    course.id = inputs[0];
+    course.className = inputs[1];
+    course.name = inputs[2];
+    course.teacherName = checkAndConvertToName(inputs[3], "teacher name");
+    course.credits = checkAndConvertToInt(inputs[4], "credits");
+    course.maxStudent = checkAndConvertToInt(inputs[5], "max student");
+    course.dayOfWeek = dropDownItems[0];
+    course.sessionNumber = stoi(std::string(dropDownItems[1]));
 
-    course.id = courseID;
-    course.className = className;
-    course.name = courseName;
-    course.teacherName = teacherName;
-    course.credits = convertStringToInteger(credits);
-    course.maxStudent = convertStringToInteger(maxStudent);
-    course.dayOfWeek = dayOfWeek;
-    course.sessionNumber = convertStringToInteger(sessionNumber);
+    if (checkCourseExists(allData.allCourses, course.id, course.className)) {
+        throw std::invalid_argument("This course already exists, please try again!");
+    }
 
-    validateCourse(allData.allCourses, course);
+    validateOtherCourseInformation(course);
     saveCourse(course);
 }

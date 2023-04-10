@@ -9,22 +9,24 @@
 class FormPage : public Page {
    private:
     Vector2 calculateInputPos(float firstInputPosY, int index);
+    virtual void drawFormInput() {}
+    virtual void submitCallBack() {}
     void drawPage() override;
     void drawFormBox();
-    virtual void drawFormInput() {}
     void drawErrorText();
-    virtual void submitCallBack() {}
     void dropDownLockGUI();
+    void checkFilledFields();
 
    protected:
     const char *title, *buttonText;
     char **inputs, **dropDownItems = nullptr, *menuDropDownItems;
-    bool *textInputEditModes, *dropdownEditModes = nullptr, menuDropDownEditMode;
+    bool *textInputEditModes, *dropDownEditModes = nullptr, menuDropDownEditMode;
     int numberOfTextInputs, numberOfDropDowns, columns;
-    int *dropdownActiveItems = nullptr, menuDropdownActiveItems;
+    int *dropDownActiveItems = nullptr, menuDropdownActiveItems;
     float childrenPosX, firstInputPosY, inputWidth;
     std::string errorText;
     Vector2 mainBoxSize, mainBoxPosition, padding, *inputPos;
+    void submit();
 
    public:
     FormPage(

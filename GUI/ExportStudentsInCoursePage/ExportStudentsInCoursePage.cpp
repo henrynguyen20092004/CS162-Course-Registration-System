@@ -20,21 +20,16 @@ void ExportStudentsInCoursePage::drawFormInput() {
     DropDown courseDropDown(allData.allCourses, inputPos[0], inputWidth);
 
     if (exportPathInput.drawTextInput("Export path", textInputEditModes[0])) {
-        submitCallBack();
+        submit();
     }
 
     courseDropDown.drawDropDown(
-        "Course", dropDownItems[0], dropdownActiveItems[0], dropdownEditModes[0]
+        "Course", dropDownItems[0], dropDownActiveItems[0], dropDownEditModes[0]
     );
 }
 
 void ExportStudentsInCoursePage::submitCallBack() {
-    try {
-        exportStudentsInCourse(inputs, dropDownItems);
-        stopLoop = true;
-    } catch (std::exception &error) {
-        errorText = error.what();
-    }
+    exportStudentsInCourse(inputs, dropDownItems);
 }
 
 void exportStudentsInCoursePage() {

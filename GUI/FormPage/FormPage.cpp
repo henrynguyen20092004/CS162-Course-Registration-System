@@ -33,8 +33,8 @@ FormPage::FormPage(
 
     if (numberOfDropDowns) {
         dropDownItems = new char *[numberOfDropDowns];
-        dropdownActiveItems = new int[numberOfDropDowns];
-        dropdownEditModes = new bool[numberOfDropDowns];
+        dropDownActiveItems = new int[numberOfDropDowns];
+        dropDownEditModes = new bool[numberOfDropDowns];
     }
 
     for (int i = 0; i < numberOfTextInputs; ++i) {
@@ -47,8 +47,8 @@ FormPage::FormPage(
     for (int i = 0; i < numberOfDropDowns; ++i) {
         dropDownItems[i] = new char[MAX_INPUT_CHAR];
         dropDownItems[i][0] = '\0';
-        dropdownActiveItems[i] = -1;
-        dropdownEditModes[i] = false;
+        dropDownActiveItems[i] = -1;
+        dropDownEditModes[i] = false;
         inputPos[i + numberOfTextInputs] =
             calculateInputPos(firstInputPosY, i + numberOfTextInputs);
     }
@@ -87,7 +87,7 @@ void FormPage::drawFormBox() {
     dropDownLockGUI();
 
     if (submitButton.drawButton()) {
-        submitCallBack();
+        submit();
     }
 
     drawFormInput();
@@ -111,13 +111,37 @@ void FormPage::drawErrorText() {
 
 void FormPage::dropDownLockGUI() {
     for (int i = 0; i < numberOfDropDowns; ++i) {
-        if (dropdownEditModes[i]) {
+        if (dropDownEditModes[i]) {
             GuiLock();
             return;
         }
     }
 
     GuiUnlock();
+}
+
+void FormPage::checkFilledFields() {
+    for (int i = 0; i < numberOfTextInputs; ++i) {
+        if (inputs[i][0] == '\0') {
+            throw std::invalid_argument("Please fill all fields before submitting!");
+        }
+    }
+
+    for (int i = 0; i < numberOfDropDowns; ++i) {
+        if (dropDownItems[i][0] == '\0') {
+            throw std::invalid_argument("Please fill all fields before submitting!");
+        }
+    }
+}
+
+void FormPage::submit() {
+    try {
+        checkFilledFields();
+        submitCallBack();
+        stopLoop = true;
+    } catch (std::exception &error) {
+        errorText = error.what();
+    }
 }
 
 FormPage::~FormPage() {
@@ -131,8 +155,8 @@ FormPage::~FormPage() {
 
     delete[] inputs;
     delete[] dropDownItems;
-    delete[] dropdownActiveItems;
-    delete[] dropdownEditModes;
+    delete[] dropDownActiveItems;
+    delete[] dropDownEditModes;
     delete[] textInputEditModes;
     delete[] inputPos;
     delete[] menuDropDownItems;

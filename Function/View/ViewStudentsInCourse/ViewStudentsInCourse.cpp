@@ -23,7 +23,7 @@ void viewStudentsInCourse() {
 
     do {
         try {
-            inputCourseIDAndClassName(course);
+            // inputCourseIDAndClassName(course);
             validateCourseIDAndClass(allData.allCourses, course, false);
             validCourse = true;
         } catch (std::exception& error) {

@@ -16,13 +16,13 @@ class UpdateCoursePage : public FormPage {
 };
 
 void UpdateCoursePage::drawFormInput() {
+    DropDown courseDropDown(allData.allCourses, inputPos[0], inputWidth);
     TextInput courseNameInput(inputs[0], inputPos[1], inputWidth);
     TextInput teacherNameInput(inputs[1], inputPos[2], inputWidth);
     TextInput creditsInput(inputs[2], inputPos[3], inputWidth);
     TextInput maxStudentInput(inputs[3], inputPos[4], inputWidth);
     DropDown dayOfWeekDropDown("MON;TUE;WED;THU;FRI;SAT", inputPos[5], inputWidth);
     DropDown sessionDropDown("1;2;3;4", inputPos[6], inputWidth);
-    DropDown courseDropDown(allData.allCourses, inputPos[0], inputWidth);
 
     if (courseNameInput.drawTextInput("Course name", textInputEditModes[0]) ||
         teacherNameInput.drawTextInput("Teacher name", textInputEditModes[1]) ||
@@ -30,28 +30,21 @@ void UpdateCoursePage::drawFormInput() {
         maxStudentInput.drawTextInput(
             "Maximum number of students", textInputEditModes[3]
         )) {
-        submitCallBack();
+        submit();
     }
 
     sessionDropDown.drawDropDown(
-        "Session number", dropDownItems[2], dropdownActiveItems[2], dropdownEditModes[2]
+        "Session number", dropDownItems[2], dropDownActiveItems[2], dropDownEditModes[2]
     );
     dayOfWeekDropDown.drawDropDown(
-        "Day of week", dropDownItems[1], dropdownActiveItems[1], dropdownEditModes[1]
+        "Day of week", dropDownItems[1], dropDownActiveItems[1], dropDownEditModes[1]
     );
     courseDropDown.drawDropDown(
-        "Course", dropDownItems[0], dropdownActiveItems[0], dropdownEditModes[0]
+        "Course", dropDownItems[0], dropDownActiveItems[0], dropDownEditModes[0]
     );
 }
 
-void UpdateCoursePage::submitCallBack() {
-    try {
-        updateCourse(inputs, dropDownItems);
-        stopLoop = true;
-    } catch (std::exception &error) {
-        errorText = error.what();
-    }
-}
+void UpdateCoursePage::submitCallBack() { updateCourse(inputs, dropDownItems); }
 
 void updateCoursePage() {
     UpdateCoursePage updateCoursePage(

@@ -38,7 +38,7 @@ void deleteCourse() {
 
     do {
         try {
-            inputCourseIDAndClassName(course);
+            // inputCourseIDAndClassName(course);
             validateCourseIDAndClass(allCourses, course, false);
             validCourse = true;
         } catch (std::exception &error) {

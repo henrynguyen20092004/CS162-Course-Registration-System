@@ -72,11 +72,11 @@ void drawMenu(
     char*& menuDropDownItems, int& menuDropdownActiveItems, bool& menuDropDownEditMode
 ) {
     DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, SCREEN_HEIGHT / 6.4f}, SECONDARY_COLOR);
-    DrawTextureV(defaultAvatar, DEFAULT_AVATAR_POSITION, WHITE);
+    DrawTextureV(defaultAvatar, AVATAR_POSITION, WHITE);
 
     DropDown accountNameDropDown(
         "Change current semester;Change password;Log out",
-        {DEFAULT_AVATAR_SIZE.x + DEFAULT_PADDING.x * 4 + 8, DEFAULT_PADDING.y * 2},
+        {AVATAR_SIZE.x + DEFAULT_PADDING.x * 4 + 8, DEFAULT_PADDING.y * 2},
         DEFAULT_MENU_BUTTON_WIDTH * 1.5f
     );
 

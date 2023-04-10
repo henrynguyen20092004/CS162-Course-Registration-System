@@ -3,6 +3,8 @@
 
 #include <string>
 
-void splitCourseToIDAndClassName(std::string* courseIDAndClassName, char* course);
+void splitCourseToIDAndClassName(
+    std::string* courseIDAndClassName, const std::string& course
+);
 
 #endif

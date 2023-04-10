@@ -3,10 +3,6 @@
 
 #include "../../../Struct/Semester.h"
 
-void createCourse(
-    const Semester &semester, char *&courseID, char *&className, char *&courseName,
-    char *&teacherName, char *&credits, char *&maxStudent, char *&dayOfWeek,
-    char *&sessionNumbe
-);
+void createCourse(const Semester &semester, char **inputs, char **dropDownItems);
 
 #endif
