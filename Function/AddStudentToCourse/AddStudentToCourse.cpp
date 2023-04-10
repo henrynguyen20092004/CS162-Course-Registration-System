@@ -17,31 +17,24 @@ void saveStudentToCourse(const StudentCourse &studentCourse) {
     addNewItemsToOldList(allData.allStudentCourses, new Node(studentCourse));
 }
 
-void addStudentToCourse() {
+void addStudentToCourse(char *courseID, char *className, char *studentID) {
     StudentCourse studentCourse;
-    bool validStudentCourse = false;
 
-    do {
-        try {
-            inputStudentCourse(studentCourse);
-            validateStudentCourse(
-                allData.allStudents, allData.allClasses, allData.allCourses, studentCourse
-            );
+    studentCourse.courseID = courseID;
+    studentCourse.className = className;
+    studentCourse.studentID = studentID;
 
-            if (checkStudentInCourse(
-                    allData.allStudentCourses, studentCourse.studentID,
-                    studentCourse.courseID, studentCourse.className
-                )) {
-                std::cout << "This student is already in the course, please try again!\n";
-                continue;
-            }
+    validateStudentCourse(
+        allData.allStudents, allData.allClasses, allData.allCourses, studentCourse
+    );
 
-            validStudentCourse = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validStudentCourse);
-
+    if (checkStudentInCourse(
+            allData.allStudentCourses, studentCourse.studentID, studentCourse.courseID,
+            studentCourse.className
+        )) {
+        throw std::invalid_argument(
+            "This student is already in the course, please try again!\n"
+        );
+    }
     saveStudentToCourse(studentCourse);
-    std::cout << "Student successfully added!\n";
 }

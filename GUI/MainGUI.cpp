@@ -2,6 +2,7 @@
 
 #include "MainGUI.h"
 
+#include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "LogInPage/LogInPage.h"
@@ -23,8 +24,7 @@ void mainWindow() {
 
     // Testing
     try {
-        User currentUser = logInPage();
-        std::cout << "Welcome, " << currentUser.username;
+        addStudentToCoursePage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {
