@@ -14,6 +14,7 @@
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
+#include "ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 
 Font titleFont, textFont;
 Texture2D defaultAvatar;
@@ -44,7 +45,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        updateCoursePage();
+        viewStudentsInClassPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {
