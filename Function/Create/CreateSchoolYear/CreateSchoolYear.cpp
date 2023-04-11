@@ -23,9 +23,7 @@ void saveSchoolYear(const std::string &schoolYearName) {
     addNewItemsToOldList(allData.allSchoolYears, new Node(schoolYearName));
 }
 
-void createSchoolYear(char *inputedSchoolYear) {
-    std::string schoolYearName = inputedSchoolYear;
-    validateSchoolYear(allData.allSchoolYears, schoolYearName);
-    saveSchoolYear(schoolYearName);
-    std::cout << "School year successfully added!\n";
+void createSchoolYear(char *inputtedSchoolYear) {
+    validateSchoolYear(allData.allSchoolYears, inputtedSchoolYear);
+    saveSchoolYear(inputtedSchoolYear);
 }

@@ -21,8 +21,8 @@ void CreateSemesterPage::drawFormInput() {
     TextInput startDateInput(inputs[0], inputPos[2], inputWidth);
     TextInput endDateInput(inputs[1], inputPos[3], inputWidth);
 
-    if (startDateInput.drawTextInput("Start date", textInputEditModes[0]) ||
-        endDateInput.drawTextInput("End date", textInputEditModes[1])) {
+    if (startDateInput.drawTextInput("Start date (dd/mm/yyyy)", textInputEditModes[0]) ||
+        endDateInput.drawTextInput("End date (dd/mm/yyyy)", textInputEditModes[1])) {
         submit();
     }
 
@@ -30,7 +30,8 @@ void CreateSemesterPage::drawFormInput() {
         "Semester number", dropDownItems[1], dropDownActiveItems[1], dropDownEditModes[1]
     );
     schoolYearDropDown.drawDropDown(
-        "School year", dropDownItems[0], dropDownActiveItems[0], dropDownEditModes[0]
+        "School year (yyyy-yyyy)", dropDownItems[0], dropDownActiveItems[0],
+        dropDownEditModes[0]
     );
 }
 
