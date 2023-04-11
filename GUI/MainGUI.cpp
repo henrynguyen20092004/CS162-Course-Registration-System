@@ -7,6 +7,7 @@
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "LogInPage/LogInPage.h"
+#include "MenuPage/MenuPage.h"
 #include "Page/Page.h"
 #include "UpdateCoursePage/UpdateCoursePage.h"
 
@@ -28,9 +29,10 @@ void mainWindow() {
 
     // Testing
     try {
-        exportStudentsInCoursePage();
-        Page tmpPage;
-        tmpPage.mainLoop();
+        // User currentUser = logInPage();
+        // std::cout << "Welcome, " << currentUser.username;
+        MenuPage tempPage;
+        tempPage.mainLoop();
     } catch (std::runtime_error &error) {
         UnloadImage(windowIcon);
         UnloadFont(titleFont);
