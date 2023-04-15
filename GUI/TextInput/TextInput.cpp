@@ -7,12 +7,9 @@ TextInput::TextInput(char *input, Vector2 pos, float width)
     : textInputBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}), input(input) {}
 
 bool TextInput::drawTextInput(const char *label, bool &editMode) {
-    if (IsMouseButtonPressed(0)) {
-        if (CheckCollisionPointRec(GetMousePosition(), textInputBox)) {
-            editMode = true;
-        } else {
-            editMode = false;
-        }
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        editMode =
+            CheckCollisionPointRec(GetMousePosition(), textInputBox) && !GuiIsLocked();
     }
 
     drawDefaultText(

@@ -18,19 +18,19 @@ class FormPage : public Page {
     virtual void submitCallBack() {}
 
    protected:
-    const char *title;
-    char **inputs;
-    const char *buttonText;
-    bool *editModes;
-    int numberOfInputs, columns;
+    const char *title, *buttonText;
+    char **inputs, **dropDownItems = nullptr;
+    bool *textInputEditModes, *dropdownEditModes = nullptr;
+    int numberOfTextInputs, numberOfDropDowns, columns, *dropdownActiveItems = nullptr;
     float childrenPosX, firstInputPosY, inputWidth;
     std::string errorText;
     Vector2 mainBoxSize, mainBoxPosition, padding, *inputPos;
 
    public:
     FormPage(
-        const char *title, int numberOfInputs, int columns, Vector2 mainBoxSize,
-        const char *buttonText = "Submit", Vector2 padding = DEFAULT_PADDING
+        const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
+        Vector2 mainBoxSize, const char *buttonText = "Submit",
+        Vector2 padding = DEFAULT_PADDING
     );
     ~FormPage();
 };
