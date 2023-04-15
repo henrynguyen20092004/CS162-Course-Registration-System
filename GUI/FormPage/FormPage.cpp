@@ -1,5 +1,7 @@
 #include "FormPage.h"
 
+#include <algorithm>
+
 #include "../Button/Button.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
@@ -60,8 +62,15 @@ void FormPage::drawFormBox() {
 }
 
 void FormPage::drawErrorText() {
-    float posY = mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_TEXT_SIZE -
-                 DEFAULT_ITEM_HEIGHT - DEFAULT_TEXT_MARGIN.y;
+    if (errorText == "") {
+        return;
+    }
+
+    errorText = clipText(textFont, errorText.c_str(), inputWidth);
+    int numberOfLines = std::count(errorText.begin(), errorText.end(), '\n') + 1;
+
+    float posY = mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT -
+                 DEFAULT_TEXT_SIZE * (numberOfLines * 1.5 - 0.5) - DEFAULT_TEXT_MARGIN.y;
 
     drawDefaultText(
         textFont, errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR

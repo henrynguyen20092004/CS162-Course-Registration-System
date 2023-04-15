@@ -45,4 +45,26 @@ void addNewItemsToOldList(Node<T> *&allItems, Node<T> *newItems) {
     cur->next = newItems;
 }
 
+template <typename T>
+int getLinkedListSize(Node<T> *head) {
+    int result = 0;
+
+    for (; head; head = head->next) {
+        ++result;
+    }
+
+    return result;
+}
+
+template <typename T>
+void transformLinkedListToArray(Node<T> *allItems, T *&allItemsArray, int &arraySize) {
+    arraySize = getLinkedListSize(allItems);
+    allItemsArray = new T[arraySize];
+
+    for (int i = 0; i < arraySize; ++i) {
+        allItemsArray[i] = allItems->data;
+        allItems = allItems->next;
+    }
+}
+
 #endif
