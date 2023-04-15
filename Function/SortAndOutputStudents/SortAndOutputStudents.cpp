@@ -2,14 +2,6 @@
 
 #include <algorithm>
 
-int getLinkedListSize(Node<Student>* head) {
-    int result = 0;
-    for (; head; head = head->next) {
-        ++result;
-    }
-    return result;
-}
-
 bool compareStudent(const Student& firstStudent, const Student& secondStudent) {
     return firstStudent.id < secondStudent.id;
 }
@@ -19,14 +11,9 @@ void sortAndOutputStudents(
     void (*outputStudentsCallBack
     )(std::ostream& out, Student* allStudentsArray, int arraySize)
 ) {
-    int arraySize = getLinkedListSize(allStudents);
-    Student* allStudentsArray = new Student[arraySize];
-
-    for (int i = 0; i < arraySize; ++i) {
-        allStudentsArray[i] = allStudents->data;
-        allStudents = allStudents->next;
-    }
-
+    int arraySize;
+    Student* allStudentsArray;
+    transformLinkedListToArray(allStudents, allStudentsArray, arraySize);
     std::sort(allStudentsArray, allStudentsArray + arraySize, compareStudent);
     outputStudentsCallBack(out, allStudentsArray, arraySize);
     delete[] allStudentsArray;
