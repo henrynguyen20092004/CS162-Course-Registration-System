@@ -30,16 +30,6 @@ FRI
 3
 2022-2023
 2
-PH211
-General Physics I
-22TT2
-Nguyen Huu Nha
-4
-50
-SAT
-2
-2022-2023
-2
 MTH2
 Calculus II
 22TT2
@@ -58,16 +48,6 @@ Dinh Ba Tien
 120
 MON
 1
-2023-2024
-2
-PH215
-General Physics V
-22TT2
-Nguyen Huu Nha
-50
-10
-MON
-4
 2025-2026
 1
 MTH251

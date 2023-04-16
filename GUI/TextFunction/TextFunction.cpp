@@ -1,7 +1,5 @@
 #include "TextFunction.h"
 
-#include <cstring>
-
 float measureTextWidth(const Font& font, const char* text) {
     return MeasureTextEx(font, text, font.baseSize, SPACING).x;
 }
@@ -11,10 +9,10 @@ std::string clipText(const Font& font, const char* text, int maxWidth) {
         return text;
     }
 
-    int curSpace = 1, textLength = strlen(text);
+    int curSpace = 1;
     std::string curText, result = text;
 
-    for (int i = 1; i < textLength; ++i) {
+    for (int i = 1; text[i] != '\0'; ++i) {
         if (text[i] == ' ') {
             curSpace = i;
         }

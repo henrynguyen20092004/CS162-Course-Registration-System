@@ -24,8 +24,8 @@ void LogInPage::drawFormInput() {
     TextInput usernameInput(inputs[0], inputPos[0], inputWidth);
     TextInput passwordInput(inputs[1], inputPos[1], inputWidth);
 
-    if (usernameInput.drawTextInput("Username", editModes[0]) ||
-        passwordInput.drawTextInput("Password", editModes[1])) {
+    if (usernameInput.drawTextInput("Username", textInputEditModes[0]) ||
+        passwordInput.drawTextInput("Password", textInputEditModes[1])) {
         submitCallBack();
     }
 
@@ -34,7 +34,7 @@ void LogInPage::drawFormInput() {
 
 void LogInPage::submitCallBack() {
     try {
-        currentUser = logIn(inputs[0], inputs[2]);
+        currentUser = logIn(inputs);
         stopLoop = true;
     } catch (std::exception &error) {
         errorText = error.what();
@@ -43,7 +43,8 @@ void LogInPage::submitCallBack() {
 
 User logInPage() {
     LogInPage logInPage(
-        "Log in to continue", 3, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f}, "Log in"
+        "Log in to continue", 3, 0, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f},
+        "Log in"
     );
     logInPage.mainLoop();
 

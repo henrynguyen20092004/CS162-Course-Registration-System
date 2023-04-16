@@ -3,6 +3,6 @@
 
 #include "../../Struct/User.h"
 
-User logIn(char *username, char *password);
+User logIn(char **inputs);
 
 #endif

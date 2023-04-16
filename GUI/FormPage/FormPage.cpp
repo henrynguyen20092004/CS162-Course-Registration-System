@@ -7,11 +7,12 @@
 #include "../TextFunction/TextFunction.h"
 
 FormPage::FormPage(
-    const char *title, int numberOfInputs, int columns, Vector2 mainBoxSize,
-    const char *buttonText, Vector2 padding
+    const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
+    Vector2 mainBoxSize, const char *buttonText, Vector2 padding
 )
     : title(title),
-      numberOfInputs(numberOfInputs),
+      numberOfTextInputs(numberOfTextInputs),
+      numberOfDropDowns(numberOfDropDowns),
       columns(columns),
       mainBoxSize(mainBoxSize),
       padding(padding),
@@ -23,15 +24,30 @@ FormPage::FormPage(
     childrenPosX = mainBoxPosition.x + padding.x;
     firstInputPosY = mainBoxPosition.y + padding.y + DEFAULT_TITLE_SIZE +
                      DEFAULT_TEXT_MARGIN.y + DEFAULT_TEXT_SIZE + DEFAULT_ITEM_MARGIN.y;
-    inputs = new char *[numberOfInputs];
-    editModes = new bool[numberOfInputs];
-    inputPos = new Vector2[numberOfInputs];
+    inputs = new char *[numberOfTextInputs];
+    textInputEditModes = new bool[numberOfTextInputs];
+    inputPos = new Vector2[numberOfTextInputs + numberOfDropDowns];
 
-    for (int i = 0; i < numberOfInputs; i++) {
+    if (numberOfDropDowns) {
+        dropDownItems = new char *[numberOfDropDowns];
+        dropdownActiveItems = new int[numberOfDropDowns];
+        dropdownEditModes = new bool[numberOfDropDowns];
+    }
+
+    for (int i = 0; i < numberOfTextInputs; ++i) {
         inputs[i] = new char[MAX_INPUT_CHAR];
         inputs[i][0] = '\0';
-        editModes[i] = false;
+        textInputEditModes[i] = false;
         inputPos[i] = calculateInputPos(firstInputPosY, i);
+    }
+
+    for (int i = 0; i < numberOfDropDowns; ++i) {
+        dropDownItems[i] = new char[MAX_INPUT_CHAR];
+        dropDownItems[i][0] = '\0';
+        dropdownActiveItems[i] = -1;
+        dropdownEditModes[i] = false;
+        inputPos[i + numberOfTextInputs] =
+            calculateInputPos(firstInputPosY, i + numberOfTextInputs);
     }
 }
 
@@ -53,12 +69,20 @@ void FormPage::drawFormBox() {
 
     DrawRectangleV(mainBoxPosition, mainBoxSize, WHITE);
     drawDefaultTitle(titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y});
-    drawFormInput();
     drawErrorText();
+
+    for (int i = 0; i < numberOfDropDowns; ++i) {
+        if (dropdownEditModes[i]) {
+            GuiLock();
+            break;
+        }
+    }
 
     if (submitButton.drawButton()) {
         submitCallBack();
     }
+
+    drawFormInput();
 }
 
 void FormPage::drawErrorText() {
@@ -78,11 +102,18 @@ void FormPage::drawErrorText() {
 }
 
 FormPage::~FormPage() {
-    for (int i = 0; i < numberOfInputs; i++) {
+    for (int i = 0; i < numberOfTextInputs; ++i) {
         delete[] inputs[i];
     }
 
+    for (int i = 0; i < numberOfDropDowns; ++i) {
+        delete[] dropDownItems[i];
+    }
+
     delete[] inputs;
-    delete[] editModes;
+    delete[] dropDownItems;
+    delete[] dropdownActiveItems;
+    delete[] dropdownEditModes;
+    delete[] textInputEditModes;
     delete[] inputPos;
 }

@@ -2,6 +2,7 @@
 
 #include "MainGUI.h"
 
+#include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "LogInPage/LogInPage.h"
@@ -19,12 +20,13 @@ void mainWindow() {
     SetWindowIcon(windowIcon);
     SetTargetFPS(60);
     GuiSetStyle(DEFAULT, TEXT_SIZE, DEFAULT_TEXT_SIZE);
+    GuiSetStyle(DROPDOWNBOX, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
+    GuiSetStyle(DROPDOWNBOX, DROPDOWN_ITEMS_SPACING, 0);
     GuiSetFont(textFont);
 
     // Testing
     try {
-        User currentUser = logInPage();
-        std::cout << "Welcome, " << currentUser.username;
+        addStudentToCoursePage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

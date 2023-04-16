@@ -6,6 +6,7 @@
 #include "../Check/CheckStudentID/CheckStudentID.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
+#include "../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void saveStudentToCourse(const StudentCourse &studentCourse) {
     std::ofstream fout;
@@ -17,31 +18,40 @@ void saveStudentToCourse(const StudentCourse &studentCourse) {
     addNewItemsToOldList(allData.allStudentCourses, new Node(studentCourse));
 }
 
-void addStudentToCourse() {
+void addStudentToCourse(char **inputs, char **dropDownItems) {
+    if (dropDownItems[0][0] == '\0') {
+        throw std::invalid_argument("Please choose a course!");
+    }
+
     StudentCourse studentCourse;
-    bool validStudentCourse = false;
+    std::string *courseIDAndClassName = new std::string[2];
+    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
 
-    do {
-        try {
-            inputStudentCourse(studentCourse);
-            validateStudentCourse(
-                allData.allStudents, allData.allClasses, allData.allCourses, studentCourse
-            );
+    studentCourse.courseID = courseIDAndClassName[0];
+    studentCourse.className = courseIDAndClassName[1];
+    studentCourse.studentID = inputs[0];
+    std::cout << studentCourse.courseID << '\n';
+    std::cout << studentCourse.className << '\n';
+    std::cout << studentCourse.studentID << '\n';
 
-            if (checkStudentInCourse(
-                    allData.allStudentCourses, studentCourse.studentID,
-                    studentCourse.courseID, studentCourse.className
-                )) {
-                std::cout << "This student is already in the course, please try again!\n";
-                continue;
-            }
-
-            validStudentCourse = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
+    try {
+        if (!checkStudentIDExists(allData.allStudents, studentCourse.studentID)) {
+            throw std::invalid_argument("This student does not exist, please try again!");
         }
-    } while (!validStudentCourse);
 
-    saveStudentToCourse(studentCourse);
-    std::cout << "Student successfully added!\n";
+        if (checkStudentInCourse(
+                allData.allStudentCourses, studentCourse.studentID,
+                studentCourse.courseID, studentCourse.className
+            )) {
+            throw std::invalid_argument(
+                "This student is already in the course, please try again!"
+            );
+        }
+
+        saveStudentToCourse(studentCourse);
+        delete[] courseIDAndClassName;
+    } catch (...) {
+        delete[] courseIDAndClassName;
+        throw;
+    }
 }

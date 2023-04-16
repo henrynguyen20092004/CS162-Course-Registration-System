@@ -15,10 +15,10 @@ bool checkUserExists(Node<User> *allUsers, const User &user) {
     return false;
 }
 
-User logIn(char *username, char *password) {
+User logIn(char **inputs) {
     User user;
-    user.username = username;
-    user.password = password;
+    user.username = inputs[0];
+    user.password = inputs[1];
 
     if (!checkUserExists(allData.allUsers, user)) {
         throw std::invalid_argument("Invalid credentials, please try again!");
