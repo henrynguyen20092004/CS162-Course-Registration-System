@@ -43,6 +43,7 @@ FormPage::FormPage(
 
     for (int i = 0; i < numberOfDropDowns; ++i) {
         dropDownItems[i] = new char[MAX_INPUT_CHAR];
+        dropDownItems[i][0] = '\0';
         dropdownActiveItems[i] = -1;
         dropdownEditModes[i] = false;
         inputPos[i + numberOfTextInputs] =

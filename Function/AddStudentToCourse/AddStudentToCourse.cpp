@@ -19,6 +19,10 @@ void saveStudentToCourse(const StudentCourse &studentCourse) {
 }
 
 void addStudentToCourse(char **inputs, char **dropDownItems) {
+    if (dropDownItems[0][0] == '\0') {
+        throw std::invalid_argument("Please choose a course!");
+    }
+
     StudentCourse studentCourse;
     std::string *courseIDAndClassName = new std::string[2];
     splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
