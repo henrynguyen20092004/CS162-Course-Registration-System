@@ -6,15 +6,13 @@ int checkAndConvertToInt(std::string input, const std::string &fieldName) {
     int n = input.size();
 
     if (!isdigit(input[0]) && input[0] != '-') {
-        throw std::invalid_argument(
-            "The inputted " + fieldName + " is not an integer!\n"
-        );
+        throw std::invalid_argument("The inputted " + fieldName + " is not an integer!");
     }
 
     for (int i = 1; i < n; ++i) {
         if (!isdigit(input[i])) {
             throw std::invalid_argument(
-                "The inputted " + fieldName + " is not an integer!\n"
+                "The inputted " + fieldName + " is not an integer!"
             );
         }
     }
@@ -23,7 +21,7 @@ int checkAndConvertToInt(std::string input, const std::string &fieldName) {
         return stoi(input);
     } catch (...) {
         throw std::invalid_argument(
-            "The inputted " + fieldName + " is out of integer range!\n"
+            "The inputted " + fieldName + " is out of integer range!"
         );
     }
 }
@@ -33,20 +31,18 @@ double checkAndConvertToScore(std::string input, const std::string &fieldName) {
     double score;
 
     if (!isdigit(input[0]) && input[0] != '-') {
-        throw std::invalid_argument("The inputted " + fieldName + " is not a score!\n");
+        throw std::invalid_argument("The inputted " + fieldName + " is not a score!");
     }
 
     for (int i = 1; i < n; ++i) {
         if (input[i] == '.') {
             if (numberOfDecimalPoint++) {
                 throw std::invalid_argument(
-                    "The inputted " + fieldName + " is not a score!\n"
+                    "The inputted " + fieldName + " is not a score!"
                 );
             }
         } else if (!isdigit(input[i])) {
-            throw std::invalid_argument(
-                "The inputted " + fieldName + " is not a score!\n"
-            );
+            throw std::invalid_argument("The inputted " + fieldName + " is not a score!");
         }
     }
 
@@ -54,13 +50,13 @@ double checkAndConvertToScore(std::string input, const std::string &fieldName) {
         score = stod(input);
     } catch (...) {
         throw std::invalid_argument(
-            "The inputted " + fieldName + " is out of valid score range!\n"
+            "The inputted " + fieldName + " is out of valid score range!"
         );
     }
 
     if (score < 0 || score > 10) {
         throw std::invalid_argument(
-            "The inputted " + fieldName + " is out of valid score range!\n"
+            "The inputted " + fieldName + " is out of valid score range!"
         );
     }
 
@@ -102,15 +98,13 @@ std::string checkNameAndConvertToName(std::string input, const std::string &fiel
     int length = input.length();
 
     if (length == 0) {
-        throw std::invalid_argument("The inputted " + fieldName + " is not a name!\n");
+        throw std::invalid_argument("The inputted " + fieldName + " is not a name!");
     }
 
     for (int i = 0; i < length; ++i) {
         if (input[i] != ' ' &&
             (input[i] < 'A' || (input[i] > 'Z' && input[i] < 'a') || input[i] > 'z')) {
-            throw std::invalid_argument(
-                "The inputted " + fieldName + " is not a name!\n"
-            );
+            throw std::invalid_argument("The inputted " + fieldName + " is not a name!");
         }
     }
 

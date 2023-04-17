@@ -5,20 +5,26 @@
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
+#include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 #include "../../View/ViewCourses/ViewCourses.h"
 
-void inputChanges(Course& course, char** inputs) {
-    course.id = inputs[0];
-    course.className = inputs[1];
-    course.name = checkNameAndConvertToName(inputs[2], "course name");
-    course.teacherName = checkNameAndConvertToName(inputs[3], "teacher name");
-    course.credits = checkAndConvertToInt(inputs[4], "credit");
-    course.maxStudent = checkAndConvertToInt(inputs[5], "number of students");
-    course.dayOfWeek = inputs[6];
-    course.sessionNumber = checkAndConvertToInt(inputs[7], "session number");
+void inputChanges(Course& course, char** inputs, char** dropDownItems) {
+    std::string* courseIDAndClassName = new std::string[2];
+    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
+
+    course.id = courseIDAndClassName[0];
+    course.className = courseIDAndClassName[1];
+    course.name = checkNameAndConvertToName(inputs[0], "course name");
+    course.teacherName = checkNameAndConvertToName(inputs[1], "teacher name");
+    course.credits = checkAndConvertToInt(inputs[2], "credit");
+    course.maxStudent = checkAndConvertToInt(inputs[3], "number of students");
+    course.dayOfWeek = dropDownItems[1];
+    course.sessionNumber = checkAndConvertToInt(dropDownItems[2], "session number");
+
+    delete[] courseIDAndClassName;
 }
 
-void updateCourse(char** inputs) {
+void updateCourse(char** inputs, char** dropDownItems) {
     if (!allData.allCourses) {
         throw std::invalid_argument(
             "No course records, please create one and try again later!"
@@ -26,7 +32,7 @@ void updateCourse(char** inputs) {
     }
 
     Course course;
-    inputChanges(course, inputs);
+    inputChanges(course, inputs, dropDownItems);
     validateCourseIDAndClass(allData.allCourses, course, false);
     validateOtherCourseInformation(course);
 
