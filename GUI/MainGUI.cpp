@@ -30,8 +30,9 @@ void mainWindow() {
     try {
         User currentUser = logInPage();
         std::cout << "Welcome, " << currentUser.username;
-        Page tempPage;
-        tempPage.mainLoop();
+        exportStudentsInCoursePage();
+        Page tmpPage;
+        tmpPage.mainLoop();
     } catch (std::runtime_error &error) {
         UnloadImage(windowIcon);
         UnloadFont(titleFont);

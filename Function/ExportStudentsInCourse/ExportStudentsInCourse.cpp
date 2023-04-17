@@ -6,6 +6,7 @@
 #include "../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../OpenFile/OpenFile.h"
 #include "../SortAndOutputStudents/SortAndOutputStudents.h"
+#include "../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void exportStudentsToFile(std::ostream &out, Student *allStudentsArray, int arraySize) {
     for (int i = 0; i < arraySize; ++i) {
@@ -21,13 +22,14 @@ void exportStudentsToFile(std::ostream &out, Student *allStudentsArray, int arra
     }
 }
 
-void exportStudentsInCourse(
-    char *inputedCourseID, char *inputedClassName, char *inputedPath
-) {
+void exportStudentsInCourse(char **inputs, char **dropDownItems) {
+    std::string *tmpDropDownItems = new std::string[2];
+    splitCourseToIDAndClassName(tmpDropDownItems, dropDownItems[0]);
+
     Course course;
-    course.id = inputedCourseID;
-    course.className = inputedClassName;
-    std::string exportPath = inputedPath;
+    course.id = tmpDropDownItems[0];
+    course.className = tmpDropDownItems[1];
+    std::string exportPath = inputs[0];
 
     validateCourseIDAndClass(allData.allCourses, course, false);
 
@@ -54,6 +56,6 @@ void exportStudentsInCourse(
     sortAndOutputStudents(fout, allStudentsInCourse, &exportStudentsToFile);
     fout.close();
 
-    deleteLinkedList(allStudentsInCourse);
+    delete[] tmpDropDownItems;
     std::cout << "Student's info successfully exported to " << exportPath << '\n';
 }
