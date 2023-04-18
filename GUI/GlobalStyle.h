@@ -25,7 +25,10 @@
 #define SPACING 1.0f
 #define DEFAULT_AVATAR_SIZE \
     (Vector2) { 50.f, 50.f }
-#define DEFAULT_MENU_BUTTON_WIDTH 180
+#define DEFAULT_AVATAR_POSITION \
+    (Vector2) { 50.f, 35.f }
+#define DEFAULT_MENU_BUTTON_WIDTH 180.f
+#define UNKNOWN_USERNAME "-1"
 
 extern Font titleFont, textFont;
 

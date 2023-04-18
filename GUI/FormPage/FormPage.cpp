@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "../Button/Button.h"
+#include "../DrawMenu/DrawMenu.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
 
@@ -49,6 +50,15 @@ FormPage::FormPage(
         inputPos[i + numberOfTextInputs] =
             calculateInputPos(firstInputPosY, i + numberOfTextInputs);
     }
+
+    currentUser.username = UNKNOWN_USERNAME;
+
+    menuDropDownItems = new char[MAX_INPUT_CHAR];
+    menuDropDownItems[0] = '\0';
+    menuDropdownActiveItems = -1;
+    menuDropDownEditMode = false;
+
+    defaultAvatar = LoadTexture("Pictures/DefaultAvatar.png");
 }
 
 Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
@@ -59,7 +69,16 @@ Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
                              (index / columns)};
 }
 
-void FormPage::drawPage() { drawFormBox(); }
+void FormPage::drawPage() {
+    if (currentUser.username != UNKNOWN_USERNAME) {
+        drawMenu(
+            currentUser.username, menuDropDownItems, menuDropdownActiveItems,
+            menuDropDownEditMode, defaultAvatar
+        );
+    }
+
+    drawFormBox();
+}
 
 void FormPage::drawFormBox() {
     Button submitButton(
@@ -116,4 +135,7 @@ FormPage::~FormPage() {
     delete[] dropdownEditModes;
     delete[] textInputEditModes;
     delete[] inputPos;
+    delete[] menuDropDownItems;
+
+    UnloadTexture(defaultAvatar);
 }

@@ -17,7 +17,7 @@ class DropDown {
     DropDown(Node<std::string>* itemList, Vector2 pos, float width);
     DropDown(Node<Semester>* itemList, Vector2 pos, float width);
     DropDown(Node<Course>* itemList, Vector2 pos, float width);
-    DropDown(std::string dropdownOption, Vector2 pos, float width);
+    DropDown(const std::string& itemList, Vector2 pos, float width);
     void drawDropDown(
         const char* label, char*& selectedItem, int& activeItemIndex, bool& editMode
     );

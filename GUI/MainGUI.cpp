@@ -3,11 +3,11 @@
 #include "MainGUI.h"
 
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
+#include "DrawMenu/DrawMenu.h"
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "LogInPage/LogInPage.h"
-#include "MenuPage/MenuPage.h"
 #include "Page/Page.h"
 #include "UpdateCoursePage/UpdateCoursePage.h"
 
@@ -29,10 +29,11 @@ void mainWindow() {
 
     // Testing
     try {
-        // User currentUser = logInPage();
-        // std::cout << "Welcome, " << currentUser.username;
-        MenuPage tempPage;
-        tempPage.mainLoop();
+        User currentUser = logInPage();
+        std::cout << "Welcome, " << currentUser.username;
+        addStudentToCoursePage(currentUser);
+        Page tmpPage;
+        tmpPage.mainLoop();
     } catch (std::runtime_error &error) {
         UnloadImage(windowIcon);
         UnloadFont(titleFont);

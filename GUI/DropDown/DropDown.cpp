@@ -37,8 +37,8 @@ DropDown::DropDown(Node<Course>* itemList, Vector2 pos, float width)
     }
 }
 
-DropDown::DropDown(std::string dropdownOption, Vector2 pos, float width)
-    : items(dropdownOption), dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}) {}
+DropDown::DropDown(const std::string& itemList, Vector2 pos, float width)
+    : items(itemList), dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}) {}
 
 void DropDown::drawDropDown(
     const char* label, char*& selectedItem, int& activeItemIndex, bool& editMode

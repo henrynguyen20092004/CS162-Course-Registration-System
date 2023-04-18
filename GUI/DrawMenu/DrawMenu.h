@@ -9,6 +9,9 @@
 #include "../GlobalStyle.h"
 #include "../Page/Page.h"
 
-void drawMenu(const std::string& username);
+void drawMenu(
+    const std::string& currentUsername, char*& menuDropDownItems,
+    int& menuDropdownActiveItems, bool& menuDropDownEditMode, const Texture2D& avatar
+);
 
 #endif

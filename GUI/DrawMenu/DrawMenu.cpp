@@ -4,12 +4,37 @@
 #include <iostream>
 
 #include "../Button/Button.h"
+#include "../DropDown/DropDown.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
-#include "../LogOutPage/LogOutPage.h"
 #include "../TextFunction/TextFunction.h"
 #include "../TextInput/TextInput.h"
 
-void drawStudentMenu() {}
+void drawStudentMenu() {
+    Button studentInformation(
+        "Your information", SCREEN_WIDTH / 1.7f, DEFAULT_PADDING.x * 2,
+        DEFAULT_MENU_BUTTON_WIDTH
+    );
+    Button currentCoursesButton(
+        "Current courses", SCREEN_WIDTH / 1.7f + DEFAULT_MENU_BUTTON_WIDTH,
+        DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
+    );
+    Button scoreboard(
+        "Scoreboard", SCREEN_WIDTH / 1.7f + 2 * DEFAULT_MENU_BUTTON_WIDTH,
+        DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
+    );
+
+    if (studentInformation.drawButton()) {
+        // viewStudentInformationPage
+    }
+
+    if (currentCoursesButton.drawButton()) {
+        // viewCurrentCoursesPage
+    }
+
+    if (scoreboard.drawButton()) {
+        // viewScoreboardPage
+    }
+}
 
 void drawAdminMenu() {
     Button schoolYearButton(
@@ -45,21 +70,40 @@ void drawAdminMenu() {
     }
 }
 
-void drawMenu(const std::string& currentUsername) {
-    char* username = c_string(currentUsername);
+void drawMenu(
+    const std::string& currentUsername, char*& menuDropDownItems,
+    int& menuDropdownActiveItems, bool& menuDropDownEditMode, const Texture2D& avatar
+) {
+    DrawTextureV(avatar, DEFAULT_AVATAR_POSITION, BACK_GROUND_COLOR);
 
-    Button accountNameButton(
-        username, defaultAvatarPosition.x + DEFAULT_AVATAR_SIZE.x + DEFAULT_PADDING.x * 2,
-        DEFAULT_PADDING * 2, DEFAULT_MENU_BUTTON_WIDTH
+    DropDown accountNameDropDown(
+        "Change Current Semester;Change Password;Log out",
+        {DEFAULT_AVATAR_SIZE.x + DEFAULT_PADDING.x * 4 + 8, DEFAULT_PADDING.y * 2},
+        DEFAULT_MENU_BUTTON_WIDTH * 1.7f
     );
 
-    if (accountNameButton.drawButton()) {
-        // logout and change password
-    }
+    accountNameDropDown.drawDropDown(
+        ("Welcome, " + currentUsername).c_str(), menuDropDownItems,
+        menuDropdownActiveItems, menuDropDownEditMode
+    );
 
-    if (strncmp(username, "admin", 5) == 0) {
+    if (currentUsername == "admin") {
         drawAdminMenu();
     } else {
         drawStudentMenu();
+    }
+
+    switch (menuDropdownActiveItems) {
+        case 0:
+            // changeCurrentSemesterPage
+            break;
+
+        case 1:
+            // changePasswordPage
+            break;
+
+        case 2:
+            // logoutPage
+            break;
     }
 }
