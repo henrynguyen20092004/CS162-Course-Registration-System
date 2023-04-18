@@ -23,6 +23,9 @@
     (Vector2) { 20.0f, 20.0f }
 #define MAX_INPUT_CHAR 256
 #define SPACING 1.0f
+#define DEFAULT_AVATAR_SIZE \
+    (Vector2) { 50.f, 50.f }
+#define DEFAULT_MENU_BUTTON_WIDTH 180
 
 extern Font titleFont, textFont;
 
