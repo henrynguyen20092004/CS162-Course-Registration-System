@@ -7,12 +7,11 @@ void validateSchoolYear(
     Node<std::string> *allSchoolYears, const std::string &schoolYearName
 ) {
     if (!checkValidSchoolYear(schoolYearName)) {
-        throw std::invalid_argument("Invalid school year, please try again!\n");
+        throw std::invalid_argument("Invalid school year, please try again!");
     }
 
     if (checkSchoolYearExists(allSchoolYears, schoolYearName)) {
-        throw std::invalid_argument("This school year already exists, please try again!\n"
-        );
+        throw std::invalid_argument("This school year already exists, please try again!");
     }
 }
 

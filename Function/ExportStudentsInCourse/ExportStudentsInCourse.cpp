@@ -6,68 +6,49 @@
 #include "../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../OpenFile/OpenFile.h"
 #include "../SortAndOutputStudents/SortAndOutputStudents.h"
+#include "../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void exportStudentsToFile(std::ostream &out, Student *allStudentsArray, int arraySize) {
     for (int i = 0; i < arraySize; ++i) {
         Student student = allStudentsArray[i];
-        out << i + 1 << ",";
-        out << student.id << ",";
-        out << student.firstName << ",";
-        out << student.lastName << ",";
-        out << student.gender << ",";
-        out << student.dateOfBirth << ",";
-        out << student.socialID << ",";
+        out << i + 1 << ',';
+        out << student.id << ',';
+        out << student.firstName << ',';
+        out << student.lastName << ',';
+        out << student.gender << ',';
+        out << student.dateOfBirth << ',';
+        out << student.socialID << ',';
         out << student.className << '\n';
     }
 }
 
-void exportStudentsInCourse() {
+void exportStudentsInCourse(char **inputs, char **dropDownItems) {
+    std::string *courseIDAndClassName = new std::string[2], exportPath = inputs[0];
+    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
+
     Course course;
-    bool validCourse = false, validPath = false;
-    std::string exportPath;
-
-    do {
-        try {
-            inputCourseIDAndClassName(course);
-            validateCourseIDAndClass(allData.allCourses, course, false);
-            validCourse = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validCourse);
-
+    course.id = courseIDAndClassName[0];
+    course.className = courseIDAndClassName[1];
     Node<Student> *allStudentsInCourse = getAllStudentsInCourse(course);
 
     if (!allStudentsInCourse) {
-        std::cout << "There's no student in this course, please add some!\n";
-        return;
+        throw std::invalid_argument("There's no student in this course!");
     }
 
-    do {
-        try {
-            std::cout << "Please enter the path to the CSV: ";
-            getline(std::cin, exportPath);
+    if (exportPath == "") {
+        throw std::invalid_argument(
+            "Please enter a path to the folder you want to export!"
+        );
+    }
 
-            if (exportPath == "") {
-                std::cout << "Please enter a path to the folder you want to export: \n";
-                continue;
-            }
+    if (exportPath.back() != '\\' && exportPath.back() != '/') {
+        exportPath += exportPath.find('\\') != std::string::npos ? '\\' : '/';
+    }
 
-            if (exportPath.back() != '\\' && exportPath.back() != '/') {
-                exportPath += exportPath.find('\\') != std::string::npos ? '\\' : '/';
-            }
-
-            exportPath += "StudentsInCourse.csv";
-            std::ofstream fout;
-            writeFile(fout, exportPath);
-            sortAndOutputStudents(fout, allStudentsInCourse, &exportStudentsToFile);
-            fout.close();
-            validPath = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validPath);
-
-    deleteLinkedList(allStudentsInCourse);
-    std::cout << "Student's info successfully exported to " << exportPath << '\n';
+    exportPath += "StudentsInCourse.csv";
+    std::ofstream fout;
+    writeFile(fout, exportPath);
+    sortAndOutputStudents(fout, allStudentsInCourse, &exportStudentsToFile);
+    fout.close();
+    delete[] courseIDAndClassName;
 }

@@ -10,7 +10,6 @@
 #include "CurrentSemester/CurrentSemester.h"
 #include "DeleteCourse/DeleteCourse.h"
 #include "DownloadTemplateCSV/DownloadTemplateCSV.h"
-#include "ExportStudentsInCourse/ExportStudentsInCourse.h"
 #include "ImportCSV/ImportScoreboard/ImportScoreboard.h"
 #include "ImportCSV/ImportStudentsInClass/ImportStudentsInClass.h"
 #include "ImportCSV/ImportStudentsInCourse/ImportStudentInCourse.h"

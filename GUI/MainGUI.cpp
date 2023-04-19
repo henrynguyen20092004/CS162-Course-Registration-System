@@ -3,6 +3,7 @@
 #include "MainGUI.h"
 
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
+#include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "LogInPage/LogInPage.h"
@@ -27,9 +28,9 @@ void mainWindow() {
 
     // Testing
     try {
-        updateCoursePage();
-        Page tempPage;
-        tempPage.mainLoop();
+        exportStudentsInCoursePage();
+        Page tmpPage;
+        tmpPage.mainLoop();
     } catch (std::runtime_error &error) {
         UnloadImage(windowIcon);
         UnloadFont(titleFont);

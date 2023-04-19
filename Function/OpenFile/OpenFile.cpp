@@ -4,7 +4,7 @@ void readFile(std::ifstream &fin, const std::string &filePath) {
     fin.open(filePath);
 
     if (!fin.is_open()) {
-        throw std::runtime_error("Can't read from " + filePath + ", file not found!\n");
+        throw std::runtime_error("File doesn't exist!");
     }
 }
 
@@ -15,8 +15,7 @@ void writeFile(
 
     if (!fout.is_open()) {
         throw std::runtime_error(
-            "Can't write to " + filePath +
-            ", either the parent folder doesn't exists or it is inaccessible!\n"
+            "Illegal path, either the parent folder doesn't exist or it's inaccessible!"
         );
     }
 }
