@@ -1,7 +1,5 @@
 #include "ExportStudentsInCoursePage.h"
 
-#include <cstring>
-
 #include "../../Function/ExportStudentsInCourse/ExportStudentsInCourse.h"
 #include "../../Struct/Data.h"
 #include "../DropDown/DropDown.h"
@@ -42,7 +40,7 @@ void ExportStudentsInCoursePage::submitCallBack() {
 void exportStudentsInCoursePage() {
     ExportStudentsInCoursePage exportStudentsInCoursePage(
         "Export students in a course", 1, 1, 1,
-        {SCREEN_WIDTH / 2.7f, SCREEN_HEIGHT / 1.8f}
+        {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f}
     );
     exportStudentsInCoursePage.mainLoop();
 }

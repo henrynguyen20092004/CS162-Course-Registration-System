@@ -28,8 +28,6 @@ void mainWindow() {
 
     // Testing
     try {
-        User currentUser = logInPage();
-        std::cout << "Welcome, " << currentUser.username;
         exportStudentsInCoursePage();
         Page tmpPage;
         tmpPage.mainLoop();

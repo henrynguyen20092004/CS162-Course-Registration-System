@@ -11,19 +11,13 @@ std::string clipText(const Font& font, const char* text, int maxWidth) {
 
     int curDelimiter = 1;
     std::string curText, result = text;
-    int resultLength = result.size();
-    result[resultLength] = '\0';
 
     for (int i = 1; result[i] != '\0'; ++i) {
-        if (result[i] == ' ' || result[i] == '\\' || result[i] == '/') {
+        if (result[i] == ' ') {
             curDelimiter = i;
         }
 
         if (measureTextWidth(font, curText.c_str()) > maxWidth) {
-            if (result[curDelimiter] != ' ') {
-                result.insert(curDelimiter + 1, result, curDelimiter, 1);
-            }
-
             result[curDelimiter] = '\n';
             curText = "";
             i = curDelimiter + 1;
