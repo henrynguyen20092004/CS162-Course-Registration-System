@@ -3,7 +3,6 @@
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../DateFunction/DateFunction.h"
-// #include "../../Input/Input.h"
 
 void inputCourseIDAndClassName(Course &course) {
     std::cout << "Please enter the course's id: ";
@@ -34,31 +33,33 @@ void validateCourseIDAndClass(
     if (checkCourseExists(allCourses, course.id, course.className) ==
         checkCourseAlreadyExists) {
         if (checkCourseAlreadyExists) {
-            throw std::invalid_argument("This course already exists, please try again!\n"
-            );
+            throw std::invalid_argument("This course already exists, please try again!");
         } else {
-            throw std::invalid_argument("This course does not exist, please try again!\n"
-            );
+            throw std::invalid_argument("This course does not exist, please try again!");
         }
     }
 }
 
 void validateOtherCourseInformation(const Course &course) {
+    if (course.name == "") {
+        throw std::invalid_argument("Please enter a course name!");
+    }
+
     if (course.credits < 1) {
-        throw std::invalid_argument("Invalid credits number, please try again!\n");
+        throw std::invalid_argument("Invalid credits number, please try again!");
     }
 
     if (course.maxStudent < 1) {
         throw std::invalid_argument(
-            "Invalid maximum number of students, please try again!\n"
+            "Invalid maximum number of students, please try again!"
         );
     }
 
     if (!checkDayOfWeek(course.dayOfWeek)) {
-        throw std::invalid_argument("Invalid day of week, please try again!\n");
+        throw std::invalid_argument("Invalid day of week, please try again!");
     }
 
     if (course.sessionNumber < 1 || course.sessionNumber > 4) {
-        throw std::invalid_argument("Invalid session number, please try again!\n");
+        throw std::invalid_argument("Invalid session number, please try again!");
     }
 }

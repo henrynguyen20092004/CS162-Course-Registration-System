@@ -7,6 +7,7 @@
 #include "GlobalStyle.h"
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
+#include "UpdateCoursePage/UpdateCoursePage.h"
 
 Font titleFont, textFont;
 
@@ -26,7 +27,7 @@ void mainWindow() {
 
     // Testing
     try {
-        addStudentToCoursePage();
+        updateCoursePage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

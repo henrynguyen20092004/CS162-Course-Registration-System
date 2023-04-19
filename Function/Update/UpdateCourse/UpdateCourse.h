@@ -1,6 +1,6 @@
 #ifndef UPDATE_COURSE_H
 #define UPDATE_COURSE_H
 
-void updateCourse();
+void updateCourse(char** inputs, char** dropDownItems);
 
 #endif
