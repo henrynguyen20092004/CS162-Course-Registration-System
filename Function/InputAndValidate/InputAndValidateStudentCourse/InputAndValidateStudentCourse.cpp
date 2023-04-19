@@ -19,15 +19,15 @@ void validateStudentCourse(
 ) {
     if (!checkStudentIDExists(allStudents, studentCourse.studentID)) {
         throw std::invalid_argument(
-            "This student does not exist, please create one or try again!\n"
+            "This student does not exist, please create one or try again!"
         );
     }
 
     if (!checkClassExists(allClasses, studentCourse.className)) {
-        throw std::invalid_argument("This class does not exist, please try again!\n");
+        throw std::invalid_argument("This class does not exist, please try again!");
     }
 
     if (!checkCourseExists(allCourses, studentCourse.courseID, studentCourse.className)) {
-        throw std::invalid_argument("This course does not exist, please try again!\n");
+        throw std::invalid_argument("This course does not exist, please try again!");
     }
 }

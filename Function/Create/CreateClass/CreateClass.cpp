@@ -5,7 +5,7 @@
 
 void validateClass(Node<std::string>* allClasses, const std::string& className) {
     if (checkClassExists(allClasses, className)) {
-        throw std::invalid_argument("This class already exists, please try again!\n");
+        throw std::invalid_argument("This class already exists, please try again!");
     }
 }
 

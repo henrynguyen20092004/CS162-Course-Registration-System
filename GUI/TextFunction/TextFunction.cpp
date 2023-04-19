@@ -9,18 +9,24 @@ std::string clipText(const Font& font, const char* text, int maxWidth) {
         return text;
     }
 
-    int curSpace = 1;
+    int curDelimiter = 1;
     std::string curText, result = text;
+    int resultLength = result.size();
+    result[resultLength] = '\0';
 
-    for (int i = 1; text[i] != '\0'; ++i) {
-        if (text[i] == ' ') {
-            curSpace = i;
+    for (int i = 1; result[i] != '\0'; ++i) {
+        if (result[i] == ' ' || result[i] == '\\' || result[i] == '/') {
+            curDelimiter = i;
         }
 
         if (measureTextWidth(font, curText.c_str()) > maxWidth) {
-            result[curSpace] = '\n';
+            if (result[curDelimiter] != ' ') {
+                result.insert(curDelimiter + 1, result, curDelimiter, 1);
+            }
+
+            result[curDelimiter] = '\n';
             curText = "";
-            i = curSpace + 1;
+            i = curDelimiter + 1;
         }
 
         curText += text[i];

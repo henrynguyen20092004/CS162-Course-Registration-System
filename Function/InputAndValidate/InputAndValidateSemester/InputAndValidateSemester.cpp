@@ -24,27 +24,24 @@ void validateSemesterSchoolYearAndNumber(
     const Semester &semester, bool checkSemesterAlreadyExists
 ) {
     if (!checkValidSchoolYear(semester.schoolYearName)) {
-        throw std::invalid_argument("Invalid school year, please try again!\n");
+        throw std::invalid_argument("Invalid school year, please try again!");
     }
 
     if (!checkSchoolYearExists(allSchoolYears, semester.schoolYearName)) {
-        throw std::invalid_argument("This school year doesn't exist, please try again!\n"
-        );
+        throw std::invalid_argument("This school year doesn't exist, please try again!");
     }
 
     if (semester.number < 1 || semester.number > 3) {
-        throw std::invalid_argument("Invalid semester, please try again!\n");
+        throw std::invalid_argument("Invalid semester, please try again!");
     }
 
     if (checkSemesterExists(allSemesters, semester.number, semester.schoolYearName) ==
         checkSemesterAlreadyExists) {
         if (checkSemesterAlreadyExists) {
-            throw std::invalid_argument(
-                "This semester already exists, please try again!\n"
+            throw std::invalid_argument("This semester already exists, please try again!"
             );
         } else {
-            throw std::invalid_argument(
-                "This semester does not exist, please try again!\n"
+            throw std::invalid_argument("This semester does not exist, please try again!"
             );
         }
     }
@@ -54,12 +51,12 @@ void validateSemesterDates(const Semester &semester) {
     if (!checkDate(semester.startDate) ||
         semester.startDate.substr(6) < semester.schoolYearName.substr(0, 4) ||
         semester.startDate.substr(6) > semester.schoolYearName.substr(5)) {
-        throw std::invalid_argument("Invalid start date, please try again!\n");
+        throw std::invalid_argument("Invalid start date, please try again!");
     }
 
     if (!checkDate(semester.endDate) ||
         semester.endDate.substr(6) < semester.schoolYearName.substr(0, 4) ||
         semester.endDate.substr(6) > semester.schoolYearName.substr(5)) {
-        throw std::invalid_argument("Invalid end date, please try again!\n");
+        throw std::invalid_argument("Invalid end date, please try again!");
     }
 }
