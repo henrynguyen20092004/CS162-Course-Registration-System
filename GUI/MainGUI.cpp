@@ -12,6 +12,8 @@
 #include "UpdateCoursePage/UpdateCoursePage.h"
 
 Font titleFont, textFont;
+Texture2D defaultAvatar;
+User currentUser;
 
 void mainWindow() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Course Registration System");
@@ -19,6 +21,7 @@ void mainWindow() {
     Image windowIcon = LoadImage("Pictures/WindowIcon.png");
     titleFont = loadDefaultTitleFont();
     textFont = loadDefaultTextFont();
+    defaultAvatar = LoadTexture("Pictures/DefaultAvatar.png");
 
     SetWindowIcon(windowIcon);
     SetTargetFPS(60);
@@ -29,15 +32,15 @@ void mainWindow() {
 
     // Testing
     try {
-        User currentUser = logInPage();
-        std::cout << "Welcome, " << currentUser.username;
-        addStudentToCoursePage(currentUser);
+        logInPage();
+        addStudentToCoursePage();
         Page tmpPage;
         tmpPage.mainLoop();
     } catch (std::runtime_error &error) {
         UnloadImage(windowIcon);
         UnloadFont(titleFont);
         UnloadFont(textFont);
+        UnloadTexture(defaultAvatar);
         CloseWindow();
     }
 }

@@ -10,7 +10,6 @@ class Button {
 
    public:
     Button(const char *text, float posX, float posY, float width);
-    Button(const char *text, float posX, float posY);
     bool drawButton();
 };
 

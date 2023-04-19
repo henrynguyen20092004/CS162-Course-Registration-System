@@ -3,6 +3,6 @@
 
 #include "../../Struct/User.h"
 
-User logInPage();
+void logInPage();
 
 #endif

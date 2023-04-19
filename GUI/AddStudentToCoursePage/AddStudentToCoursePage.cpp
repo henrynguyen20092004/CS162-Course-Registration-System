@@ -2,7 +2,6 @@
 
 #include "../../Function/AddStudentToCourse/AddStudentToCourse.h"
 #include "../../Struct/Data.h"
-#include "../DrawMenu/DrawMenu.h"
 #include "../DropDown/DropDown.h"
 #include "../FormPage/FormPage.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
@@ -15,7 +14,6 @@ class AddStudentToCoursePage : public FormPage {
     void submitCallBack() override;
 
    public:
-    using FormPage::currentUser;
     using FormPage::FormPage;
 };
 
@@ -41,11 +39,9 @@ void AddStudentToCoursePage::submitCallBack() {
     }
 }
 
-void addStudentToCoursePage(const User &currentUser) {
+void addStudentToCoursePage() {
     AddStudentToCoursePage addStudentToCoursePage(
         "Add student to course", 1, 1, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f}
     );
-
-    addStudentToCoursePage.currentUser = currentUser;
     addStudentToCoursePage.mainLoop();
 }

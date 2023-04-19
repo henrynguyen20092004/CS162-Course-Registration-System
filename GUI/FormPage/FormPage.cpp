@@ -51,14 +51,10 @@ FormPage::FormPage(
             calculateInputPos(firstInputPosY, i + numberOfTextInputs);
     }
 
-    currentUser.username = UNKNOWN_USERNAME;
-
     menuDropDownItems = new char[MAX_INPUT_CHAR];
     menuDropDownItems[0] = '\0';
     menuDropdownActiveItems = -1;
     menuDropDownEditMode = false;
-
-    defaultAvatar = LoadTexture("Pictures/DefaultAvatar.png");
 }
 
 Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
@@ -70,11 +66,8 @@ Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
 }
 
 void FormPage::drawPage() {
-    if (currentUser.username != UNKNOWN_USERNAME) {
-        drawMenu(
-            currentUser.username, menuDropDownItems, menuDropdownActiveItems,
-            menuDropDownEditMode, defaultAvatar
-        );
+    if (currentUser.username != "") {
+        drawMenu(menuDropDownItems, menuDropdownActiveItems, menuDropDownEditMode);
     }
 
     drawFormBox();
@@ -136,6 +129,4 @@ FormPage::~FormPage() {
     delete[] textInputEditModes;
     delete[] inputPos;
     delete[] menuDropDownItems;
-
-    UnloadTexture(defaultAvatar);
 }

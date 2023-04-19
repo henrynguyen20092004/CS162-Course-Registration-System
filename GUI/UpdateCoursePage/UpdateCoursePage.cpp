@@ -59,6 +59,5 @@ void updateCoursePage() {
         "Update Course Information", 4, 3, 2, {SCREEN_WIDTH / 1.6f, SCREEN_HEIGHT / 1.4f},
         "Submit"
     );
-
     updateCoursePage.mainLoop();
 }

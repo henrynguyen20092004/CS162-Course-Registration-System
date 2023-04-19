@@ -4,8 +4,12 @@
 #include <raygui.h>
 #include <raylib.h>
 
-#define BACK_GROUND_COLOR \
+#include "../Struct/User.h"
+
+#define PRIMARY_COLOR \
     (Color) { 165, 215, 232, 255 }
+#define SECONDARY_COLOR \
+    (Color) { 0, 159, 189, 255 }
 #define NORMAL_TEXT_COLOR \
     (Color) { 11, 24, 47, 255 }
 #define ERROR_TEXT_COLOR \
@@ -27,9 +31,10 @@
     (Vector2) { 50.f, 50.f }
 #define DEFAULT_AVATAR_POSITION \
     (Vector2) { 50.f, 35.f }
-#define DEFAULT_MENU_BUTTON_WIDTH 180.f
-#define UNKNOWN_USERNAME "-1"
+#define DEFAULT_MENU_BUTTON_WIDTH 180.0f
 
 extern Font titleFont, textFont;
+extern Texture2D defaultAvatar;
+extern User currentUser;
 
 #endif

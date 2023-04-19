@@ -1,25 +1,19 @@
 #include "DrawMenu.h"
 
-#include <cstring>
-#include <iostream>
-
 #include "../Button/Button.h"
 #include "../DropDown/DropDown.h"
-#include "../GetCenterPosition/GetCenterPosition.h"
-#include "../TextFunction/TextFunction.h"
-#include "../TextInput/TextInput.h"
 
 void drawStudentMenu() {
     Button studentInformation(
-        "Your information", SCREEN_WIDTH / 1.7f, DEFAULT_PADDING.x * 2,
+        "Your information", SCREEN_WIDTH / 1.6f, DEFAULT_PADDING.x * 2,
         DEFAULT_MENU_BUTTON_WIDTH
     );
     Button currentCoursesButton(
-        "Current courses", SCREEN_WIDTH / 1.7f + DEFAULT_MENU_BUTTON_WIDTH,
+        "Current course", SCREEN_WIDTH / 1.6f + DEFAULT_MENU_BUTTON_WIDTH,
         DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
     );
     Button scoreboard(
-        "Scoreboard", SCREEN_WIDTH / 1.7f + 2 * DEFAULT_MENU_BUTTON_WIDTH,
+        "Scoreboard", SCREEN_WIDTH / 1.6f + 2 * DEFAULT_MENU_BUTTON_WIDTH,
         DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
     );
 
@@ -38,19 +32,23 @@ void drawStudentMenu() {
 
 void drawAdminMenu() {
     Button schoolYearButton(
-        "School years", SCREEN_WIDTH / 2, DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
-    );
-    Button semesterButton(
-        "Semesters", SCREEN_WIDTH / 2 + DEFAULT_MENU_BUTTON_WIDTH, DEFAULT_PADDING.x * 2,
+        "School year", SCREEN_WIDTH / 2.0f, DEFAULT_PADDING.y * 2,
         DEFAULT_MENU_BUTTON_WIDTH
     );
+    Button semesterButton(
+        "Semester",
+        SCREEN_WIDTH / 2.0f + DEFAULT_MENU_BUTTON_WIDTH + DEFAULT_ITEM_MARGIN.x,
+        DEFAULT_PADDING.y * 2, DEFAULT_MENU_BUTTON_WIDTH
+    );
     Button courseButton(
-        "Courses", SCREEN_WIDTH / 2 + 2 * DEFAULT_MENU_BUTTON_WIDTH,
-        DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
+        "Course",
+        SCREEN_WIDTH / 2.0f + 2 * (DEFAULT_MENU_BUTTON_WIDTH + DEFAULT_ITEM_MARGIN.x),
+        DEFAULT_PADDING.y * 2, DEFAULT_MENU_BUTTON_WIDTH
     );
     Button classButton(
-        "Classes", SCREEN_WIDTH / 2 + 3 * DEFAULT_MENU_BUTTON_WIDTH,
-        DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
+        "Class",
+        SCREEN_WIDTH / 2.0f + 3 * (DEFAULT_MENU_BUTTON_WIDTH + DEFAULT_ITEM_MARGIN.x),
+        DEFAULT_PADDING.y * 2, DEFAULT_MENU_BUTTON_WIDTH
     );
 
     if (schoolYearButton.drawButton()) {
@@ -71,27 +69,29 @@ void drawAdminMenu() {
 }
 
 void drawMenu(
-    const std::string& currentUsername, char*& menuDropDownItems,
-    int& menuDropdownActiveItems, bool& menuDropDownEditMode, const Texture2D& avatar
+    char*& menuDropDownItems, int& menuDropdownActiveItems, bool& menuDropDownEditMode
 ) {
-    DrawTextureV(avatar, DEFAULT_AVATAR_POSITION, BACK_GROUND_COLOR);
+    DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, SCREEN_HEIGHT / 6.0f}, SECONDARY_COLOR);
+    DrawTextureV(defaultAvatar, DEFAULT_AVATAR_POSITION, PRIMARY_COLOR);
 
     DropDown accountNameDropDown(
-        "Change Current Semester;Change Password;Log out",
+        "Change current semester;Change password;Log out",
         {DEFAULT_AVATAR_SIZE.x + DEFAULT_PADDING.x * 4 + 8, DEFAULT_PADDING.y * 2},
-        DEFAULT_MENU_BUTTON_WIDTH * 1.7f
+        DEFAULT_MENU_BUTTON_WIDTH * 1.5f
     );
 
     accountNameDropDown.drawDropDown(
-        ("Welcome, " + currentUsername).c_str(), menuDropDownItems,
+        ("Welcome, " + currentUser.username).c_str(), menuDropDownItems,
         menuDropdownActiveItems, menuDropDownEditMode
     );
 
-    if (currentUsername == "admin") {
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 36);
+    if (currentUser.username == "admin") {
         drawAdminMenu();
     } else {
         drawStudentMenu();
     }
+    GuiSetStyle(DEFAULT, TEXT_SIZE, DEFAULT_TEXT_SIZE);
 
     switch (menuDropdownActiveItems) {
         case 0:

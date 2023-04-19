@@ -1,7 +1,5 @@
 #include "LogInPage.h"
 
-#include <cstring>
-
 #include "../../Function/LogIn/LogIn.h"
 #include "../../Struct/Data.h"
 #include "../FormPage/FormPage.h"
@@ -17,7 +15,6 @@ class LogInPage : public FormPage {
 
    public:
     using FormPage::FormPage;
-    User currentUser;
 };
 
 void LogInPage::drawFormInput() {
@@ -41,12 +38,10 @@ void LogInPage::submitCallBack() {
     }
 }
 
-User logInPage() {
+void logInPage() {
     LogInPage logInPage(
         "Log in to continue", 3, 0, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f},
         "Log in"
     );
     logInPage.mainLoop();
-
-    return logInPage.currentUser;
 }
