@@ -3,7 +3,6 @@
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../DateFunction/DateFunction.h"
-// #include "../../Input/Input.h"
 
 void inputCourseIDAndClassName(Course &course) {
     std::cout << "Please enter the course's id: ";
@@ -42,6 +41,10 @@ void validateCourseIDAndClass(
 }
 
 void validateOtherCourseInformation(const Course &course) {
+    if (course.name == "") {
+        throw std::invalid_argument("Please enter a course name!");
+    }
+
     if (course.credits < 1) {
         throw std::invalid_argument("Invalid credits number, please try again!");
     }

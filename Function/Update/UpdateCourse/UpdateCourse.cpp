@@ -12,16 +12,20 @@ void inputChanges(Course& course, char** inputs, char** dropDownItems) {
     std::string* courseIDAndClassName = new std::string[2];
     splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
 
-    course.id = courseIDAndClassName[0];
-    course.className = courseIDAndClassName[1];
-    course.name = checkNameAndConvertToName(inputs[0], "course name");
-    course.teacherName = checkNameAndConvertToName(inputs[1], "teacher name");
-    course.credits = checkAndConvertToInt(inputs[2], "credit");
-    course.maxStudent = checkAndConvertToInt(inputs[3], "number of students");
-    course.dayOfWeek = dropDownItems[1];
-    course.sessionNumber = checkAndConvertToInt(dropDownItems[2], "session number");
-
-    delete[] courseIDAndClassName;
+    try {
+        course.id = courseIDAndClassName[0];
+        course.className = courseIDAndClassName[1];
+        course.name = inputs[0];
+        course.teacherName = checkNameAndConvertToName(inputs[1], "teacher name");
+        course.credits = checkAndConvertToInt(inputs[2], "credit");
+        course.maxStudent = checkAndConvertToInt(inputs[3], "number of students");
+        course.dayOfWeek = dropDownItems[1];
+        course.sessionNumber = checkAndConvertToInt(dropDownItems[2], "session number");
+        delete[] courseIDAndClassName;
+    } catch (...) {
+        delete[] courseIDAndClassName;
+        throw;
+    }
 }
 
 void updateCourse(char** inputs, char** dropDownItems) {
@@ -33,7 +37,6 @@ void updateCourse(char** inputs, char** dropDownItems) {
 
     Course course;
     inputChanges(course, inputs, dropDownItems);
-    validateCourseIDAndClass(allData.allCourses, course, false);
     validateOtherCourseInformation(course);
 
     for (Node<Course>* cur = allData.allCourses; cur; cur = cur->next) {
