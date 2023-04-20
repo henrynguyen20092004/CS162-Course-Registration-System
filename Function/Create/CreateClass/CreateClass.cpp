@@ -4,14 +4,17 @@
 #include "../../Check/CheckClass/CheckClass.h"
 
 void validateClass(Node<std::string>* allClasses, const std::string& className) {
+    int classNameLength = className.size();
+
+    for (int i = 0; i < classNameLength; ++i) {
+        if (!isalnum(className[i])) {
+            throw std::invalid_argument("Invalid class name, please try again!");
+        }
+    }
+
     if (checkClassExists(allClasses, className)) {
         throw std::invalid_argument("This class already exists, please try again!");
     }
-}
-
-void inputClass(std::string& className) {
-    std::cout << "Please enter the name of the class: ";
-    getline(std::cin, className);
 }
 
 void saveClass(const std::string& className) {
@@ -22,20 +25,8 @@ void saveClass(const std::string& className) {
     addNewItemsToOldList(allData.allClasses, new Node(className));
 }
 
-void createClass() {
-    std::string className;
-    bool validClass = false;
-
-    do {
-        try {
-            inputClass(className);
-            validateClass(allData.allClasses, className);
-            validClass = true;
-        } catch (std::exception& error) {
-            std::cout << error.what();
-        }
-    } while (!validClass);
-
+void createClass(char* inputtedClassName) {
+    std::string className = inputtedClassName;
+    validateClass(allData.allClasses, className);
     saveClass(className);
-    std::cout << "Class successfully added!\n";
 }
