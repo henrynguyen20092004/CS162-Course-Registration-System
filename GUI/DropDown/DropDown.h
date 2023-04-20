@@ -19,7 +19,8 @@ class DropDown {
     DropDown(Node<Course>* itemList, Vector2 pos, float width);
     DropDown(const std::string& itemList, Vector2 pos, float width);
     void drawDropDown(
-        const char* label, char*& selectedItem, int& activeItemIndex, bool& editMode
+        const char* label, char*& selectedItem, int& activeItemIndex, bool& editMode,
+        Color labelColor = NORMAL_TEXT_COLOR
     );
 };
 

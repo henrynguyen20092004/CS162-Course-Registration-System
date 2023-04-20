@@ -9,7 +9,7 @@
 #define PRIMARY_COLOR \
     (Color) { 165, 215, 232, 255 }
 #define SECONDARY_COLOR \
-    (Color) { 0, 159, 189, 255 }
+    (Color) { 6, 57, 112, 255 }
 #define NORMAL_TEXT_COLOR \
     (Color) { 11, 24, 47, 255 }
 #define ERROR_TEXT_COLOR \
@@ -28,9 +28,9 @@
 #define MAX_INPUT_CHAR 256
 #define SPACING 1.0f
 #define DEFAULT_AVATAR_SIZE \
-    (Vector2) { 50.f, 50.f }
+    (Vector2) { 50.0f, 50.0f }
 #define DEFAULT_AVATAR_POSITION \
-    (Vector2) { 50.f, 35.f }
+    (Vector2) { 40.0f, 35.0f }
 #define DEFAULT_MENU_BUTTON_WIDTH 180.0f
 
 extern Font titleFont, textFont;

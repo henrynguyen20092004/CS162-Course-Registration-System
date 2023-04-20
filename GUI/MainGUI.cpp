@@ -15,6 +15,15 @@ Font titleFont, textFont;
 Texture2D defaultAvatar;
 User currentUser;
 
+void SetDefaultStyle() {
+    GuiSetStyle(DEFAULT, TEXT_SIZE, DEFAULT_TEXT_SIZE);
+    GuiSetStyle(DROPDOWNBOX, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
+    GuiSetStyle(DROPDOWNBOX, DROPDOWN_ITEMS_SPACING, 0);
+    GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, 0x063970ff);
+    GuiSetStyle(BUTTON, TEXT_COLOR_NORMAL, 0xffffffff);
+    GuiSetFont(textFont);
+}
+
 void mainWindow() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Course Registration System");
 
@@ -25,10 +34,7 @@ void mainWindow() {
 
     SetWindowIcon(windowIcon);
     SetTargetFPS(60);
-    GuiSetStyle(DEFAULT, TEXT_SIZE, DEFAULT_TEXT_SIZE);
-    GuiSetStyle(DROPDOWNBOX, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
-    GuiSetStyle(DROPDOWNBOX, DROPDOWN_ITEMS_SPACING, 0);
-    GuiSetFont(textFont);
+    SetDefaultStyle();
 
     // Testing
     try {
