@@ -1,8 +1,6 @@
 #ifndef FORM_H
 #define FORM_H
 
-#include <raylib.h>
-
 #include <string>
 
 #include "../GlobalStyle.h"
@@ -19,9 +17,10 @@ class FormPage : public Page {
 
    protected:
     const char *title, *buttonText;
-    char **inputs, **dropDownItems = nullptr;
-    bool *textInputEditModes, *dropdownEditModes = nullptr;
-    int numberOfTextInputs, numberOfDropDowns, columns, *dropdownActiveItems = nullptr;
+    char **inputs, **dropDownItems = nullptr, *menuDropDownItems;
+    bool *textInputEditModes, *dropdownEditModes = nullptr, menuDropDownEditMode;
+    int numberOfTextInputs, numberOfDropDowns, columns;
+    int *dropdownActiveItems = nullptr, menuDropdownActiveItems;
     float childrenPosX, firstInputPosY, inputWidth;
     std::string errorText;
     Vector2 mainBoxSize, mainBoxPosition, padding, *inputPos;

@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "../Button/Button.h"
+#include "../DrawMenu/DrawMenu.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
 
@@ -49,6 +50,11 @@ FormPage::FormPage(
         inputPos[i + numberOfTextInputs] =
             calculateInputPos(firstInputPosY, i + numberOfTextInputs);
     }
+
+    menuDropDownItems = new char[MAX_INPUT_CHAR];
+    menuDropDownItems[0] = '\0';
+    menuDropdownActiveItems = -1;
+    menuDropDownEditMode = false;
 }
 
 Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
@@ -59,7 +65,13 @@ Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
                              (index / columns)};
 }
 
-void FormPage::drawPage() { drawFormBox(); }
+void FormPage::drawPage() {
+    if (currentUser.username != "") {
+        drawMenu(menuDropDownItems, menuDropdownActiveItems, menuDropDownEditMode);
+    }
+
+    drawFormBox();
+}
 
 void FormPage::drawFormBox() {
     Button submitButton(
@@ -116,4 +128,5 @@ FormPage::~FormPage() {
     delete[] dropdownEditModes;
     delete[] textInputEditModes;
     delete[] inputPos;
+    delete[] menuDropDownItems;
 }

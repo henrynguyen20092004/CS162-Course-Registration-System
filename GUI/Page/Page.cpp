@@ -11,7 +11,7 @@ void Page::mainLoop() {
         }
 
         BeginDrawing();
-        ClearBackground(BACK_GROUND_COLOR);
+        ClearBackground(PRIMARY_COLOR);
         drawPage();
         EndDrawing();
     }
