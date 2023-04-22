@@ -68,9 +68,7 @@ void drawAdminMenu() {
     }
 }
 
-void drawMenu(
-    char*& menuDropDownItems, int& menuDropdownActiveItems, bool& menuDropDownEditMode
-) {
+void drawMenu(char*& menuDropDownItems) {
     DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, SCREEN_HEIGHT / 6.4f}, SECONDARY_COLOR);
     DrawTextureV(defaultAvatar, AVATAR_POSITION, WHITE);
 
@@ -81,8 +79,7 @@ void drawMenu(
     );
 
     accountNameDropDown.drawDropDown(
-        ("Welcome, " + currentUser.username).c_str(), menuDropDownItems,
-        menuDropdownActiveItems, menuDropDownEditMode, WHITE
+        ("Welcome, " + currentUser.username).c_str(), menuDropDownItems, WHITE
     );
 
     if (currentUser.username == "admin") {
@@ -91,7 +88,7 @@ void drawMenu(
         drawStudentMenu();
     }
 
-    switch (menuDropdownActiveItems) {
+    switch (accountNameDropDown.activeItemIndex) {
         case 0:
             // changeCurrentSemesterPage
             break;

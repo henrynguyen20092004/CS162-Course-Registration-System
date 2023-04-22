@@ -5,6 +5,8 @@
 #include "../GlobalStyle.h"
 
 void Page::mainLoop() {
+    initComponents();
+
     while (!stopLoop) {
         if (WindowShouldClose()) {
             throw std::runtime_error("Close window");

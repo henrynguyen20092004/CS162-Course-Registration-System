@@ -2,21 +2,24 @@
 
 #include "../../../Function/Create/CreateClass/CreateClass.h"
 #include "../../FormPage/FormPage.h"
-#include "../../TextInput/TextInput.h"
 
 class CreateClassPage : public FormPage {
    private:
-    void drawFormInput() override;
+    void initComponents() override;
+    void drawFormInputs() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void CreateClassPage::drawFormInput() {
-    TextInput classNameInput(inputs[0], inputPos[0], inputWidth);
+void CreateClassPage::initComponents() {
+    FormPage::initComponents();
+    textInputs[0] = TextInput(inputs[0], inputPos[0], inputWidth);
+}
 
-    if (classNameInput.drawTextInput("Class name", textInputEditModes[0])) {
+void CreateClassPage::drawFormInputs() {
+    if (textInputs[0].drawTextInput("Class name")) {
         submit();
     }
 }

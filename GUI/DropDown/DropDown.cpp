@@ -4,6 +4,8 @@
 
 #include "../TextFunction/TextFunction.h"
 
+DropDown::DropDown() : dropDownBox({0.0f, 0.0f, 0.0f, 0.0f}) {}
+
 DropDown::DropDown(Node<std::string>* itemList, Vector2 pos, float width)
     : dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}) {
     for (; itemList; itemList = itemList->next) {
@@ -40,10 +42,7 @@ DropDown::DropDown(Node<Course>* itemList, Vector2 pos, float width)
 DropDown::DropDown(const std::string& itemList, Vector2 pos, float width)
     : items(itemList), dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}) {}
 
-void DropDown::drawDropDown(
-    const char* label, char*& selectedItem, int& activeItemIndex, bool& editMode,
-    Color labelColor
-) {
+void DropDown::drawDropDown(const char* label, char*& selectedItem, Color labelColor) {
     drawDefaultText(
         textFont, label,
         {dropDownBox.x, dropDownBox.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y},

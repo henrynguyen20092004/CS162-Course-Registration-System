@@ -2,46 +2,40 @@
 
 #include "../../../Function/Update/UpdateCourse/UpdateCourse.h"
 #include "../../../Struct/Data.h"
-#include "../../DropDown/DropDown.h"
 #include "../../FormPage/FormPage.h"
-#include "../../TextInput/TextInput.h"
 
 class UpdateCoursePage : public FormPage {
    private:
-    void drawFormInput() override;
+    void initComponents() override;
+    void drawFormInputs() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void UpdateCoursePage::drawFormInput() {
-    DropDown courseDropDown(allData.allCourses, inputPos[0], inputWidth);
-    TextInput courseNameInput(inputs[0], inputPos[1], inputWidth);
-    TextInput teacherNameInput(inputs[1], inputPos[2], inputWidth);
-    TextInput creditsInput(inputs[2], inputPos[3], inputWidth);
-    TextInput maxStudentInput(inputs[3], inputPos[4], inputWidth);
-    DropDown dayOfWeekDropDown("MON;TUE;WED;THU;FRI;SAT", inputPos[5], inputWidth);
-    DropDown sessionDropDown("1;2;3;4", inputPos[6], inputWidth);
+void UpdateCoursePage::initComponents() {
+    FormPage::initComponents();
+    dropDowns[0] = DropDown(allData.allCourses, inputPos[0], inputWidth);
+    textInputs[0] = TextInput(inputs[0], inputPos[1], inputWidth);
+    textInputs[1] = TextInput(inputs[1], inputPos[2], inputWidth);
+    textInputs[2] = TextInput(inputs[2], inputPos[3], inputWidth);
+    textInputs[3] = TextInput(inputs[3], inputPos[4], inputWidth);
+    dropDowns[1] = DropDown("MON;TUE;WED;THU;FRI;SAT", inputPos[5], inputWidth);
+    dropDowns[2] = DropDown("1;2;3;4", inputPos[6], inputWidth);
+}
 
-    if (courseNameInput.drawTextInput("Course name", textInputEditModes[0]) ||
-        teacherNameInput.drawTextInput("Teacher name", textInputEditModes[1]) ||
-        creditsInput.drawTextInput("Credits", textInputEditModes[2]) ||
-        maxStudentInput.drawTextInput(
-            "Maximum number of students", textInputEditModes[3]
-        )) {
+void UpdateCoursePage::drawFormInputs() {
+    if (textInputs[0].drawTextInput("Course name") ||
+        textInputs[1].drawTextInput("Teacher name") ||
+        textInputs[2].drawTextInput("Credits") ||
+        textInputs[3].drawTextInput("Maximum number of students")) {
         submit();
     }
 
-    sessionDropDown.drawDropDown(
-        "Session number", dropDownItems[2], dropDownActiveItems[2], dropDownEditModes[2]
-    );
-    dayOfWeekDropDown.drawDropDown(
-        "Day of week", dropDownItems[1], dropDownActiveItems[1], dropDownEditModes[1]
-    );
-    courseDropDown.drawDropDown(
-        "Course", dropDownItems[0], dropDownActiveItems[0], dropDownEditModes[0]
-    );
+    dropDowns[2].drawDropDown("Session number", dropDownItems[2]);
+    dropDowns[1].drawDropDown("Day of week", dropDownItems[1]);
+    dropDowns[0].drawDropDown("Course", dropDownItems[0]);
 }
 
 void UpdateCoursePage::submitCallBack() { updateCourse(inputs, dropDownItems); }

@@ -2,37 +2,34 @@
 
 #include "../../../Function/Create/CreateSemester/CreateSemester.h"
 #include "../../../Struct/Data.h"
-#include "../../DropDown/Dropdown.h"
 #include "../../FormPage/FormPage.h"
-#include "../../TextInput/TextInput.h"
 
 class CreateSemesterPage : public FormPage {
    private:
-    void drawFormInput() override;
+    void initComponents() override;
+    void drawFormInputs() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void CreateSemesterPage::drawFormInput() {
-    DropDown schoolYearDropDown(allData.allSchoolYears, inputPos[0], inputWidth);
-    DropDown semesterNumberDropDown("1;2;3", inputPos[1], inputWidth);
-    TextInput startDateInput(inputs[0], inputPos[2], inputWidth);
-    TextInput endDateInput(inputs[1], inputPos[3], inputWidth);
+void CreateSemesterPage::initComponents() {
+    FormPage::initComponents();
+    dropDowns[0] = DropDown(allData.allSchoolYears, inputPos[0], inputWidth);
+    dropDowns[1] = DropDown("1;2;3", inputPos[1], inputWidth);
+    textInputs[0] = TextInput(inputs[0], inputPos[2], inputWidth);
+    textInputs[1] = TextInput(inputs[1], inputPos[3], inputWidth);
+}
 
-    if (startDateInput.drawTextInput("Start date (dd/mm/yyyy)", textInputEditModes[0]) ||
-        endDateInput.drawTextInput("End date (dd/mm/yyyy)", textInputEditModes[1])) {
+void CreateSemesterPage::drawFormInputs() {
+    if (textInputs[0].drawTextInput("Start date (dd/mm/yyyy)") ||
+        textInputs[1].drawTextInput("End date (dd/mm/yyyy)")) {
         submit();
     }
 
-    semesterNumberDropDown.drawDropDown(
-        "Semester number", dropDownItems[1], dropDownActiveItems[1], dropDownEditModes[1]
-    );
-    schoolYearDropDown.drawDropDown(
-        "School year (yyyy-yyyy)", dropDownItems[0], dropDownActiveItems[0],
-        dropDownEditModes[0]
-    );
+    dropDowns[1].drawDropDown("Semester number", dropDownItems[1]);
+    dropDowns[0].drawDropDown("School year (yyyy-yyyy)", dropDownItems[0]);
 }
 
 void CreateSemesterPage::submitCallBack() {

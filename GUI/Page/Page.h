@@ -3,6 +3,7 @@
 
 class Page {
    private:
+    virtual void initComponents() {}
     virtual void drawPage() {}
 
    protected:
