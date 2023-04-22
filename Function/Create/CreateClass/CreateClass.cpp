@@ -12,11 +12,9 @@ void saveClass(const std::string& className) {
 }
 
 void createClass(char* inputtedClassName) {
-    std::string className = inputtedClassName;
-
-    if (checkClassExists(allData.allClasses, className)) {
+    if (checkClassExists(allData.allClasses, inputtedClassName)) {
         throw std::invalid_argument("This class already exists, please try again!");
     }
 
-    saveClass(className);
+    saveClass(inputtedClassName);
 }

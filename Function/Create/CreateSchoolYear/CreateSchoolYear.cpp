@@ -15,11 +15,6 @@ void validateSchoolYear(
     }
 }
 
-void inputSchoolYear(std::string &schoolYearName) {
-    std::cout << "Please enter the school year (yyyy-yyyy): ";
-    getline(std::cin, schoolYearName);
-}
-
 void saveSchoolYear(const std::string &schoolYearName) {
     std::ofstream fout;
     writeFile(fout, "Data/SchoolYear.txt", std::ios::app);
@@ -28,20 +23,7 @@ void saveSchoolYear(const std::string &schoolYearName) {
     addNewItemsToOldList(allData.allSchoolYears, new Node(schoolYearName));
 }
 
-void createSchoolYear() {
-    std::string schoolYearName;
-    bool validSchoolYear = false;
-
-    do {
-        try {
-            inputSchoolYear(schoolYearName);
-            validateSchoolYear(allData.allSchoolYears, schoolYearName);
-            validSchoolYear = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validSchoolYear);
-
-    saveSchoolYear(schoolYearName);
-    std::cout << "School year successfully added!\n";
+void createSchoolYear(char *inputtedSchoolYear) {
+    validateSchoolYear(allData.allSchoolYears, inputtedSchoolYear);
+    saveSchoolYear(inputtedSchoolYear);
 }
