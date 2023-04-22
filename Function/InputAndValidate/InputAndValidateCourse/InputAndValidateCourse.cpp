@@ -41,10 +41,6 @@ void validateCourseIDAndClass(
 }
 
 void validateOtherCourseInformation(const Course &course) {
-    if (course.name == "") {
-        throw std::invalid_argument("Please enter a course name!");
-    }
-
     if (course.credits < 1) {
         throw std::invalid_argument("Invalid credits number, please try again!");
     }

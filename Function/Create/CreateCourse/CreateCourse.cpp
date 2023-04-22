@@ -1,22 +1,10 @@
 #include "CreateCourse.h"
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../DateFunction/DateFunction.h"
-// #include "../../Input/Input.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
-#include "../CreateSemester/CreateSemester.h"
-
-void validateCourse(Node<Course> *allCourses, const Course &course) {
-    validateCourseIDAndClass(allCourses, course, true);
-    validateOtherCourseInformation(course);
-}
-
-void inputCourse(Course &course) {
-    inputCourseIDAndClassName(course);
-    inputOtherCourseInformation(course);
-}
 
 void saveCourse(const Course &course) {
     std::ofstream fout;
@@ -35,27 +23,27 @@ void saveCourse(const Course &course) {
     addNewItemsToOldList(allData.allCourses, new Node(course));
 }
 
-void createCourse(const Semester &semester) {
+void createCourse(const Semester &semester, char **inputs, char **dropDownItems) {
     if (semester.schoolYearName == "") {
-        std::cout << "Please create a semester first!\n";
-        return;
+        throw std::runtime_error("Please create a semester first!");
     }
 
     Course course;
-    bool validCourse = false;
     course.schoolYearName = semester.schoolYearName;
     course.semesterNumber = semester.number;
+    course.id = inputs[0];
+    course.className = inputs[1];
+    course.name = inputs[2];
+    course.teacherName = checkAndConvertToName(inputs[3], "teacher name");
+    course.credits = checkAndConvertToInt(inputs[4], "credits");
+    course.maxStudent = checkAndConvertToInt(inputs[5], "max student");
+    course.dayOfWeek = dropDownItems[0];
+    course.sessionNumber = stoi(std::string(dropDownItems[1]));
 
-    do {
-        try {
-            inputCourse(course);
-            validateCourse(allData.allCourses, course);
-            validCourse = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validCourse);
+    if (checkCourseExists(allData.allCourses, course.id, course.className)) {
+        throw std::invalid_argument("This course already exists, please try again!");
+    }
 
+    validateOtherCourseInformation(course);
     saveCourse(course);
-    std::cout << "Course successfully added!\n";
 }

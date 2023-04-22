@@ -108,13 +108,3 @@ std::string checkAndConvertToName(std::string input, const std::string &fieldNam
 
     return normalization(input);
 }
-
-std::string checkDropDownAndConvertToString(
-    char *dropdownItem, const std::string &fieldName
-) {
-    if (dropdownItem[0] == '\0') {
-        throw std::invalid_argument("Please choose a " + fieldName + "!");
-    }
-
-    return std::string(dropdownItem);
-}

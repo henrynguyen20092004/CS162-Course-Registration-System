@@ -33,7 +33,7 @@ void getStudentInCourseFromLine(Student &student, const std::string &importLine)
 }
 
 void checkImportedStudentInCourse(
-    Student &student, Node<Student> *allStudents, Node<StudentCourse> *allStudentCourses,
+    Student &student, Node<Student> *allStudents, Node<StudentCourse> *&allStudentCourses,
     const StudentCourse &studentCourse
 ) {
     Node<StudentCourse> *newNode = new Node(studentCourse);
@@ -53,9 +53,9 @@ void checkImportedStudentInCourse(
                     throw std::runtime_error("Record added");
                 }
 
-                for (; allStudentCourses->next;
-                     allStudentCourses = allStudentCourses->next);
-                allStudentCourses->next = newNode;
+                Node<StudentCourse> *cur = allStudentCourses;
+                for (; cur->next; cur = cur->next);
+                cur->next = newNode;
                 throw std::runtime_error("Record added");
             }
         } else if (allStudents->data.id == student.id) {
@@ -71,9 +71,9 @@ void checkImportedStudentInCourse(
                     throw std::runtime_error("Record added");
                 }
 
-                for (; allStudentCourses->next;
-                     allStudentCourses = allStudentCourses->next);
-                allStudentCourses->next = newNode;
+                Node<StudentCourse> *cur = allStudentCourses;
+                for (; cur->next; cur = cur->next);
+                cur->next = newNode;
             } else {
                 delete newNode;
             }
@@ -97,7 +97,7 @@ void importStudentsInCourse() {
               *curInvalidErrors;
 
     do {
-        inputCourseIDAndClassName(course);
+        // inputCourseIDAndClassName(course);
         courseExists = checkCourseExists(allData.allCourses, course.id, course.className);
 
         if (!courseExists) {

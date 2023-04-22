@@ -20,21 +20,16 @@ void AddStudentToCoursePage::drawFormInput() {
     TextInput studentIDInput(inputs[0], inputPos[1], inputWidth);
 
     if (studentIDInput.drawTextInput("Student ID", textInputEditModes[0])) {
-        submitCallBack();
+        submit();
     }
 
     courseDropDown.drawDropDown(
-        "Course name", dropDownItems[0], dropdownActiveItems[0], dropdownEditModes[0]
+        "Course name", dropDownItems[0], dropDownActiveItems[0], dropDownEditModes[0]
     );
 }
 
 void AddStudentToCoursePage::submitCallBack() {
-    try {
-        addStudentToCourse(inputs, dropDownItems);
-        stopLoop = true;
-    } catch (std::exception &error) {
-        errorText = error.what();
-    }
+    addStudentToCourse(inputs, dropDownItems);
 }
 
 void addStudentToCoursePage() {

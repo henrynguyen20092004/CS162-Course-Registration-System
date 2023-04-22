@@ -23,24 +23,19 @@ void CreateSemesterPage::drawFormInput() {
 
     if (startDateInput.drawTextInput("Start date", textInputEditModes[0]) ||
         endDateInput.drawTextInput("End date", textInputEditModes[1])) {
-        submitCallBack();
+        submit();
     }
 
     semesterNumberDropDown.drawDropDown(
-        "Semester number", dropDownItems[1], dropdownActiveItems[1], dropdownEditModes[1]
+        "Semester number", dropDownItems[1], dropDownActiveItems[1], dropDownEditModes[1]
     );
     schoolYearDropDown.drawDropDown(
-        "School year", dropDownItems[0], dropdownActiveItems[0], dropdownEditModes[0]
+        "School year", dropDownItems[0], dropDownActiveItems[0], dropDownEditModes[0]
     );
 }
 
 void CreateSemesterPage::submitCallBack() {
-    try {
-        currentSemester = createSemester(inputs, dropDownItems);
-        stopLoop = true;
-    } catch (std::exception &error) {
-        errorText = error.what();
-    }
+    currentSemester = createSemester(inputs, dropDownItems);
 }
 
 void createSemesterPage() {

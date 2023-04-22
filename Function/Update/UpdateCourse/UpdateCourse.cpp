@@ -18,8 +18,7 @@ void inputChanges(Course& course, char** inputs, char** dropDownItems) {
         course.credits = checkAndConvertToInt(inputs[2], "credit");
         course.maxStudent = checkAndConvertToInt(inputs[3], "number of students");
         course.dayOfWeek = dropDownItems[1];
-        course.sessionNumber =
-            stoi(checkDropDownAndConvertToString(dropDownItems[2], "session number"));
+        course.sessionNumber = stoi(std::string(dropDownItems[2]));
         delete[] courseIDAndClassName;
     } catch (...) {
         delete[] courseIDAndClassName;

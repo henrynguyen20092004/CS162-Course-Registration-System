@@ -97,11 +97,8 @@ void saveSemester(Node<Semester> *allSemesters) {
 
 Semester createSemester(char **inputs, char **dropDownItems) {
     Semester semester;
-
-    semester.schoolYearName =
-        checkDropDownAndConvertToString(dropDownItems[0], "school year");
-    semester.number =
-        stoi(checkDropDownAndConvertToString(dropDownItems[1], "semester number"));
+    semester.schoolYearName = dropDownItems[0];
+    semester.number = stoi(std::string(dropDownItems[1]));
     semester.startDate = inputs[0];
     semester.endDate = inputs[1];
 

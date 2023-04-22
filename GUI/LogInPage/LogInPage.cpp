@@ -20,20 +20,13 @@ void LogInPage::drawFormInput() {
 
     if (usernameInput.drawTextInput("Username", textInputEditModes[0]) ||
         passwordInput.drawTextInput("Password", textInputEditModes[1])) {
-        submitCallBack();
+        submit();
     }
 
     hidePassword(inputs[1], inputs[2]);
 }
 
-void LogInPage::submitCallBack() {
-    try {
-        currentUser = logIn(inputs);
-        stopLoop = true;
-    } catch (std::exception &error) {
-        errorText = error.what();
-    }
-}
+void LogInPage::submitCallBack() { currentUser = logIn(inputs); }
 
 void logInPage() {
     LogInPage logInPage(

@@ -2,8 +2,10 @@
 
 #include "MainGUI.h"
 
+#include "../Function/CurrentSemester/CurrentSemester.h"
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
+#include "Create/CreateCoursePage/CreateCoursePage.h"
 #include "Create/CreateSemesterPage/CreateSemesterPage.h"
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
@@ -15,7 +17,7 @@
 Font titleFont, textFont;
 Texture2D defaultAvatar;
 User currentUser;
-Semester currentSemester;
+Semester currentSemester = getCurrentSemester();
 
 void SetDefaultStyle() {
     GuiSetStyle(DEFAULT, TEXT_SIZE, DEFAULT_TEXT_SIZE);
@@ -41,7 +43,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        createSemesterPage();
+        createCoursePage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

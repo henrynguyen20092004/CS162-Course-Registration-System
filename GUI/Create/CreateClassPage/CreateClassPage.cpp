@@ -17,18 +17,11 @@ void CreateClassPage::drawFormInput() {
     TextInput classNameInput(inputs[0], inputPos[0], inputWidth);
 
     if (classNameInput.drawTextInput("Class name", textInputEditModes[0])) {
-        submitCallBack();
+        submit();
     }
 }
 
-void CreateClassPage::submitCallBack() {
-    try {
-        createClass(inputs[0]);
-        stopLoop = true;
-    } catch (std::exception &error) {
-        errorText = error.what();
-    }
-}
+void CreateClassPage::submitCallBack() { createClass(inputs[0]); }
 
 void createClassPage() {
     CreateClassPage createClassPage(

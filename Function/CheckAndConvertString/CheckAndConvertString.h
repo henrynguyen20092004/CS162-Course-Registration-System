@@ -6,8 +6,5 @@
 int checkAndConvertToInt(std::string input, const std::string &fieldName);
 double checkAndConvertToScore(std::string input, const std::string &fieldName);
 std::string checkAndConvertToName(std::string input, const std::string &fieldName);
-std::string checkDropDownAndConvertToString(
-    char *dropdownItem, const std::string &fieldName
-);
 
 #endif
