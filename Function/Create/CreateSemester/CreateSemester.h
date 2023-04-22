@@ -3,6 +3,6 @@
 
 #include "../../../Struct/Semester.h"
 
-Semester createSemester();
+Semester createSemester(char **inputs, char **dropDownItems);
 
 #endif

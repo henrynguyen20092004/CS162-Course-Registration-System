@@ -4,16 +4,18 @@
 
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
+#include "Create/CreateSemesterPage/CreateSemesterPage.h"
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
-#include "UpdateCoursePage/UpdateCoursePage.h"
+#include "Update/UpdateCoursePage/UpdateCoursePage.h"
 
 Font titleFont, textFont;
 Texture2D defaultAvatar;
 User currentUser;
+Semester currentSemester;
 
 void SetDefaultStyle() {
     GuiSetStyle(DEFAULT, TEXT_SIZE, DEFAULT_TEXT_SIZE);
@@ -39,9 +41,9 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        createClassPage();
-        Page tmpPage;
-        tmpPage.mainLoop();
+        createSemesterPage();
+        Page tempPage;
+        tempPage.mainLoop();
     } catch (std::runtime_error &error) {
         UnloadImage(windowIcon);
         UnloadFont(titleFont);

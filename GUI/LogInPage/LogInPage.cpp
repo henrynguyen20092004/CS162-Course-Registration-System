@@ -1,10 +1,7 @@
 #include "LogInPage.h"
 
 #include "../../Function/LogIn/LogIn.h"
-#include "../../Struct/Data.h"
 #include "../FormPage/FormPage.h"
-#include "../GetCenterPosition/GetCenterPosition.h"
-#include "../GlobalStyle.h"
 #include "../HidePassword/HidePassword.h"
 #include "../TextInput/TextInput.h"
 
@@ -40,7 +37,7 @@ void LogInPage::submitCallBack() {
 
 void logInPage() {
     LogInPage logInPage(
-        "Log in to continue", 3, 0, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.0f},
+        "Log in to continue", 3, 0, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.25f},
         "Log in"
     );
     logInPage.mainLoop();

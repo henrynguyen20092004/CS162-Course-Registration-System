@@ -1,8 +1,6 @@
 #include "AddStudentToCourse.h"
 
 #include "../../Struct/Data.h"
-#include "../Check/CheckClass/CheckClass.h"
-#include "../Check/CheckCourse/CheckCourse.h"
 #include "../Check/CheckStudentID/CheckStudentID.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
@@ -19,22 +17,15 @@ void saveStudentToCourse(const StudentCourse &studentCourse) {
 }
 
 void addStudentToCourse(char **inputs, char **dropDownItems) {
-    if (dropDownItems[0][0] == '\0') {
-        throw std::invalid_argument("Please choose a course!");
-    }
-
     StudentCourse studentCourse;
     std::string *courseIDAndClassName = new std::string[2];
-    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
-
-    studentCourse.courseID = courseIDAndClassName[0];
-    studentCourse.className = courseIDAndClassName[1];
-    studentCourse.studentID = inputs[0];
-    std::cout << studentCourse.courseID << '\n';
-    std::cout << studentCourse.className << '\n';
-    std::cout << studentCourse.studentID << '\n';
 
     try {
+        splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
+        studentCourse.courseID = courseIDAndClassName[0];
+        studentCourse.className = courseIDAndClassName[1];
+        studentCourse.studentID = inputs[0];
+
         if (!checkStudentIDExists(allData.allStudents, studentCourse.studentID)) {
             throw std::invalid_argument("This student does not exist, please try again!");
         }

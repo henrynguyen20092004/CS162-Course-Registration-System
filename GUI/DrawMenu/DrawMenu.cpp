@@ -71,7 +71,7 @@ void drawAdminMenu() {
 void drawMenu(
     char*& menuDropDownItems, int& menuDropdownActiveItems, bool& menuDropDownEditMode
 ) {
-    DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, SCREEN_HEIGHT / 6.0f}, SECONDARY_COLOR);
+    DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, SCREEN_HEIGHT / 6.4f}, SECONDARY_COLOR);
     DrawTextureV(defaultAvatar, DEFAULT_AVATAR_POSITION, WHITE);
 
     DropDown accountNameDropDown(

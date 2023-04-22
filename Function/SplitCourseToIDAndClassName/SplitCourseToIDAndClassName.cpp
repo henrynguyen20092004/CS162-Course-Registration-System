@@ -1,13 +1,10 @@
 #include "SplitCourseToIDAndClassName.h"
 
+#include "../CheckAndConvertString/CheckAndConvertString.h"
+
 void splitCourseToIDAndClassName(std::string* courseIDAndClassName, char* course) {
-    int i = 0;
-
-    for (; course[i] != '-'; ++i) {
-        courseIDAndClassName[0] += course[i];
-    }
-
-    for (++i; i < course[i] != '\0'; ++i) {
-        courseIDAndClassName[1] += course[i];
-    }
+    std::string courseString = checkDropDownAndConvertToString(course, "course");
+    int hyphenIndex = courseString.find('-');
+    courseIDAndClassName[0] = courseString.substr(0, hyphenIndex);
+    courseIDAndClassName[1] = courseString.substr(hyphenIndex + 1);
 }

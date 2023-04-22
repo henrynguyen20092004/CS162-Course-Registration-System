@@ -3,7 +3,6 @@
 #include "../../Check/CheckSchoolYear/CheckSchoolYear.h"
 #include "../../Check/CheckSemester/CheckSemester.h"
 #include "../../DateFunction/DateFunction.h"
-// #include "../../Input/Input.h"
 
 void inputSemesterSchoolYearAndNumber(Semester &semester) {
     std::cout << "Please enter the school year of this semester (yyyy-yyyy): ";
@@ -23,18 +22,6 @@ void validateSemesterSchoolYearAndNumber(
     Node<Semester> *allSemesters, Node<std::string> *allSchoolYears,
     const Semester &semester, bool checkSemesterAlreadyExists
 ) {
-    if (!checkValidSchoolYear(semester.schoolYearName)) {
-        throw std::invalid_argument("Invalid school year, please try again!");
-    }
-
-    if (!checkSchoolYearExists(allSchoolYears, semester.schoolYearName)) {
-        throw std::invalid_argument("This school year doesn't exist, please try again!");
-    }
-
-    if (semester.number < 1 || semester.number > 3) {
-        throw std::invalid_argument("Invalid semester, please try again!");
-    }
-
     if (checkSemesterExists(allSemesters, semester.number, semester.schoolYearName) ==
         checkSemesterAlreadyExists) {
         if (checkSemesterAlreadyExists) {
@@ -58,5 +45,11 @@ void validateSemesterDates(const Semester &semester) {
         semester.endDate.substr(6) < semester.schoolYearName.substr(0, 4) ||
         semester.endDate.substr(6) > semester.schoolYearName.substr(5)) {
         throw std::invalid_argument("Invalid end date, please try again!");
+    }
+
+    if (!compareDate(semester.startDate, semester.endDate)) {
+        throw std::invalid_argument(
+            "End date can't be smaller than start date, please try again!"
+        );
     }
 }

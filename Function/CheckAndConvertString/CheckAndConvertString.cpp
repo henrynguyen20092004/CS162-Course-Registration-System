@@ -1,7 +1,5 @@
 #include "CheckAndConvertString.h"
 
-#include <conio.h>
-
 int checkAndConvertToInt(std::string input, const std::string &fieldName) {
     int n = input.size();
 
@@ -94,7 +92,7 @@ std::string normalization(const std::string &str) {
     return result;
 }
 
-std::string checkNameAndConvertToName(std::string input, const std::string &fieldName) {
+std::string checkAndConvertToName(std::string input, const std::string &fieldName) {
     int length = input.length();
 
     if (length == 0) {
@@ -109,4 +107,14 @@ std::string checkNameAndConvertToName(std::string input, const std::string &fiel
     }
 
     return normalization(input);
+}
+
+std::string checkDropDownAndConvertToString(
+    char *dropdownItem, const std::string &fieldName
+) {
+    if (dropdownItem[0] == '\0') {
+        throw std::invalid_argument("Please choose a " + fieldName + "!");
+    }
+
+    return std::string(dropdownItem);
 }

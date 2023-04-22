@@ -4,7 +4,6 @@
 #include "ChangePassword/ChangePassword.h"
 #include "Create/CreateCourse/CreateCourse.h"
 #include "Create/CreateSchoolYear/CreateSchoolYear.h"
-#include "Create/CreateSemester/CreateSemester.h"
 #include "Create/CreateStudent/CreateStudent.h"
 #include "CurrentSemester/CurrentSemester.h"
 #include "DeleteCourse/DeleteCourse.h"

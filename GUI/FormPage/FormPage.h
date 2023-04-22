@@ -14,6 +14,7 @@ class FormPage : public Page {
     virtual void drawFormInput() {}
     void drawErrorText();
     virtual void submitCallBack() {}
+    void dropDownLockGUI();
 
    protected:
     const char *title, *buttonText;

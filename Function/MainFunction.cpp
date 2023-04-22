@@ -80,7 +80,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 9: {
-            currentSemester = createSemester();
+            // currentSemester = createSemester();
             break;
         }
 

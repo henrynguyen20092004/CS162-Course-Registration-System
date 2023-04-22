@@ -1,6 +1,8 @@
 #include "CreateSemester.h"
 
 #include "../../../Struct/Data.h"
+#include "../../Check/CheckSemester/CheckSemester.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../DateFunction/DateFunction.h"
 #include "../../InputAndValidate/InputAndValidateSemester/InputAndValidateSemester.h"
 #include "../../OpenFile/OpenFile.h"
@@ -93,34 +95,32 @@ void saveSemester(Node<Semester> *allSemesters) {
     fout.close();
 }
 
-Semester createSemester() {
+Semester createSemester(char **inputs, char **dropDownItems) {
     Semester semester;
-    bool validSemester = false;
 
-    do {
-        try {
-            inputSemesterSchoolYearAndNumber(semester);
-            inputSemesterDates(semester);
-            validateSemesterSchoolYearAndNumber(
-                allData.allSemesters, allData.allSchoolYears, semester, true
-            );
-            validateSemesterDates(semester);
+    semester.schoolYearName =
+        checkDropDownAndConvertToString(dropDownItems[0], "school year");
+    semester.number =
+        stoi(checkDropDownAndConvertToString(dropDownItems[1], "semester number"));
+    semester.startDate = inputs[0];
+    semester.endDate = inputs[1];
 
-            if (!checkDateBeforeAddToList(allData.allSemesters, semester)) {
-                std::cout << "Your start/end date can't overlap other semesters, please "
-                             "try again!\n";
-                continue;
-            }
+    if (checkSemesterExists(
+            allData.allSemesters, semester.number, semester.schoolYearName
+        )) {
+        throw std::invalid_argument("This semester already exists, please try again!");
+    }
 
-            validSemester = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validSemester);
+    validateSemesterDates(semester);
+
+    if (!checkDateBeforeAddToList(allData.allSemesters, semester)) {
+        throw std::invalid_argument(
+            "Your start/end date can't overlap other semesters, please try again!"
+        );
+    }
 
     addSemseterToList(semester);
     saveSemester(allData.allSemesters);
     saveCurrentSemester(semester);
-    std::cout << "Semester successfully added!\n";
     return semester;
 }

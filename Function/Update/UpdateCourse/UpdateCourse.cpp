@@ -1,12 +1,10 @@
 #include "UpdateCourse.h"
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
-#include "../../View/ViewCourses/ViewCourses.h"
 
 void inputChanges(Course& course, char** inputs, char** dropDownItems) {
     std::string* courseIDAndClassName = new std::string[2];
@@ -16,11 +14,12 @@ void inputChanges(Course& course, char** inputs, char** dropDownItems) {
         course.id = courseIDAndClassName[0];
         course.className = courseIDAndClassName[1];
         course.name = inputs[0];
-        course.teacherName = checkNameAndConvertToName(inputs[1], "teacher name");
+        course.teacherName = checkAndConvertToName(inputs[1], "teacher name");
         course.credits = checkAndConvertToInt(inputs[2], "credit");
         course.maxStudent = checkAndConvertToInt(inputs[3], "number of students");
         course.dayOfWeek = dropDownItems[1];
-        course.sessionNumber = checkAndConvertToInt(dropDownItems[2], "session number");
+        course.sessionNumber =
+            stoi(checkDropDownAndConvertToString(dropDownItems[2], "session number"));
         delete[] courseIDAndClassName;
     } catch (...) {
         delete[] courseIDAndClassName;
