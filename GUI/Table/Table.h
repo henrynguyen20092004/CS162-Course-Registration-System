@@ -1,27 +1,26 @@
 #ifndef DRAW_TABLE_H
 #define DRAW_TABLE_H
 
-#include <raylib.h>
-
 #include <string>
 
-#include "../../Struct/Student.h"
+#include "../GlobalStyle.h"
 
 class Table {
    private:
+    const char* tableTitle;
+    int row, col, rowHeight;
+    float *columnWidths, tableWidth = 0.0f, tableHeight = 0.0f;
     std::string **tableData, *columnTitle;
-    int row, col;
-    float *width, height;
-    void convertLinkedListToTableDatas(Student* allStudentsArray);
+    Vector2 tablePos, initialTextPosition;
 
    public:
+    Table();
     Table(
-        Student* allStudentsArray, int row, int col, std::string* columnTitle,
-        float* width, float height
+        std::string** tableData, std::string* columnTitle, const char* tableTitle,
+        int row, int col, int rowHeight, float* columnWidths,
+        float tablePosY = SCREEN_HEIGHT / 6.4f + DEFAULT_ITEM_MARGIN.y + DEFAULT_PADDING.y
     );
-    ~Table();
-
-    void drawTable(const char* tableTitle);
+    void drawTable();
 };
 
 #endif

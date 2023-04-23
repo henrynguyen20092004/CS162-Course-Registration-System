@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-#include "../DrawMenu/DrawMenu.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
 
@@ -56,16 +55,7 @@ Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
                              (index / columns)};
 }
 
-void FormPage::drawPage() { drawFormBox(); }
-
-void FormPage::initComponents() {
-    submitButton = Button(
-        buttonText, getCenterX(inputWidth),
-        mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT, inputWidth
-    );
-}
-
-void FormPage::drawFormBox() {
+void FormPage::drawPage() {
     DrawRectangleV(mainBoxPosition, mainBoxSize, WHITE);
     drawDefaultTitle(titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y});
     drawErrorText();
@@ -85,6 +75,13 @@ void FormPage::drawFormBox() {
     for (int i = numberOfDropDowns - 1; i >= 0; --i) {
         dropDowns[i].drawDropDown(dropDownItems[i]);
     }
+}
+
+void FormPage::initComponents() {
+    submitButton = Button(
+        buttonText, getCenterX(inputWidth),
+        mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT, inputWidth
+    );
 }
 
 void FormPage::drawErrorText() {
