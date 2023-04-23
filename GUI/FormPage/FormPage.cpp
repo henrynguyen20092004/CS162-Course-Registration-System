@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-#include "../Button/Button.h"
 #include "../DrawMenu/DrawMenu.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
@@ -20,43 +19,33 @@ FormPage::FormPage(
       mainBoxPosition(
           {getCenterX(mainBoxSize.x), getCenterY(mainBoxSize.y) + PAGE_Y_OFFSET}
       ),
-      buttonText(buttonText),
-      errorText("") {
+      buttonText(buttonText) {
     inputWidth =
         (mainBoxSize.x - padding.x * 2 - DEFAULT_ITEM_MARGIN.x * (columns - 1)) / columns;
     childrenPosX = mainBoxPosition.x + padding.x;
     firstInputPosY = mainBoxPosition.y + padding.y + DEFAULT_TITLE_SIZE +
                      DEFAULT_TEXT_MARGIN.y + DEFAULT_TEXT_SIZE + DEFAULT_ITEM_MARGIN.y;
     inputs = new char *[numberOfTextInputs];
-    textInputEditModes = new bool[numberOfTextInputs];
+    textInputs = new TextInput[numberOfTextInputs];
     inputPos = new Vector2[numberOfTextInputs + numberOfDropDowns];
 
     if (numberOfDropDowns) {
         dropDownItems = new char *[numberOfDropDowns];
-        dropDownActiveItems = new int[numberOfDropDowns];
-        dropDownEditModes = new bool[numberOfDropDowns];
+        dropDowns = new DropDown[numberOfDropDowns];
     }
 
     for (int i = 0; i < numberOfTextInputs; ++i) {
         inputs[i] = new char[MAX_INPUT_CHAR];
         inputs[i][0] = '\0';
-        textInputEditModes[i] = false;
         inputPos[i] = calculateInputPos(firstInputPosY, i);
     }
 
     for (int i = 0; i < numberOfDropDowns; ++i) {
         dropDownItems[i] = new char[MAX_INPUT_CHAR];
         dropDownItems[i][0] = '\0';
-        dropDownActiveItems[i] = -1;
-        dropDownEditModes[i] = false;
         inputPos[i + numberOfTextInputs] =
             calculateInputPos(firstInputPosY, i + numberOfTextInputs);
     }
-
-    menuDropDownItems = new char[MAX_INPUT_CHAR];
-    menuDropDownItems[0] = '\0';
-    menuDropdownActiveItems = -1;
-    menuDropDownEditMode = false;
 }
 
 Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
@@ -67,30 +56,35 @@ Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
                              (index / columns)};
 }
 
-void FormPage::drawPage() {
-    if (currentUser.username != "") {
-        drawMenu(menuDropDownItems, menuDropdownActiveItems, menuDropDownEditMode);
-    }
+void FormPage::drawPage() { drawFormBox(); }
 
-    drawFormBox();
-}
-
-void FormPage::drawFormBox() {
-    Button submitButton(
+void FormPage::initComponents() {
+    submitButton = Button(
         buttonText, getCenterX(inputWidth),
         mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT, inputWidth
     );
+}
 
+void FormPage::drawFormBox() {
     DrawRectangleV(mainBoxPosition, mainBoxSize, WHITE);
     drawDefaultTitle(titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y});
     drawErrorText();
     dropDownLockGUI();
+    passwordHide();
 
     if (submitButton.drawButton()) {
         submit();
     }
 
-    drawFormInput();
+    for (int i = 0; i < numberOfTextInputs; ++i) {
+        if (textInputs[i].drawTextInput()) {
+            submit();
+        }
+    }
+
+    for (int i = numberOfDropDowns - 1; i >= 0; --i) {
+        dropDowns[i].drawDropDown(dropDownItems[i]);
+    }
 }
 
 void FormPage::drawErrorText() {
@@ -111,7 +105,7 @@ void FormPage::drawErrorText() {
 
 void FormPage::dropDownLockGUI() {
     for (int i = 0; i < numberOfDropDowns; ++i) {
-        if (dropDownEditModes[i]) {
+        if (dropDowns[i].editMode) {
             GuiLock();
             return;
         }
@@ -154,10 +148,8 @@ FormPage::~FormPage() {
     }
 
     delete[] inputs;
+    delete[] textInputs;
     delete[] dropDownItems;
-    delete[] dropDownActiveItems;
-    delete[] dropDownEditModes;
-    delete[] textInputEditModes;
+    delete[] dropDowns;
     delete[] inputPos;
-    delete[] menuDropDownItems;
 }

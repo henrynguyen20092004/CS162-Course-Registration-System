@@ -3,28 +3,24 @@
 #include "../../Function/LogIn/LogIn.h"
 #include "../FormPage/FormPage.h"
 #include "../HidePassword/HidePassword.h"
-#include "../TextInput/TextInput.h"
 
 class LogInPage : public FormPage {
    private:
-    void drawFormInput() override;
+    void initComponents() override;
+    void passwordHide() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void LogInPage::drawFormInput() {
-    TextInput usernameInput(inputs[0], inputPos[0], inputWidth);
-    TextInput passwordInput(inputs[1], inputPos[1], inputWidth);
-
-    if (usernameInput.drawTextInput("Username", textInputEditModes[0]) ||
-        passwordInput.drawTextInput("Password", textInputEditModes[1])) {
-        submit();
-    }
-
-    hidePassword(inputs[1], inputs[2]);
+void LogInPage::initComponents() {
+    FormPage::initComponents();
+    textInputs[0] = TextInput("Username", inputs[0], inputPos[0], inputWidth);
+    textInputs[1] = TextInput("Password", inputs[1], inputPos[1], inputWidth);
 }
+
+void LogInPage::passwordHide() { hidePassword(inputs[1], inputs[2]); }
 
 void LogInPage::submitCallBack() { currentUser = logIn(inputs); }
 

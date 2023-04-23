@@ -6,11 +6,14 @@
 class TextInput {
    private:
     Rectangle textInputBox;
+    const char *label;
     char *input;
+    bool editMode = false;
 
    public:
-    TextInput(char *input, Vector2 pos, float width);
-    bool drawTextInput(const char *label, bool &editMode);
+    TextInput();
+    TextInput(const char *label, char *input, Vector2 pos, float width);
+    bool drawTextInput();
 };
 
 #endif

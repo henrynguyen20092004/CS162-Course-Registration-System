@@ -2,30 +2,21 @@
 
 #include "../../Function/AddStudentToCourse/AddStudentToCourse.h"
 #include "../../Struct/Data.h"
-#include "../DropDown/DropDown.h"
 #include "../FormPage/FormPage.h"
-#include "../TextInput/TextInput.h"
 
 class AddStudentToCoursePage : public FormPage {
    private:
-    void drawFormInput() override;
+    void initComponents() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void AddStudentToCoursePage::drawFormInput() {
-    DropDown courseDropDown(allData.allCourses, inputPos[0], inputWidth);
-    TextInput studentIDInput(inputs[0], inputPos[1], inputWidth);
-
-    if (studentIDInput.drawTextInput("Student ID", textInputEditModes[0])) {
-        submit();
-    }
-
-    courseDropDown.drawDropDown(
-        "Course name", dropDownItems[0], dropDownActiveItems[0], dropDownEditModes[0]
-    );
+void AddStudentToCoursePage::initComponents() {
+    FormPage::initComponents();
+    dropDowns[0] = DropDown("Course name", allData.allCourses, inputPos[0], inputWidth);
+    textInputs[0] = TextInput("Student ID", inputs[0], inputPos[1], inputWidth);
 }
 
 void AddStudentToCoursePage::submitCallBack() {

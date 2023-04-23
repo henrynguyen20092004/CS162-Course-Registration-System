@@ -1,12 +1,16 @@
 #include "TextInput.h"
 
-#include "../GlobalStyle.h"
 #include "../TextFunction/TextFunction.h"
 
-TextInput::TextInput(char *input, Vector2 pos, float width)
-    : textInputBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}), input(input) {}
+TextInput::TextInput()
+    : textInputBox({0.0f, 0.0f, 0.0f, 0.0f}), input(nullptr), label(nullptr) {}
 
-bool TextInput::drawTextInput(const char *label, bool &editMode) {
+TextInput::TextInput(const char *label, char *input, Vector2 pos, float width)
+    : textInputBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}),
+      input(input),
+      label(label) {}
+
+bool TextInput::drawTextInput() {
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         editMode =
             CheckCollisionPointRec(GetMousePosition(), textInputBox) && !GuiIsLocked();

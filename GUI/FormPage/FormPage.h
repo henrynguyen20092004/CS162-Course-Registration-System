@@ -1,15 +1,22 @@
-#ifndef FORM_H
-#define FORM_H
+#ifndef FORM_PAGE_H
+#define FORM_PAGE_H
 
 #include <string>
 
-#include "../GlobalStyle.h"
+#include "../Button/Button.h"
 #include "../Page/Page.h"
+#include "../TextInput/TextInput.h"
 
 class FormPage : public Page {
    private:
+    const char *title, *buttonText;
+    int numberOfTextInputs, numberOfDropDowns, columns;
+    float childrenPosX, firstInputPosY;
+    std::string errorText;
+    Button submitButton;
+    Vector2 mainBoxSize, mainBoxPosition, padding;
     Vector2 calculateInputPos(float firstInputPosY, int index);
-    virtual void drawFormInput() {}
+    virtual void passwordHide() {}
     virtual void submitCallBack() {}
     void drawPage() override;
     void drawFormBox();
@@ -18,14 +25,12 @@ class FormPage : public Page {
     void checkFilledFields();
 
    protected:
-    const char *title, *buttonText;
-    char **inputs, **dropDownItems = nullptr, *menuDropDownItems;
-    bool *textInputEditModes, *dropDownEditModes = nullptr, menuDropDownEditMode;
-    int numberOfTextInputs, numberOfDropDowns, columns;
-    int *dropDownActiveItems = nullptr, menuDropdownActiveItems;
-    float childrenPosX, firstInputPosY, inputWidth;
-    std::string errorText;
-    Vector2 mainBoxSize, mainBoxPosition, padding, *inputPos;
+    char **inputs, **dropDownItems = nullptr;
+    float inputWidth;
+    TextInput *textInputs;
+    DropDown *dropDowns = nullptr;
+    Vector2 *inputPos;
+    void initComponents() override;
     void submit();
 
    public:

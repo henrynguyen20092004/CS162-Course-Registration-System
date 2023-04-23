@@ -3,23 +3,20 @@
 #include "../../../Function/Create/CreateSchoolYear/CreateSchoolYear.h"
 #include "../../../Struct/Data.h"
 #include "../../FormPage/FormPage.h"
-#include "../../TextInput/TextInput.h"
 
 class CreateSchoolYearPage : public FormPage {
    private:
-    void drawFormInput() override;
+    void initComponents() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void CreateSchoolYearPage::drawFormInput() {
-    TextInput schoolYearInput(inputs[0], inputPos[0], inputWidth);
-
-    if (schoolYearInput.drawTextInput("School year (yyyy-yyyy)", textInputEditModes[0])) {
-        submit();
-    }
+void CreateSchoolYearPage::initComponents() {
+    FormPage::initComponents();
+    textInputs[0] =
+        TextInput("School year (yyyy-yyyy)", inputs[0], inputPos[0], inputWidth);
 }
 
 void CreateSchoolYearPage::submitCallBack() { createSchoolYear(inputs[0]); }

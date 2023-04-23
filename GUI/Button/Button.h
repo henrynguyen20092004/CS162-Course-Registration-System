@@ -6,10 +6,11 @@
 class Button {
    private:
     Rectangle buttonBox;
-    const char *text;
+    const char *label;
 
    public:
-    Button(const char *text, float posX, float posY, float width);
+    Button();
+    Button(const char *label, float posX, float posY, float width);
     bool drawButton();
 };
 

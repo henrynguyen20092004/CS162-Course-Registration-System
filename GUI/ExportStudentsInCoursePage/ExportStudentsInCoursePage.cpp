@@ -2,30 +2,21 @@
 
 #include "../../Function/ExportStudentsInCourse/ExportStudentsInCourse.h"
 #include "../../Struct/Data.h"
-#include "../DropDown/DropDown.h"
 #include "../FormPage/FormPage.h"
-#include "../TextInput/TextInput.h"
 
 class ExportStudentsInCoursePage : public FormPage {
    private:
-    void drawFormInput() override;
+    void initComponents() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void ExportStudentsInCoursePage::drawFormInput() {
-    TextInput exportPathInput(inputs[0], inputPos[1], inputWidth);
-    DropDown courseDropDown(allData.allCourses, inputPos[0], inputWidth);
-
-    if (exportPathInput.drawTextInput("Export path", textInputEditModes[0])) {
-        submit();
-    }
-
-    courseDropDown.drawDropDown(
-        "Course", dropDownItems[0], dropDownActiveItems[0], dropDownEditModes[0]
-    );
+void ExportStudentsInCoursePage::initComponents() {
+    FormPage::initComponents();
+    textInputs[0] = TextInput("Export path", inputs[0], inputPos[1], inputWidth);
+    dropDowns[0] = DropDown("Course name", allData.allCourses, inputPos[0], inputWidth);
 }
 
 void ExportStudentsInCoursePage::submitCallBack() {
