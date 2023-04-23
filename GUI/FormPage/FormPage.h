@@ -4,8 +4,6 @@
 #include <string>
 
 #include "../Button/Button.h"
-#include "../DropDown/DropDown.h"
-#include "../GlobalStyle.h"
 #include "../Page/Page.h"
 #include "../TextInput/TextInput.h"
 
@@ -27,7 +25,7 @@ class FormPage : public Page {
     void checkFilledFields();
 
    protected:
-    char **inputs, **dropDownItems = nullptr, *menuDropDownItems;
+    char **inputs, **dropDownItems = nullptr;
     float inputWidth;
     TextInput *textInputs;
     DropDown *dropDowns = nullptr;

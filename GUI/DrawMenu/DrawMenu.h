@@ -1,6 +1,8 @@
 #ifndef DRAW_MENU_H
 #define DRAW_MENU_H
 
-void drawMenu(char*& menuDropDownItems);
+#include "../DropDown/DropDown.h"
+
+void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems);
 
 #endif

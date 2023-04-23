@@ -46,9 +46,6 @@ FormPage::FormPage(
         inputPos[i + numberOfTextInputs] =
             calculateInputPos(firstInputPosY, i + numberOfTextInputs);
     }
-
-    menuDropDownItems = new char[MAX_INPUT_CHAR];
-    menuDropDownItems[0] = '\0';
 }
 
 Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
@@ -59,13 +56,7 @@ Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
                              (index / columns)};
 }
 
-void FormPage::drawPage() {
-    if (currentUser.username != "") {
-        drawMenu(menuDropDownItems);
-    }
-
-    drawFormBox();
-}
+void FormPage::drawPage() { drawFormBox(); }
 
 void FormPage::initComponents() {
     submitButton = Button(
@@ -152,5 +143,4 @@ FormPage::~FormPage() {
     delete[] dropDownItems;
     delete[] dropDowns;
     delete[] inputPos;
-    delete[] menuDropDownItems;
 }

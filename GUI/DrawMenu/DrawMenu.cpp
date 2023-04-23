@@ -1,7 +1,6 @@
 #include "DrawMenu.h"
 
 #include "../Button/Button.h"
-#include "../DropDown/DropDown.h"
 
 void drawStudentMenu() {
     Button studentInformation(
@@ -68,17 +67,11 @@ void drawAdminMenu() {
     }
 }
 
-void drawMenu(char*& menuDropDownItems) {
+void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems) {
     DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, SCREEN_HEIGHT / 6.4f}, SECONDARY_COLOR);
     DrawTextureV(defaultAvatar, AVATAR_POSITION, WHITE);
 
-    DropDown accountNameDropDown(
-        "Change current semester;Change password;Log out",
-        {AVATAR_SIZE.x + DEFAULT_PADDING.x * 4 + 8, DEFAULT_PADDING.y * 2},
-        DEFAULT_MENU_BUTTON_WIDTH * 1.5f
-    );
-
-    accountNameDropDown.drawDropDown(
+    menuDropDown.drawDropDown(
         ("Welcome, " + currentUser.username).c_str(), menuDropDownItems, WHITE
     );
 
@@ -88,7 +81,7 @@ void drawMenu(char*& menuDropDownItems) {
         drawStudentMenu();
     }
 
-    switch (accountNameDropDown.activeItemIndex) {
+    switch (menuDropDown.activeItemIndex) {
         case 0:
             // changeCurrentSemesterPage
             break;
