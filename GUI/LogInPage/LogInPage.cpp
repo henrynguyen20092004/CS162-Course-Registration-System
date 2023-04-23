@@ -7,7 +7,7 @@
 class LogInPage : public FormPage {
    private:
     void initComponents() override;
-    void drawFormInputs() override;
+    void passwordHide() override;
     void submitCallBack() override;
 
    public:
@@ -16,18 +16,11 @@ class LogInPage : public FormPage {
 
 void LogInPage::initComponents() {
     FormPage::initComponents();
-    textInputs[0] = TextInput(inputs[0], inputPos[0], inputWidth);
-    textInputs[1] = TextInput(inputs[1], inputPos[1], inputWidth);
+    textInputs[0] = TextInput("Username", inputs[0], inputPos[0], inputWidth);
+    textInputs[1] = TextInput("Password", inputs[1], inputPos[1], inputWidth);
 }
 
-void LogInPage::drawFormInputs() {
-    if (textInputs[0].drawTextInput("Username") ||
-        textInputs[1].drawTextInput("Password")) {
-        submit();
-    }
-
-    hidePassword(inputs[1], inputs[2]);
-}
+void LogInPage::passwordHide() { hidePassword(inputs[1], inputs[2]); }
 
 void LogInPage::submitCallBack() { currentUser = logIn(inputs); }
 

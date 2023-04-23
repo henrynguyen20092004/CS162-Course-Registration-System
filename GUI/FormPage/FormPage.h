@@ -16,7 +16,7 @@ class FormPage : public Page {
     Button submitButton;
     Vector2 mainBoxSize, mainBoxPosition, padding;
     Vector2 calculateInputPos(float firstInputPosY, int index);
-    virtual void drawFormInputs() {}
+    virtual void passwordHide() {}
     virtual void submitCallBack() {}
     void drawPage() override;
     void drawFormBox();

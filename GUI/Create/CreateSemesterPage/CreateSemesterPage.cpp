@@ -7,7 +7,6 @@
 class CreateSemesterPage : public FormPage {
    private:
     void initComponents() override;
-    void drawFormInputs() override;
     void submitCallBack() override;
 
    public:
@@ -16,20 +15,13 @@ class CreateSemesterPage : public FormPage {
 
 void CreateSemesterPage::initComponents() {
     FormPage::initComponents();
-    dropDowns[0] = DropDown(allData.allSchoolYears, inputPos[0], inputWidth);
-    dropDowns[1] = DropDown("1;2;3", inputPos[1], inputWidth);
-    textInputs[0] = TextInput(inputs[0], inputPos[2], inputWidth);
-    textInputs[1] = TextInput(inputs[1], inputPos[3], inputWidth);
-}
-
-void CreateSemesterPage::drawFormInputs() {
-    if (textInputs[0].drawTextInput("Start date (dd/mm/yyyy)") ||
-        textInputs[1].drawTextInput("End date (dd/mm/yyyy)")) {
-        submit();
-    }
-
-    dropDowns[1].drawDropDown("Semester number", dropDownItems[1]);
-    dropDowns[0].drawDropDown("School year (yyyy-yyyy)", dropDownItems[0]);
+    dropDowns[0] =
+        DropDown("School year", allData.allSchoolYears, inputPos[0], inputWidth);
+    dropDowns[1] = DropDown("Semester number", "1;2;3", inputPos[1], inputWidth);
+    textInputs[0] =
+        TextInput("Start date (dd/mm/yyyy)", inputs[0], inputPos[2], inputWidth);
+    textInputs[1] =
+        TextInput("End date (dd/mm/yyyy)", inputs[1], inputPos[3], inputWidth);
 }
 
 void CreateSemesterPage::submitCallBack() {

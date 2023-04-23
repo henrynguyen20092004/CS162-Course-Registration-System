@@ -70,12 +70,21 @@ void FormPage::drawFormBox() {
     drawDefaultTitle(titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y});
     drawErrorText();
     dropDownLockGUI();
+    passwordHide();
 
     if (submitButton.drawButton()) {
         submit();
     }
 
-    drawFormInputs();
+    for (int i = 0; i < numberOfTextInputs; ++i) {
+        if (textInputs[i].drawTextInput()) {
+            submit();
+        }
+    }
+
+    for (int i = numberOfDropDowns - 1; i >= 0; --i) {
+        dropDowns[i].drawDropDown(dropDownItems[i]);
+    }
 }
 
 void FormPage::drawErrorText() {

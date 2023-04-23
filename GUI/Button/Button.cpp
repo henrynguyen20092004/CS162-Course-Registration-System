@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button() : buttonBox({0.0f, 0.0f, 0.0f, 0.0f}), label("") {}
+Button::Button() : buttonBox({0.0f, 0.0f, 0.0f, 0.0f}), label(nullptr) {}
 
 Button::Button(const char *label, float posX, float posY, float width)
     : buttonBox({posX, posY, width, DEFAULT_ITEM_HEIGHT}), label(label) {}

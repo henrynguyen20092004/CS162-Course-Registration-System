@@ -7,7 +7,6 @@
 class AddStudentToCoursePage : public FormPage {
    private:
     void initComponents() override;
-    void drawFormInputs() override;
     void submitCallBack() override;
 
    public:
@@ -16,16 +15,8 @@ class AddStudentToCoursePage : public FormPage {
 
 void AddStudentToCoursePage::initComponents() {
     FormPage::initComponents();
-    dropDowns[0] = DropDown(allData.allCourses, inputPos[0], inputWidth);
-    textInputs[0] = TextInput(inputs[0], inputPos[1], inputWidth);
-}
-
-void AddStudentToCoursePage::drawFormInputs() {
-    if (textInputs[0].drawTextInput("Student ID")) {
-        submit();
-    }
-
-    dropDowns[0].drawDropDown("Course name", dropDownItems[0]);
+    dropDowns[0] = DropDown("Course name", allData.allCourses, inputPos[0], inputWidth);
+    textInputs[0] = TextInput("Student ID", inputs[0], inputPos[1], inputWidth);
 }
 
 void AddStudentToCoursePage::submitCallBack() {

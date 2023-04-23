@@ -7,7 +7,6 @@
 class CreateSchoolYearPage : public FormPage {
    private:
     void initComponents() override;
-    void drawFormInputs() override;
     void submitCallBack() override;
 
    public:
@@ -16,13 +15,8 @@ class CreateSchoolYearPage : public FormPage {
 
 void CreateSchoolYearPage::initComponents() {
     FormPage::initComponents();
-    textInputs[0] = TextInput(inputs[0], inputPos[0], inputWidth);
-}
-
-void CreateSchoolYearPage::drawFormInputs() {
-    if (textInputs[0].drawTextInput("School year (yyyy-yyyy)")) {
-        submit();
-    }
+    textInputs[0] =
+        TextInput("School year (yyyy-yyyy)", inputs[0], inputPos[0], inputWidth);
 }
 
 void CreateSchoolYearPage::submitCallBack() { createSchoolYear(inputs[0]); }

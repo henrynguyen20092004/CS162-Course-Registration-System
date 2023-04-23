@@ -7,7 +7,6 @@
 class ExportStudentsInCoursePage : public FormPage {
    private:
     void initComponents() override;
-    void drawFormInputs() override;
     void submitCallBack() override;
 
    public:
@@ -16,16 +15,8 @@ class ExportStudentsInCoursePage : public FormPage {
 
 void ExportStudentsInCoursePage::initComponents() {
     FormPage::initComponents();
-    textInputs[0] = TextInput(inputs[0], inputPos[1], inputWidth);
-    dropDowns[0] = DropDown(allData.allCourses, inputPos[0], inputWidth);
-}
-
-void ExportStudentsInCoursePage::drawFormInputs() {
-    if (textInputs[0].drawTextInput("Export path")) {
-        submit();
-    }
-
-    dropDowns[0].drawDropDown("Course name", dropDownItems[0]);
+    textInputs[0] = TextInput("Export path", inputs[0], inputPos[1], inputWidth);
+    dropDowns[0] = DropDown("Course name", allData.allCourses, inputPos[0], inputWidth);
 }
 
 void ExportStudentsInCoursePage::submitCallBack() {

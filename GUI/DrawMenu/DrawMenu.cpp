@@ -71,9 +71,7 @@ void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems) {
     DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, SCREEN_HEIGHT / 6.4f}, SECONDARY_COLOR);
     DrawTextureV(defaultAvatar, AVATAR_POSITION, WHITE);
 
-    menuDropDown.drawDropDown(
-        ("Welcome, " + currentUser.username).c_str(), menuDropDownItems, WHITE
-    );
+    menuDropDown.drawDropDown(menuDropDownItems, WHITE);
 
     if (currentUser.username == "admin") {
         drawAdminMenu();

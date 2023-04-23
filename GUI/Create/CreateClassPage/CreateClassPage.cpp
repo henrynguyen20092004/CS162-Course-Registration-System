@@ -6,7 +6,6 @@
 class CreateClassPage : public FormPage {
    private:
     void initComponents() override;
-    void drawFormInputs() override;
     void submitCallBack() override;
 
    public:
@@ -15,13 +14,7 @@ class CreateClassPage : public FormPage {
 
 void CreateClassPage::initComponents() {
     FormPage::initComponents();
-    textInputs[0] = TextInput(inputs[0], inputPos[0], inputWidth);
-}
-
-void CreateClassPage::drawFormInputs() {
-    if (textInputs[0].drawTextInput("Class name")) {
-        submit();
-    }
+    textInputs[0] = TextInput("Class name", inputs[0], inputPos[0], inputWidth);
 }
 
 void CreateClassPage::submitCallBack() { createClass(inputs[0]); }
