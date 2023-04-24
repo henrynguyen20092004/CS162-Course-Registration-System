@@ -15,7 +15,7 @@ void ViewStudentsInClassPage::initColumns() {
     columnTitle =
         new std::string[col]{"No",     "Student ID",    "First Name", "Last Name",
                              "Gender", "Date of Birth", "Social ID"};
-    columnWidths = new float[col]{50, 200, 120, 330, 80, 180, 150};
+    columnWidths = new float[col]{50, 200, 120, 200, 70, 150, 150};
 }
 
 void ViewStudentsInClassPage::convertLinkedListToData() {
