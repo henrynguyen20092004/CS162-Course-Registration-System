@@ -31,3 +31,7 @@ bool operator<(const Student &firstStudent, const Student &secondStudent) {
                ? firstStudent.id < secondStudent.id
                : firstStudent.id.size() < secondStudent.id.size();
 }
+
+bool operator<(const Course &firstCourse, const Course &secondCourse) {
+    return firstCourse.name < secondCourse.name;
+}

@@ -21,6 +21,7 @@
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
 #include "Update/UpdateStudentResultPage/UpdateStudentResultPage.h"
 #include "ViewClassesPage/ViewClassesPage.h"
+#include "ViewCoursesPage/ViewCoursesPage.h"
 #include "ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 
 std::string renderArgs;
