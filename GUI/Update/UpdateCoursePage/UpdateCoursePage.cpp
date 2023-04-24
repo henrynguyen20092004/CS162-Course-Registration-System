@@ -6,15 +6,14 @@
 
 class UpdateCoursePage : public FormPage {
    private:
-    void initComponents() override;
+    void initInputs() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void UpdateCoursePage::initComponents() {
-    FormPage::initComponents();
+void UpdateCoursePage::initInputs() {
     dropDowns[0] = DropDown("Course", allData.allCourses, inputPos[0], inputWidth);
     textInputs[0] = TextInput("Course name", inputs[0], inputPos[1], inputWidth);
     textInputs[1] = TextInput("Teacher name", inputs[1], inputPos[2], inputWidth);
@@ -31,7 +30,7 @@ void UpdateCoursePage::submitCallBack() { updateCourse(inputs, dropDownItems); }
 void updateCoursePage() {
     UpdateCoursePage updateCoursePage(
         "Update Course Information", 4, 3, 2,
-        {SCREEN_WIDTH / 1.6f, SCREEN_HEIGHT / 1.35f}, "Submit"
+        {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}, "Submit"
     );
     updateCoursePage.mainLoop();
 }

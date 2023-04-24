@@ -23,12 +23,12 @@ void saveStudent(const Student &student) {
 void createStudent(char **inputs, char **dropDownItems) {
     Student student;
     student.id = inputs[0];
+    student.className = dropDownItems[0];
     student.firstName = checkAndConvertToName(inputs[1], "first name");
     student.lastName = checkAndConvertToName(inputs[2], "last name");
-    student.gender = dropDownItems[0];
+    student.gender = dropDownItems[1];
     student.dateOfBirth = inputs[3];
     student.socialID = inputs[4];
-    student.className = dropDownItems[1];
 
     if (checkStudentIDExists(allData.allStudents, student.id)) {
         throw std::invalid_argument("This student already exists, please try again!");

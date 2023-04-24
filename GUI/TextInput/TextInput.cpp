@@ -34,21 +34,27 @@ void TextInput::truncateInput() {
     }
 }
 
-bool TextInput::drawTextInput() {
+bool TextInput::drawTextInput(float scrollY) {
+    Rectangle textInputBoxWithScroll = textInputBox;
+    textInputBoxWithScroll.y += scrollY;
+
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        editMode =
-            CheckCollisionPointRec(GetMousePosition(), textInputBox) && !GuiIsLocked();
+        editMode = CheckCollisionPointRec(GetMousePosition(), textInputBoxWithScroll) &&
+                   !GuiIsLocked();
     }
 
     drawDefaultText(
         textFont, label,
-        {textInputBox.x, textInputBox.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y}
+        {textInputBoxWithScroll.x,
+         textInputBoxWithScroll.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y}
     );
 
     if (!editMode && measureTextWidth(textFont, input) > width) {
         truncateInput();
-        return GuiTextBox(textInputBox, truncatedInput.data(), MAX_INPUT_CHAR, editMode);
+        return GuiTextBox(
+            textInputBoxWithScroll, truncatedInput.data(), MAX_INPUT_CHAR, editMode
+        );
     }
 
-    return GuiTextBox(textInputBox, input, MAX_INPUT_CHAR, editMode);
+    return GuiTextBox(textInputBoxWithScroll, input, MAX_INPUT_CHAR, editMode);
 }

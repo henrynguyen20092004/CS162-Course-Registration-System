@@ -22,7 +22,8 @@ DropDown::DropDown(
 DropDown::DropDown(const char* label, Node<Semester>* itemList, Vector2 pos, float width)
     : dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}), label(label) {
     for (; itemList; itemList = itemList->next) {
-        items += itemList->data.number;
+        items += "Semester " + std::to_string(itemList->data.number) + ", " +
+                 itemList->data.schoolYearName;
 
         if (itemList->next) {
             items += ';';
@@ -46,14 +47,19 @@ DropDown::DropDown(const char* label, const char* itemList, Vector2 pos, float w
       dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}),
       label(label) {}
 
-void DropDown::drawDropDown(char*& selectedItem, Color labelColor) {
+void DropDown::drawDropDown(char*& selectedItem, float scrollY, Color labelColor) {
     drawDefaultText(
         textFont, label,
-        {dropDownBox.x, dropDownBox.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y},
+        {dropDownBox.x,
+         dropDownBox.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y + scrollY},
         labelColor
     );
+    Rectangle dropDownBoxWithScroll = dropDownBox;
+    dropDownBoxWithScroll.y += scrollY;
 
-    if (GuiDropdownBox(dropDownBox, items.c_str(), &activeItemIndex, editMode)) {
+    if (GuiDropdownBox(
+            dropDownBoxWithScroll, items.c_str(), &activeItemIndex, editMode
+        )) {
         editMode = !editMode;
         int itemsLength = items.size(), indexToGetSelectedItem = 0,
             currentStringIndex = 0;

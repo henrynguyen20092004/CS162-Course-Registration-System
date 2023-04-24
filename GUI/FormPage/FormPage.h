@@ -11,11 +11,12 @@ class FormPage : public Page {
    private:
     const char *title, *buttonText;
     int numberOfTextInputs, numberOfDropDowns, columns;
-    float childrenPosX, firstInputPosY;
+    float childrenPosX, firstInputPosY, pageHeight = SCREEN_HEIGHT - MENU_HEIGHT;
     std::string errorText;
     Button submitButton;
     Vector2 mainBoxSize, mainBoxPosition, padding;
     Vector2 calculateInputPos(float firstInputPosY, int index);
+    virtual void initInputs() {}
     virtual void passwordHide() {}
     virtual void submitCallBack() {}
     void drawPage() override;
@@ -28,7 +29,7 @@ class FormPage : public Page {
     float inputWidth;
     TextInput *textInputs;
     DropDown *dropDowns = nullptr;
-    Vector2 *inputPos;
+    Vector2 *inputPos, scroll = {0.0f, 0.0f};
     void initComponents() override;
     void submit();
 

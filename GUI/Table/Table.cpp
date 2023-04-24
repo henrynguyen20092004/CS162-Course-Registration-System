@@ -1,5 +1,6 @@
 #include "Table.h"
 
+#include "../DrawScrollBar/DrawScrollBar.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
 
@@ -47,12 +48,13 @@ void Table::drawTable() {
     Vector2 textPosition = initialTextPosition, cellPos = tablePos;
     float backgroundHeight = tableHeight + DEFAULT_PADDING.y * 2;
 
-    GuiScrollPanel(
+    drawScrollBar(
         {0, MENU_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - MENU_HEIGHT}, nullptr,
         {tablePos.x, tablePos.y, tableWidth,
          backgroundHeight + DEFAULT_ITEM_MARGIN.y * 2},
-        &scroll
+        scroll
     );
+
     DrawRectangleV(
         {tablePos.x - DEFAULT_PADDING.x, tablePos.y - DEFAULT_PADDING.y + scroll.y},
         {tableWidth + DEFAULT_PADDING.x * 2, backgroundHeight}, WHITE

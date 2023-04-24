@@ -18,7 +18,7 @@ class TextInput {
    public:
     TextInput();
     TextInput(const char *label, char *input, Vector2 pos, float width);
-    bool drawTextInput();
+    bool drawTextInput(float scrollY = 0.0f);
 };
 
 #endif
