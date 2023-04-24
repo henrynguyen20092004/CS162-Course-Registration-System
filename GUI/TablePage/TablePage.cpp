@@ -1,7 +1,7 @@
 #include "TablePage.h"
 
 void TablePage::initComponents() {
-    initHeaders();
+    initColumns();
     convertLinkedListToData();
     table = Table(
         tableData, columnTitle, title.c_str(), row, col, TABLE_ROW_HEIGHT, columnWidths

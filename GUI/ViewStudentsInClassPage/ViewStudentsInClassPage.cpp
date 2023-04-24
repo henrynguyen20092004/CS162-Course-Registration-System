@@ -1,23 +1,19 @@
 #include <algorithm>
 
 #include "../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
+#include "../../Function/OperatorOverload/OperatorOverload.h"
 #include "../TablePage/TablePage.h"
 
 class ViewStudentsInClassPage : public TablePage {
    private:
-    void initHeaders() override;
+    void initColumns() override;
     void convertLinkedListToData() override;
 
    public:
     using TablePage::TablePage;
-    std::string className;
 };
 
-bool sortData(const Student& firstStudent, const Student& secondStudent) {
-    return firstStudent.id < secondStudent.id;
-}
-
-void ViewStudentsInClassPage::initHeaders() {
+void ViewStudentsInClassPage::initColumns() {
     columnTitle =
         new std::string[col]{"No",     "Student ID",    "First Name", "Last Name",
                              "Gender", "Date of Birth", "Social ID"};
@@ -26,11 +22,10 @@ void ViewStudentsInClassPage::initHeaders() {
 
 void ViewStudentsInClassPage::convertLinkedListToData() {
     int arraySize = row - 1;
-    dataArray = new Student[arraySize];
     Node<Student>* allStudentsInClass = (Node<Student>*)dataLinkedList;
-    Student* studentsInClassArray = (Student*)dataArray;
+    Student* studentsInClassArray = new Student[arraySize];
     transformLinkedListToArray(allStudentsInClass, studentsInClassArray, arraySize);
-    std::sort(studentsInClassArray, studentsInClassArray + arraySize, sortData);
+    std::sort(studentsInClassArray, studentsInClassArray + arraySize);
 
     for (int j = 0; j < col; ++j) {
         tableData[0][j] = columnTitle[j];

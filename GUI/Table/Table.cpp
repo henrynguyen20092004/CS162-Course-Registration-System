@@ -32,8 +32,8 @@ Table::Table(
     tableHeight = DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y + rowHeight * row;
     tablePos = {getCenterX(tableWidth), tablePosY};
     initialTextPosition = {
-        tablePos.x,
-        rowHeight / 2.0f + tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y};
+        tablePos.x, tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y +
+                        (rowHeight - DEFAULT_TEXT_SIZE) / 2.0f};
 }
 
 void Table::drawTable() {
@@ -56,8 +56,9 @@ void Table::drawTable() {
 
         for (int i = 0; i < row; ++i) {
             DrawRectangleLines(
-                prevWidth, i * rowHeight + tablePos.y + 68.0f, columnWidths[j], rowHeight,
-                BLACK
+                prevWidth,
+                i * rowHeight + tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y,
+                columnWidths[j], rowHeight, BLACK
             );
         }
     }
