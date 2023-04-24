@@ -46,7 +46,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        createStudentPage();
+        viewStudentsInClassPage("22TT2");
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

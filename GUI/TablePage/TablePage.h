@@ -10,9 +10,11 @@ class TablePage : public Page {
     virtual void initColumns() {}
     virtual void convertLinkedListToData() {}
     void drawPage() override;
+    void clipData();
+    void generateRowHeights();
 
    protected:
-    int row, col;
+    int row, col, *rowHeights;
     float *columnWidths;
     Node<T> *dataLinkedList;
     std::string **tableData, *columnTitle, title;

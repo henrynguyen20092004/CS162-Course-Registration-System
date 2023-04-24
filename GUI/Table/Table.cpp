@@ -1,5 +1,7 @@
 #include "Table.h"
 
+#include <algorithm>
+
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
 
@@ -9,36 +11,42 @@ Table::Table()
       tableTitle(nullptr),
       row(0),
       col(0),
-      rowHeight(0),
+      rowHeights(nullptr),
       columnWidths(nullptr),
       tablePos({0.0f, 0.0f}),
       initialTextPosition({0.0f, 0.0f}) {}
 
 Table::Table(
     std::string** tableData, std::string* columnTitle, const char* tableTitle, int row,
-    int col, int rowHeight, float* columnWidths, float tablePosY
+    int col, int* rowHeights, float* columnWidths, float tablePosY
 )
     : tableData(tableData),
       columnTitle(columnTitle),
       tableTitle(tableTitle),
       row(row),
       col(col),
-      rowHeight(rowHeight),
+      rowHeights(rowHeights),
       columnWidths(columnWidths) {
+    tableHeight = DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y;
+
     for (int j = 0; j < col; ++j) {
+        columnWidths[j] += TABLE_CELL_PADDING_X * 2;
         tableWidth += columnWidths[j];
     }
 
-    tableHeight = DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y + rowHeight * row;
+    for (int i = 0; i < row; ++i) {
+        tableHeight += rowHeights[i];
+    }
+
     tablePos = {getCenterX(tableWidth), tablePosY};
     initialTextPosition = {
-        tablePos.x, tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y +
-                        (rowHeight - DEFAULT_TEXT_SIZE) / 2.0f};
+        tablePos.x + TABLE_CELL_PADDING_X,
+        tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y +
+            (rowHeights[0] - DEFAULT_TEXT_SIZE) / 2.0f};
 }
 
 void Table::drawTable() {
-    float prevWidth = tablePos.x;
-    Vector2 textPosition = initialTextPosition;
+    Vector2 textPosition = initialTextPosition, cellPos = tablePos;
 
     DrawRectangleV(
         {tablePos.x - DEFAULT_PADDING.x, tablePos.y - DEFAULT_PADDING.y},
@@ -50,33 +58,42 @@ void Table::drawTable() {
     );
 
     for (int j = 0; j < col; ++j) {
+        cellPos.y = tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y;
+
         if (j > 0) {
-            prevWidth += columnWidths[j - 1];
+            cellPos.x += columnWidths[j - 1];
         }
 
         for (int i = 0; i < row; ++i) {
+            if (i > 0) {
+                cellPos.y += rowHeights[i - 1];
+            }
+
             DrawRectangleLines(
-                prevWidth,
-                i * rowHeight + tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y,
-                columnWidths[j], rowHeight, BLACK
+                cellPos.x, cellPos.y, columnWidths[j], rowHeights[i], BLACK
             );
         }
     }
 
     for (int j = 0; j < col; ++j) {
-        if (j > 0) {
-            textPosition.x += columnWidths[j - 1] / 2;
-        }
-
-        textPosition.x += columnWidths[j] / 2;
         textPosition.y = initialTextPosition.y;
 
         for (int i = 0; i < row; ++i) {
             float textSize = measureTextWidth(textFont, tableData[i][j].c_str());
-            textPosition.x -= textSize / 2;
+
+            if (j < 2) {
+                textPosition.x += (columnWidths[j] - textSize) / 2 - TABLE_CELL_PADDING_X;
+            }
+
             drawDefaultText(textFont, tableData[i][j].c_str(), textPosition, BLACK);
-            textPosition.x += textSize / 2;
-            textPosition.y += rowHeight;
+
+            if (j < 2) {
+                textPosition.x -= (columnWidths[j] - textSize) / 2 - TABLE_CELL_PADDING_X;
+            }
+
+            textPosition.y += rowHeights[i];
         }
+
+        textPosition.x += columnWidths[j];
     }
 }
