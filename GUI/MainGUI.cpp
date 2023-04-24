@@ -16,6 +16,7 @@
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
+#include "ViewClassesPage/ViewClassesPage.h"
 #include "ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 
 Font titleFont, textFont;
@@ -48,7 +49,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        importScoreboardPage();
+        importStudentsInCoursePage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {
