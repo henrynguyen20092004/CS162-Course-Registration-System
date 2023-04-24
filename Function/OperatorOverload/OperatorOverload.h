@@ -10,5 +10,6 @@ bool operator==(const Score &firstScore, const Score &secondScore);
 bool operator==(
     const StudentCourse &firstStudentCourse, const StudentCourse &secondStudentCourse
 );
+bool operator<(const Student &firstStudent, const Student &secondStudent);
 
 #endif

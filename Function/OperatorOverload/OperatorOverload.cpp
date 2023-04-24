@@ -25,3 +25,9 @@ bool operator==(
            firstStudentCourse.courseID == secondStudentCourse.courseID &&
            firstStudentCourse.className == secondStudentCourse.className;
 }
+
+bool operator<(const Student &firstStudent, const Student &secondStudent) {
+    return firstStudent.id.size() == secondStudent.id.size()
+               ? firstStudent.id < secondStudent.id
+               : firstStudent.id.size() < secondStudent.id.size();
+}

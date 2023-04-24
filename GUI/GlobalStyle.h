@@ -17,6 +17,7 @@
     (Color) { 255, 0, 0, 255 }
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
+#define TABLE_ROW_HEIGHT 60
 #define DEFAULT_TITLE_SIZE 48
 #define DEFAULT_TEXT_SIZE 24
 #define MAX_INPUT_CHAR 256

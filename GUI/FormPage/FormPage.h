@@ -19,7 +19,6 @@ class FormPage : public Page {
     virtual void passwordHide() {}
     virtual void submitCallBack() {}
     void drawPage() override;
-    void drawFormBox();
     void drawErrorText();
     void dropDownLockGUI();
     void checkFilledFields();
