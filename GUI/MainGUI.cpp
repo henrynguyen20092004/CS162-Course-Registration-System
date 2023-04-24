@@ -22,6 +22,7 @@
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
 #include "Update/UpdateStudentResultPage/UpdateStudentResultPage.h"
 #include "View/ViewClassesPage/ViewClassesPage.h"
+#include "View/ViewCoursesOfStudentPage/ViewCoursesOfStudentPage.h"
 #include "View/ViewCoursesPage/ViewCoursesPage.h"
 #include "View/ViewSchoolYearsPage/ViewSchoolYearsPage.h"
 #include "View/ViewSemestersPage/ViewSemestersPage.h"
@@ -102,7 +103,7 @@ void selectPage() {
             break;
 
         case VIEW_COURSES_OF_STUDENT:
-            temp.mainLoop();
+            viewCoursesOfStudentPage();
             break;
 
         case CREATE_SCHOOL_YEAR:
