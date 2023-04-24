@@ -8,6 +8,7 @@
 #include "Create/CreateCoursePage/CreateCoursePage.h"
 #include "Create/CreateSchoolYearPage/CreateSchoolYearPage.h"
 #include "Create/CreateSemesterPage/CreateSemesterPage.h"
+#include "Create/CreateStudentPage/CreateStudentPage.h"
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
@@ -45,7 +46,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        viewStudentsInClassPage("22TT2");
+        createStudentPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

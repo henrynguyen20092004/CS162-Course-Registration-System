@@ -1,14 +1,12 @@
 #include "CreateStudent.h"
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
-#include "../../DateFunction/DateFunction.h"
-// #include "../../Input/Input.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"
 
-void saveCreatedStudent(const Student &student) {
+void saveStudent(const Student &student) {
     std::ofstream fout;
     writeFile(fout, "Data/Student.txt", std::ios::app);
     fout << student.id << '\n';
@@ -22,27 +20,21 @@ void saveCreatedStudent(const Student &student) {
     addNewItemsToOldList(allData.allStudents, new Node(student));
 }
 
-void createStudent() {
+void createStudent(char **inputs, char **dropDownItems) {
     Student student;
-    bool validStudent = false;
+    student.id = inputs[0];
+    student.firstName = checkAndConvertToName(inputs[1], "first name");
+    student.lastName = checkAndConvertToName(inputs[2], "last name");
+    student.gender = dropDownItems[0];
+    student.dateOfBirth = inputs[3];
+    student.socialID = inputs[4];
+    student.className = dropDownItems[1];
 
-    do {
-        try {
-            inputStudent(student);
+    if (checkStudentIDExists(allData.allStudents, student.id)) {
+        throw std::invalid_argument("This student already exists, please try again!");
+    }
 
-            if (checkStudentIDExists(allData.allStudents, student.id)) {
-                std::cout << "This student already exists, please try again!\n";
-                continue;
-            }
-
-            validateStudent(allData.allClasses, student);
-            validStudent = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!validStudent);
-
-    saveCreatedStudent(student);
+    validateStudent(allData.allClasses, student);
+    saveStudent(student);
     createStudentAccount(student);
-    std::cout << "Student successfully added!\n";
 }
