@@ -1,14 +1,12 @@
 #include "CreateStudent.h"
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
-#include "../../DateFunction/DateFunction.h"
-// #include "../../Input/Input.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"
 
-void saveCreatedStudent(const Student& student) {
+void saveStudent(const Student &student) {
     std::ofstream fout;
     writeFile(fout, "Data/Student.txt", std::ios::app);
     fout << student.id << '\n';
@@ -22,24 +20,21 @@ void saveCreatedStudent(const Student& student) {
     addNewItemsToOldList(allData.allStudents, new Node(student));
 }
 
-void createStudent(
-    char* studentID, char* firstName, char* lastName, char* gender, char* dateOfBirth,
-    char* socialID, char* className
-) {
+void createStudent(char **inputs, char **dropDownItems) {
     Student student;
-    student.id = studentID;
+    student.id = inputs[0];
+    student.firstName = checkAndConvertToName(inputs[1], "first name");
+    student.lastName = checkAndConvertToName(inputs[2], "last name");
+    student.gender = dropDownItems[0];
+    student.dateOfBirth = inputs[3];
+    student.socialID = inputs[4];
+    student.className = dropDownItems[1];
+
     if (checkStudentIDExists(allData.allStudents, student.id)) {
         throw std::invalid_argument("This student already exists, please try again!");
     }
 
-    student.firstName = firstName;
-    student.lastName = lastName;
-    student.gender = gender;
-    student.dateOfBirth = dateOfBirth;
-    student.socialID = socialID;
-    student.className = className;
-
     validateStudent(allData.allClasses, student);
-    saveCreatedStudent(student);
+    saveStudent(student);
     createStudentAccount(student);
 }

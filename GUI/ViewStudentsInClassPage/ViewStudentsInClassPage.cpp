@@ -1,5 +1,3 @@
-#include <algorithm>
-
 #include "../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
 #include "../../Function/OperatorOverload/OperatorOverload.h"
 #include "../TablePage/TablePage.h"

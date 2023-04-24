@@ -1,9 +1,7 @@
 #include "InputAndValidateStudent.h"
 
 #include "../../Check/CheckClass/CheckClass.h"
-#include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../DateFunction/DateFunction.h"
-// #include "../../Input/Input.h"
 
 void inputStudent(Student &student) {
     std::cout << "Please fill the information in every box\n";

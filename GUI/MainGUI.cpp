@@ -3,12 +3,12 @@
 #include "MainGUI.h"
 
 #include "../Function/CurrentSemester/CurrentSemester.h"
-#include "AddStudentToClassPage/AddStudentToClassPage.h"
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
 #include "Create/CreateCoursePage/CreateCoursePage.h"
 #include "Create/CreateSchoolYearPage/CreateSchoolYearPage.h"
 #include "Create/CreateSemesterPage/CreateSemesterPage.h"
+#include "Create/CreateStudentPage/CreateStudentPage.h"
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
@@ -46,7 +46,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        addStudentToClassPage();
+        createStudentPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {
