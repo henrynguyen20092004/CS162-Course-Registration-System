@@ -24,10 +24,12 @@ Semester currentSemester = getCurrentSemester();
 
 void SetDefaultStyle() {
     GuiSetStyle(DEFAULT, TEXT_SIZE, DEFAULT_TEXT_SIZE);
+    GuiSetStyle(DEFAULT, BACKGROUND_COLOR, 0xa5d7e8ff);
     GuiSetStyle(DROPDOWNBOX, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
     GuiSetStyle(DROPDOWNBOX, DROPDOWN_ITEMS_SPACING, 0);
     GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, 0x063970ff);
     GuiSetStyle(BUTTON, TEXT_COLOR_NORMAL, 0xffffffff);
+    GuiSetStyle(LISTVIEW, SCROLLBAR_WIDTH, 18);
     GuiSetFont(textFont);
 }
 

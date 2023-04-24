@@ -27,6 +27,7 @@ void Page::mainLoop() {
         if (currentUser.username != "") {
             drawMenu(menuDropDown, menuDropDownItems);
         }
+
         EndDrawing();
     }
 }

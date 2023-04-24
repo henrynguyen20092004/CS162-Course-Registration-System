@@ -68,7 +68,7 @@ void drawAdminMenu() {
 }
 
 void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems) {
-    DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, SCREEN_HEIGHT / 6.4f}, SECONDARY_COLOR);
+    DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, MENU_HEIGHT}, SECONDARY_COLOR);
     DrawTextureV(defaultAvatar, AVATAR_POSITION, WHITE);
 
     menuDropDown.drawDropDown(menuDropDownItems, WHITE);

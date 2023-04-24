@@ -1,7 +1,5 @@
 #include "Table.h"
 
-#include <algorithm>
-
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
 
@@ -47,18 +45,25 @@ Table::Table(
 
 void Table::drawTable() {
     Vector2 textPosition = initialTextPosition, cellPos = tablePos;
+    float backgroundHeight = tableHeight + DEFAULT_PADDING.y * 2;
 
+    GuiScrollPanel(
+        {0, MENU_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - MENU_HEIGHT}, nullptr,
+        {tablePos.x, tablePos.y, tableWidth,
+         backgroundHeight + DEFAULT_ITEM_MARGIN.y * 2},
+        &scroll
+    );
     DrawRectangleV(
-        {tablePos.x - DEFAULT_PADDING.x, tablePos.y - DEFAULT_PADDING.y},
-        {tableWidth + DEFAULT_PADDING.x * 2, tableHeight + DEFAULT_PADDING.y * 2}, WHITE
+        {tablePos.x - DEFAULT_PADDING.x, tablePos.y - DEFAULT_PADDING.y + scroll.y},
+        {tableWidth + DEFAULT_PADDING.x * 2, backgroundHeight}, WHITE
     );
     drawDefaultTitle(
         titleFont, tableTitle,
-        {getCenterX(measureTextWidth(titleFont, tableTitle)), tablePos.y}
+        {getCenterX(measureTextWidth(titleFont, tableTitle)), tablePos.y + scroll.y}
     );
 
     for (int j = 0; j < col; ++j) {
-        cellPos.y = tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y;
+        cellPos.y = tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y + scroll.y;
 
         if (j > 0) {
             cellPos.x += columnWidths[j - 1];
@@ -76,7 +81,7 @@ void Table::drawTable() {
     }
 
     for (int j = 0; j < col; ++j) {
-        textPosition.y = initialTextPosition.y;
+        textPosition.y = initialTextPosition.y + scroll.y;
 
         for (int i = 0; i < row; ++i) {
             float textSize = measureTextWidth(textFont, tableData[i][j].c_str());
@@ -86,12 +91,11 @@ void Table::drawTable() {
             }
 
             drawDefaultText(textFont, tableData[i][j].c_str(), textPosition, BLACK);
+            textPosition.y += rowHeights[i];
 
             if (j < 2) {
                 textPosition.x -= (columnWidths[j] - textSize) / 2 - TABLE_CELL_PADDING_X;
             }
-
-            textPosition.y += rowHeights[i];
         }
 
         textPosition.x += columnWidths[j];

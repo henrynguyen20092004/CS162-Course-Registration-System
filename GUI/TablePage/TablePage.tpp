@@ -45,7 +45,7 @@ void TablePage<T>::generateRowHeights() {
         }
 
         rowHeights[i] =
-            TABLE_ROW_HEIGHT + DEFAULT_TEXT_SIZE * (maxNumberOfLines * 1.5 - 0.5);
+            TABLE_CELL_HEIGHT + DEFAULT_TEXT_SIZE * (maxNumberOfLines * 1.5 - 0.5);
     }
 }
 
