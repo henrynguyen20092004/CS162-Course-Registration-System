@@ -4,7 +4,7 @@
 #include "../../Function/OperatorOverload/OperatorOverload.h"
 #include "../TablePage/TablePage.h"
 
-class ViewStudentsInClassPage : public TablePage {
+class ViewStudentsInClassPage : public TablePage<Student> {
    private:
     void initColumns() override;
     void convertLinkedListToData() override;
@@ -21,11 +21,8 @@ void ViewStudentsInClassPage::initColumns() {
 }
 
 void ViewStudentsInClassPage::convertLinkedListToData() {
-    int arraySize = row - 1;
-    Node<Student>* allStudentsInClass = (Node<Student>*)dataLinkedList;
-    Student* studentsInClassArray = new Student[arraySize];
-    transformLinkedListToArray(allStudentsInClass, studentsInClassArray, arraySize);
-    std::sort(studentsInClassArray, studentsInClassArray + arraySize);
+    Student* studentsInClassArray;
+    createAndSortDataArray(studentsInClassArray);
 
     for (int j = 0; j < col; ++j) {
         tableData[0][j] = columnTitle[j];
@@ -41,7 +38,7 @@ void ViewStudentsInClassPage::convertLinkedListToData() {
         tableData[i][6] = studentsInClassArray[i - 1].socialID;
     }
 
-    deleteLinkedList(allStudentsInClass);
+    deleteLinkedList(dataLinkedList);
     delete[] studentsInClassArray;
 }
 

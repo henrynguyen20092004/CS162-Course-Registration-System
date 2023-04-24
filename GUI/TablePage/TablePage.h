@@ -4,6 +4,7 @@
 #include "../Page/Page.h"
 #include "../Table/Table.h"
 
+template <typename T>
 class TablePage : public Page {
    private:
     virtual void initColumns() {}
@@ -13,27 +14,17 @@ class TablePage : public Page {
    protected:
     int row, col;
     float *columnWidths;
-    void *dataLinkedList;
+    Node<T> *dataLinkedList;
     std::string **tableData, *columnTitle, title;
     Table table;
     void initComponents() override;
+    void createAndSortDataArray(T *&dataArray);
 
    public:
-    template <typename T>
-    TablePage(const std::string &title, int col, Node<T> *dataLinkedList)
-        : title(title),
-          col(col),
-          columnTitle(nullptr),
-          columnWidths(nullptr),
-          dataLinkedList(dataLinkedList) {
-        row = getLinkedListSize(dataLinkedList) + 1;
-        tableData = new std::string *[row];
-
-        for (int i = 0; i < row; ++i) {
-            tableData[i] = new std::string[col];
-        }
-    }
+    TablePage(const std::string &title, int col, Node<T> *dataLinkedList);
     ~TablePage();
 };
+
+#include "TablePage.tpp"
 
 #endif
