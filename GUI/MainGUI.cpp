@@ -49,7 +49,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        importScoreboardPage();
+        importStudentsInCoursePage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

@@ -87,10 +87,8 @@ void checkImportedStudentInCourse(
 }
 
 void importStudentsInCourse(char **inputs, char **dropDownItems) {
-    std::string importLine, _;
-    bool courseExists;
+    std::string importLine, _, importPath = inputs[1];
     int curLine = 1;
-    Course course;
     Student student;
     StudentCourse studentCourse;
     Node<User> *newUsers = nullptr, *curUser;
@@ -107,7 +105,7 @@ void importStudentsInCourse(char **inputs, char **dropDownItems) {
     delete[] courseIDAndClassName;
 
     std::ifstream fin;
-    readFile(fin, inputs[0]);
+    readFile(fin, importPath);
     getline(fin, _);
 
     while (fin.good()) {
@@ -144,16 +142,11 @@ void importStudentsInCourse(char **inputs, char **dropDownItems) {
     }
     fin.close();
 
-    std::string allCSVErrors = "File imported successfully!\n" +
-                               showCSVErrorLines(duplicateErrors, invalidErrors);
     addNewItemsToOldList(allData.allStudents, newStudents);
     addNewItemsToOldList(allData.allStudentCourses, newStudentCourses);
     addNewItemsToOldList(allData.allUsers, newUsers);
     saveAllUsers(allData.allUsers);
     saveAllStudents(allData.allStudents);
     saveAllStudentCourses(allData.allStudentCourses);
-    deleteLinkedList(duplicateErrors);
-    deleteLinkedList(invalidErrors);
-    std::cout << "Student successfully imported to course!\n";
-    throw std::invalid_argument(allCSVErrors);
+    showCSVErrorLines(duplicateErrors, invalidErrors);
 }

@@ -1,41 +1,27 @@
 #include "ImportStudentsInCoursePage.h"
 
-#include "../../../Function/DownloadTemplateCSV/DownloadTemplateCSV.h"
+#include "../../../Function/ImportCSV/ImportScoreboard/ImportScoreboard.h"
 #include "../../../Function/ImportCSV/ImportStudentsInCourse/ImportStudentInCourse.h"
 #include "../../../Struct/Data.h"
-#include "../../FormPage/FormPage.h"
+#include "../ImportCSVPage.h"
 
-class ImportStudentsInCoursePage : public FormPage {
+class ImportStudentsInCoursePage : public ImportCSVPage {
    private:
-    void initComponents() override;
-    void submitCallBack() override;
+    void initInputs() override;
 
    public:
-    using FormPage::FormPage;
+    using ImportCSVPage::ImportCSVPage;
 };
 
-void ImportStudentsInCoursePage::initComponents() {
-    FormPage::initComponents();
-    dropDowns[0] = DropDown(
-        "What do you want to do?",
-        "Download template CSV;Import CSV of students in course", inputPos[0], inputWidth
-    );
-    dropDowns[1] = DropDown("Course name", allData.allCourses, inputPos[1], inputWidth);
-    dropDowns[1].addOption("No option");
-    textInputs[0] = TextInput("Export path", inputs[0], inputPos[2], inputWidth);
-}
-
-void ImportStudentsInCoursePage::submitCallBack() {
-    downloadPrompt(
-        "StudentsInCourse.csv", importStudentsInCourse, dropDowns[0].activeItemIndex,
-        inputs, dropDownItems
-    );
+void ImportStudentsInCoursePage::initInputs() {
+    ImportCSVPage::initInputs();
+    dropDowns[1] = DropDown("Course name", allData.allCourses, inputPos[2], inputWidth);
 }
 
 void importStudentsInCoursePage() {
     ImportStudentsInCoursePage importStudentsInCoursePage(
-        "Import students in a course", 1, 2, 1,
-        {SCREEN_WIDTH / 2.5f, SCREEN_HEIGHT / 1.5f}
+        "Import students in a course", "StudentsInCourse.csv",
+        {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.5f}, &importStudentsInCourse
     );
 
     importStudentsInCoursePage.mainLoop();

@@ -5,6 +5,6 @@
 
 #include "../../Struct/LinkedList.h"
 
-std::string showCSVErrorLines(Node<int> *duplicateErrors, Node<int> *invalidErrors);
+void showCSVErrorLines(Node<int> *duplicateErrors, Node<int> *invalidErrors);
 
 #endif
