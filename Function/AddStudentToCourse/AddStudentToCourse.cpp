@@ -18,31 +18,26 @@ void saveStudentToCourse(const StudentCourse &studentCourse) {
 
 void addStudentToCourse(char **inputs, char **dropDownItems) {
     StudentCourse studentCourse;
+    studentCourse.studentID = inputs[0];
+
     std::string *courseIDAndClassName = new std::string[2];
+    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
+    studentCourse.courseID = courseIDAndClassName[0];
+    studentCourse.className = courseIDAndClassName[1];
+    delete[] courseIDAndClassName;
 
-    try {
-        splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
-        studentCourse.courseID = courseIDAndClassName[0];
-        studentCourse.className = courseIDAndClassName[1];
-        studentCourse.studentID = inputs[0];
-
-        if (!checkStudentIDExists(allData.allStudents, studentCourse.studentID)) {
-            throw std::invalid_argument("This student does not exist, please try again!");
-        }
-
-        if (checkStudentInCourse(
-                allData.allStudentCourses, studentCourse.studentID,
-                studentCourse.courseID, studentCourse.className
-            )) {
-            throw std::invalid_argument(
-                "This student is already in the course, please try again!"
-            );
-        }
-
-        saveStudentToCourse(studentCourse);
-        delete[] courseIDAndClassName;
-    } catch (...) {
-        delete[] courseIDAndClassName;
-        throw;
+    if (!checkStudentIDExists(allData.allStudents, studentCourse.studentID)) {
+        throw std::invalid_argument("This student does not exist, please try again!");
     }
+
+    if (checkStudentInCourse(
+            allData.allStudentCourses, studentCourse.studentID, studentCourse.courseID,
+            studentCourse.className
+        )) {
+        throw std::invalid_argument(
+            "This student is already in the course, please try again!"
+        );
+    }
+
+    saveStudentToCourse(studentCourse);
 }

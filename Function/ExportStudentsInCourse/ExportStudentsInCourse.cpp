@@ -29,6 +29,7 @@ void exportStudentsInCourse(char **inputs, char **dropDownItems) {
     Course course;
     course.id = courseIDAndClassName[0];
     course.className = courseIDAndClassName[1];
+    delete[] courseIDAndClassName;
     Node<Student> *allStudentsInCourse = getAllStudentsInCourse(course);
 
     if (!allStudentsInCourse) {
@@ -50,5 +51,4 @@ void exportStudentsInCourse(char **inputs, char **dropDownItems) {
     writeFile(fout, exportPath);
     sortAndOutputStudents(fout, allStudentsInCourse, &exportStudentsToFile);
     fout.close();
-    delete[] courseIDAndClassName;
 }

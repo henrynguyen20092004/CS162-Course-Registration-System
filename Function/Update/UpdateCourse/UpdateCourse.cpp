@@ -9,21 +9,16 @@
 void inputChanges(Course& course, char** inputs, char** dropDownItems) {
     std::string* courseIDAndClassName = new std::string[2];
     splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
+    course.id = courseIDAndClassName[0];
+    course.className = courseIDAndClassName[1];
+    delete[] courseIDAndClassName;
 
-    try {
-        course.id = courseIDAndClassName[0];
-        course.className = courseIDAndClassName[1];
-        course.name = inputs[0];
-        course.teacherName = checkAndConvertToName(inputs[1], "teacher name");
-        course.credits = checkAndConvertToInt(inputs[2], "credit");
-        course.maxStudent = checkAndConvertToInt(inputs[3], "number of students");
-        course.dayOfWeek = dropDownItems[1];
-        course.sessionNumber = stoi(std::string(dropDownItems[2]));
-        delete[] courseIDAndClassName;
-    } catch (...) {
-        delete[] courseIDAndClassName;
-        throw;
-    }
+    course.name = inputs[0];
+    course.teacherName = checkAndConvertToName(inputs[1], "teacher name");
+    course.credits = checkAndConvertToInt(inputs[2], "credit");
+    course.maxStudent = checkAndConvertToInt(inputs[3], "number of students");
+    course.dayOfWeek = dropDownItems[1];
+    course.sessionNumber = stoi(std::string(dropDownItems[2]));
 }
 
 void updateCourse(char** inputs, char** dropDownItems) {

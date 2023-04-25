@@ -22,7 +22,7 @@ class DropDown {
     DropDown(const char* label, Node<Semester>* itemList, Vector2 pos, float width);
     DropDown(const char* label, Node<Course>* itemList, Vector2 pos, float width);
     DropDown(const char* label, const char* itemList, Vector2 pos, float width);
-    void drawDropDown(
+    bool drawDropDown(
         char*& selectedItem, float scrollY = 0.0f, Color labelColor = NORMAL_TEXT_COLOR
     );
 };

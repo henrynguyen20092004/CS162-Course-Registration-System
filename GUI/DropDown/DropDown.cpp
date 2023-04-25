@@ -47,7 +47,7 @@ DropDown::DropDown(const char* label, const char* itemList, Vector2 pos, float w
       dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}),
       label(label) {}
 
-void DropDown::drawDropDown(char*& selectedItem, float scrollY, Color labelColor) {
+bool DropDown::drawDropDown(char*& selectedItem, float scrollY, Color labelColor) {
     drawDefaultText(
         textFont, label,
         {dropDownBox.x,
@@ -56,10 +56,10 @@ void DropDown::drawDropDown(char*& selectedItem, float scrollY, Color labelColor
     );
     Rectangle dropDownBoxWithScroll = dropDownBox;
     dropDownBoxWithScroll.y += scrollY;
+    bool dropDownClicked =
+        GuiDropdownBox(dropDownBoxWithScroll, items.c_str(), &activeItemIndex, editMode);
 
-    if (GuiDropdownBox(
-            dropDownBoxWithScroll, items.c_str(), &activeItemIndex, editMode
-        )) {
+    if (dropDownClicked) {
         editMode = !editMode;
         int itemsLength = items.size(), indexToGetSelectedItem = 0,
             currentStringIndex = 0;
@@ -74,7 +74,7 @@ void DropDown::drawDropDown(char*& selectedItem, float scrollY, Color labelColor
                 }
 
                 strcpy(selectedItem, subFromStart.substr(0, nextDelimiter).c_str());
-                return;
+                return dropDownClicked;
             }
 
             if (items[indexToGetSelectedItem] == ';') {
@@ -82,4 +82,6 @@ void DropDown::drawDropDown(char*& selectedItem, float scrollY, Color labelColor
             }
         }
     }
+
+    return dropDownClicked;
 }
