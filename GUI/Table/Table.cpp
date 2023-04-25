@@ -9,8 +9,7 @@ Table::Table() {}
 Table::Table(
     std::string** tableData, std::string* columnTitle, const char* tableTitle, int row,
     int col, int buttonCol, int headerButton, int* rowHeights, float* columnWidths,
-    float tableWidth, Command* columnButtonCommands, Command* headerButtonCommands,
-    Vector2 tablePos, Button** columnButtons, Button* headerButtons
+    float tableWidth, Vector2 tablePos
 )
     : tableData(tableData),
       columnTitle(columnTitle),
@@ -22,11 +21,7 @@ Table::Table(
       rowHeights(rowHeights),
       columnWidths(columnWidths),
       tableWidth(tableWidth),
-      tablePos(tablePos),
-      columnButtons(columnButtons),
-      headerButtons(headerButtons),
-      columnButtonCommands(columnButtonCommands),
-      headerButtonCommands(headerButtonCommands) {
+      tablePos(tablePos) {
     tableHeight = DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y;
     tableOffsetY = (headerButton > 0) * (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y);
 
@@ -41,12 +36,12 @@ Table::Table(
             (rowHeights[0] - DEFAULT_TEXT_SIZE) / 2.0f + tableOffsetY};
 }
 
-void Table::drawGrid() {
+void Table::drawGrid(float scrollY) {
     Vector2 cellPos = tablePos;
 
     for (int j = 0; j < col + buttonCol; ++j) {
         cellPos.y = tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y +
-                    tableOffsetY + scroll.y;
+                    tableOffsetY + scrollY;
 
         if (j > 0) {
             cellPos.x += columnWidths[j - 1];
@@ -64,11 +59,11 @@ void Table::drawGrid() {
     }
 }
 
-void Table::drawText() {
+void Table::drawText(float scrollY) {
     Vector2 textPos = initialTextPos;
 
     for (int j = 0; j < col + buttonCol; ++j) {
-        textPos.y = initialTextPos.y + scroll.y;
+        textPos.y = initialTextPos.y + scrollY;
 
         for (int i = 0; i < row; ++i) {
             float textSize = measureTextWidth(textFont, tableData[i][j].c_str());
@@ -89,41 +84,7 @@ void Table::drawText() {
     }
 }
 
-void Table::drawButton(bool& stopLoop) {
-    for (int i = 0; i < headerButton; ++i) {
-        if (headerButtons[i].drawButton(scroll.y)) {
-            commandChoice = headerButtonCommands[i];
-            stopLoop = true;
-        }
-    }
-
-    for (int i = 0; i < 3; ++i) {
-        GuiSetStyle(BUTTON, i * 3, 0xffffffff);
-        GuiSetStyle(BUTTON, i * 3 + 1, 0xffffffff);
-    }
-
-    GuiSetStyle(BUTTON, TEXT_COLOR_NORMAL, 0x0b182fff);
-
-    for (int i = 0; i < row - 1; ++i) {
-        for (int j = 0; j < buttonCol; ++j) {
-            if (columnButtons[i][j].drawButton(scroll.y)) {
-                renderArgs = tableData[i + 1][1];
-                commandChoice = columnButtonCommands[j];
-                stopLoop = true;
-            }
-        }
-    }
-
-    GuiSetStyle(BUTTON, BORDER_COLOR_NORMAL, 0x838383ff);
-    GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, 0x063970ff);
-    GuiSetStyle(BUTTON, TEXT_COLOR_NORMAL, 0xffffffff);
-    GuiSetStyle(BUTTON, BORDER_COLOR_FOCUSED, 0x5bb2d9ff);
-    GuiSetStyle(BUTTON, BASE_COLOR_FOCUSED, 0xc9effeff);
-    GuiSetStyle(BUTTON, BORDER_COLOR_PRESSED, 0x0492c7ff);
-    GuiSetStyle(BUTTON, BASE_COLOR_PRESSED, 0x97e8ffff);
-}
-
-void Table::drawTable(bool& stopLoop) {
+void Table::drawTable(Vector2& scroll) {
     drawScrollBar(
         {0, MENU_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - MENU_HEIGHT}, nullptr,
         {tablePos.x, tablePos.y, tableWidth,
@@ -138,7 +99,6 @@ void Table::drawTable(bool& stopLoop) {
         titleFont, tableTitle,
         {getCenterX(measureTextWidth(titleFont, tableTitle)), tablePos.y + scroll.y}
     );
-    drawText();
-    drawButton(stopLoop);
-    drawGrid();
+    drawText(scroll.y);
+    drawGrid(scroll.y);
 }

@@ -3,60 +3,48 @@
 #include "../../Struct/Data.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
+#include "../OperatorOverload/OperatorOverload.h"
 #include "../Save/SaveCourse/SaveCourse.h"
 
 void removeStudent(
     Node<StudentCourse> *allStudentCourses, const StudentCourse &studentCourse
 ) {
-    Node<StudentCourse> *cur = allStudentCourses, *tmpStudentCourse;
+    Node<StudentCourse> *tmpStudentCourse;
 
-    for (; cur->next; cur = cur->next) {
-        tmpStudentCourse = cur->next;
+    for (; allStudentCourses->next; allStudentCourses = allStudentCourses->next) {
+        tmpStudentCourse = allStudentCourses->next;
 
-        if (tmpStudentCourse->data.courseID == studentCourse.courseID &&
-            tmpStudentCourse->data.studentID == studentCourse.studentID &&
-            tmpStudentCourse->data.className == studentCourse.className) {
-            cur->next = tmpStudentCourse->next;
+        if (tmpStudentCourse->data == studentCourse) {
+            allStudentCourses->next = tmpStudentCourse->next;
             delete tmpStudentCourse;
-            saveAllStudentCourses(allStudentCourses->next);
             return;
         }
     }
 }
 
-void removeStudentFromCourse() {
-    if (!allData.allStudentCourses) {
-        std::cout << "There's no student enrolling in a course right now!\n";
-        return;
-    }
+void removeStudentFromCourse(const std::string &studentID, const Course &course) {
+    StudentCourse studentCourse;
+    studentCourse.studentID = studentID;
+    studentCourse.courseID = course.id;
+    studentCourse.className = course.className;
 
     Node<StudentCourse> *allStudentCourses = new Node(allData.allStudentCourses);
-    StudentCourse studentCourse;
-    bool studentExist = false;
 
-    do {
-        try {
-            inputStudentCourse(studentCourse);
-            validateStudentCourse(
-                allData.allStudents, allData.allClasses, allData.allCourses, studentCourse
-            );
+    validateStudentCourse(
+        allData.allStudents, allData.allClasses, allData.allCourses, studentCourse
+    );
 
-            if (!checkStudentInCourse(
-                    allStudentCourses, studentCourse.studentID, studentCourse.courseID,
-                    studentCourse.className
-                )) {
-                std::cout << "This student isn't in the course, please try again!\n";
-                continue;
-            }
+    if (!checkStudentInCourse(
+            allStudentCourses, studentCourse.studentID, studentCourse.courseID,
+            studentCourse.className
+        )) {
+        throw std::invalid_argument(
+            "The student doesn't exist in course, please try again!"
+        );
+    }
 
-            removeStudent(allStudentCourses, studentCourse);
-            studentExist = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
-        }
-    } while (!studentExist);
-
+    removeStudent(allStudentCourses, studentCourse);
+    saveAllStudentCourses(allStudentCourses->next);
     allData.allStudentCourses = allStudentCourses->next;
     delete allStudentCourses;
-    std::cout << "Student successfully removed!\n";
 }

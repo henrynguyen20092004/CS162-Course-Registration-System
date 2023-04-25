@@ -157,10 +157,6 @@ void selectPage() {
             updateStudentResultPage();
             break;
 
-        case REMOVE_STUDENT_FROM_COURSE:
-            temp.mainLoop();
-            break;
-
         case DELETE_COURSE:
             temp.mainLoop();
             break;

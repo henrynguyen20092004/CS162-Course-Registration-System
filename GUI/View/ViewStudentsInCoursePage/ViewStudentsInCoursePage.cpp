@@ -2,6 +2,7 @@
 
 #include "../../../Function/GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../../Function/RemoveStudentFromCourse/RemoveStudentFromCourse.h"
 #include "../../../Function/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 #include "../../TablePage/TablePage.h"
 
@@ -10,20 +11,33 @@ class ViewStudentsInCoursePage : public TablePage<Student> {
     void initColumns() override;
     void initButtons() override;
     void convertLinkedListToData() override;
+    void drawColumnButtons() override;
 
    public:
     using TablePage::TablePage;
+    ViewStudentsInCoursePage(const std::string& course, const Course& curCourse);
+    Course curCourse;
 };
+
+ViewStudentsInCoursePage::ViewStudentsInCoursePage(
+    const std::string& course, const Course& curCourse
+)
+    : TablePage(
+          "All student in course " + course, 7, 1, 2, getAllStudentsInCourse(curCourse)
+      ),
+      curCourse(curCourse) {}
 
 void ViewStudentsInCoursePage::initColumns() {
     columnTitle =
         new std::string[col]{"No",     "Student ID",    "First Name", "Last Name",
                              "Gender", "Date of Birth", "Social ID"};
-    columnWidths = new float[col]{50.0f, 200.0f, 120.0f, 330.0f, 80.0f, 180.0f, 150.0f};
+    columnWidths = new float[col + buttonCol]{
+        50.0f, 200.0f, 120.0f, 330.0f, 80.0f, 180.0f, 150.0f, TABLE_BUTTON_CELL_WIDTH};
 }
 void ViewStudentsInCoursePage::initButtons() {
     headerButtonTitles[0] = "Import CSV of students";
     headerButtonTitles[1] = "Export CSV of students";
+    firstRowButtonTitles[0] = "Remove";
     headerButtonCommands =
         new Command[headerButton]{IMPORT_STUDENTS_IN_COURSE, EXPORT_STUDENTS_IN_COURSE};
 }
@@ -50,6 +64,15 @@ void ViewStudentsInCoursePage::convertLinkedListToData() {
     delete[] studentInCourseArray;
 }
 
+void ViewStudentsInCoursePage::drawColumnButtons() {
+    for (int i = 0; i < row - 1; ++i) {
+        if (columnButtons[i][0].drawButton(scroll.y)) {
+            removeStudentFromCourse(tableData[i + 1][1], curCourse);
+            stopLoop = true;
+        }
+    }
+}
+
 void viewStudentsInCoursePage(const std::string& course) {
     std::string* courseIDAndClassName = new std::string[2];
     splitCourseToIDAndClassName(courseIDAndClassName, course);
@@ -58,8 +81,6 @@ void viewStudentsInCoursePage(const std::string& course) {
     curCourse.className = courseIDAndClassName[1];
     delete[] courseIDAndClassName;
 
-    ViewStudentsInCoursePage viewStudentsInCoursePage(
-        "All student in course " + course, 7, 0, 2, getAllStudentsInCourse(curCourse)
-    );
+    ViewStudentsInCoursePage viewStudentsInCoursePage(course, curCourse);
     viewStudentsInCoursePage.mainLoop();
 }
