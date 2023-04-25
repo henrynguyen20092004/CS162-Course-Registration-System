@@ -13,7 +13,7 @@
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveStudent/SaveStudent.h"
 #include "../../Save/SaveUser/SaveUser.h"
-#include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
+// #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
 
 void getStudentInClassFromLine(Student &student, std::string importLine) {
@@ -114,7 +114,7 @@ void importStudentsInClass() {
         }
     } while (!validPath);
 
-    showCSVErrorLines(duplicateErrors, invalidErrors);
+    // showCSVErrorLines(duplicateErrors, invalidErrors);
     addNewItemsToOldList(allData.allStudents, newStudents);
     addNewItemsToOldList(allData.allUsers, newUsers);
     saveAllUsers(allData.allUsers);
