@@ -8,7 +8,7 @@
 struct Score {
     StudentCourse studentCourse;
     std::string studentFullName;
-    double otherMark, midtermMark, finalMark, totalMark;
+    double otherMark = INT_MIN, midtermMark, finalMark, totalMark;
 };
 
 #endif

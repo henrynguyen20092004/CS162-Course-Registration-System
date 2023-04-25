@@ -18,8 +18,7 @@ class ImportCSVPage : public FormPage {
    public:
     using FormPage::FormPage;
     ImportCSVPage(
-        const char *title, const char *CSVName, Vector2 mainBoxSize,
-        void (*importCallBack)(char **, char **)
+        const char *title, const char *CSVName, void (*importCallBack)(char **, char **)
     );
 };
 

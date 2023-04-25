@@ -150,7 +150,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 23: {
-            updateStudentResult();
+            // updateStudentResult();
             break;
         }
 

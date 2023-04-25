@@ -5,8 +5,6 @@
 
 struct User {
     std::string username, password;
-
-    User() : username("") {}
 };
 
 #endif

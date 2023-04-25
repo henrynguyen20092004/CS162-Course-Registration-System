@@ -17,6 +17,7 @@
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
+#include "Update/UpdateStudentResultPage/UpdateStudentResultPage.h"
 #include "ViewClassesPage/ViewClassesPage.h"
 #include "ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 
@@ -50,7 +51,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        importStudentsInCoursePage();
+        updateStudentResultPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {
