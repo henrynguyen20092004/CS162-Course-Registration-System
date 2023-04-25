@@ -15,5 +15,9 @@ bool operator==(
 bool operator<(const Student &firstStudent, const Student &secondStudent);
 bool operator<(const Course &firstCourse, const Course &secondCourse);
 bool operator<(const Semester &firstSemester, const Semester &secondSemester);
+bool operator<(
+    const StudentCourse &firstStudentCourse, const StudentCourse &secondStudentCourse
+);
+bool operator<(const Score &firstScore, const Score &secondScore);
 
 #endif

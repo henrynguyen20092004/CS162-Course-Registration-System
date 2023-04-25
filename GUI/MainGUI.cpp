@@ -28,6 +28,7 @@
 #include "View/ViewSemestersPage/ViewSemestersPage.h"
 #include "View/ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 #include "View/ViewStudentsInCoursePage/ViewStudentsInCoursePage.h"
+#include "ViewCourseScoreboardPage/ViewCourseScoreboardPage.h"
 
 std::string renderArgs;
 Command commandChoice;
