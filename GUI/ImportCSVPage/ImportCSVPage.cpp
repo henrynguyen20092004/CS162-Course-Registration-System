@@ -1,7 +1,7 @@
 #include "ImportCSVPage.h"
 
 #include "../../Function/DownloadTemplateCSV/DownloadTemplateCSV.h"
-#include "../DrawFileDialog/DrawFileDialog.h"
+#include "../OpenDialog/OpenDialog.h"
 
 ImportCSVPage::ImportCSVPage(
     const char *title, const char *CSVName, Vector2 mainBoxSize,
@@ -12,26 +12,29 @@ ImportCSVPage::ImportCSVPage(
       importCallBack(importCallBack) {}
 
 void ImportCSVPage::initInputs() {
-    float openFileButtonWidth = 120.0f;
-
+    float browseButtonWidth = 140.0f,
+          textInputWidth = inputWidth - DEFAULT_ITEM_MARGIN.x - browseButtonWidth,
+          browseButtonPosX = inputPos[1].x + inputWidth - browseButtonWidth;
     dropDowns[0] = DropDown(
-        "What do you want to do?", "Download a template;Continue importing the CSV",
+        "What do you want to do?", "Download the template;Continue importing the CSV",
         inputPos[0], inputWidth
     );
-    textInputs[0] = TextInput("Download folder path", inputs[0], inputPos[1], inputWidth);
-    textInputs[1] = TextInput(
-        "CSV path", inputs[1], inputPos[1],
-        inputWidth - DEFAULT_ITEM_MARGIN.x - openFileButtonWidth
-    );
-    openFileButton = Button(
-        "Browse file", inputPos[1].x + inputWidth - openFileButtonWidth, inputPos[1].y,
-        openFileButtonWidth
-    );
+    textInputs[0] =
+        TextInput("Download folder path", inputs[0], inputPos[1], textInputWidth);
+    textInputs[1] = TextInput("CSV path", inputs[1], inputPos[1], textInputWidth);
+    browseFolderButton =
+        Button("Select folder", browseButtonPosX, inputPos[1].y, browseButtonWidth);
+    browseFileButton =
+        Button("Select file", browseButtonPosX, inputPos[1].y, browseButtonWidth);
 }
 
 void ImportCSVPage::drawInputs() {
     switch (dropDowns[0].activeItemIndex) {
         case 0: {
+            if (browseFolderButton.drawButton(scroll.y)) {
+                openFolderDialog(inputs[0]);
+            }
+
             if (textInputs[0].drawTextInput(scroll.y)) {
                 submit();
             }
@@ -39,8 +42,8 @@ void ImportCSVPage::drawInputs() {
             break;
         }
         case 1: {
-            if (openFileButton.drawButton(scroll.y)) {
-                openFileDialog(inputs[1], "CSV File\0*.csv");
+            if (browseFileButton.drawButton(scroll.y)) {
+                openFileDialog(inputs[1]);
             }
 
             if (textInputs[1].drawTextInput(scroll.y)) {
