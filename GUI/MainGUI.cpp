@@ -12,6 +12,7 @@
 #include "ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
+#include "ImportCSVPage/ImportScoreboardPage/ImportScoreboardPage.h"
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
@@ -47,7 +48,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        updateCoursePage();
+        importScoreboardPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

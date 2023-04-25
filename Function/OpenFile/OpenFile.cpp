@@ -15,7 +15,7 @@ void writeFile(
 
     if (!fout.is_open()) {
         throw std::runtime_error(
-            "Illegal path, either the parent folder doesn't exist or it's inaccessible!"
+            "Illegal path, the parent folder doesn't exist or it's inaccessible!"
         );
     }
 }

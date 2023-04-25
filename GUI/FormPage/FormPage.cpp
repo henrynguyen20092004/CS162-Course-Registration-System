@@ -8,22 +8,22 @@
 
 FormPage::FormPage(
     const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
-    Vector2 mainBoxSize, const char *buttonText, Vector2 padding
+    Vector2 mainBoxSize, const char *buttonText
 )
     : title(title),
       numberOfTextInputs(numberOfTextInputs),
       numberOfDropDowns(numberOfDropDowns),
       columns(columns),
       mainBoxSize(mainBoxSize),
-      padding(padding),
       mainBoxPosition(
           {getCenterX(mainBoxSize.x), getCenterY(mainBoxSize.y) + PAGE_Y_OFFSET}
       ),
       buttonText(buttonText) {
     inputWidth =
-        (mainBoxSize.x - padding.x * 2 - DEFAULT_ITEM_MARGIN.x * (columns - 1)) / columns;
-    childrenPosX = mainBoxPosition.x + padding.x;
-    firstInputPosY = mainBoxPosition.y + padding.y + DEFAULT_TITLE_SIZE +
+        (mainBoxSize.x - DEFAULT_PADDING.x * 2 - DEFAULT_ITEM_MARGIN.x * (columns - 1)) /
+        columns;
+    childrenPosX = mainBoxPosition.x + DEFAULT_PADDING.x;
+    firstInputPosY = mainBoxPosition.y + DEFAULT_PADDING.y + DEFAULT_TITLE_SIZE +
                      DEFAULT_TEXT_MARGIN.y + DEFAULT_TEXT_SIZE + DEFAULT_ITEM_MARGIN.y;
     inputs = new char *[numberOfTextInputs];
     textInputs = new TextInput[numberOfTextInputs];
@@ -59,7 +59,8 @@ Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
 void FormPage::initComponents() {
     submitButton = Button(
         buttonText, getCenterX(inputWidth),
-        mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT, inputWidth
+        mainBoxPosition.y + mainBoxSize.y - DEFAULT_PADDING.y - DEFAULT_ITEM_HEIGHT,
+        inputWidth
     );
     initInputs();
 
@@ -87,15 +88,20 @@ void FormPage::drawPage() {
 
     DrawRectangleV({mainBoxPosition.x, mainBoxPosition.y + scroll.y}, mainBoxSize, WHITE);
     drawDefaultTitle(
-        titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y + scroll.y}
+        titleFont, title, {childrenPosX, mainBoxPosition.y + DEFAULT_PADDING.y + scroll.y}
     );
     drawErrorText();
     dropDownLockGUI();
-    passwordHide();
 
     if (submitButton.drawButton(scroll.y)) {
         submit();
     }
+
+    drawInputs();
+}
+
+void FormPage::drawInputs() {
+    passwordHide();
 
     for (int i = 0; i < numberOfTextInputs; ++i) {
         if (textInputs[i].drawTextInput(scroll.y)) {
@@ -116,9 +122,9 @@ void FormPage::drawErrorText() {
     errorText = clipText(textFont, errorText.c_str(), inputWidth);
     int numberOfLines = std::count(errorText.begin(), errorText.end(), '\n') + 1;
 
-    float posY = mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT -
-                 DEFAULT_TEXT_SIZE * (numberOfLines * 1.5 - 0.5) - DEFAULT_TEXT_MARGIN.y +
-                 scroll.y;
+    float posY = mainBoxPosition.y + mainBoxSize.y - DEFAULT_PADDING.y -
+                 DEFAULT_ITEM_HEIGHT - DEFAULT_TEXT_SIZE * (numberOfLines * 1.5 - 0.5) -
+                 DEFAULT_TEXT_MARGIN.y + scroll.y;
 
     drawDefaultText(
         textFont, errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR

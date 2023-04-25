@@ -16,6 +16,4 @@ void readSemester(std::ifstream &fin, Semester &semester) {
     semester.number = stoi(semesterNumber);
 }
 
-Node<Semester> *getAllSemesters() {
-    return getAll("Data/Semester.txt", readSemester);
-}
+Node<Semester> *getAllSemesters() { return getAll("Data/Semester.txt", readSemester); }

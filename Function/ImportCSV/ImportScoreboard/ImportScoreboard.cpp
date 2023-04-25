@@ -7,11 +7,12 @@
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
-// #include "../../Input/Input.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveScore/SaveScore.h"
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
+#include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void getScoreFromLine(Score &score, const std::string &importLine) {
     std::string _;
@@ -19,10 +20,14 @@ void getScoreFromLine(Score &score, const std::string &importLine) {
     getline(importStream, _, ',');
     getline(importStream, score.studentCourse.studentID, ',');
     getline(importStream, score.studentFullName, ',');
-    // score.otherMark = scoreInput(importStream, ',');
-    // score.midtermMark = scoreInput(importStream, ',');
-    // score.finalMark = scoreInput(importStream, ',');
-    // score.totalMark = scoreInput(importStream);
+    getline(importStream, _, ',');
+    score.otherMark = checkAndConvertToScore(_, "other mark");
+    getline(importStream, _, ',');
+    score.midtermMark = checkAndConvertToScore(_, "midterm mark");
+    getline(importStream, _, ',');
+    score.finalMark = checkAndConvertToScore(_, "final mark");
+    getline(importStream, _);
+    score.totalMark = checkAndConvertToScore(_, "total mark");
 }
 
 void checkImportedScore(
@@ -60,81 +65,52 @@ void checkImportedScore(
     }
 }
 
-void importScoreboard() {
-    std::string importPath, importLine, _;
-    bool validCourse = false, validPath = false;
+void importScoreboard(char **inputs, char **dropDownItems) {
     int curLine = 1;
-    Course course;
     Score score;
     Node<Score> *newScores = nullptr, *cur;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
+    std::string *courseIDAndClassName = new std::string[2], importPath = inputs[1],
+                importLine, _;
 
-    do {
-        try {
-            // inputCourseIDAndClassName(course);
-            validateCourseIDAndClass(allData.allCourses, course, false);
-            validCourse = true;
-        } catch (std::exception &error) {
-            std::cout << error.what();
+    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[1]);
+    score.studentCourse.courseID = courseIDAndClassName[0];
+    score.studentCourse.className = courseIDAndClassName[1];
+    delete[] courseIDAndClassName;
+
+    std::ifstream fin;
+    readFile(fin, importPath);
+    getline(fin, _);
+
+    while (fin.good()) {
+        getline(fin, importLine);
+
+        if (!fin.good()) {
+            break;
         }
-    } while (!validCourse);
 
-    score.studentCourse.courseID = course.id;
-    score.studentCourse.className = course.className;
+        ++curLine;
 
-    do {
         try {
-            std::cout << "Please enter the path to the CSV: ";
-            getline(std::cin, importPath);
-
-            if (importPath == "") {
-                std::cout << "Please enter a path!\n";
-                continue;
+            getScoreFromLine(score, importLine);
+            checkImportedScore(score, allData.allStudents, allData.allScores);
+        } catch (std::invalid_argument &error) {
+            if (!strcmp(error.what(), "Duplicated record")) {
+                pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
+            } else {
+                pushToEndLinkedList(invalidErrors, curInvalidErrors, curLine);
             }
-
-            std::ifstream fin;
-            readFile(fin, importPath);
-            getline(fin, _);
-
-            while (fin.good()) {
-                getline(fin, importLine);
-
-                if (!fin.good()) {
-                    break;
-                }
-
-                ++curLine;
-
-                try {
-                    getScoreFromLine(score, importLine);
-                    checkImportedScore(score, allData.allStudents, allData.allScores);
-                } catch (std::invalid_argument &error) {
-                    if (!strcmp(error.what(), "Duplicated record")) {
-                        pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
-                    } else {
-                        pushToEndLinkedList(invalidErrors, curInvalidErrors, curLine);
-                    }
-
-                    continue;
-                } catch (...) {
-                    continue;
-                }
-
-                pushToEndLinkedList(newScores, cur, score);
-            }
-
-            validPath = true;
-            fin.close();
-        } catch (std::exception &error) {
-            std::cout << error.what();
+            continue;
+        } catch (...) {
+            continue;
         }
-    } while (!validPath);
 
-    showCSVErrorLines(duplicateErrors, invalidErrors);
+        pushToEndLinkedList(newScores, cur, score);
+    }
+
+    fin.close();
     addNewItemsToOldList(allData.allScores, newScores);
     saveScores(allData.allScores);
-    deleteLinkedList(duplicateErrors);
-    deleteLinkedList(invalidErrors);
-    std::cout << "Scoreboard successfully imported!\n";
+    showCSVErrorLines(duplicateErrors, invalidErrors);
 }

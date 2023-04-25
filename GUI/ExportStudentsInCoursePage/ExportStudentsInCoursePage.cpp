@@ -14,7 +14,7 @@ class ExportStudentsInCoursePage : public FormPage {
 };
 
 void ExportStudentsInCoursePage::initInputs() {
-    textInputs[0] = TextInput("Export path", inputs[0], inputPos[1], inputWidth);
+    textInputs[0] = TextInput("Export folder path", inputs[0], inputPos[1], inputWidth);
     dropDowns[0] = DropDown("Course name", allData.allCourses, inputPos[0], inputWidth);
 }
 

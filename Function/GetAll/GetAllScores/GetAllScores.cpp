@@ -21,6 +21,4 @@ void readScore(std::ifstream &fin, Score &score) {
     score.totalMark = stoi(totalMark);
 }
 
-Node<Score> *getAllScores() {
-    return getAll("Data/Score.txt", &readScore);
-}
+Node<Score> *getAllScores() { return getAll("Data/Score.txt", &readScore); }

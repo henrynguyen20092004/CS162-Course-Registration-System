@@ -3,6 +3,6 @@
 
 #include <iostream>
 
-void downloadPrompt(const std::string &CSVName, void (*importCallBack)());
+void downloadTemplateCSV(const std::string &CSVName, char *inputtedCSVPath);
 
 #endif

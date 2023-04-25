@@ -75,7 +75,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 8: {
-            downloadPrompt("StudentsInClass.csv", &importStudentsInClass);
+            // downloadPrompt("StudentsInClass.csv", &importStudentsInClass);
             break;
         }
 
@@ -90,7 +90,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 11: {
-            downloadPrompt("StudentsInCourse.csv", importStudentsInCourse);
+            // downloadPrompt("StudentsInCourse.csv", importStudentsInCourse);
             break;
         }
 
@@ -140,7 +140,7 @@ void processAdminCommand(int commandNumber, Semester &currentSemester) {
         }
 
         case 21: {
-            downloadPrompt("Scoreboard.csv", &importScoreboard);
+            // downloadPrompt("Scoreboard.csv", &importScoreboard);
             break;
         }
 

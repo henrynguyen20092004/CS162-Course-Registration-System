@@ -10,23 +10,25 @@
 class FormPage : public Page {
    private:
     const char *title, *buttonText;
-    int numberOfTextInputs, numberOfDropDowns, columns;
+    int numberOfTextInputs, columns;
     float childrenPosX, firstInputPosY, pageHeight = SCREEN_HEIGHT - MENU_HEIGHT;
-    std::string errorText;
     Button submitButton;
-    Vector2 mainBoxSize, mainBoxPosition, padding;
+    Vector2 mainBoxSize, mainBoxPosition;
     Vector2 calculateInputPos(float firstInputPosY, int index);
     virtual void initInputs() {}
     virtual void passwordHide() {}
     virtual void submitCallBack() {}
+    virtual void drawInputs();
+    virtual void checkFilledFields();
     void drawPage() override;
     void drawErrorText();
     void dropDownLockGUI();
-    void checkFilledFields();
 
    protected:
     char **inputs, **dropDownItems = nullptr;
+    int numberOfDropDowns;
     float inputWidth;
+    std::string errorText;
     TextInput *textInputs;
     DropDown *dropDowns = nullptr;
     Vector2 *inputPos, scroll = {0.0f, 0.0f};
@@ -36,8 +38,7 @@ class FormPage : public Page {
    public:
     FormPage(
         const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
-        Vector2 mainBoxSize, const char *buttonText = "Submit",
-        Vector2 padding = DEFAULT_PADDING
+        Vector2 mainBoxSize, const char *buttonText = "Submit"
     );
     ~FormPage();
 };

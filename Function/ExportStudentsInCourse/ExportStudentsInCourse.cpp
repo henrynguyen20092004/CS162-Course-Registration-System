@@ -29,16 +29,11 @@ void exportStudentsInCourse(char **inputs, char **dropDownItems) {
     Course course;
     course.id = courseIDAndClassName[0];
     course.className = courseIDAndClassName[1];
+    delete[] courseIDAndClassName;
     Node<Student> *allStudentsInCourse = getAllStudentsInCourse(course);
 
     if (!allStudentsInCourse) {
         throw std::invalid_argument("There's no student in this course!");
-    }
-
-    if (exportPath == "") {
-        throw std::invalid_argument(
-            "Please enter a path to the folder you want to export!"
-        );
     }
 
     if (exportPath.back() != '\\' && exportPath.back() != '/') {
@@ -50,5 +45,4 @@ void exportStudentsInCourse(char **inputs, char **dropDownItems) {
     writeFile(fout, exportPath);
     sortAndOutputStudents(fout, allStudentsInCourse, &exportStudentsToFile);
     fout.close();
-    delete[] courseIDAndClassName;
 }
