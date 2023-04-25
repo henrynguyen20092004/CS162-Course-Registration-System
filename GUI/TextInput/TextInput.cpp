@@ -1,24 +1,60 @@
 #include "TextInput.h"
 
+#include <cstring>
+
 #include "../TextFunction/TextFunction.h"
 
 TextInput::TextInput()
-    : textInputBox({0.0f, 0.0f, 0.0f, 0.0f}), input(nullptr), label(nullptr) {}
+    : textInputBox({0.0f, 0.0f, 0.0f, 0.0f}),
+      input(nullptr),
+      label(nullptr),
+      width(0.0f) {}
 
 TextInput::TextInput(const char *label, char *input, Vector2 pos, float width)
     : textInputBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}),
       input(input),
-      label(label) {}
+      label(label),
+      width(width - GuiGetStyle(TEXTBOX, TEXT_PADDING) * 2) {}
 
-bool TextInput::drawTextInput() {
+void TextInput::truncateInput() {
+    truncatedInput = "";
+
+    for (int i = 0; input[i] != '\0'; ++i) {
+        truncatedInput += input[i];
+
+        if (measureTextWidth(textFont, truncatedInput.c_str()) > width) {
+            truncatedInput[i + 1] = '\0';
+
+            for (int j = i - 2; j <= i; ++j) {
+                truncatedInput[j] = '.';
+            }
+
+            break;
+        }
+    }
+}
+
+bool TextInput::drawTextInput(float scrollY) {
+    Rectangle textInputBoxWithScroll = textInputBox;
+    textInputBoxWithScroll.y += scrollY;
+
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        editMode =
-            CheckCollisionPointRec(GetMousePosition(), textInputBox) && !GuiIsLocked();
+        editMode = CheckCollisionPointRec(GetMousePosition(), textInputBoxWithScroll) &&
+                   !GuiIsLocked();
     }
 
     drawDefaultText(
         textFont, label,
-        {textInputBox.x, textInputBox.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y}
+        {textInputBoxWithScroll.x,
+         textInputBoxWithScroll.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y}
     );
-    return GuiTextBox(textInputBox, input, MAX_INPUT_CHAR, editMode);
+
+    if (!editMode && measureTextWidth(textFont, input) > width) {
+        truncateInput();
+        return GuiTextBox(
+            textInputBoxWithScroll, truncatedInput.data(), MAX_INPUT_CHAR, editMode
+        );
+    }
+
+    return GuiTextBox(textInputBoxWithScroll, input, MAX_INPUT_CHAR, editMode);
 }

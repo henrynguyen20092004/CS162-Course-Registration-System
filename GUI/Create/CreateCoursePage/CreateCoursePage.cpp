@@ -6,15 +6,14 @@
 
 class CreateCoursePage : public FormPage {
    private:
-    void initComponents() override;
+    void initInputs() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void CreateCoursePage::initComponents() {
-    FormPage::initComponents();
+void CreateCoursePage::initInputs() {
     textInputs[0] = TextInput("Course ID", inputs[0], inputPos[0], inputWidth);
     textInputs[1] = TextInput("Class Name", inputs[1], inputPos[1], inputWidth);
     textInputs[2] = TextInput("Course Name", inputs[2], inputPos[2], inputWidth);
@@ -33,7 +32,7 @@ void CreateCoursePage::submitCallBack() {
 
 void createCoursePage() {
     CreateCoursePage createCoursePage(
-        "Add course to semester", 6, 2, 2, {SCREEN_WIDTH / 1.6f, SCREEN_HEIGHT / 1.35f}
+        "Add course to semester", 6, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}
     );
     createCoursePage.mainLoop();
 }

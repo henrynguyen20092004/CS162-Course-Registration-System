@@ -11,7 +11,7 @@ class Button {
    public:
     Button();
     Button(const char *label, float posX, float posY, float width);
-    bool drawButton();
+    bool drawButton(float scrollY = 0.0f);
 };
 
 #endif

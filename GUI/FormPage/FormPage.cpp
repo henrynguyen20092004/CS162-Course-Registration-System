@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+#include "../DrawScrollBar/DrawScrollBar.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
 
@@ -55,33 +56,56 @@ Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
                              (index / columns)};
 }
 
-void FormPage::drawPage() {
-    DrawRectangleV(mainBoxPosition, mainBoxSize, WHITE);
-    drawDefaultTitle(titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y});
-    drawErrorText();
-    dropDownLockGUI();
-    passwordHide();
-
-    if (submitButton.drawButton()) {
-        submit();
-    }
-
-    for (int i = 0; i < numberOfTextInputs; ++i) {
-        if (textInputs[i].drawTextInput()) {
-            submit();
-        }
-    }
-
-    for (int i = numberOfDropDowns - 1; i >= 0; --i) {
-        dropDowns[i].drawDropDown(dropDownItems[i]);
-    }
-}
-
 void FormPage::initComponents() {
     submitButton = Button(
         buttonText, getCenterX(inputWidth),
         mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT, inputWidth
     );
+    initInputs();
+
+    if (dropDowns) {
+        for (int i = 0; i < numberOfDropDowns; ++i) {
+            int numberOfItems =
+                std::count(dropDowns[i].items.begin(), dropDowns[i].items.end(), ';') + 1;
+            float maxHeight = dropDowns[i].dropDownBox.y +
+                              dropDowns[i].dropDownBox.height * numberOfItems;
+
+            if (maxHeight > pageHeight) {
+                pageHeight = maxHeight;
+            }
+        }
+    }
+}
+
+void FormPage::drawPage() {
+    if (pageHeight > SCREEN_HEIGHT - MENU_HEIGHT) {
+        drawScrollBar(
+            {0, MENU_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - MENU_HEIGHT}, nullptr,
+            {mainBoxPosition.x, mainBoxPosition.y, mainBoxSize.x, pageHeight}, scroll
+        );
+    }
+
+    DrawRectangleV({mainBoxPosition.x, mainBoxPosition.y + scroll.y}, mainBoxSize, WHITE);
+    drawDefaultTitle(
+        titleFont, title, {childrenPosX, mainBoxPosition.y + padding.y + scroll.y}
+    );
+    drawErrorText();
+    dropDownLockGUI();
+    passwordHide();
+
+    if (submitButton.drawButton(scroll.y)) {
+        submit();
+    }
+
+    for (int i = 0; i < numberOfTextInputs; ++i) {
+        if (textInputs[i].drawTextInput(scroll.y)) {
+            submit();
+        }
+    }
+
+    for (int i = numberOfDropDowns - 1; i >= 0; --i) {
+        dropDowns[i].drawDropDown(dropDownItems[i], scroll.y);
+    }
 }
 
 void FormPage::drawErrorText() {
@@ -93,7 +117,8 @@ void FormPage::drawErrorText() {
     int numberOfLines = std::count(errorText.begin(), errorText.end(), '\n') + 1;
 
     float posY = mainBoxPosition.y + mainBoxSize.y - padding.y - DEFAULT_ITEM_HEIGHT -
-                 DEFAULT_TEXT_SIZE * (numberOfLines * 1.5 - 0.5) - DEFAULT_TEXT_MARGIN.y;
+                 DEFAULT_TEXT_SIZE * (numberOfLines * 1.5 - 0.5) - DEFAULT_TEXT_MARGIN.y +
+                 scroll.y;
 
     drawDefaultText(
         textFont, errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR

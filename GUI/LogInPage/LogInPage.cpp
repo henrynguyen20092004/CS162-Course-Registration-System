@@ -6,7 +6,7 @@
 
 class LogInPage : public FormPage {
    private:
-    void initComponents() override;
+    void initInputs() override;
     void passwordHide() override;
     void submitCallBack() override;
 
@@ -14,8 +14,7 @@ class LogInPage : public FormPage {
     using FormPage::FormPage;
 };
 
-void LogInPage::initComponents() {
-    FormPage::initComponents();
+void LogInPage::initInputs() {
     textInputs[0] = TextInput("Username", inputs[0], inputPos[0], inputWidth);
     textInputs[1] = TextInput("Password", inputs[1], inputPos[1], inputWidth);
 }
@@ -26,7 +25,7 @@ void LogInPage::submitCallBack() { currentUser = logIn(inputs); }
 
 void logInPage() {
     LogInPage logInPage(
-        "Log in to continue", 3, 0, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 2.25f},
+        "Log in to continue", 3, 0, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.25f},
         "Log in"
     );
     logInPage.mainLoop();

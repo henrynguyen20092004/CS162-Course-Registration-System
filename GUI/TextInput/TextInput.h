@@ -1,6 +1,8 @@
 #ifndef TEXT_INPUT_H
 #define TEXT_INPUT_H
 
+#include <string>
+
 #include "../GlobalStyle.h"
 
 class TextInput {
@@ -9,11 +11,14 @@ class TextInput {
     const char *label;
     char *input;
     bool editMode = false;
+    float width;
+    std::string truncatedInput = "";
+    void truncateInput();
 
    public:
     TextInput();
     TextInput(const char *label, char *input, Vector2 pos, float width);
-    bool drawTextInput();
+    bool drawTextInput(float scrollY = 0.0f);
 };
 
 #endif

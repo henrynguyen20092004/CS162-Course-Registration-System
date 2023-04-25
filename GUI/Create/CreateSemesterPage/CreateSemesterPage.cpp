@@ -6,15 +6,14 @@
 
 class CreateSemesterPage : public FormPage {
    private:
-    void initComponents() override;
+    void initInputs() override;
     void submitCallBack() override;
 
    public:
     using FormPage::FormPage;
 };
 
-void CreateSemesterPage::initComponents() {
-    FormPage::initComponents();
+void CreateSemesterPage::initInputs() {
     dropDowns[0] =
         DropDown("School year", allData.allSchoolYears, inputPos[0], inputWidth);
     dropDowns[1] = DropDown("Semester number", "1;2;3", inputPos[1], inputWidth);
@@ -30,7 +29,7 @@ void CreateSemesterPage::submitCallBack() {
 
 void createSemesterPage() {
     CreateSemesterPage createSemesterPage(
-        "Create semester", 2, 2, 1, {SCREEN_WIDTH / 3.2f, SCREEN_HEIGHT / 1.35f}
+        "Create semester", 2, 2, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.35f}
     );
     createSemesterPage.mainLoop();
 }

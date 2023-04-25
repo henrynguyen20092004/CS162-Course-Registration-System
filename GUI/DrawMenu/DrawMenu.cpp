@@ -4,16 +4,18 @@
 
 void drawStudentMenu() {
     Button studentInformation(
-        "Your information", SCREEN_WIDTH / 1.6f, DEFAULT_PADDING.x * 2,
+        "Your information", SCREEN_WIDTH / 1.6f, DEFAULT_PADDING.y * 2,
         DEFAULT_MENU_BUTTON_WIDTH
     );
     Button currentCoursesButton(
-        "Current course", SCREEN_WIDTH / 1.6f + DEFAULT_MENU_BUTTON_WIDTH,
-        DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
+        "Current course",
+        SCREEN_WIDTH / 1.6f + DEFAULT_MENU_BUTTON_WIDTH + DEFAULT_ITEM_MARGIN.x,
+        DEFAULT_PADDING.y * 2, DEFAULT_MENU_BUTTON_WIDTH
     );
     Button scoreboard(
-        "Scoreboard", SCREEN_WIDTH / 1.6f + 2 * DEFAULT_MENU_BUTTON_WIDTH,
-        DEFAULT_PADDING.x * 2, DEFAULT_MENU_BUTTON_WIDTH
+        "Scoreboard",
+        SCREEN_WIDTH / 1.6f + 2 * (DEFAULT_MENU_BUTTON_WIDTH + DEFAULT_ITEM_MARGIN.x),
+        DEFAULT_PADDING.y * 2, DEFAULT_MENU_BUTTON_WIDTH
     );
 
     if (studentInformation.drawButton()) {
@@ -71,7 +73,7 @@ void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems) {
     DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, MENU_HEIGHT}, SECONDARY_COLOR);
     DrawTextureV(defaultAvatar, AVATAR_POSITION, WHITE);
 
-    menuDropDown.drawDropDown(menuDropDownItems, WHITE);
+    menuDropDown.drawDropDown(menuDropDownItems, 0.0f, WHITE);
 
     if (currentUser.username == "admin") {
         drawAdminMenu();

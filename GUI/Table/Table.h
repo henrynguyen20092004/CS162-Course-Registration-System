@@ -11,7 +11,7 @@ class Table {
     int row, col, *rowHeights;
     float *columnWidths, tableWidth = 0.0f, tableHeight = 0.0f;
     std::string **tableData, *columnTitle;
-    Vector2 tablePos, initialTextPosition, scroll = {0, 0};
+    Vector2 tablePos, initialTextPosition, scroll = {0.0f, 0.0f};
 
    public:
     Table();
