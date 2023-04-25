@@ -36,12 +36,6 @@ void exportStudentsInCourse(char **inputs, char **dropDownItems) {
         throw std::invalid_argument("There's no student in this course!");
     }
 
-    if (exportPath == "") {
-        throw std::invalid_argument(
-            "Please enter a path to the folder you want to export!"
-        );
-    }
-
     if (exportPath.back() != '\\' && exportPath.back() != '/') {
         exportPath += exportPath.find('\\') != std::string::npos ? '\\' : '/';
     }

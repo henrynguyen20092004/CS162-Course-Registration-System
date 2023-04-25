@@ -1,6 +1,7 @@
 #include "ImportCSVPage.h"
 
 #include "../../Function/DownloadTemplateCSV/DownloadTemplateCSV.h"
+#include "../DrawFileDialog/DrawFileDialog.h"
 
 ImportCSVPage::ImportCSVPage(
     const char *title, const char *CSVName, Vector2 mainBoxSize,
@@ -11,12 +12,21 @@ ImportCSVPage::ImportCSVPage(
       importCallBack(importCallBack) {}
 
 void ImportCSVPage::initInputs() {
+    float openFileButtonWidth = 120.0f;
+
     dropDowns[0] = DropDown(
         "What do you want to do?", "Download a template;Continue importing the CSV",
         inputPos[0], inputWidth
     );
     textInputs[0] = TextInput("Download folder path", inputs[0], inputPos[1], inputWidth);
-    textInputs[1] = TextInput("CSV path", inputs[1], inputPos[1], inputWidth);
+    textInputs[1] = TextInput(
+        "CSV path", inputs[1], inputPos[1],
+        inputWidth - DEFAULT_ITEM_MARGIN.x - openFileButtonWidth
+    );
+    openFileButton = Button(
+        "Browse file", inputPos[1].x + inputWidth - openFileButtonWidth, inputPos[1].y,
+        openFileButtonWidth
+    );
 }
 
 void ImportCSVPage::drawInputs() {
@@ -29,6 +39,10 @@ void ImportCSVPage::drawInputs() {
             break;
         }
         case 1: {
+            if (openFileButton.drawButton(scroll.y)) {
+                openFileDialog(inputs[1], "CSV File\0*.csv");
+            }
+
             if (textInputs[1].drawTextInput(scroll.y)) {
                 submit();
             }

@@ -10,6 +10,7 @@ class ImportCSVPage : public FormPage {
     void drawInputs() override;
     void checkFilledFields() override;
     void submitCallBack() override;
+    Button openFileButton;
 
    protected:
     void initInputs() override;

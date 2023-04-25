@@ -23,6 +23,4 @@ void readCourse(std::ifstream &fin, Course &course) {
     course.sessionNumber = stoi(sessionNumber);
 }
 
-Node<Course> *getAllCourses() {
-    return getAll("Data/Course.txt", &readCourse);
-}
+Node<Course> *getAllCourses() { return getAll("Data/Course.txt", &readCourse); }
