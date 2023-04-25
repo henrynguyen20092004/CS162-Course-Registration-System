@@ -13,6 +13,7 @@
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "ImportCSVPage/ImportScoreboardPage/ImportScoreboardPage.h"
+#include "ImportCSVPage/ImportStudentsInCoursePage/ImportStudentsInCoursePage.h"
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"

@@ -17,6 +17,7 @@
 #include "../../Save/SaveStudent/SaveStudent.h"
 #include "../../Save/SaveUser/SaveUser.h"
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
+#include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 #include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
 
 void getStudentInCourseFromLine(Student &student, const std::string &importLine) {
@@ -54,7 +55,8 @@ void checkImportedStudentInCourse(
                 }
 
                 Node<StudentCourse> *cur = allStudentCourses;
-                for (; cur->next; cur = cur->next);
+                for (; cur->next; cur = cur->next)
+                    ;
                 cur->next = newNode;
                 throw std::runtime_error("Record added");
             }
@@ -72,7 +74,8 @@ void checkImportedStudentInCourse(
                 }
 
                 Node<StudentCourse> *cur = allStudentCourses;
-                for (; cur->next; cur = cur->next);
+                for (; cur->next; cur = cur->next)
+                    ;
                 cur->next = newNode;
             } else {
                 delete newNode;
@@ -83,9 +86,9 @@ void checkImportedStudentInCourse(
     }
 }
 
-void importStudentsInCourse() {
-    std::string importPath, importLine, _;
-    bool courseExists, validPath = false;
+void importStudentsInCourse(char **inputs, char **dropDownItems) {
+    std::string importLine, _;
+    bool courseExists;
     int curLine = 1;
     Course course;
     Student student;
@@ -96,74 +99,53 @@ void importStudentsInCourse() {
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
 
-    do {
-        // inputCourseIDAndClassName(course);
-        courseExists = checkCourseExists(allData.allCourses, course.id, course.className);
+    std::string *courseIDAndClassName = new std::string[2];
+    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[1]);
 
-        if (!courseExists) {
-            std::cout << "This course does not exist, please try again!\n";
+    studentCourse.courseID = courseIDAndClassName[0];
+    studentCourse.className = courseIDAndClassName[1];
+    delete[] courseIDAndClassName;
+
+    std::ifstream fin;
+    readFile(fin, inputs[0]);
+    getline(fin, _);
+
+    while (fin.good()) {
+        getline(fin, importLine);
+
+        if (!fin.good()) {
+            break;
         }
-    } while (!courseExists);
 
-    studentCourse.courseID = course.id;
-    studentCourse.className = course.className;
+        ++curLine;
 
-    do {
         try {
-            std::cout << "Please enter the path to the CSV: ";
-            getline(std::cin, importPath);
-
-            if (importPath == "") {
-                std::cout << "Please enter a path!\n";
-                continue;
+            getStudentInCourseFromLine(student, importLine);
+            studentCourse.studentID = student.id;
+            checkImportedStudentInCourse(
+                student, allData.allStudents, allData.allStudentCourses, studentCourse
+            );
+        } catch (std::invalid_argument &error) {
+            if (!strcmp(error.what(), "Duplicated record")) {
+                pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
+            } else {
+                pushToEndLinkedList(invalidErrors, curInvalidErrors, curLine);
             }
 
-            std::ifstream fin;
-            readFile(fin, importPath);
-            getline(fin, _);
-
-            while (fin.good()) {
-                getline(fin, importLine);
-
-                if (!fin.good()) {
-                    break;
-                }
-
-                ++curLine;
-
-                try {
-                    getStudentInCourseFromLine(student, importLine);
-                    studentCourse.studentID = student.id;
-                    checkImportedStudentInCourse(
-                        student, allData.allStudents, allData.allStudentCourses,
-                        studentCourse
-                    );
-                } catch (std::invalid_argument &error) {
-                    if (!strcmp(error.what(), "Duplicated record")) {
-                        pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
-                    } else {
-                        pushToEndLinkedList(invalidErrors, curInvalidErrors, curLine);
-                    }
-
-                    continue;
-                } catch (...) {
-                    continue;
-                }
-
-                pushToEndLinkedList(newStudentCourses, curStudentCourse, studentCourse);
-                pushToEndLinkedList(newStudents, curStudent, student);
-                User newStudentAccount = createAccount(student);
-                pushToEndLinkedList(newUsers, curUser, newStudentAccount);
-            }
-
-            validPath = true;
-            fin.close();
-        } catch (std::exception &error) {
-            std::cout << error.what();
+            continue;
+        } catch (...) {
+            continue;
         }
-    } while (!validPath);
 
-    showCSVErrorLines(duplicateErrors, invalidErrors);
+        pushToEndLinkedList(newStudentCourses, curStudentCourse, studentCourse);
+        pushToEndLinkedList(newStudents, curStudent, student);
+        User newStudentAccount = createAccount(student);
+        pushToEndLinkedList(newUsers, curUser, newStudentAccount);
+    }
+    fin.close();
+
+    std::string allCSVErrors = "File imported successfully!\n" +
+                               showCSVErrorLines(duplicateErrors, invalidErrors);
     addNewItemsToOldList(allData.allStudents, newStudents);
     addNewItemsToOldList(allData.allStudentCourses, newStudentCourses);
     addNewItemsToOldList(allData.allUsers, newUsers);
@@ -173,4 +155,5 @@ void importStudentsInCourse() {
     deleteLinkedList(duplicateErrors);
     deleteLinkedList(invalidErrors);
     std::cout << "Student successfully imported to course!\n";
+    throw std::invalid_argument(allCSVErrors);
 }
