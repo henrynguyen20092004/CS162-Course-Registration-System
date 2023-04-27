@@ -41,7 +41,8 @@ void addNewItemsToOldList(Node<T> *&allItems, Node<T> *newItems) {
     }
 
     Node<T> *cur = allItems;
-    for (; cur->next; cur = cur->next);
+    for (; cur->next; cur = cur->next)
+        ;
     cur->next = newItems;
 }
 

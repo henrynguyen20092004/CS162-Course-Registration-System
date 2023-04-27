@@ -6,4 +6,6 @@
 
 bool checkStudentIDExists(Node<Student>* allStudents, const std::string& studentID);
 
+bool isInClass(Node<Student>*& allStudentsInClass, const std::string& studentID);
+
 #endif
