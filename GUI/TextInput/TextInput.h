@@ -7,12 +7,12 @@
 
 class TextInput {
    private:
-    Rectangle textInputBox;
-    const char *label;
-    char *input;
+    Rectangle textInputBox{0.0f, 0.0f, 0.0f, 0.0f};
+    const char *label = nullptr;
+    char *input = nullptr;
     bool editMode = false;
-    float width;
-    std::string truncatedInput = "";
+    float width = 0.0f;
+    std::string truncatedInput;
     void truncateInput();
 
    public:

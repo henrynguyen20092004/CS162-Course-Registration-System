@@ -4,7 +4,7 @@
 
 #include "../TextFunction/TextFunction.h"
 
-DropDown::DropDown() : dropDownBox({0.0f, 0.0f, 0.0f, 0.0f}), label(nullptr) {}
+DropDown::DropDown() {}
 
 DropDown::DropDown(
     const char* label, Node<std::string>* itemList, Vector2 pos, float width

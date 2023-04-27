@@ -31,7 +31,7 @@ class FormPage : public Page {
     std::string errorText;
     TextInput *textInputs;
     DropDown *dropDowns = nullptr;
-    Vector2 *inputPos, scroll = {0.0f, 0.0f};
+    Vector2 *inputPos, scroll{0.0f, 0.0f};
     void initComponents() override;
     void submit();
 
