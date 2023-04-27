@@ -1,7 +1,6 @@
 #ifndef MAIN_FUNCTION_H
 #define MAIN_FUNCTION_H
 
-#include "ChangePassword/ChangePassword.h"
 #include "CurrentSemester/CurrentSemester.h"
 #include "DeleteCourse/DeleteCourse.h"
 #include "LogOut/LogOut.h"

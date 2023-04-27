@@ -46,7 +46,7 @@ void processUserCommand(int commandNumber, Semester &currentSemester, User &curr
         }
 
         case 2: {
-            changePassword(currentUser);
+            // changePassword(currentUser);
             break;
         }
 

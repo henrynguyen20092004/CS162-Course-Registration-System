@@ -3,6 +3,6 @@
 
 #include "../../Struct/User.h"
 
-void changePassword(User &currentUser);
+void changePassword(User &currentUser, char **inputs);
 
 #endif
