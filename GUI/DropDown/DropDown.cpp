@@ -42,6 +42,17 @@ DropDown::DropDown(const char* label, Node<Course>* itemList, Vector2 pos, float
     }
 }
 
+DropDown::DropDown(const char* label, Node<Student>* itemList, Vector2 pos, float width)
+    : dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}), label(label) {
+    for (; itemList; itemList = itemList->next) {
+        items += itemList->data.id;
+
+        if (itemList->next) {
+            items += ';';
+        }
+    }
+}
+
 DropDown::DropDown(const char* label, const char* itemList, Vector2 pos, float width)
     : items(itemList),
       dropDownBox({pos.x, pos.y, width, DEFAULT_ITEM_HEIGHT}),

@@ -6,6 +6,7 @@
 #include "../../Struct/Course.h"
 #include "../../Struct/LinkedList.h"
 #include "../../Struct/Semester.h"
+#include "../../Struct/Student.h"
 #include "../GlobalStyle.h"
 
 class DropDown {
@@ -21,6 +22,7 @@ class DropDown {
     DropDown(const char* label, Node<std::string>* itemList, Vector2 pos, float width);
     DropDown(const char* label, Node<Semester>* itemList, Vector2 pos, float width);
     DropDown(const char* label, Node<Course>* itemList, Vector2 pos, float width);
+    DropDown(const char* label, Node<Student>* itemList, Vector2 pos, float width);
     DropDown(const char* label, const char* itemList, Vector2 pos, float width);
     bool drawDropDown(
         char*& selectedItem, float scrollY = 0.0f, Color labelColor = NORMAL_TEXT_COLOR

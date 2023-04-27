@@ -19,8 +19,7 @@ void ImportScoreboardPage::initInputs() {
 
 void importScoreboardPage() {
     ImportScoreboardPage importScoreboardPage(
-        "Import a scoreboard", "Scoreboard.csv",
-        {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.5f}, &importScoreboard
+        "Import a scoreboard", "Scoreboard.csv", &importScoreboard
     );
     importScoreboardPage.mainLoop();
 }

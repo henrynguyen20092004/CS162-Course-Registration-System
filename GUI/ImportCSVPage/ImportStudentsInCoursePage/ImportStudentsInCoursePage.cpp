@@ -20,8 +20,7 @@ void ImportStudentsInCoursePage::initInputs() {
 
 void importStudentsInCoursePage() {
     ImportStudentsInCoursePage importStudentsInCoursePage(
-        "Import students in a course", "StudentsInCourse.csv",
-        {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.5f}, &importStudentsInCourse
+        "Import students in a course", "StudentsInCourse.csv", &importStudentsInCourse
     );
 
     importStudentsInCoursePage.mainLoop();

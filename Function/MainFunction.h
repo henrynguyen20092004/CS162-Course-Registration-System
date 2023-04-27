@@ -6,7 +6,6 @@
 #include "DeleteCourse/DeleteCourse.h"
 #include "LogOut/LogOut.h"
 #include "RemoveStudentFromCourse/RemoveStudentFromCourse.h"
-#include "Update/UpdateStudentResult/UpdateStudentResult.h"
 #include "View/ViewClasses/ViewClasses.h"
 #include "View/ViewCourses/ViewCourses.h"
 #include "View/ViewCoursesOfStudent/ViewCoursesOfStudent.h"
