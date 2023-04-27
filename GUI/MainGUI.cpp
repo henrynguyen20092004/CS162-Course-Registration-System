@@ -4,6 +4,7 @@
 
 #include "../Function/CurrentSemester/CurrentSemester.h"
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
+#include "ChangePasswordPage/ChangePasswordPage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
 #include "Create/CreateCoursePage/CreateCoursePage.h"
 #include "Create/CreateSchoolYearPage/CreateSchoolYearPage.h"
@@ -51,7 +52,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        updateStudentResultPage();
+        changePasswordPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

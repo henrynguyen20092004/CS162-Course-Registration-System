@@ -1,8 +1,8 @@
 #include "ChangePassword.h"
 
+#include <cstring>
+
 #include "../../Struct/Data.h"
-#include "../GetAll/GetAllUsers/GetAllUsers.h"
-// #include "../Input/Input.h"
 #include "../Save/SaveUser/SaveUser.h"
 
 void updateUser(Node<User> *allUsers, const User &newUser) {
@@ -14,26 +14,16 @@ void updateUser(Node<User> *allUsers, const User &newUser) {
     }
 }
 
-void changePassword(User &currentUser) {
-    std::string oldPassword, newPassword, confirmNewPassword;
+void changePassword(User &currentUser, char **inputs) {
+    if (strcmp(inputs[3], currentUser.password.c_str())) {
+        throw std::invalid_argument("Wrong old password, please enter again!");
+    }
 
-    do {
-        // oldPassword = passwordInput("Please enter your old password: ");
-        if (oldPassword != currentUser.password) {
-            std::cout << "Wrong password, please enter again!\n";
-        }
-    } while (oldPassword != currentUser.password);
+    if (strcmp(inputs[4], inputs[5])) {
+        throw std::invalid_argument("New password mismatch, please enter again!");
+    }
 
-    do {
-        // newPassword = passwordInput("Please enter your new password: ");
-        // confirmNewPassword = passwordInput("Please confirm your new password: ");
-        if (newPassword != confirmNewPassword) {
-            std::cout << "Password mismatch, please enter again!\n";
-        }
-    } while (newPassword != confirmNewPassword);
-
-    currentUser.password = newPassword;
+    currentUser.password = inputs[4];
     updateUser(allData.allUsers, currentUser);
     saveAllUsers(allData.allUsers);
-    std::cout << "Password successfully changed!\n";
 }
