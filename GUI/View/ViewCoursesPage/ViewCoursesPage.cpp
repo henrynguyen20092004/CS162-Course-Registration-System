@@ -1,5 +1,6 @@
 #include "ViewCoursesPage.h"
 
+#include "../../../Function/DeleteCourse/DeleteCourse.h"
 #include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
 #include "../../../Struct/Data.h"
@@ -10,6 +11,7 @@ class ViewCoursesPage : public TablePage<Course> {
     void initColumns() override;
     void initButtons() override;
     void convertLinkedListToData() override;
+    void drawColumnButtons() override;
 
    public:
     using TablePage::TablePage;
@@ -29,19 +31,19 @@ void ViewCoursesPage::initColumns() {
         80.0f,
         80.0f,
         TABLE_BUTTON_CELL_WIDTH,
+        TABLE_BUTTON_CELL_WIDTH,
         TABLE_BUTTON_CELL_WIDTH};
 }
 
 void ViewCoursesPage::initButtons() {
     headerButtonTitles[0] = "Create a course";
     headerButtonTitles[1] = "Update a course";
-    headerButtonTitles[2] = "Delete a course";
     firstRowButtonTitles[0] = "Student";
     firstRowButtonTitles[1] = "Score";
-    headerButtonCommands =
-        new Command[headerButton]{CREATE_COURSE, UPDATE_COURSE, DELETE_COURSE};
+    firstRowButtonTitles[2] = "Delete";
+    headerButtonCommands = new Command[headerButton]{CREATE_COURSE, UPDATE_COURSE};
     columnButtonCommands =
-        new Command[buttonCol]{VIEW_STUDENTS_IN_COURSE, VIEW_SCOREBOARD_OF_COURSE};
+        new Command[buttonCol - 1]{VIEW_STUDENTS_IN_COURSE, VIEW_SCOREBOARD_OF_COURSE};
 }
 
 void ViewCoursesPage::convertLinkedListToData() {
@@ -66,7 +68,24 @@ void ViewCoursesPage::convertLinkedListToData() {
     delete[] courseArray;
 }
 
+void ViewCoursesPage::drawColumnButtons() {
+    for (int i = 0; i < row - 1; ++i) {
+        for (int j = 0; j < buttonCol - 1; ++j) {
+            if (columnButtons[i][j].drawButton(scroll.y)) {
+                renderArgs = tableData[i + 1][1];
+                commandChoice = columnButtonCommands[j];
+                stopLoop = true;
+            }
+        }
+
+        if (columnButtons[i][2].drawButton(scroll.y)) {
+            deleteCourse(tableData[i + 1][1]);
+            stopLoop = true;
+        }
+    }
+}
+
 void viewCoursesPage() {
-    ViewCoursesPage viewCoursesPage("List of courses", 8, 2, 3, allData.allCourses);
+    ViewCoursesPage viewCoursesPage("List of courses", 8, 3, 2, allData.allCourses);
     viewCoursesPage.mainLoop();
 }
