@@ -10,14 +10,16 @@ bool checkStudentIDExists(Node<Student>* allStudents, const std::string& student
     return false;
 }
 
-bool isInClass(Node<Student>*& allStudentsInClass, const std::string& studentID) {
-    Node<Student>* cur = allStudentsInClass;
-    while (cur) {
-        if (studentID == cur->data.id) {
+bool checkStudentInClass(
+    Node<Student>* allStudentsInClass, const std::string& studentID
+) {
+    while (allStudentsInClass) {
+        if (studentID == allStudentsInClass->data.id) {
             return true;
         }
-        cur = cur->next;
+
+        allStudentsInClass = allStudentsInClass->next;
     }
-    deleteLinkedList(cur);
+
     return false;
 }

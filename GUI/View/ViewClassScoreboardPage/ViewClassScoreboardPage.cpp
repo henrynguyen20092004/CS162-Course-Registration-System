@@ -1,5 +1,6 @@
 #include "ViewClassScoreboardPage.h"
 
+#include <cmath>
 #include <cstring>
 
 #include "../../../Function/ConvertScoreToString/ConvertScoreToString.h"
@@ -16,26 +17,41 @@ class ViewClassScoreboardPage : public TablePage<Student> {
 
    public:
     using TablePage::TablePage;
+    ViewClassScoreboardPage(
+        const std::string& title, const std::string& className, int col,
+        Node<Student>* allStudentsInClass, Node<std::string>* allCoursesOfStudentsInClass,
+        Node<Score>* allScoresInClass
+    );
     std::string className;
-    Node<std::string>* allCoursesOfStudentInClass;
+    Node<std::string>* allCoursesOfStudentsInClass;
     Node<Score>* allScoresInClass;
 };
 
-void ViewClassScoreboardPage::initColumns() {
-    allScoresInClass = getAllScoresOfStudentsInClass(dataLinkedList);
+ViewClassScoreboardPage::ViewClassScoreboardPage(
+    const std::string& title, const std::string& className, int col,
+    Node<Student>* allStudentsInClass, Node<std::string>* allCoursesOfStudentsInClass,
+    Node<Score>* allScoresInClass
+)
+    : TablePage(title, col, 0, 0, allStudentsInClass),
+      className(className),
+      allCoursesOfStudentsInClass(allCoursesOfStudentsInClass),
+      allScoresInClass(allScoresInClass) {}
 
-    allCoursesOfStudentInClass = getAllCoursesOfStudentsInClass(allScoresInClass);
-    col = getLinkedListSize(allCoursesOfStudentInClass) + 4;
+void ViewClassScoreboardPage::initColumns() {
     columnTitle = new std::string[col]{"No", "Student ID", "Full Name"};
+    Node<std::string>* cur = allCoursesOfStudentsInClass;
+
     for (int j = 3; j < col - 1; ++j) {
-        columnTitle[j] = allCoursesOfStudentInClass->data;
-        allCoursesOfStudentInClass = allCoursesOfStudentInClass->next;
+        columnTitle[j] = cur->data;
+        cur = cur->next;
     }
+
     columnTitle[col - 1] = "GPA";
-    columnWidths = new float[col]{50, 200, 120};
-    columnWidths[col - 1] = 50;
+    columnWidths = new float[col]{50.0f, 200.0f, 200.0f};
+    columnWidths[col - 1] = 50.0f;
+
     for (int j = 3; j < col - 1; ++j) {
-        columnWidths[j] = 150;
+        columnWidths[j] = 150.0f;
     }
 }
 
@@ -56,7 +72,6 @@ void ViewClassScoreboardPage::convertLinkedListToData() {
 
     for (int i = 1; i < row; ++i) {
         tableData[i][0] = std::to_string(i);
-
         tableData[i][1] = allStudentsInClassArray[i - 1].id;
         tableData[i][2] = allStudentsInClassArray[i - 1].lastName + " " +
                           allStudentsInClassArray[i - 1].firstName;
@@ -66,15 +81,18 @@ void ViewClassScoreboardPage::convertLinkedListToData() {
         for (int j = 3; j < col; ++j) {
             tableData[i][j] = "x";
         }
+
         double gpaComponent = 0;
         int creditSum = 0;
+
         for (int k = 0; k < allScoresInClassArraySize; ++k) {
             if (allScoresInClassArray[k].studentCourse.studentID == tableData[i][1]) {
                 std::string fullCourseName =
                     allScoresInClassArray[k].studentCourse.courseID + "-" +
                     allScoresInClassArray[k].studentCourse.className;
-                for (int j = 3; j < col - 1; ++j) {
-                    if (tableData[0][j] == fullCourseName) {
+
+                for (int l = 3; l < col - 1; ++l) {
+                    if (tableData[0][l] == fullCourseName) {
                         double result = allScoresInClassArray[k].totalMark;
                         int credit = getCourseCredits(
                             allData.allCourses,
@@ -83,30 +101,31 @@ void ViewClassScoreboardPage::convertLinkedListToData() {
                         );
                         creditSum += credit;
                         gpaComponent += result * credit;
-
-                        tableData[i][j] = convertScoreToString(result);
-                        // tableData[i][j] = std::to_string(result);
+                        tableData[i][l] = convertScoreToString(result);
                     }
                 }
-                double gpa = gpaComponent / creditSum;
+
+                double gpa = round(gpaComponent / creditSum * 100.0f) / 100.0f;
                 tableData[i][col - 1] = convertScoreToString(gpa);
-                // tableData[i][col - 1] = std::to_string(gpa);
             }
         }
     }
 
     deleteLinkedList(dataLinkedList);
+    deleteLinkedList(allCoursesOfStudentsInClass);
     deleteLinkedList(allScoresInClass);
 }
 
 void viewClassScoreboardPage(const std::string& className) {
+    Node<Student>* allStudentsInClass = getAllStudentsInClass(className);
+    Node<Score>* allScoresInClass = getAllScoresOfStudentsInClass(allStudentsInClass);
+    Node<std::string>* allCoursesOfStudentsInClass =
+        getAllCoursesOfStudentsInClass(allScoresInClass);
+
     ViewClassScoreboardPage viewClassScoreboardPage(
-        "The scoreboard of class " + className,
-        getLinkedListSize(getAllCoursesOfStudentsInClass(
-            getAllScoresOfStudentsInClass(getAllStudentsInClass(className))
-        )) + 4,
-        getAllStudentsInClass(className)
+        "The scoreboard of class " + className, className,
+        getLinkedListSize(allCoursesOfStudentsInClass) + 4, allStudentsInClass,
+        allCoursesOfStudentsInClass, allScoresInClass
     );
-    viewClassScoreboardPage.className = className;
     viewClassScoreboardPage.mainLoop();
 }

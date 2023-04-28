@@ -98,7 +98,7 @@ void selectPage() {
             break;
 
         case VIEW_SCOREBOARD_OF_CLASS:
-            temp.mainLoop();
+            viewClassScoreboardPage(renderArgs);
             break;
 
         case VIEW_SCOREBOARD_OF_STUDENT:

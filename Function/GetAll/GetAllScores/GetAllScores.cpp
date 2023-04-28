@@ -50,22 +50,24 @@ Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course) {
 }
 
 Node<Score>* getAllScoresOfStudentsInClass(Node<Student>* allStudentsInClass) {
-    std::ifstream fin;
+    Score score;
     Node<Score>*allScoresOfStudentsInClass = nullptr, *cur;
-    readFile(fin, "Data/Score.txt");
-    while (fin.good()) {
-        Score score;
-        getline(fin, score.studentCourse.studentID);
+    std::string otherMark, midtermMark, finalMark, totalMark;
 
-        if (!isInClass(allStudentsInClass, score.studentCourse.studentID)) {
-            continue;
-        }
+    std::ifstream fin;
+    readFile(fin, "Data/Score.txt");
+
+    while (fin.good()) {
+        getline(fin, score.studentCourse.studentID);
 
         if (!fin.good()) {
             break;
         }
 
-        std::string otherMark, midtermMark, finalMark, totalMark;
+        if (!checkStudentInClass(allStudentsInClass, score.studentCourse.studentID)) {
+            continue;
+        }
+
         getline(fin, score.studentCourse.courseID);
         getline(fin, score.studentCourse.className);
         getline(fin, score.studentFullName);
