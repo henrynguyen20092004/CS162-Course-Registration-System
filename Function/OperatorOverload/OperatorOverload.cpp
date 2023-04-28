@@ -44,57 +44,6 @@ bool operator<(const Semester &firstSemester, const Semester &secondSemester) {
                      secondSemester.schoolYearName.size();
 }
 
-bool operator<(const Score &firstScore, const Score &secondScore) {
-    return firstScore.studentCourse < secondScore.studentCourse;
-}
-
-bool operator<(const Course &firstCourse, const Course &secondCourse) {
-    return firstCourse.name < secondCourse.name;
-}
-
-bool operator<(
-    const StudentCourse &firstStudentCourse, const StudentCourse &secondStudentCourse
-) {
-    return firstStudentCourse.studentID != secondStudentCourse.studentID
-               ? (firstStudentCourse.studentID.size() ==
-                          secondStudentCourse.studentID.size()
-                      ? firstStudentCourse.studentID < secondStudentCourse.studentID
-                      : firstStudentCourse.studentID.size() <
-                            secondStudentCourse.studentID.size())
-               : (firstStudentCourse.courseID < secondStudentCourse.courseID);
-}
-
-bool operator<(const Score &firstScore, const Score &secondScore) {
-    return firstScore.studentCourse < secondScore.studentCourse;
-}
-
-bool operator<(const Semester &firstSemester, const Semester &secondSemester) {
-    return firstSemester.schoolYearName.size() == secondSemester.schoolYearName.size()
-
-               ? firstSemester.schoolYearName < secondSemester.schoolYearName
-               : firstSemester.schoolYearName.size() <
-                     secondSemester.schoolYearName.size();
-}
-
-bool operator<(
-    const StudentCourse &firstStudentCourse, const StudentCourse &secondStudentCourse
-) {
-    return firstStudentCourse.studentID != secondStudentCourse.studentID
-               ? (firstStudentCourse.studentID.size() ==
-                          secondStudentCourse.studentID.size()
-                      ? firstStudentCourse.studentID < secondStudentCourse.studentID
-                      : firstStudentCourse.studentID.size() <
-                            secondStudentCourse.studentID.size())
-               : (firstStudentCourse.courseID < secondStudentCourse.courseID);
-}
-
-bool operator<(const Score &firstScore, const Score &secondScore) {
-    return firstScore.studentCourse < secondScore.studentCourse;
-}
-
-bool operator<(const Course &firstCourse, const Course &secondCourse) {
-    return firstCourse.name < secondCourse.name;
-}
 bool operator<(
     const StudentCourse &firstStudentCourse, const StudentCourse &secondStudentCourse
 ) {

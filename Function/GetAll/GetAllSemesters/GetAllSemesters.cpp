@@ -1,7 +1,5 @@
 #include "GetAllSemesters.h"
 
-// #include "../../Input/Input.h"
-
 void readSemester(std::ifstream &fin, Semester &semester) {
     getline(fin, semester.schoolYearName);
 
