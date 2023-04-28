@@ -3,6 +3,7 @@
 
 #include "../../Struct/Course.h"
 #include "../../Struct/Score.h"
+#include "../../Struct/Semester.h"
 #include "../../Struct/Student.h"
 #include "../../Struct/StudentCourse.h"
 
@@ -13,5 +14,6 @@ bool operator==(
 );
 bool operator<(const Student &firstStudent, const Student &secondStudent);
 bool operator<(const Course &firstCourse, const Course &secondCourse);
+bool operator<(const Semester &firstSemester, const Semester &secondSemester);
 
 #endif

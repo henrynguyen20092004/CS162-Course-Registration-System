@@ -2,6 +2,7 @@
 
 #include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../../Struct/Data.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewCoursesPage : public TablePage<Course> {
@@ -64,11 +65,10 @@ void ViewCoursesPage::convertLinkedListToData() {
         tableData[i][8] = std::to_string(courseArray[i - 1].sessionNumber);
     }
 
-    deleteLinkedList(dataLinkedList);
     delete[] courseArray;
 }
 
 void viewCoursesPage() {
-    ViewCoursesPage viewCoursesPage("List of courses", 9, 2, 3, getAllCourses());
+    ViewCoursesPage viewCoursesPage("List of courses", 9, 2, 3, allData.allCourses);
     viewCoursesPage.mainLoop();
 }
