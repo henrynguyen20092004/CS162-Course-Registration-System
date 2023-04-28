@@ -4,7 +4,7 @@ void readFile(std::ifstream &fin, const std::string &filePath) {
     fin.open(filePath);
 
     if (!fin.is_open()) {
-        throw std::runtime_error("File doesn't exist!");
+        throw std::runtime_error("File doesn't exist or is inaccessible!");
     }
 }
 

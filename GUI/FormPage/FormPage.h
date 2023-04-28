@@ -9,10 +9,11 @@
 
 class FormPage : public Page {
    private:
-    const char *title, *backButtonText;
+    const char *backButtonText;
     int columns;
     float childrenPosX, titlePosY, firstInputPosY,
         pageHeight = SCREEN_HEIGHT - MENU_HEIGHT;
+    std::string title;
     Button submitButton, backButton;
     Vector2 mainBoxSize, mainBoxPos;
     Vector2 calculateInputPos(float firstInputPosY, int index);
@@ -38,8 +39,8 @@ class FormPage : public Page {
 
    public:
     FormPage(
-        const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
-        Vector2 mainBoxSize, Command backButtonCommand = HOME
+        const std::string &title, int numberOfTextInputs, int numberOfDropDowns,
+        int columns, Vector2 mainBoxSize, Command backButtonCommand = HOME
     );
     ~FormPage();
 };

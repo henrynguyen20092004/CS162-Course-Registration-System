@@ -7,7 +7,7 @@
 #include "../TextFunction/TextFunction.h"
 
 FormPage::FormPage(
-    const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
+    const std::string &title, int numberOfTextInputs, int numberOfDropDowns, int columns,
     Vector2 mainBoxSize, Command backButtonCommand
 )
     : title(title),
@@ -93,7 +93,7 @@ void FormPage::drawPage() {
     }
 
     DrawRectangleV({mainBoxPos.x, mainBoxPos.y + scroll.y}, mainBoxSize, WHITE);
-    drawDefaultTitle(titleFont, title, {childrenPosX, titlePosY + scroll.y});
+    drawDefaultTitle(titleFont, title.c_str(), {childrenPosX, titlePosY + scroll.y});
     drawErrorText();
     dropDownLockGUI();
 

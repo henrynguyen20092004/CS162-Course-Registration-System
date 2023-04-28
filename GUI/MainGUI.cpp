@@ -15,6 +15,7 @@
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"
 #include "ImportCSVPage/ImportScoreboardPage/ImportScoreboardPage.h"
+#include "ImportCSVPage/ImportStudentsInClassPage/ImportStudentsInClassPage.h"
 #include "ImportCSVPage/ImportStudentsInCoursePage/ImportStudentsInCoursePage.h"
 #include "LogInPage/LogInPage.h"
 #include "Page/Page.h"
@@ -132,15 +133,15 @@ void selectPage() {
             break;
 
         case IMPORT_STUDENTS_IN_CLASS:
-            temp.mainLoop();
+            importStudentsInClassPage(renderArgs);
             break;
 
         case IMPORT_STUDENTS_IN_COURSE:
-            importStudentsInCoursePage();
+            importStudentsInCoursePage(renderArgs);
             break;
 
         case IMPORT_SCOREBOARD:
-            importScoreboardPage();
+            importScoreboardPage(renderArgs);
             break;
 
         case EXPORT_STUDENTS_IN_COURSE:

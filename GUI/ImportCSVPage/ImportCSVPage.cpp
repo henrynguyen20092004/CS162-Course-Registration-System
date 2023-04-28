@@ -4,13 +4,15 @@
 #include "../OpenDialog/OpenDialog.h"
 
 ImportCSVPage::ImportCSVPage(
-    const char *title, const char *CSVName, void (*importCallBack)(char **, char **),
+    const std::string &title, const char *CSVName, const std::string &arg,
+    void (*importCallBack)(char **, char **, const std::string &arg),
     Command backButtonCommand
 )
     : FormPage(
-          title, 2, 2, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.5f}, backButtonCommand
+          title, 2, 1, 1, {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 1.75f}, backButtonCommand
       ),
       CSVName(CSVName),
+      arg(arg),
       importCallBack(importCallBack) {}
 
 void ImportCSVPage::initInputs() {
@@ -51,9 +53,6 @@ void ImportCSVPage::drawInputs() {
             if (textInputs[1].drawTextInput(scroll.y)) {
                 submit();
             }
-
-            dropDowns[1].drawDropDown(dropDownItems[1], scroll.y);
-            break;
         }
     }
 
@@ -74,7 +73,7 @@ void ImportCSVPage::checkFilledFields() {
             break;
         }
         case 1: {
-            if (inputs[1][0] == '\0' || dropDownItems[1][0] == '\0') {
+            if (inputs[1][0] == '\0') {
                 throw std::invalid_argument("Please fill all fields before submitting!");
             }
             break;
@@ -89,7 +88,7 @@ void ImportCSVPage::submitCallBack() {
             break;
         }
         case 1: {
-            importCallBack(inputs, dropDownItems);
+            importCallBack(inputs, dropDownItems, arg);
             break;
         }
     }

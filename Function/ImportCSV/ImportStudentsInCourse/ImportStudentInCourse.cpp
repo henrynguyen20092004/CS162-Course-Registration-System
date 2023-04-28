@@ -4,13 +4,9 @@
 #include <sstream>
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckClass/CheckClass.h"
-#include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
-#include "../../DateFunction/DateFunction.h"
-#include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
@@ -86,8 +82,9 @@ void checkImportedStudentInCourse(
     }
 }
 
-void importStudentsInCourse(char **inputs, char **dropDownItems) {
-    std::string importLine, _, importPath = inputs[1];
+void importStudentsInCourse(
+    char **inputs, char **dropDownItems, const std::string &course
+) {
     int curLine = 1;
     Student student;
     StudentCourse studentCourse;
@@ -96,10 +93,10 @@ void importStudentsInCourse(char **inputs, char **dropDownItems) {
     Node<Student> *newStudents = nullptr, *curStudent;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
+    std::string *courseIDAndClassName = new std::string[2], importPath = inputs[1],
+                importLine, _;
 
-    std::string *courseIDAndClassName = new std::string[2];
-    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[1]);
-
+    splitCourseToIDAndClassName(courseIDAndClassName, course);
     studentCourse.courseID = courseIDAndClassName[0];
     studentCourse.className = courseIDAndClassName[1];
     delete[] courseIDAndClassName;
@@ -140,8 +137,8 @@ void importStudentsInCourse(char **inputs, char **dropDownItems) {
         User newStudentAccount = createAccount(student);
         pushToEndLinkedList(newUsers, curUser, newStudentAccount);
     }
-    fin.close();
 
+    fin.close();
     addNewItemsToOldList(allData.allStudents, newStudents);
     addNewItemsToOldList(allData.allStudentCourses, newStudentCourses);
     addNewItemsToOldList(allData.allUsers, newUsers);

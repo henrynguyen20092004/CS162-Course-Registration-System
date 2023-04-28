@@ -4,30 +4,28 @@
 #include <sstream>
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../Check/CheckStudentID/CheckStudentID.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
-#include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveScore/SaveScore.h"
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void getScoreFromLine(Score &score, const std::string &importLine) {
-    std::string _;
+    std::string part;
     std::istringstream importStream(importLine);
-    getline(importStream, _, ',');
+    getline(importStream, part, ',');
     getline(importStream, score.studentCourse.studentID, ',');
     getline(importStream, score.studentFullName, ',');
-    getline(importStream, _, ',');
-    score.otherMark = checkAndConvertToScore(_, "other mark");
-    getline(importStream, _, ',');
-    score.midtermMark = checkAndConvertToScore(_, "midterm mark");
-    getline(importStream, _, ',');
-    score.finalMark = checkAndConvertToScore(_, "final mark");
-    getline(importStream, _);
-    score.totalMark = checkAndConvertToScore(_, "total mark");
+    getline(importStream, part, ',');
+    score.otherMark = checkAndConvertToScore(part, "other mark");
+    getline(importStream, part, ',');
+    score.midtermMark = checkAndConvertToScore(part, "midterm mark");
+    getline(importStream, part, ',');
+    score.finalMark = checkAndConvertToScore(part, "final mark");
+    getline(importStream, part);
+    score.totalMark = checkAndConvertToScore(part, "total mark");
 }
 
 void checkImportedScore(
@@ -65,7 +63,7 @@ void checkImportedScore(
     }
 }
 
-void importScoreboard(char **inputs, char **dropDownItems) {
+void importScoreboard(char **inputs, char **dropDownItems, const std::string &course) {
     int curLine = 1;
     Score score;
     Node<Score> *newScores = nullptr, *cur;
@@ -74,7 +72,7 @@ void importScoreboard(char **inputs, char **dropDownItems) {
     std::string *courseIDAndClassName = new std::string[2], importPath = inputs[1],
                 importLine, _;
 
-    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[1]);
+    splitCourseToIDAndClassName(courseIDAndClassName, course);
     score.studentCourse.courseID = courseIDAndClassName[0];
     score.studentCourse.className = courseIDAndClassName[1];
     delete[] courseIDAndClassName;
