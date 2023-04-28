@@ -6,7 +6,8 @@
 class ImportCSVPage : public FormPage {
    private:
     const char *CSVName;
-    void (*importCallBack)(char **, char **);
+    std::string arg;
+    void (*importCallBack)(char **, char **, const std::string &arg);
     void drawInputs() override;
     void checkFilledFields() override;
     void submitCallBack() override;
@@ -18,7 +19,8 @@ class ImportCSVPage : public FormPage {
    public:
     using FormPage::FormPage;
     ImportCSVPage(
-        const char *title, const char *CSVName, void (*importCallBack)(char **, char **),
+        const std::string &title, const char *CSVName, const std::string &arg,
+        void (*importCallBack)(char **, char **, const std::string &arg),
         Command backButtonCommand
     );
 };

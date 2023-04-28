@@ -133,15 +133,15 @@ void selectPage() {
             break;
 
         case IMPORT_STUDENTS_IN_CLASS:
-            temp.mainLoop();
+            importStudentsInClassPage(renderArgs);
             break;
 
         case IMPORT_STUDENTS_IN_COURSE:
-            importStudentsInCoursePage();
+            importStudentsInCoursePage(renderArgs);
             break;
 
         case IMPORT_SCOREBOARD:
-            importScoreboardPage();
+            importScoreboardPage(renderArgs);
             break;
 
         case EXPORT_STUDENTS_IN_COURSE:

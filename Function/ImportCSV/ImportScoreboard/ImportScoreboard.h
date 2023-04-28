@@ -1,6 +1,8 @@
 #ifndef IMPORT_SCOREBOARD_H
 #define IMPORT_SCOREBOARD_H
 
-void importScoreboard(char **inputs, char **dropDownItems);
+#include <string>
+
+void importScoreboard(char **inputs, char **dropDownItems, const std::string &course);
 
 #endif

@@ -13,7 +13,7 @@
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveStudent/SaveStudent.h"
 #include "../../Save/SaveUser/SaveUser.h"
-// #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
+#include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
 
 void getStudentInClassFromLine(Student &student, std::string importLine) {
@@ -42,15 +42,16 @@ void checkImportedStudentInClass(Node<Student> *allStudents, Student &student) {
     }
 }
 
-void importStudentsInClass(char **inputs, char **dropDownItems) {
-    std::string className, importPath, importLine, _;
+void importStudentsInClass(
+    char **inputs, char **dropDownItems, const std::string &className
+) {
     int curLine = 1;
     Student student;
     Node<User> *newUsers = nullptr, *curUser;
     Node<Student> *newStudents = nullptr, *curStudent;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
-
+    std::string importPath = inputs[1], importLine, _;
     student.className = className;
 
     std::ifstream fin;
@@ -87,12 +88,9 @@ void importStudentsInClass(char **inputs, char **dropDownItems) {
     }
 
     fin.close();
-
-    // showCSVErrorLines(duplicateErrors, invalidErrors);
     addNewItemsToOldList(allData.allStudents, newStudents);
     addNewItemsToOldList(allData.allUsers, newUsers);
     saveAllUsers(allData.allUsers);
     saveAllStudents(allData.allStudents);
-    deleteLinkedList(duplicateErrors);
-    deleteLinkedList(invalidErrors);
+    showCSVErrorLines(duplicateErrors, invalidErrors);
 }
