@@ -10,7 +10,7 @@ class ImportStudentsInCoursePage : public ImportCSVPage {
 
 void importStudentsInCoursePage(const std::string& course) {
     ImportStudentsInCoursePage importStudentsInCoursePage(
-        "Import students of course " + course, "StudentsInCourse.csv", course,
+        "Import students of " + course, "StudentsInCourse.csv", course,
         &importStudentsInCourse, VIEW_STUDENTS_IN_COURSE
     );
     importStudentsInCoursePage.mainLoop();

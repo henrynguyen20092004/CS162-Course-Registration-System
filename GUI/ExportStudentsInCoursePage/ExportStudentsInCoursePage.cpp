@@ -14,17 +14,25 @@ class ExportStudentsInCoursePage : public FormPage {
 
    public:
     using FormPage::FormPage;
+    ExportStudentsInCoursePage(const std::string &course);
+    std::string course;
 };
+
+ExportStudentsInCoursePage::ExportStudentsInCoursePage(const std::string &course)
+    : FormPage(
+          "Export students of " + course, 1, 0, 1,
+          {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 3.0f}, VIEW_STUDENTS_IN_COURSE
+      ),
+      course(course) {}
 
 void ExportStudentsInCoursePage::initInputs() {
     float browseButtonWidth = 140.0f;
-    dropDowns[0] = DropDown("Course name", allData.allCourses, inputPos[0], inputWidth);
     textInputs[0] = TextInput(
-        "Export folder path", inputs[0], inputPos[1],
+        "Export folder path", inputs[0], inputPos[0],
         inputWidth - DEFAULT_ITEM_MARGIN.x - browseButtonWidth
     );
     browseFolderButton = Button(
-        "Select folder", inputPos[1].x + inputWidth - browseButtonWidth, inputPos[1].y,
+        "Select folder", inputPos[0].x + inputWidth - browseButtonWidth, inputPos[0].y,
         browseButtonWidth
     );
 }
@@ -37,18 +45,13 @@ void ExportStudentsInCoursePage::drawInputs() {
     if (textInputs[0].drawTextInput(scroll.y)) {
         submit();
     }
-
-    dropDowns[0].drawDropDown(dropDownItems[0], scroll.y);
 }
 
 void ExportStudentsInCoursePage::submitCallBack() {
-    exportStudentsInCourse(inputs, dropDownItems);
+    exportStudentsInCourse(inputs, course);
 }
 
-void exportStudentsInCoursePage() {
-    ExportStudentsInCoursePage exportStudentsInCoursePage(
-        "Export students in a course", 1, 1, 1,
-        {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.0f}, VIEW_STUDENTS_IN_COURSE
-    );
+void exportStudentsInCoursePage(const std::string &course) {
+    ExportStudentsInCoursePage exportStudentsInCoursePage(course);
     exportStudentsInCoursePage.mainLoop();
 }

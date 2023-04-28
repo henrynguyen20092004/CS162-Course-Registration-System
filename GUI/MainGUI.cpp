@@ -26,8 +26,7 @@
 #include "View/ViewSchoolYearsPage/ViewSchoolYearsPage.h"
 #include "View/ViewSemestersPage/ViewSemestersPage.h"
 #include "View/ViewStudentsInClassPage/ViewStudentsInClassPage.h"
-#include "ViewStudentInCoursePage/ViewStudentInCoursePage.h"
-#include "ViewStudentsInClassPage/ViewStudentsInClassPage.h"
+#include "View/ViewStudentsInCoursePage/ViewStudentsInCoursePage.h"
 
 std::string renderArgs;
 Command commandChoice;
@@ -91,7 +90,7 @@ void selectPage() {
             break;
 
         case VIEW_STUDENTS_IN_COURSE:
-            temp.mainLoop();
+            viewStudentsInCoursePage(renderArgs);
             break;
 
         case VIEW_SCOREBOARD_OF_COURSE:
@@ -147,7 +146,7 @@ void selectPage() {
             break;
 
         case EXPORT_STUDENTS_IN_COURSE:
-            exportStudentsInCoursePage();
+            exportStudentsInCoursePage(renderArgs);
             break;
 
         case UPDATE_COURSE:
