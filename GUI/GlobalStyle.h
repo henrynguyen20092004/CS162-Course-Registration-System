@@ -23,7 +23,6 @@
 #define MAX_INPUT_CHAR 256
 #define DEFAULT_ITEM_HEIGHT 60.0f
 #define DEFAULT_MENU_BUTTON_WIDTH 180.0f
-#define PAGE_Y_OFFSET 45.0f
 #define TEXT_SPACING 1.0f
 #define DEFAULT_PADDING \
     (Vector2) { 20.0f, 20.0f }

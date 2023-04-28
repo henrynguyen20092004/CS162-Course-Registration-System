@@ -10,14 +10,13 @@
 class FormPage : public Page {
    private:
     const char *title, *backButtonText;
-    int numberOfTextInputs, columns;
+    int columns;
     float childrenPosX, titlePosY, firstInputPosY,
         pageHeight = SCREEN_HEIGHT - MENU_HEIGHT;
     Button submitButton, backButton;
-    Vector2 mainBoxSize, mainBoxPosition;
+    Vector2 mainBoxSize, mainBoxPos;
     Vector2 calculateInputPos(float firstInputPosY, int index);
     virtual void initInputs() {}
-    virtual void passwordHide() {}
     virtual void submitCallBack() {}
     virtual void drawInputs();
     virtual void checkFilledFields();
@@ -27,7 +26,7 @@ class FormPage : public Page {
 
    protected:
     char **inputs, **dropDownItems = nullptr;
-    int numberOfDropDowns;
+    int numberOfTextInputs, numberOfDropDowns;
     float inputWidth;
     std::string errorText;
     Command backButtonCommand;
@@ -38,7 +37,6 @@ class FormPage : public Page {
     void submit();
 
    public:
-    const char *buttonText = "Submit";
     FormPage(
         const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
         Vector2 mainBoxSize, Command backButtonCommand = HOME

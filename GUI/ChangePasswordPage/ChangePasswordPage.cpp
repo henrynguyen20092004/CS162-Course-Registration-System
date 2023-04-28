@@ -7,7 +7,7 @@
 class ChangePasswordPage : public FormPage {
    private:
     void initInputs() override;
-    void passwordHide() override;
+    void drawInputs() override;
     void submitCallBack() override;
 
    public:
@@ -20,9 +20,15 @@ void ChangePasswordPage::initInputs() {
     textInputs[2] = TextInput("Confirm new password", inputs[2], inputPos[2], inputWidth);
 }
 
-void ChangePasswordPage::passwordHide() {
+void ChangePasswordPage::drawInputs() {
     for (int i = 0; i < 3; ++i) {
         hidePassword(inputs[i], inputs[i + 3]);
+    }
+
+    for (int i = 0; i < numberOfTextInputs; ++i) {
+        if (textInputs[i].drawTextInput(scroll.y)) {
+            submit();
+        }
     }
 }
 
