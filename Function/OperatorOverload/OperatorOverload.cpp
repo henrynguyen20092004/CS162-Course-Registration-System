@@ -35,3 +35,11 @@ bool operator<(const Student &firstStudent, const Student &secondStudent) {
 bool operator<(const Course &firstCourse, const Course &secondCourse) {
     return firstCourse.name < secondCourse.name;
 }
+
+bool operator<(const Semester &firstSemester, const Semester &secondSemester) {
+    return firstSemester.schoolYearName.size() == secondSemester.schoolYearName.size()
+
+               ? firstSemester.schoolYearName < secondSemester.schoolYearName
+               : firstSemester.schoolYearName.size() <
+                     secondSemester.schoolYearName.size();
+}
