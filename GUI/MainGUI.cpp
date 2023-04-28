@@ -22,6 +22,7 @@
 #include "Update/UpdateStudentResultPage/UpdateStudentResultPage.h"
 #include "View/ViewClassesPage/ViewClassesPage.h"
 #include "View/ViewCoursesPage/ViewCoursesPage.h"
+#include "View/ViewSchoolYearsPage/ViewSchoolYearsPage.h"
 #include "View/ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 
 std::string renderArgs;
@@ -66,7 +67,7 @@ void selectPage() {
             break;
 
         case VIEW_SCHOOL_YEARS:
-            temp.mainLoop();
+            viewSchoolYearsPage();
             break;
 
         case VIEW_SEMESTERS:
