@@ -11,10 +11,10 @@
 
 class DropDown {
    private:
-    const char* label;
+    const char* label = nullptr;
 
    public:
-    Rectangle dropDownBox;
+    Rectangle dropDownBox{0.0f, 0.0f, 0.0f, 0.0f};
     std::string items;
     int activeItemIndex = -1;
     bool editMode = false;

@@ -28,7 +28,7 @@ void CreateStudentPage::submitCallBack() { createStudent(inputs, dropDownItems);
 
 void createStudentPage() {
     CreateStudentPage createStudentPage(
-        "Add student to class", 5, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}
+        "Add a student to class", 5, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}
     );
     createStudentPage.mainLoop();
 }

@@ -5,6 +5,7 @@
 class ViewStudentsInClassPage : public TablePage<Student> {
    private:
     void initColumns() override;
+    void initButtons() override;
     void convertLinkedListToData() override;
 
    public:
@@ -15,7 +16,12 @@ void ViewStudentsInClassPage::initColumns() {
     columnTitle =
         new std::string[col]{"No",     "Student ID",    "First Name", "Last Name",
                              "Gender", "Date of Birth", "Social ID"};
-    columnWidths = new float[col]{50, 200, 120, 200, 70, 150, 150};
+    columnWidths = new float[col]{50.0f, 200.0f, 120.0f, 200.0f, 70.0f, 150.0f, 150.0f};
+}
+
+void ViewStudentsInClassPage::initButtons() {
+    headerButtonTitles[0] = "Add a student";
+    headerButtonTitles[1] = "Import CSV of students";
 }
 
 void ViewStudentsInClassPage::convertLinkedListToData() {
@@ -42,7 +48,7 @@ void ViewStudentsInClassPage::convertLinkedListToData() {
 
 void viewStudentsInClassPage(const std::string& className) {
     ViewStudentsInClassPage viewStudentsInClassPage(
-        "Student of class " + className, 7, getAllStudentsInClass(className)
+        "Student of class " + className, 7, 0, 2, getAllStudentsInClass(className)
     );
     viewStudentsInClassPage.mainLoop();
 }

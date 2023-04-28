@@ -52,7 +52,7 @@ void mainWindow() {
     // Testing
     try {
         logInPage();
-        changePasswordPage();
+        viewClassesPage();
         Page tempPage;
         tempPage.mainLoop();
     } catch (std::runtime_error &error) {

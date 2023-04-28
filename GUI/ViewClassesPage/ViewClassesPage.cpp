@@ -6,6 +6,7 @@
 class ViewClassesPage : public TablePage<std::string> {
    private:
     void initColumns() override;
+    void initButtons() override;
     void convertLinkedListToData() override;
 
    public:
@@ -14,7 +15,14 @@ class ViewClassesPage : public TablePage<std::string> {
 
 void ViewClassesPage::initColumns() {
     columnTitle = new std::string[col]{"No", "Class"};
-    columnWidths = new float[col]{150, 400};
+    columnWidths = new float[col + buttonCol]{
+        150.0f, 400.0f, TABLE_BUTTON_CELL_WIDTH, TABLE_BUTTON_CELL_WIDTH};
+}
+
+void ViewClassesPage::initButtons() {
+    headerButtonTitles[0] = "Create a class";
+    firstRowButtonTitles[0] = "Student";
+    firstRowButtonTitles[1] = "Score";
 }
 
 void ViewClassesPage::convertLinkedListToData() {
@@ -34,6 +42,6 @@ void ViewClassesPage::convertLinkedListToData() {
 }
 
 void viewClassesPage() {
-    ViewClassesPage viewClassesPage("All classes", 2, allData.allClasses);
+    ViewClassesPage viewClassesPage("All classes", 2, 2, 1, allData.allClasses);
     viewClassesPage.mainLoop();
 }
