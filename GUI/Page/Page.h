@@ -12,6 +12,7 @@ class Page {
 
    protected:
     bool stopLoop = false;
+    bool isLoggedIn();
 
    public:
     Page();

@@ -29,7 +29,8 @@ void CreateSemesterPage::submitCallBack() {
 
 void createSemesterPage() {
     CreateSemesterPage createSemesterPage(
-        "Create semester", 2, 2, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.35f}
+        "Create semester", 2, 2, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.35f},
+        VIEW_SEMESTERS
     );
     createSemesterPage.mainLoop();
 }

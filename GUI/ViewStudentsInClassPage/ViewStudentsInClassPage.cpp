@@ -22,6 +22,8 @@ void ViewStudentsInClassPage::initColumns() {
 void ViewStudentsInClassPage::initButtons() {
     headerButtonTitles[0] = "Add a student";
     headerButtonTitles[1] = "Import CSV of students";
+    headerButtonCommands =
+        new Command[headerButton]{CREATE_STUDENT, IMPORT_STUDENTS_IN_CLASS};
 }
 
 void ViewStudentsInClassPage::convertLinkedListToData() {

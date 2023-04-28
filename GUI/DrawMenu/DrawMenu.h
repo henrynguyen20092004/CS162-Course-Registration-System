@@ -3,6 +3,6 @@
 
 #include "../DropDown/DropDown.h"
 
-void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems);
+void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems, bool& stopLoop);
 
 #endif

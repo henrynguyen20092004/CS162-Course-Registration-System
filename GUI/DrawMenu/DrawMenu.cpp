@@ -2,36 +2,39 @@
 
 #include "../Button/Button.h"
 
-void drawStudentMenu() {
-    Button studentInformation(
-        "Your information", SCREEN_WIDTH / 1.6f, DEFAULT_PADDING.y * 2,
+void drawStudentMenu(bool& stopLoop) {
+    Button myInfoButton(
+        "My information", SCREEN_WIDTH / 1.6f, DEFAULT_PADDING.y * 2,
         DEFAULT_MENU_BUTTON_WIDTH
     );
-    Button currentCoursesButton(
-        "Current course",
+    Button myCoursesButton(
+        "My courses",
         SCREEN_WIDTH / 1.6f + DEFAULT_MENU_BUTTON_WIDTH + DEFAULT_ITEM_MARGIN.x,
         DEFAULT_PADDING.y * 2, DEFAULT_MENU_BUTTON_WIDTH
     );
-    Button scoreboard(
-        "Scoreboard",
+    Button myScoreboardButton(
+        "My scoreboard",
         SCREEN_WIDTH / 1.6f + 2 * (DEFAULT_MENU_BUTTON_WIDTH + DEFAULT_ITEM_MARGIN.x),
         DEFAULT_PADDING.y * 2, DEFAULT_MENU_BUTTON_WIDTH
     );
 
-    if (studentInformation.drawButton()) {
-        // viewStudentInformationPage
+    if (myInfoButton.drawButton()) {
+        commandChoice = VIEW_STUDENT_INFO;
+        stopLoop = true;
     }
 
-    if (currentCoursesButton.drawButton()) {
-        // viewCurrentCoursesPage
+    if (myCoursesButton.drawButton()) {
+        commandChoice = VIEW_COURSES_OF_STUDENT;
+        stopLoop = true;
     }
 
-    if (scoreboard.drawButton()) {
-        // viewScoreboardPage
+    if (myScoreboardButton.drawButton()) {
+        commandChoice = VIEW_SCOREBOARD_OF_STUDENT;
+        stopLoop = true;
     }
 }
 
-void drawAdminMenu() {
+void drawAdminMenu(bool& stopLoop) {
     Button schoolYearButton(
         "School year", SCREEN_WIDTH / 2.0f, DEFAULT_PADDING.y * 2,
         DEFAULT_MENU_BUTTON_WIDTH
@@ -53,45 +56,52 @@ void drawAdminMenu() {
     );
 
     if (schoolYearButton.drawButton()) {
-        // viewSchoolYearPage
+        commandChoice = VIEW_SCHOOL_YEARS;
+        stopLoop = true;
     }
 
     if (semesterButton.drawButton()) {
-        // viewSemesterPage
+        commandChoice = VIEW_SEMESTERS;
+        stopLoop = true;
     }
 
     if (courseButton.drawButton()) {
-        // viewCoursePage
+        commandChoice = VIEW_COURSES;
+        stopLoop = true;
     }
 
     if (classButton.drawButton()) {
-        // viewClassPage
+        commandChoice = VIEW_CLASSES;
+        stopLoop = true;
     }
 }
 
-void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems) {
+void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems, bool& stopLoop) {
     DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, MENU_HEIGHT}, SECONDARY_COLOR);
     DrawTextureV(defaultAvatar, AVATAR_POSITION, WHITE);
 
     menuDropDown.drawDropDown(menuDropDownItems, 0.0f, WHITE);
 
     if (currentUser.username == "admin") {
-        drawAdminMenu();
+        drawAdminMenu(stopLoop);
     } else {
-        drawStudentMenu();
+        drawStudentMenu(stopLoop);
     }
 
     switch (menuDropDown.activeItemIndex) {
         case 0:
-            // changeCurrentSemesterPage
+            commandChoice = CHANGE_CURRENT_SEMESTER;
+            stopLoop = true;
             break;
 
         case 1:
-            // changePasswordPage
+            commandChoice = CHANGE_PASSWORD;
+            stopLoop = true;
             break;
 
         case 2:
-            // logoutPage
+            commandChoice = LOG_OUT;
+            stopLoop = true;
             break;
     }
 }

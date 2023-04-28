@@ -27,7 +27,8 @@ class UpdateStudentResultPage : public FormPage {
 
 UpdateStudentResultPage::UpdateStudentResultPage()
     : FormPage(
-          "Update student's result", 4, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.75f}
+          "Update student's result", 4, 2, 2,
+          {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.75f}, VIEW_SCOREBOARD_OF_COURSE
       ) {
     previousCourseDropDownItem = new char[MAX_INPUT_CHAR];
     previousCourseDropDownItem[0] = '\0';

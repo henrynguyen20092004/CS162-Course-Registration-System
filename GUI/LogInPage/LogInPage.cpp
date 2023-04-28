@@ -21,12 +21,16 @@ void LogInPage::initInputs() {
 
 void LogInPage::passwordHide() { hidePassword(inputs[1], inputs[2]); }
 
-void LogInPage::submitCallBack() { currentUser = logIn(inputs); }
+void LogInPage::submitCallBack() {
+    currentUser = logIn(inputs);
+    commandChoice = HOME;
+    stopLoop = true;
+}
 
 void logInPage() {
     LogInPage logInPage(
-        "Log in to continue", 3, 0, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.25f},
-        "Log in"
+        "Log in to continue", 3, 0, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.25f}
     );
+    logInPage.buttonText = "Log in";
     logInPage.mainLoop();
 }

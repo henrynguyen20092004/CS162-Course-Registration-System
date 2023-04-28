@@ -32,7 +32,8 @@ void CreateCoursePage::submitCallBack() {
 
 void createCoursePage() {
     CreateCoursePage createCoursePage(
-        "Add course to semester", 6, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}
+        "Add course to semester", 6, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f},
+        VIEW_COURSES
     );
     createCoursePage.mainLoop();
 }
