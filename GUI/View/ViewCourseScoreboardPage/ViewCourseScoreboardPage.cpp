@@ -1,15 +1,14 @@
 #include "ViewCourseScoreBoardPage.h"
 
-#include <math.h>
-
-#include "../../Function/ConvertScoreToString/ConvertScoreToString.h"
-#include "../../Function/GetAll/GetAllScoresOfStudentsInCourse/GetAllScoresOfStudentsInCourse.h"
-#include "../../Function/OperatorOverload/OperatorOverload.h"
-#include "../TablePage/TablePage.h"
+#include "../../../Function/ConvertScoreToString/ConvertScoreToString.h"
+#include "../../../Function/GetAll/GetAllScores/GetAllScores.h"
+#include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../TablePage/TablePage.h"
 
 class ViewCourseScoreBoardPage : public TablePage<Score> {
    private:
     void initColumns() override;
+    void initButtons() override;
     void convertLinkedListToData() override;
 
    public:
@@ -19,7 +18,16 @@ class ViewCourseScoreBoardPage : public TablePage<Score> {
 void ViewCourseScoreBoardPage::initColumns() {
     columnTitle =
         new std::string[col]{"No", "ID", "Name", "Mid-term", "Final", "Other", "Total"};
-    columnWidths = new float[col]{50, 200, 300, 150, 150, 150, 150};
+    columnWidths = new float[col]{
+        50.0f, 200.0f, 250.0f, 150.0f, 150.0f, 150.0f, 150.0f,
+    };
+}
+
+void ViewCourseScoreBoardPage::initButtons() {
+    headerButtonTitles[0] = "Update student's result";
+    headerButtonTitles[1] = "Import CSV of scoreboard";
+    headerButtonCommands =
+        new Command[headerButton]{UPDATE_STUDENT_RESULT, IMPORT_SCOREBOARD};
 }
 
 void ViewCourseScoreBoardPage::convertLinkedListToData() {
@@ -46,7 +54,7 @@ void ViewCourseScoreBoardPage::convertLinkedListToData() {
 
 void viewCourseScoreboardPage(const std::string& courseIDAndClassName) {
     ViewCourseScoreBoardPage viewCourseScoreboardPage(
-        courseIDAndClassName + " scoreboard:", 7,
+        courseIDAndClassName + " scoreboard:", 7, 0, 2,
         getAllScoresOfStudentsInCourse(courseIDAndClassName)
     );
 

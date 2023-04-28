@@ -22,13 +22,13 @@
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
 #include "Update/UpdateStudentResultPage/UpdateStudentResultPage.h"
 #include "View/ViewClassesPage/ViewClassesPage.h"
+#include "View/ViewCourseScoreboardPage/ViewCourseScoreboardPage.h"
 #include "View/ViewCoursesOfStudentPage/ViewCoursesOfStudentPage.h"
 #include "View/ViewCoursesPage/ViewCoursesPage.h"
 #include "View/ViewSchoolYearsPage/ViewSchoolYearsPage.h"
 #include "View/ViewSemestersPage/ViewSemestersPage.h"
 #include "View/ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 #include "View/ViewStudentsInCoursePage/ViewStudentsInCoursePage.h"
-#include "ViewCourseScoreboardPage/ViewCourseScoreboardPage.h"
 
 std::string renderArgs;
 Command commandChoice;
@@ -92,7 +92,7 @@ void selectPage() {
             break;
 
         case VIEW_SCOREBOARD_OF_COURSE:
-            temp.mainLoop();
+            viewCourseScoreboardPage(renderArgs);
             break;
 
         case VIEW_SCOREBOARD_OF_CLASS:
