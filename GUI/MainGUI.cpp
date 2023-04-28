@@ -20,9 +20,9 @@
 #include "Page/Page.h"
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
 #include "Update/UpdateStudentResultPage/UpdateStudentResultPage.h"
-#include "ViewClassesPage/ViewClassesPage.h"
-#include "ViewCoursesPage/ViewCoursesPage.h"
-#include "ViewStudentsInClassPage/ViewStudentsInClassPage.h"
+#include "View/ViewClassesPage/ViewClassesPage.h"
+#include "View/ViewCoursesPage/ViewCoursesPage.h"
+#include "View/ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 
 std::string renderArgs;
 Command commandChoice;
@@ -61,48 +61,20 @@ void selectPage() {
             logOut(currentUser);
             break;
 
-        case CREATE_SCHOOL_YEAR:
-            createSchoolYearPage();
-            break;
-
-        case CREATE_CLASS:
-            createClassPage();
-            break;
-
-        case CREATE_STUDENT:
-            createStudentPage();
-            break;
-
-        case IMPORT_STUDENTS_IN_CLASS:
+        case VIEW_STUDENT_INFO:
             temp.mainLoop();
             break;
 
-        case CREATE_SEMESTER:
-            createSemesterPage();
-            break;
-
-        case CREATE_COURSE:
-            createCoursePage();
-            break;
-
-        case IMPORT_STUDENTS_IN_COURSE:
-            importStudentsInCoursePage();
-            break;
-
-        case UPDATE_COURSE:
-            updateCoursePage();
-            break;
-
-        case ADD_STUDENT_TO_COURSE:
-            addStudentToCoursePage();
-            break;
-
-        case REMOVE_STUDENT_FROM_COURSE:
+        case VIEW_SCHOOL_YEARS:
             temp.mainLoop();
             break;
 
-        case DELETE_COURSE:
+        case VIEW_SEMESTERS:
             temp.mainLoop();
+            break;
+
+        case VIEW_COURSES:
+            viewCoursesPage();
             break;
 
         case VIEW_CLASSES:
@@ -117,23 +89,15 @@ void selectPage() {
             temp.mainLoop();
             break;
 
-        case EXPORT_STUDENTS_IN_COURSE:
-            exportStudentsInCoursePage();
-            break;
-
-        case IMPORT_SCOREBOARD:
-            importScoreboardPage();
-            break;
-
         case VIEW_SCOREBOARD_OF_COURSE:
             temp.mainLoop();
             break;
 
-        case UPDATE_STUDENT_RESULT:
-            updateStudentResultPage();
+        case VIEW_SCOREBOARD_OF_CLASS:
+            temp.mainLoop();
             break;
 
-        case VIEW_SCOREBOARD_OF_CLASS:
+        case VIEW_SCOREBOARD_OF_STUDENT:
             temp.mainLoop();
             break;
 
@@ -141,7 +105,59 @@ void selectPage() {
             temp.mainLoop();
             break;
 
-        case VIEW_SCOREBOARD_OF_STUDENT:
+        case CREATE_SCHOOL_YEAR:
+            createSchoolYearPage();
+            break;
+
+        case CREATE_CLASS:
+            createClassPage();
+            break;
+
+        case CREATE_STUDENT:
+            createStudentPage();
+            break;
+
+        case CREATE_SEMESTER:
+            createSemesterPage();
+            break;
+
+        case CREATE_COURSE:
+            createCoursePage();
+            break;
+
+        case ADD_STUDENT_TO_COURSE:
+            addStudentToCoursePage();
+            break;
+
+        case IMPORT_STUDENTS_IN_CLASS:
+            temp.mainLoop();
+            break;
+
+        case IMPORT_STUDENTS_IN_COURSE:
+            importStudentsInCoursePage();
+            break;
+
+        case IMPORT_SCOREBOARD:
+            importScoreboardPage();
+            break;
+
+        case EXPORT_STUDENTS_IN_COURSE:
+            exportStudentsInCoursePage();
+            break;
+
+        case UPDATE_COURSE:
+            updateCoursePage();
+            break;
+
+        case UPDATE_STUDENT_RESULT:
+            updateStudentResultPage();
+            break;
+
+        case REMOVE_STUDENT_FROM_COURSE:
+            temp.mainLoop();
+            break;
+
+        case DELETE_COURSE:
             temp.mainLoop();
             break;
     }

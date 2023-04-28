@@ -22,7 +22,7 @@ class UpdateCoursePage : public FormPage {
 
 UpdateCoursePage::UpdateCoursePage()
     : FormPage(
-          "Update Course Information", 4, 3, 2,
+          "Update course information", 4, 3, 2,
           {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}, VIEW_COURSES
       ) {
     previousCourseDropDownItem = new char[MAX_INPUT_CHAR];

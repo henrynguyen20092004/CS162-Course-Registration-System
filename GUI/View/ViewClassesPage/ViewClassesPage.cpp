@@ -1,7 +1,7 @@
 #include "ViewClassesPage.h"
 
-#include "../../Struct/Data.h"
-#include "../TablePage/TablePage.h"
+#include "../../../Struct/Data.h"
+#include "../../TablePage/TablePage.h"
 
 class ViewClassesPage : public TablePage<std::string> {
    private:
@@ -45,6 +45,6 @@ void ViewClassesPage::convertLinkedListToData() {
 }
 
 void viewClassesPage() {
-    ViewClassesPage viewClassesPage("All classes", 2, 2, 1, allData.allClasses);
+    ViewClassesPage viewClassesPage("List of classes", 2, 2, 1, allData.allClasses);
     viewClassesPage.mainLoop();
 }

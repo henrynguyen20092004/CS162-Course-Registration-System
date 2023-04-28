@@ -13,4 +13,5 @@ bool operator==(
 );
 bool operator<(const Student &firstStudent, const Student &secondStudent);
 bool operator<(const Course &firstCourse, const Course &secondCourse);
+
 #endif

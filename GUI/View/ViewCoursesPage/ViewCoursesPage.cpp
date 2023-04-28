@@ -1,15 +1,13 @@
 #include "ViewCoursesPage.h"
 
-#include <algorithm>
-#include <cstring>
-
-#include "../../Function/GetAll/GetAllCourses/GetAllCourses.h"
-#include "../../Function/OperatorOverload/OperatorOverload.h"
-#include "../TablePage/TablePage.h"
+#include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
+#include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../TablePage/TablePage.h"
 
 class ViewCoursesPage : public TablePage<Course> {
    private:
     void initColumns() override;
+    void initButtons() override;
     void convertLinkedListToData() override;
 
    public:
@@ -18,17 +16,32 @@ class ViewCoursesPage : public TablePage<Course> {
 
 void ViewCoursesPage::initColumns() {
     columnTitle = new std::string[col]{
-        "No",
-        "Course id",
-        "Course name",
-        "Class name",
-        "Teacher name",
-        "Credits",
-        "Maximum students",
-        "The day-performed",
-        "The session-performed"};
+        "No",      "Course ID",        "Course name", "Class name", "Teacher name",
+        "Credits", "Maximum students", "Day",         "Session"};
+    columnWidths = new float[col + buttonCol]{
+        50.0f,
+        100.0f,
+        200.0f,
+        120.0f,
+        180.0f,
+        80.0f,
+        180.0f,
+        80.0f,
+        80.0f,
+        TABLE_BUTTON_CELL_WIDTH,
+        TABLE_BUTTON_CELL_WIDTH};
+}
 
-    columnWidths = new float[col]{50, 100, 330, 120, 300, 100, 180, 190, 220};
+void ViewCoursesPage::initButtons() {
+    headerButtonTitles[0] = "Create a course";
+    headerButtonTitles[1] = "Update a course";
+    headerButtonTitles[2] = "Delete a course";
+    firstRowButtonTitles[0] = "Student";
+    firstRowButtonTitles[1] = "Score";
+    headerButtonCommands =
+        new Command[headerButton]{CREATE_COURSE, UPDATE_COURSE, DELETE_COURSE};
+    columnButtonCommands =
+        new Command[buttonCol]{VIEW_STUDENTS_IN_COURSE, VIEW_SCOREBOARD_OF_COURSE};
 }
 
 void ViewCoursesPage::convertLinkedListToData() {
@@ -56,6 +69,6 @@ void ViewCoursesPage::convertLinkedListToData() {
 }
 
 void viewCoursesPage() {
-    ViewCoursesPage viewCoursesPage("List of cousres", 9, getAllCourses());
+    ViewCoursesPage viewCoursesPage("List of courses", 9, 2, 3, getAllCourses());
     viewCoursesPage.mainLoop();
 }
