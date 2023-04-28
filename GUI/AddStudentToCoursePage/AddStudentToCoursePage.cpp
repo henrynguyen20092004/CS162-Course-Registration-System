@@ -24,7 +24,8 @@ void AddStudentToCoursePage::submitCallBack() {
 
 void addStudentToCoursePage() {
     AddStudentToCoursePage addStudentToCoursePage(
-        "Add student to course", 1, 1, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.0f}
+        "Add student to course", 1, 1, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.0f},
+        VIEW_STUDENTS_IN_COURSE
     );
     addStudentToCoursePage.mainLoop();
 }

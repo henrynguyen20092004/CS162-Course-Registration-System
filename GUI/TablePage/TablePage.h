@@ -23,6 +23,7 @@ class TablePage : public Page {
     float *columnWidths = nullptr, tableWidth = 0.0f, firstRowButtonsPosX = 0.0f;
     Node<T> *dataLinkedList;
     std::string **tableData, *columnTitle = nullptr, title;
+    Command *columnButtonCommands = nullptr, *headerButtonCommands = nullptr;
     Vector2 tablePos{0.0f, 0.0f};
     Button **columnButtons = nullptr, *headerButtons = nullptr;
     Table table;

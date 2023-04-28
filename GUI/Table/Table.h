@@ -18,21 +18,23 @@ class Table {
     float *columnWidths, tableWidth = 0.0f, tableHeight = 0.0f, tableOffsetY = 0.0f,
                          backgroundHeight = 0.0f;
     std::string **tableData = nullptr, *columnTitle = nullptr;
+    Command *columnButtonCommands = nullptr, *headerButtonCommands = nullptr;
     Vector2 tablePos{0.0f, 0.0f}, initialTextPos{0.0f, 0.0f}, scroll{0.0f, 0.0f};
     Button **columnButtons = nullptr, *headerButtons = nullptr;
     void drawGrid();
     void drawText();
-    void drawButton();
+    void drawButton(bool& stopLoop);
 
    public:
     Table();
     Table(
         std::string** tableData, std::string* columnTitle, const char* tableTitle,
         int row, int col, int buttonCol, int headerButton, int* rowHeights,
-        float* columnWidths, float tableWidth, Vector2 tablePos, Button** columnButtons,
+        float* columnWidths, float tableWidth, Command* columnButtonCommands,
+        Command* headerButtonCommands, Vector2 tablePos, Button** columnButtons,
         Button* headerButtons
     );
-    void drawTable();
+    void drawTable(bool& stopLoop);
 };
 
 #endif

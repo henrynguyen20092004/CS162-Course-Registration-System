@@ -23,6 +23,9 @@ void ViewClassesPage::initButtons() {
     headerButtonTitles[0] = "Create a class";
     firstRowButtonTitles[0] = "Student";
     firstRowButtonTitles[1] = "Score";
+    headerButtonCommands = new Command[headerButton]{CREATE_CLASS};
+    columnButtonCommands =
+        new Command[buttonCol]{VIEW_STUDENTS_IN_CLASS, VIEW_SCOREBOARD_OF_CLASS};
 }
 
 void ViewClassesPage::convertLinkedListToData() {

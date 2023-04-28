@@ -3,6 +3,7 @@
 #include "MainGUI.h"
 
 #include "../Function/CurrentSemester/CurrentSemester.h"
+#include "../Function/LogOut/LogOut.h"
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "ChangePasswordPage/ChangePasswordPage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
@@ -22,6 +23,8 @@
 #include "ViewClassesPage/ViewClassesPage.h"
 #include "ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 
+std::string renderArgs;
+Command commandChoice;
 Font titleFont, textFont;
 Texture2D defaultAvatar;
 User currentUser;
@@ -37,6 +40,112 @@ void SetDefaultStyle() {
     GuiSetFont(textFont);
 }
 
+void selectPage() {
+    Page temp;
+
+    switch (commandChoice) {
+        case HOME:
+            temp.mainLoop();
+            break;
+
+        case CHANGE_CURRENT_SEMESTER:
+            temp.mainLoop();
+            break;
+
+        case CHANGE_PASSWORD:
+            changePasswordPage();
+            break;
+
+        case LOG_OUT:
+            logOut(currentUser);
+            break;
+
+        case CREATE_SCHOOL_YEAR:
+            createSchoolYearPage();
+            break;
+
+        case CREATE_CLASS:
+            createClassPage();
+            break;
+
+        case CREATE_STUDENT:
+            createStudentPage();
+            break;
+
+        case IMPORT_STUDENTS_IN_CLASS:
+            temp.mainLoop();
+            break;
+
+        case CREATE_SEMESTER:
+            createSemesterPage();
+            break;
+
+        case CREATE_COURSE:
+            createCoursePage();
+            break;
+
+        case IMPORT_STUDENTS_IN_COURSE:
+            importStudentsInCoursePage();
+            break;
+
+        case UPDATE_COURSE:
+            updateCoursePage();
+            break;
+
+        case ADD_STUDENT_TO_COURSE:
+            addStudentToCoursePage();
+            break;
+
+        case REMOVE_STUDENT_FROM_COURSE:
+            temp.mainLoop();
+            break;
+
+        case DELETE_COURSE:
+            temp.mainLoop();
+            break;
+
+        case VIEW_CLASSES:
+            viewClassesPage();
+            break;
+
+        case VIEW_STUDENTS_IN_CLASS:
+            viewStudentsInClassPage(renderArgs);
+            break;
+
+        case VIEW_STUDENTS_IN_COURSE:
+            temp.mainLoop();
+            break;
+
+        case EXPORT_STUDENTS_IN_COURSE:
+            exportStudentsInCoursePage();
+            break;
+
+        case IMPORT_SCOREBOARD:
+            importScoreboardPage();
+            break;
+
+        case VIEW_SCOREBOARD_OF_COURSE:
+            temp.mainLoop();
+            break;
+
+        case UPDATE_STUDENT_RESULT:
+            updateStudentResultPage();
+            break;
+
+        case VIEW_SCOREBOARD_OF_CLASS:
+            temp.mainLoop();
+            break;
+
+        case VIEW_COURSES_OF_STUDENT:
+            temp.mainLoop();
+            break;
+
+        case VIEW_SCOREBOARD_OF_STUDENT:
+            temp.mainLoop();
+            break;
+    }
+}
+
 void mainWindow() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Course Registration System");
 
@@ -49,17 +158,17 @@ void mainWindow() {
     SetTargetFPS(60);
     SetDefaultStyle();
 
-    // Testing
-    try {
-        logInPage();
-        viewClassesPage();
-        Page tempPage;
-        tempPage.mainLoop();
-    } catch (std::runtime_error &error) {
-        UnloadImage(windowIcon);
-        UnloadFont(titleFont);
-        UnloadFont(textFont);
-        UnloadTexture(defaultAvatar);
-        CloseWindow();
-    }
+    do {
+        if (currentUser.username == "") {
+            logInPage();
+        } else {
+            selectPage();
+        }
+    } while (commandChoice != EXIT);
+
+    UnloadImage(windowIcon);
+    UnloadFont(titleFont);
+    UnloadFont(textFont);
+    UnloadTexture(defaultAvatar);
+    CloseWindow();
 }

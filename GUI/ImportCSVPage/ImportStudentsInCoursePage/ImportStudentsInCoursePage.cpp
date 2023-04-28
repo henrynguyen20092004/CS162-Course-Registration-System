@@ -20,7 +20,8 @@ void ImportStudentsInCoursePage::initInputs() {
 
 void importStudentsInCoursePage() {
     ImportStudentsInCoursePage importStudentsInCoursePage(
-        "Import students in a course", "StudentsInCourse.csv", &importStudentsInCourse
+        "Import students in a course", "StudentsInCourse.csv", &importStudentsInCourse,
+        VIEW_STUDENTS_IN_COURSE
     );
 
     importStudentsInCoursePage.mainLoop();

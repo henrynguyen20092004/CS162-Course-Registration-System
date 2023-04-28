@@ -6,6 +6,8 @@
 
 Page::Page() { menuDropDownItems = new char[MAX_INPUT_CHAR]; }
 
+bool Page::isLoggedIn() { return currentUser.username != ""; }
+
 void Page::mainLoop() {
     menuDropDown = DropDown(
         ("Welcome, " + currentUser.username).c_str(),
@@ -17,15 +19,16 @@ void Page::mainLoop() {
 
     while (!stopLoop) {
         if (WindowShouldClose()) {
-            throw std::runtime_error("Close window");
+            commandChoice = EXIT;
+            break;
         }
 
         BeginDrawing();
         ClearBackground(PRIMARY_COLOR);
         drawPage();
 
-        if (currentUser.username != "") {
-            drawMenu(menuDropDown, menuDropDownItems);
+        if (isLoggedIn()) {
+            drawMenu(menuDropDown, menuDropDownItems, stopLoop);
         }
 
         EndDrawing();

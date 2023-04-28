@@ -8,23 +8,26 @@
 
 FormPage::FormPage(
     const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
-    Vector2 mainBoxSize, const char *buttonText
+    Vector2 mainBoxSize, Command backButtonCommand
 )
     : title(title),
+      backButtonText("#114#Back"),
       numberOfTextInputs(numberOfTextInputs),
       numberOfDropDowns(numberOfDropDowns),
       columns(columns),
       mainBoxSize(mainBoxSize),
-      mainBoxPosition(
-          {getCenterX(mainBoxSize.x), getCenterY(mainBoxSize.y) + PAGE_Y_OFFSET}
-      ),
-      buttonText(buttonText) {
+      backButtonCommand(backButtonCommand) {
+    this->mainBoxSize.y += isLoggedIn() * (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y);
+    mainBoxPosition = {
+        getCenterX(mainBoxSize.x), getCenterY(mainBoxSize.y) + PAGE_Y_OFFSET};
     inputWidth =
         (mainBoxSize.x - DEFAULT_PADDING.x * 2 - DEFAULT_ITEM_MARGIN.x * (columns - 1)) /
         columns;
     childrenPosX = mainBoxPosition.x + DEFAULT_PADDING.x;
-    firstInputPosY = mainBoxPosition.y + DEFAULT_PADDING.y + DEFAULT_TITLE_SIZE +
-                     DEFAULT_TEXT_MARGIN.y + DEFAULT_TEXT_SIZE + DEFAULT_ITEM_MARGIN.y;
+    titlePosY = mainBoxPosition.y + DEFAULT_PADDING.y +
+                isLoggedIn() * (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y);
+    firstInputPosY = titlePosY + DEFAULT_TITLE_SIZE + DEFAULT_TEXT_MARGIN.y +
+                     DEFAULT_TEXT_SIZE + DEFAULT_ITEM_MARGIN.y;
     inputs = new char *[numberOfTextInputs];
     textInputs = new TextInput[numberOfTextInputs];
     inputPos = new Vector2[numberOfTextInputs + numberOfDropDowns];
@@ -62,6 +65,10 @@ void FormPage::initComponents() {
         mainBoxPosition.y + mainBoxSize.y - DEFAULT_PADDING.y - DEFAULT_ITEM_HEIGHT,
         inputWidth
     );
+    backButton = Button(
+        backButtonText, mainBoxPosition.x + mainBoxSize.x - DEFAULT_PADDING.x - 80.0f,
+        mainBoxPosition.y + DEFAULT_PADDING.y + scroll.y, 80.0f
+    );
     initInputs();
 
     if (dropDowns) {
@@ -87,14 +94,17 @@ void FormPage::drawPage() {
     }
 
     DrawRectangleV({mainBoxPosition.x, mainBoxPosition.y + scroll.y}, mainBoxSize, WHITE);
-    drawDefaultTitle(
-        titleFont, title, {childrenPosX, mainBoxPosition.y + DEFAULT_PADDING.y + scroll.y}
-    );
+    drawDefaultTitle(titleFont, title, {childrenPosX, titlePosY + scroll.y});
     drawErrorText();
     dropDownLockGUI();
 
     if (submitButton.drawButton(scroll.y)) {
         submit();
+    }
+
+    if (isLoggedIn() && backButton.drawButton(scroll.y)) {
+        commandChoice = backButtonCommand;
+        stopLoop = true;
     }
 
     drawInputs();
@@ -160,7 +170,7 @@ void FormPage::submit() {
     try {
         checkFilledFields();
         submitCallBack();
-        stopLoop = true;
+        errorText = "";
     } catch (std::exception &error) {
         errorText = error.what();
     }

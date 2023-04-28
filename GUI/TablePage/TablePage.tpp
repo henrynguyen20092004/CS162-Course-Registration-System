@@ -144,7 +144,8 @@ void TablePage<T>::initComponents() {
     generateButtons();
     table = Table(
         tableData, columnTitle, title.c_str(), row, col, buttonCol, headerButton,
-        rowHeights, columnWidths, tableWidth, tablePos, columnButtons, headerButtons
+        rowHeights, columnWidths, tableWidth, columnButtonCommands, headerButtonCommands,
+        tablePos, columnButtons, headerButtons
     );
 }
 
@@ -157,7 +158,7 @@ void TablePage<T>::createAndSortDataArray(T *&dataArray) {
 
 template <typename T>
 void TablePage<T>::drawPage() {
-    table.drawTable();
+    table.drawTable(stopLoop);
 }
 
 template <typename T>
@@ -176,6 +177,8 @@ TablePage<T>::~TablePage() {
     delete[] columnWidths;
     delete[] headerButtons;
     delete[] headerButtonTitles;
+    delete[] headerButtonCommands;
     delete[] firstRowButtonTitles;
     delete[] columnButtons;
+    delete[] columnButtonCommands;
 }

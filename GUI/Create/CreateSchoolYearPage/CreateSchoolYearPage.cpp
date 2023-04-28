@@ -22,7 +22,8 @@ void CreateSchoolYearPage::submitCallBack() { createSchoolYear(inputs[0]); }
 
 void createSchoolYearPage() {
     CreateSchoolYearPage createSchoolYearPage(
-        "Create a school year", 1, 0, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 3.0f}
+        "Create a school year", 1, 0, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 3.0f},
+        VIEW_SCHOOL_YEARS
     );
     createSchoolYearPage.mainLoop();
 }

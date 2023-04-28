@@ -48,7 +48,7 @@ void ExportStudentsInCoursePage::submitCallBack() {
 void exportStudentsInCoursePage() {
     ExportStudentsInCoursePage exportStudentsInCoursePage(
         "Export students in a course", 1, 1, 1,
-        {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.0f}
+        {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.0f}, VIEW_STUDENTS_IN_COURSE
     );
     exportStudentsInCoursePage.mainLoop();
 }

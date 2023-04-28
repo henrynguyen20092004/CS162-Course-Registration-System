@@ -4,9 +4,12 @@
 #include "../OpenDialog/OpenDialog.h"
 
 ImportCSVPage::ImportCSVPage(
-    const char *title, const char *CSVName, void (*importCallBack)(char **, char **)
+    const char *title, const char *CSVName, void (*importCallBack)(char **, char **),
+    Command backButtonCommand
 )
-    : FormPage(title, 2, 2, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.5f}),
+    : FormPage(
+          title, 2, 2, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.5f}, backButtonCommand
+      ),
       CSVName(CSVName),
       importCallBack(importCallBack) {}
 

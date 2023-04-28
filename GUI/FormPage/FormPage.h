@@ -9,10 +9,11 @@
 
 class FormPage : public Page {
    private:
-    const char *title, *buttonText;
+    const char *title, *backButtonText;
     int numberOfTextInputs, columns;
-    float childrenPosX, firstInputPosY, pageHeight = SCREEN_HEIGHT - MENU_HEIGHT;
-    Button submitButton;
+    float childrenPosX, titlePosY, firstInputPosY,
+        pageHeight = SCREEN_HEIGHT - MENU_HEIGHT;
+    Button submitButton, backButton;
     Vector2 mainBoxSize, mainBoxPosition;
     Vector2 calculateInputPos(float firstInputPosY, int index);
     virtual void initInputs() {}
@@ -29,6 +30,7 @@ class FormPage : public Page {
     int numberOfDropDowns;
     float inputWidth;
     std::string errorText;
+    Command backButtonCommand;
     TextInput *textInputs;
     DropDown *dropDowns = nullptr;
     Vector2 *inputPos, scroll{0.0f, 0.0f};
@@ -36,9 +38,10 @@ class FormPage : public Page {
     void submit();
 
    public:
+    const char *buttonText = "Submit";
     FormPage(
         const char *title, int numberOfTextInputs, int numberOfDropDowns, int columns,
-        Vector2 mainBoxSize, const char *buttonText = "Submit"
+        Vector2 mainBoxSize, Command backButtonCommand = HOME
     );
     ~FormPage();
 };
