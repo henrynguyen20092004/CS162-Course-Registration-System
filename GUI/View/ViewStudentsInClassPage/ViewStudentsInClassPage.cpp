@@ -1,6 +1,8 @@
-#include "../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
-#include "../../Function/OperatorOverload/OperatorOverload.h"
-#include "../TablePage/TablePage.h"
+#include "ViewStudentsInClassPage.h"
+
+#include "../../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
+#include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../TablePage/TablePage.h"
 
 class ViewStudentsInClassPage : public TablePage<Student> {
    private:
@@ -50,7 +52,8 @@ void ViewStudentsInClassPage::convertLinkedListToData() {
 
 void viewStudentsInClassPage(const std::string& className) {
     ViewStudentsInClassPage viewStudentsInClassPage(
-        "Student of class " + className, 7, 0, 2, getAllStudentsInClass(className)
+        "List of students of class " + className, 7, 0, 2,
+        getAllStudentsInClass(className)
     );
     viewStudentsInClassPage.mainLoop();
 }
