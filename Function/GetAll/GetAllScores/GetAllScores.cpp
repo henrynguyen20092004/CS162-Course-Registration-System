@@ -1,7 +1,7 @@
 #include "GetAllScores.h"
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckStudentID/CheckStudentID.h"
+#include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void readScore(std::ifstream& fin, Score& score) {
@@ -28,62 +28,35 @@ void readScore(std::ifstream& fin, Score& score) {
 Node<Score>* getAllScores() { return getAll("Data/Score.txt", &readScore); }
 
 Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course) {
+    Node<Score>*allScoresOfStudentsInCourse = nullptr, *cur = allData.allScores,
+    *curScore;
     std::string* courseIDAndClassName = new std::string[2];
     splitCourseToIDAndClassName(courseIDAndClassName, course);
 
-    std::string courseID = courseIDAndClassName[0];
-    std::string className = courseIDAndClassName[1];
-    delete[] courseIDAndClassName;
-
-    Node<Score>*allScoresOfStudentsInCourse = nullptr, *curScore;
-
-    for (Node<Score>* cur = allData.allScores; cur; cur = cur->next) {
+    for (; cur; cur = cur->next) {
         StudentCourse tmpStudentCourse = cur->data.studentCourse;
 
-        if (tmpStudentCourse.courseID == courseID &&
-            tmpStudentCourse.className == className) {
+        if (tmpStudentCourse.courseID == courseIDAndClassName[0] &&
+            tmpStudentCourse.className == courseIDAndClassName[1]) {
             pushToEndLinkedList(allScoresOfStudentsInCourse, curScore, cur->data);
         }
     }
 
+    delete[] courseIDAndClassName;
     return allScoresOfStudentsInCourse;
 }
 
 Node<Score>* getAllScoresOfStudentsInClass(Node<Student>* allStudentsInClass) {
-    Score score;
-    Node<Score>*allScoresOfStudentsInClass = nullptr, *cur;
-    std::string otherMark, midtermMark, finalMark, totalMark;
+    Node<Score>*allScoresOfStudentsInClass = nullptr, *cur = allData.allScores, *curScore;
 
-    std::ifstream fin;
-    readFile(fin, "Data/Score.txt");
+    for (; cur; cur = cur->next) {
+        Score score = cur->data;
 
-    while (fin.good()) {
-        getline(fin, score.studentCourse.studentID);
-
-        if (!fin.good()) {
-            break;
+        if (checkStudentInClass(allStudentsInClass, score.studentCourse.studentID)) {
+            pushToEndLinkedList(allScoresOfStudentsInClass, curScore, score);
         }
-
-        if (!checkStudentInClass(allStudentsInClass, score.studentCourse.studentID)) {
-            continue;
-        }
-
-        getline(fin, score.studentCourse.courseID);
-        getline(fin, score.studentCourse.className);
-        getline(fin, score.studentFullName);
-        getline(fin, otherMark);
-        getline(fin, midtermMark);
-        getline(fin, finalMark);
-        getline(fin, totalMark);
-        score.otherMark = stod(otherMark);
-        score.midtermMark = stod(midtermMark);
-        score.finalMark = stod(finalMark);
-        score.totalMark = stod(totalMark);
-
-        pushToEndLinkedList(allScoresOfStudentsInClass, cur, score);
     }
 
-    fin.close();
     return allScoresOfStudentsInClass;
 }
 

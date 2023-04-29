@@ -1,4 +1,4 @@
-#include "CheckStudentID.h"
+#include "CheckStudent.h"
 
 bool checkStudentIDExists(Node<Student>* allStudents, const std::string& studentID) {
     for (; allStudents; allStudents = allStudents->next) {

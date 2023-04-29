@@ -1,7 +1,7 @@
 #include "CreateStudent.h"
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckStudentID/CheckStudentID.h"
+#include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"

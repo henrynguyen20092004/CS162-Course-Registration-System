@@ -1,10 +1,9 @@
 #include "ViewClassScoreboardPage.h"
 
 #include <cmath>
-#include <cstring>
 
 #include "../../../Function/ConvertScoreToString/ConvertScoreToString.h"
-#include "../../../Function/GetAll/GetAllCoursesOfStudentsInClass/GetAllCoursesOfStudentsInClass.h"
+#include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
 #include "../../../Struct/Data.h"
@@ -16,11 +15,9 @@ class ViewClassScoreboardPage : public TablePage<Student> {
     void convertLinkedListToData() override;
 
    public:
-    using TablePage::TablePage;
     ViewClassScoreboardPage(
-        const std::string& title, const std::string& className, int col,
-        Node<Student>* allStudentsInClass, Node<std::string>* allCoursesOfStudentsInClass,
-        Node<Score>* allScoresInClass
+        const std::string& className, int col, Node<Student>* allStudentsInClass,
+        Node<std::string>* allCoursesOfStudentsInClass, Node<Score>* allScoresInClass
     );
     std::string className;
     Node<std::string>* allCoursesOfStudentsInClass;
@@ -28,11 +25,10 @@ class ViewClassScoreboardPage : public TablePage<Student> {
 };
 
 ViewClassScoreboardPage::ViewClassScoreboardPage(
-    const std::string& title, const std::string& className, int col,
-    Node<Student>* allStudentsInClass, Node<std::string>* allCoursesOfStudentsInClass,
-    Node<Score>* allScoresInClass
+    const std::string& className, int col, Node<Student>* allStudentsInClass,
+    Node<std::string>* allCoursesOfStudentsInClass, Node<Score>* allScoresInClass
 )
-    : TablePage(title, col, 0, 0, allStudentsInClass),
+    : TablePage("Scoreboard of class " + className, col, 0, 0, allStudentsInClass),
       className(className),
       allCoursesOfStudentsInClass(allCoursesOfStudentsInClass),
       allScoresInClass(allScoresInClass) {}
@@ -114,6 +110,8 @@ void ViewClassScoreboardPage::convertLinkedListToData() {
     deleteLinkedList(dataLinkedList);
     deleteLinkedList(allCoursesOfStudentsInClass);
     deleteLinkedList(allScoresInClass);
+    delete[] allStudentsInClassArray;
+    delete[] allScoresInClassArray;
 }
 
 void viewClassScoreboardPage(const std::string& className) {
@@ -123,8 +121,7 @@ void viewClassScoreboardPage(const std::string& className) {
         getAllCoursesOfStudentsInClass(allScoresInClass);
 
     ViewClassScoreboardPage viewClassScoreboardPage(
-        "The scoreboard of class " + className, className,
-        getLinkedListSize(allCoursesOfStudentsInClass) + 4, allStudentsInClass,
+        className, getLinkedListSize(allCoursesOfStudentsInClass) + 4, allStudentsInClass,
         allCoursesOfStudentsInClass, allScoresInClass
     );
     viewClassScoreboardPage.mainLoop();

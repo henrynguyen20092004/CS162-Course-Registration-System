@@ -1,5 +1,5 @@
-#ifndef CHECK_STUDENT_ID_H
-#define CHECK_STUDENT_ID_H
+#ifndef CHECK_STUDENT_H
+#define CHECK_STUDENT_H
 
 #include "../../../Struct/LinkedList.h"
 #include "../../../Struct/Student.h"
