@@ -1,17 +1,18 @@
 #include "Page.h"
 
-#include <stdexcept>
-
 #include "../DrawMenu/DrawMenu.h"
+#include "../TextFunction/TextFunction.h"
 
 Page::Page() { menuDropDownItems = new char[MAX_INPUT_CHAR]; }
 
 void Page::mainLoop() {
+    std::string currentSemesterText = "Current semester: Semester " +
+                                      std::to_string(currentSemester.number) + ", " +
+                                      currentSemester.schoolYearName;
+
     menuDropDown = DropDown(
-        ("Welcome, " + currentUser.username).c_str(),
-        "Change current semester;Change password;Log out",
-        {AVATAR_SIZE.x + DEFAULT_PADDING.x * 4 + 8, DEFAULT_PADDING.y * 2},
-        DEFAULT_MENU_BUTTON_WIDTH * 1.5f
+        currentSemesterText.c_str(), "Change current semester;Change password; Log out",
+        {120.0f, DEFAULT_PADDING.y * 3.5f}, DEFAULT_MENU_BUTTON_WIDTH * 1.5f
     );
     initComponents();
 
@@ -25,6 +26,10 @@ void Page::mainLoop() {
         ClearBackground(PRIMARY_COLOR);
         drawPage();
         drawMenu(menuDropDown, menuDropDownItems, stopLoop);
+        drawDefaultText(
+            textFont, ("Welcome, " + currentUser.username).c_str(),
+            {120.0f, DEFAULT_PADDING.y / 2.0f}, WHITE
+        );
         EndDrawing();
     }
 }

@@ -2,9 +2,9 @@
 
 #include "MainGUI.h"
 
-#include "../Function/CurrentSemester/CurrentSemester.h"
-#include "../Function/LogOut/LogOut.h"
+#include "../Function/GetCurrentSemester/GetCurrentSemester.h"
 #include "AddStudentToCoursePage/AddStudentToCoursePage.h"
+#include "ChangeCurrentSemesterPage/ChangeCurrentSemesterPage.h"
 #include "ChangePasswordPage/ChangePasswordPage.h"
 #include "Create/CreateClassPage/CreateClassPage.h"
 #include "Create/CreateCoursePage/CreateCoursePage.h"
@@ -54,15 +54,11 @@ void selectPage() {
             break;
 
         case CHANGE_CURRENT_SEMESTER:
-            temp.mainLoop();
+            changeCurrentSemesterPage();
             break;
 
         case CHANGE_PASSWORD:
             changePasswordPage();
-            break;
-
-        case LOG_OUT:
-            logOut(currentUser);
             break;
 
         case VIEW_STUDENT_INFO:
