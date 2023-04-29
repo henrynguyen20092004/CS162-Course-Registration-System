@@ -1,6 +1,6 @@
 #include "ViewCoursesOfStudentPage.h"
 
-#include "../../../Function/GetAll/GetAllCoursesOfStudent/GetAllCoursesOfStudent.h"
+#include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
 #include "../../TablePage/TablePage.h"
 
@@ -48,7 +48,7 @@ void ViewCoursesOfStudentPage::convertLinkedListToData() {
 
 void viewCoursesOfStudentPage() {
     ViewCoursesOfStudentPage viewCoursesOfStudentPage(
-        "All courses in this semester", 8, 0, 0,
+        "Your courses this semester", 8, 0, 0,
         getAllCoursesOfStudent(currentUser.username, currentSemester)
     );
     viewCoursesOfStudentPage.mainLoop();

@@ -47,10 +47,13 @@ bool operator<(const Semester &firstSemester, const Semester &secondSemester) {
 bool operator<(
     const StudentCourse &firstStudentCourse, const StudentCourse &secondStudentCourse
 ) {
-    return firstStudentCourse.studentID.size() == secondStudentCourse.studentID.size()
-               ? firstStudentCourse.studentID < secondStudentCourse.studentID
-               : firstStudentCourse.studentID.size() <
-                     secondStudentCourse.studentID.size();
+    return firstStudentCourse.studentID != secondStudentCourse.studentID
+               ? (firstStudentCourse.studentID.size() ==
+                          secondStudentCourse.studentID.size()
+                      ? firstStudentCourse.studentID < secondStudentCourse.studentID
+                      : firstStudentCourse.studentID.size() <
+                            secondStudentCourse.studentID.size())
+               : (firstStudentCourse.courseID < secondStudentCourse.courseID);
 }
 
 bool operator<(const Score &firstScore, const Score &secondScore) {

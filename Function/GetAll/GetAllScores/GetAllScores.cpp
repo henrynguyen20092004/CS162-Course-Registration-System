@@ -47,3 +47,36 @@ Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course) {
 
     return allScoresOfStudentsInCourse;
 }
+
+bool checkScoreExistsInSemester(const Score& score, Node<Course>* allCoursesOfSemester) {
+    for (; allCoursesOfSemester; allCoursesOfSemester = allCoursesOfSemester->next) {
+        Course curCourse = allCoursesOfSemester->data;
+
+        if (score.studentCourse.courseID == curCourse.id &&
+            score.studentCourse.className == curCourse.className) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+Node<Score>* getAllScoresOfStudent(
+    const std::string& studentID, const Semester& currentSemester
+) {
+    Node<Score>*allScoresOfStudent = nullptr, *curScore;
+    Node<Course>* allCoursesOfSemester =
+        getAllCoursesOfSemester(currentSemester.schoolYearName, currentSemester.number);
+
+    for (Node<Score>* cur = allData.allScores; cur; cur = cur->next) {
+        Score tmpScore = cur->data;
+
+        if (tmpScore.studentCourse.studentID == studentID &&
+            checkScoreExistsInSemester(tmpScore, allCoursesOfSemester)) {
+            pushToEndLinkedList(allScoresOfStudent, curScore, tmpScore);
+        }
+    }
+
+    deleteLinkedList(allCoursesOfSemester);
+    return allScoresOfStudent;
+}
