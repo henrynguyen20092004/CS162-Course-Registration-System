@@ -34,10 +34,7 @@ void checkImportedScore(
     StudentCourse studentCourse = score.studentCourse;
 
     if (!checkStudentIDExists(allStudents, studentCourse.studentID) ||
-        !checkStudentInCourse(
-            allData.allStudentCourses, studentCourse.studentID, studentCourse.courseID,
-            studentCourse.className
-        )) {
+        !checkStudentInCourse(allData.allStudentCourses, studentCourse)) {
         throw std::invalid_argument("Invalid student ID");
     }
 

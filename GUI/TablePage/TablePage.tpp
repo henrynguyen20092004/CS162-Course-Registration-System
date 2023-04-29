@@ -205,8 +205,14 @@ TablePage<T>::~TablePage() {
         delete[] tableData[i];
     }
 
-    for (int i = 0; i < row - 1; ++i) {
-        delete[] columnButtons[i];
+    if (buttonCol) {
+        for (int i = 0; i < row - 1; ++i) {
+            delete[] columnButtons[i];
+        }
+
+        delete[] firstRowButtonTitles;
+        delete[] columnButtons;
+        delete[] columnButtonCommands;
     }
 
     delete[] tableData;
@@ -216,7 +222,4 @@ TablePage<T>::~TablePage() {
     delete[] headerButtons;
     delete[] headerButtonTitles;
     delete[] headerButtonCommands;
-    delete[] firstRowButtonTitles;
-    delete[] columnButtons;
-    delete[] columnButtonCommands;
 }

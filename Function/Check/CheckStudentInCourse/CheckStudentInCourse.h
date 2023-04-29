@@ -5,8 +5,7 @@
 #include "../../../Struct/StudentCourse.h"
 
 bool checkStudentInCourse(
-    Node<StudentCourse>* allStudentCourses, const std::string& studentID,
-    const std::string& courseID, const std::string& className
+    Node<StudentCourse>* allStudentCourses, const StudentCourse& studentCourse
 );
 
 #endif
