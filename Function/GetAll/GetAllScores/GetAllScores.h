@@ -4,6 +4,7 @@
 #include "../../../Struct/Score.h"
 #include "../GetAll.h"
 
-Node<Score> *getAllScores();
+Node<Score>* getAllScores();
+Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course);
 
 #endif

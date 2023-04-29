@@ -43,3 +43,16 @@ bool operator<(const Semester &firstSemester, const Semester &secondSemester) {
                : firstSemester.schoolYearName.size() <
                      secondSemester.schoolYearName.size();
 }
+
+bool operator<(
+    const StudentCourse &firstStudentCourse, const StudentCourse &secondStudentCourse
+) {
+    return firstStudentCourse.studentID.size() == secondStudentCourse.studentID.size()
+               ? firstStudentCourse.studentID < secondStudentCourse.studentID
+               : firstStudentCourse.studentID.size() <
+                     secondStudentCourse.studentID.size();
+}
+
+bool operator<(const Score &firstScore, const Score &secondScore) {
+    return firstScore.studentCourse < secondScore.studentCourse;
+}
