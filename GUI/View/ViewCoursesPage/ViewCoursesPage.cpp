@@ -16,14 +16,13 @@ class ViewCoursesPage : public TablePage<Course> {
 };
 
 void ViewCoursesPage::initColumns() {
-    columnTitle = new std::string[col]{
-        "No",      "Course ID",        "Course name", "Class name", "Teacher name",
-        "Credits", "Maximum students", "Day",         "Session"};
+    columnTitle =
+        new std::string[col]{"No",      "Course",           "Course name", "Teacher name",
+                             "Credits", "Maximum students", "Day",         "Session"};
     columnWidths = new float[col + buttonCol]{
         50.0f,
-        100.0f,
+        180.0f,
         200.0f,
-        120.0f,
         180.0f,
         80.0f,
         180.0f,
@@ -55,20 +54,19 @@ void ViewCoursesPage::convertLinkedListToData() {
 
     for (int i = 1; i < row; ++i) {
         tableData[i][0] = std::to_string(i);
-        tableData[i][1] = courseArray[i - 1].id;
+        tableData[i][1] = courseArray[i - 1].id + '-' + courseArray[i - 1].className;
         tableData[i][2] = courseArray[i - 1].name;
-        tableData[i][3] = courseArray[i - 1].className;
-        tableData[i][4] = courseArray[i - 1].teacherName;
-        tableData[i][5] = std::to_string(courseArray[i - 1].credits);
-        tableData[i][6] = std::to_string(courseArray[i - 1].maxStudent);
-        tableData[i][7] = courseArray[i - 1].dayOfWeek;
-        tableData[i][8] = std::to_string(courseArray[i - 1].sessionNumber);
+        tableData[i][3] = courseArray[i - 1].teacherName;
+        tableData[i][4] = std::to_string(courseArray[i - 1].credits);
+        tableData[i][5] = std::to_string(courseArray[i - 1].maxStudent);
+        tableData[i][6] = courseArray[i - 1].dayOfWeek;
+        tableData[i][7] = std::to_string(courseArray[i - 1].sessionNumber);
     }
 
     delete[] courseArray;
 }
 
 void viewCoursesPage() {
-    ViewCoursesPage viewCoursesPage("List of courses", 9, 2, 3, allData.allCourses);
+    ViewCoursesPage viewCoursesPage("List of courses", 8, 2, 3, allData.allCourses);
     viewCoursesPage.mainLoop();
 }

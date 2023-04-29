@@ -10,8 +10,8 @@ class ImportScoreboardPage : public ImportCSVPage {
 
 void importScoreboardPage(const std::string& course) {
     ImportScoreboardPage importScoreboardPage(
-        "Import scoreboard of course " + course, "Scoreboard.csv", course,
-        &importScoreboard, VIEW_SCOREBOARD_OF_COURSE
+        "Import scoreboard of " + course, "Scoreboard.csv", course, &importScoreboard,
+        VIEW_SCOREBOARD_OF_COURSE
     );
     importScoreboardPage.mainLoop();
 }

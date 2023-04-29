@@ -22,15 +22,15 @@ void exportStudentsToFile(std::ostream &out, Student *allStudentsArray, int arra
     }
 }
 
-void exportStudentsInCourse(char **inputs, char **dropDownItems) {
+void exportStudentsInCourse(char **inputs, const std::string &course) {
     std::string *courseIDAndClassName = new std::string[2], exportPath = inputs[0];
-    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
+    splitCourseToIDAndClassName(courseIDAndClassName, course);
 
-    Course course;
-    course.id = courseIDAndClassName[0];
-    course.className = courseIDAndClassName[1];
+    Course curCourse;
+    curCourse.id = courseIDAndClassName[0];
+    curCourse.className = courseIDAndClassName[1];
     delete[] courseIDAndClassName;
-    Node<Student> *allStudentsInCourse = getAllStudentsInCourse(course);
+    Node<Student> *allStudentsInCourse = getAllStudentsInCourse(curCourse);
 
     if (!allStudentsInCourse) {
         throw std::invalid_argument("There's no student in this course!");
