@@ -17,7 +17,7 @@
     (Color) { 255, 0, 0, 255 }
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
-#define MENU_HEIGHT 140
+#define MENU_HEIGHT 150
 #define DEFAULT_TITLE_SIZE 48
 #define DEFAULT_TEXT_SIZE 24
 #define MAX_INPUT_CHAR 256
@@ -30,16 +30,11 @@
     (Vector2) { 6.0f, 6.0f }
 #define DEFAULT_ITEM_MARGIN \
     (Vector2) { 20.0f, 20.0f }
-#define AVATAR_SIZE \
-    (Vector2) { 50.0f, 50.0f }
-#define AVATAR_POSITION \
-    (Vector2) { 40.0f, 35.0f }
 
 enum Command {
     HOME,
     CHANGE_CURRENT_SEMESTER,
     CHANGE_PASSWORD,
-    LOG_OUT,
     VIEW_STUDENT_INFO,
     VIEW_SCHOOL_YEARS,
     VIEW_SEMESTERS,

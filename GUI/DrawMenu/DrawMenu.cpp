@@ -1,5 +1,6 @@
 #include "DrawMenu.h"
 
+#include "../../Function/LogOut/LogOut.h"
 #include "../Button/Button.h"
 
 void drawStudentMenu(bool& stopLoop) {
@@ -78,8 +79,7 @@ void drawAdminMenu(bool& stopLoop) {
 
 void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems, bool& stopLoop) {
     DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, MENU_HEIGHT}, SECONDARY_COLOR);
-    DrawTextureV(defaultAvatar, AVATAR_POSITION, WHITE);
-
+    DrawTextureV(defaultAvatar, {5.0f, 15.0f}, WHITE);
     menuDropDown.drawDropDown(menuDropDownItems, 0.0f, WHITE);
 
     if (currentUser.username == "admin") {
@@ -100,7 +100,7 @@ void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems, bool& stopLoop) 
             break;
 
         case 2:
-            commandChoice = LOG_OUT;
+            logOut(currentUser);
             stopLoop = true;
             break;
     }
