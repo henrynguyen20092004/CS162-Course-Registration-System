@@ -4,7 +4,7 @@
 #include "../TextFunction/TextFunction.h"
 #include "TablePage.h"
 
-template <typename T>
+template <class T>
 TablePage<T>::TablePage(
     const std::string &title, int col, int buttonCol, int headerButton,
     Node<T> *dataLinkedList
@@ -38,7 +38,7 @@ TablePage<T>::TablePage(
     }
 }
 
-template <typename T>
+template <class T>
 void TablePage<T>::clipData() {
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
@@ -48,7 +48,7 @@ void TablePage<T>::clipData() {
     }
 }
 
-template <typename T>
+template <class T>
 void TablePage<T>::addColumnsForButton() {
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < buttonCol; ++j) {
@@ -57,7 +57,7 @@ void TablePage<T>::addColumnsForButton() {
     }
 }
 
-template <typename T>
+template <class T>
 void TablePage<T>::calculateTableAndFirstRow() {
     for (int j = 0; j < col + buttonCol; ++j) {
         columnWidths[j] += TABLE_CELL_PADDING_X * 2;
@@ -77,7 +77,7 @@ void TablePage<T>::calculateTableAndFirstRow() {
     }
 }
 
-template <typename T>
+template <class T>
 void TablePage<T>::generateRowHeights() {
     rowHeights = new int[row];
 
@@ -98,7 +98,7 @@ void TablePage<T>::generateRowHeights() {
     }
 }
 
-template <typename T>
+template <class T>
 void TablePage<T>::generateButtons() {
     for (int i = 0; i < headerButton; ++i) {
         headerButtons[i] = Button(
@@ -132,7 +132,7 @@ void TablePage<T>::generateButtons() {
     }
 }
 
-template <typename T>
+template <class T>
 void TablePage<T>::initComponents() {
     initColumns();
     addColumnsForButton();
@@ -144,31 +144,75 @@ void TablePage<T>::initComponents() {
     generateButtons();
     table = Table(
         tableData, columnTitle, title.c_str(), row, col, buttonCol, headerButton,
-        rowHeights, columnWidths, tableWidth, columnButtonCommands, headerButtonCommands,
-        tablePos, columnButtons, headerButtons
+        rowHeights, columnWidths, tableWidth, tablePos
     );
 }
 
-template <typename T>
+template <class T>
 void TablePage<T>::createAndSortDataArray(T *&dataArray) {
     int arraySize;
     transformLinkedListToArray(dataLinkedList, dataArray, arraySize);
     std::sort(dataArray, dataArray + arraySize);
 }
 
-template <typename T>
+template <class T>
 void TablePage<T>::drawPage() {
-    table.drawTable(stopLoop);
+    table.drawTable(scroll);
+    drawButtons();
 }
 
-template <typename T>
+template <class T>
+void TablePage<T>::drawButtons() {
+    for (int i = 0; i < headerButton; ++i) {
+        if (headerButtons[i].drawButton(scroll.y)) {
+            commandChoice = headerButtonCommands[i];
+            stopLoop = true;
+        }
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        GuiSetStyle(BUTTON, i * 3, 0xffffffff);
+        GuiSetStyle(BUTTON, i * 3 + 1, 0xffffffff);
+    }
+
+    GuiSetStyle(BUTTON, TEXT_COLOR_NORMAL, 0x0b182fff);
+    drawColumnButtons();
+    GuiSetStyle(BUTTON, BORDER_COLOR_NORMAL, 0x838383ff);
+    GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, 0x063970ff);
+    GuiSetStyle(BUTTON, TEXT_COLOR_NORMAL, 0xffffffff);
+    GuiSetStyle(BUTTON, BORDER_COLOR_FOCUSED, 0x5bb2d9ff);
+    GuiSetStyle(BUTTON, BASE_COLOR_FOCUSED, 0xc9effeff);
+    GuiSetStyle(BUTTON, BORDER_COLOR_PRESSED, 0x0492c7ff);
+    GuiSetStyle(BUTTON, BASE_COLOR_PRESSED, 0x97e8ffff);
+}
+
+template <class T>
+void TablePage<T>::drawColumnButtons() {
+    for (int i = 0; i < row - 1; ++i) {
+        for (int j = 0; j < buttonCol; ++j) {
+            if (columnButtons[i][j].drawButton(scroll.y)) {
+                renderArgs = tableData[i + 1][1];
+                commandChoice = columnButtonCommands[j];
+                stopLoop = true;
+            }
+        }
+    }
+}
+
+template <class T>
 TablePage<T>::~TablePage() {
     for (int i = 0; i < row; ++i) {
         delete[] tableData[i];
     }
 
-    for (int i = 0; i < buttonCol; ++i) {
-        delete[] columnButtons[i];
+    if (buttonCol) {
+        for (int i = 0; i < row - 1; ++i) {
+            delete[] columnButtons[i];
+        }
+
+        delete[] firstRowButtonTitles;
+        delete[] columnButtons;
+        delete[] columnButtonCommands;
     }
 
     delete[] tableData;
@@ -178,7 +222,4 @@ TablePage<T>::~TablePage() {
     delete[] headerButtons;
     delete[] headerButtonTitles;
     delete[] headerButtonCommands;
-    delete[] firstRowButtonTitles;
-    delete[] columnButtons;
-    delete[] columnButtonCommands;
 }

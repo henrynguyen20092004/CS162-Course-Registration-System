@@ -1,14 +1,12 @@
 #include "CheckStudentInCourse.h"
 
+#include "../../OperatorOverload/OperatorOverload.h"
+
 bool checkStudentInCourse(
-    Node<StudentCourse>* allStudentCourses, const std::string& studentID,
-    const std::string& courseID, const std::string& className
+    Node<StudentCourse>* allStudentCourses, const StudentCourse& studentCourse
 ) {
     for (; allStudentCourses; allStudentCourses = allStudentCourses->next) {
-        StudentCourse studentCourse = allStudentCourses->data;
-
-        if (studentCourse.studentID == studentID && studentCourse.courseID == courseID &&
-            studentCourse.className == className) {
+        if (allStudentCourses->data == studentCourse) {
             return true;
         }
     }

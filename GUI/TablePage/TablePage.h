@@ -4,13 +4,15 @@
 #include "../Page/Page.h"
 #include "../Table/Table.h"
 
-template <typename T>
+template <class T>
 class TablePage : public Page {
    private:
     virtual void initColumns() {}
     virtual void initButtons() {}
     virtual void convertLinkedListToData() {}
+    virtual void drawColumnButtons();
     void drawPage() override;
+    void drawButtons();
     void clipData();
     void addColumnsForButton();
     void calculateTableAndFirstRow();
@@ -24,7 +26,7 @@ class TablePage : public Page {
     Node<T> *dataLinkedList;
     std::string **tableData, *columnTitle = nullptr, title;
     Command *columnButtonCommands = nullptr, *headerButtonCommands = nullptr;
-    Vector2 tablePos{0.0f, 0.0f};
+    Vector2 tablePos{0.0f, 0.0f}, scroll{0.0f, 0.0f};
     Button **columnButtons = nullptr, *headerButtons = nullptr;
     Table table;
     void initComponents() override;

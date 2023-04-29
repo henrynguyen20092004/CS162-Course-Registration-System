@@ -30,10 +30,7 @@ void addStudentToCourse(char **inputs, char **dropDownItems) {
         throw std::invalid_argument("This student does not exist, please try again!");
     }
 
-    if (checkStudentInCourse(
-            allData.allStudentCourses, studentCourse.studentID, studentCourse.courseID,
-            studentCourse.className
-        )) {
+    if (checkStudentInCourse(allData.allStudentCourses, studentCourse)) {
         throw std::invalid_argument(
             "This student is already in the course, please try again!"
         );

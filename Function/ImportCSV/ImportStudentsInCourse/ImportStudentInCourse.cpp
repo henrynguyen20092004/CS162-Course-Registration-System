@@ -38,10 +38,7 @@ void checkImportedStudentInCourse(
 
     for (; allStudents; allStudents = allStudents->next) {
         if (allStudents->data == student) {
-            if (checkStudentInCourse(
-                    allStudentCourses, student.id, studentCourse.courseID,
-                    studentCourse.className
-                )) {
+            if (checkStudentInCourse(allStudentCourses, studentCourse)) {
                 delete newNode;
                 throw std::invalid_argument("Duplicated record");
             } else {
@@ -60,10 +57,7 @@ void checkImportedStudentInCourse(
             updateDefaultStudentPassword(allStudents, allData.allUsers, student);
             allStudents->data = student;
 
-            if (!checkStudentInCourse(
-                    allStudentCourses, student.id, studentCourse.courseID,
-                    studentCourse.className
-                )) {
+            if (!checkStudentInCourse(allStudentCourses, studentCourse)) {
                 if (!allStudentCourses) {
                     allStudentCourses = newNode;
                     throw std::runtime_error("Record added");
