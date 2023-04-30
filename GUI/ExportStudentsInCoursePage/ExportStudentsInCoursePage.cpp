@@ -13,7 +13,6 @@ class ExportStudentsInCoursePage : public FormPage {
     void submitCallBack() override;
 
    public:
-    using FormPage::FormPage;
     ExportStudentsInCoursePage(const std::string &course);
     std::string course;
 };

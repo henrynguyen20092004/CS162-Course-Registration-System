@@ -40,18 +40,17 @@ FormPage::FormPage(
     for (int i = 0; i < numberOfTextInputs; ++i) {
         inputs[i] = new char[MAX_INPUT_CHAR];
         inputs[i][0] = '\0';
-        inputPos[i] = calculateInputPos(firstInputPosY, i);
+        inputPos[i] = calculateInputPos(i);
     }
 
     for (int i = 0; i < numberOfDropDowns; ++i) {
         dropDownItems[i] = new char[MAX_INPUT_CHAR];
         dropDownItems[i][0] = '\0';
-        inputPos[i + numberOfTextInputs] =
-            calculateInputPos(firstInputPosY, i + numberOfTextInputs);
+        inputPos[i + numberOfTextInputs] = calculateInputPos(i + numberOfTextInputs);
     }
 }
 
-Vector2 FormPage::calculateInputPos(float firstInputPosY, int index) {
+Vector2 FormPage::calculateInputPos(int index) {
     return {
         childrenPosX + (inputWidth + DEFAULT_ITEM_MARGIN.x) * (index % columns),
         firstInputPosY + (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y +
@@ -93,7 +92,7 @@ void FormPage::drawPage() {
     }
 
     DrawRectangleV({mainBoxPos.x, mainBoxPos.y + scroll.y}, mainBoxSize, WHITE);
-    drawDefaultTitle(titleFont, title.c_str(), {childrenPosX, titlePosY + scroll.y});
+    drawDefaultTitle(title.c_str(), {childrenPosX, titlePosY + scroll.y});
     drawErrorText();
     dropDownLockGUI();
 
@@ -133,9 +132,7 @@ void FormPage::drawErrorText() {
                  DEFAULT_TEXT_SIZE * (numberOfLines * 1.5 - 0.5) - DEFAULT_TEXT_MARGIN.y +
                  scroll.y;
 
-    drawDefaultText(
-        textFont, errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR
-    );
+    drawDefaultText(errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR);
 }
 
 void FormPage::dropDownLockGUI() {

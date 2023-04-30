@@ -78,7 +78,7 @@ void LogInPage::mainLoop() {
 
 void LogInPage::drawPage() {
     DrawRectangleV({mainBoxPos.x, mainBoxPos.y}, mainBoxSize, WHITE);
-    drawDefaultTitle(titleFont, "Log in to continue", {childrenPosX, titlePosY});
+    drawDefaultTitle("Log in to continue", {childrenPosX, titlePosY});
     drawInputs();
     drawErrorText();
 
@@ -104,9 +104,7 @@ void LogInPage::drawErrorText() {
     float posY = mainBoxPos.y + mainBoxSize.y - DEFAULT_PADDING.y - DEFAULT_ITEM_HEIGHT -
                  DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y;
 
-    drawDefaultText(
-        textFont, errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR
-    );
+    drawDefaultText(errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR);
 }
 
 void LogInPage::checkFilledFields() {

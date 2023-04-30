@@ -14,7 +14,6 @@ class ViewStudentsInCoursePage : public TablePage<Student> {
     void drawColumnButtons() override;
 
    public:
-    using TablePage::TablePage;
     ViewStudentsInCoursePage(const std::string& course, const Course& curCourse);
     Course curCourse;
 };

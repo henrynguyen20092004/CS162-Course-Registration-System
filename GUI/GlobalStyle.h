@@ -9,8 +9,6 @@
 
 #define PRIMARY_COLOR \
     (Color) { 165, 215, 232, 255 }
-#define SECONDARY_COLOR \
-    (Color) { 6, 57, 112, 255 }
 #define NORMAL_TEXT_COLOR \
     (Color) { 11, 24, 47, 255 }
 #define ERROR_TEXT_COLOR \
@@ -23,7 +21,6 @@
 #define MAX_INPUT_CHAR 256
 #define DEFAULT_ITEM_HEIGHT 60.0f
 #define DEFAULT_MENU_BUTTON_WIDTH 180.0f
-#define TEXT_SPACING 1.0f
 #define DEFAULT_PADDING \
     (Vector2) { 20.0f, 20.0f }
 #define DEFAULT_TEXT_MARGIN \

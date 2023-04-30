@@ -17,7 +17,6 @@ class ImportCSVPage : public FormPage {
     void initInputs() override;
 
    public:
-    using FormPage::FormPage;
     ImportCSVPage(
         const std::string &title, const char *CSVName, const std::string &arg,
         void (*importCallBack)(char **, char **, const std::string &arg),

@@ -16,7 +16,7 @@ class FormPage : public Page {
     std::string title;
     Button submitButton, backButton;
     Vector2 mainBoxSize, mainBoxPos;
-    Vector2 calculateInputPos(float firstInputPosY, int index);
+    Vector2 calculateInputPos(int index);
     virtual void initInputs() {}
     virtual void submitCallBack() {}
     virtual void drawInputs();
