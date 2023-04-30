@@ -2,6 +2,7 @@
 #define GET_ALL_COURSES_H
 
 #include "../../../Struct/Course.h"
+#include "../../../Struct/Score.h"
 #include "../../../Struct/Semester.h"
 #include "../GetAll.h"
 
@@ -11,6 +12,10 @@ Node<Course>* getAllCoursesOfSemester(
 );
 Node<Course>* getAllCoursesOfStudent(
     const std::string& studentID, const Semester& semester
+);
+Node<std::string>* getAllCoursesOfStudentsInClass(Node<Score>* allScoresOfClass);
+int getCourseCredits(
+    Node<Course>* allCourses, const std::string& courseID, const std::string& className
 );
 
 #endif

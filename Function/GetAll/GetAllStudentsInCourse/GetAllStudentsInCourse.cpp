@@ -1,13 +1,13 @@
 #include "GetAllStudentsInCourse.h"
 
+#include "../../../Struct/Data.h"
 #include "../../OpenFile/OpenFile.h"
-#include "../GetAllStudents/GetAllStudents.h"
 
 Node<Student> *getAllStudentsInCourse(const Course &course) {
     std::ifstream fin;
     readFile(fin, "Data/StudentCourse.txt");
 
-    Node<Student> *allStudents = getAllStudents(), *allStudentsInCourse = nullptr, *cur;
+    Node<Student> *allStudentsInCourse = nullptr, *cur;
     std::string studentID, courseID, className;
 
     while (fin.good()) {
@@ -21,7 +21,7 @@ Node<Student> *getAllStudentsInCourse(const Course &course) {
         getline(fin, className);
 
         if (course.id == courseID && course.className == className) {
-            for (Node<Student> *cur2 = allStudents; cur2; cur2 = cur2->next) {
+            for (Node<Student> *cur2 = allData.allStudents; cur2; cur2 = cur2->next) {
                 if (cur2->data.id == studentID) {
                     pushToEndLinkedList(allStudentsInCourse, cur, cur2->data);
                 }
@@ -30,6 +30,5 @@ Node<Student> *getAllStudentsInCourse(const Course &course) {
     }
 
     fin.close();
-    deleteLinkedList(allStudents);
     return allStudentsInCourse;
 }

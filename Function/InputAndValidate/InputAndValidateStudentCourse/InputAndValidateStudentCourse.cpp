@@ -2,7 +2,7 @@
 
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
-#include "../../Check/CheckStudentID/CheckStudentID.h"
+#include "../../Check/CheckStudent/CheckStudent.h"
 
 void inputStudentCourse(StudentCourse &studentCourse) {
     std::cout << "Please enter the student's id: ";

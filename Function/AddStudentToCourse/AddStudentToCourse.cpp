@@ -1,7 +1,7 @@
 #include "AddStudentToCourse.h"
 
 #include "../../Struct/Data.h"
-#include "../Check/CheckStudentID/CheckStudentID.h"
+#include "../Check/CheckStudent/CheckStudent.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 #include "../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"

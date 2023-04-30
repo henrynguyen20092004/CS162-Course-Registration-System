@@ -5,7 +5,7 @@
 
 #include "../../../Struct/Data.h"
 #include "../../Check/CheckClass/CheckClass.h"
-#include "../../Check/CheckStudentID/CheckStudentID.h"
+#include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
 #include "../../DateFunction/DateFunction.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"

@@ -4,7 +4,7 @@
 #include <sstream>
 
 #include "../../../Struct/Data.h"
-#include "../../Check/CheckStudentID/CheckStudentID.h"
+#include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../OperatorOverload/OperatorOverload.h"

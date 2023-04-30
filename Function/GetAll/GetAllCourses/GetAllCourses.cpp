@@ -101,3 +101,40 @@ Node<Course> *getAllCoursesOfStudent(
     deleteLinkedList(allCoursesIDOfStudent);
     return allCoursesOfStudent;
 }
+
+bool checkStudentHasCourse(Node<std::string> *allCourses, std::string fullCourseName) {
+    for (; allCourses; allCourses = allCourses->next) {
+        if (allCourses->data == fullCourseName) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+Node<std::string> *getAllCoursesOfStudentsInClass(Node<Score> *allScoresOfClass) {
+    Node<std::string> *allCoursesOfStudentsInClass = nullptr, *cur;
+
+    for (; allScoresOfClass; allScoresOfClass = allScoresOfClass->next) {
+        std::string fullCourseName = allScoresOfClass->data.studentCourse.courseID + "-" +
+                                     allScoresOfClass->data.studentCourse.className;
+
+        if (!checkStudentHasCourse(allCoursesOfStudentsInClass, fullCourseName)) {
+            pushToEndLinkedList(allCoursesOfStudentsInClass, cur, fullCourseName);
+        }
+    }
+
+    return allCoursesOfStudentsInClass;
+}
+
+int getCourseCredits(
+    Node<Course> *allCourses, const std::string &courseID, const std::string &className
+) {
+    for (; allCourses; allCourses = allCourses->next) {
+        if (allCourses->data.id == courseID && allCourses->data.className == className) {
+            return allCourses->data.credits;
+        }
+    }
+
+    return 0;
+}

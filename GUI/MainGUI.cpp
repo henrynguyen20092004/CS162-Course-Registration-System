@@ -21,6 +21,7 @@
 #include "Page/Page.h"
 #include "Update/UpdateCoursePage/UpdateCoursePage.h"
 #include "Update/UpdateStudentResultPage/UpdateStudentResultPage.h"
+#include "View/ViewClassScoreboardPage/ViewClassScoreboardPage.h"
 #include "View/ViewClassesPage/ViewClassesPage.h"
 #include "View/ViewCourseScoreboardPage/ViewCourseScoreboardPage.h"
 #include "View/ViewCoursesOfStudentPage/ViewCoursesOfStudentPage.h"
@@ -97,7 +98,7 @@ void selectPage() {
             break;
 
         case VIEW_SCOREBOARD_OF_CLASS:
-            temp.mainLoop();
+            viewClassScoreboardPage(renderArgs);
             break;
 
         case VIEW_SCOREBOARD_OF_STUDENT:
