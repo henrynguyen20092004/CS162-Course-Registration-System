@@ -1,6 +1,6 @@
 #include "CreateStudent.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
@@ -17,7 +17,7 @@ void saveStudent(const Student &student) {
     fout << student.socialID << '\n';
     fout << student.className << '\n';
     fout.close();
-    addNewItemsToOldList(allData.allStudents, new Node(student));
+    addNewItemsToOldList(GlobalVar::allData.allStudents, new Node(student));
 }
 
 void createStudent(char **inputs, char **dropDownItems) {
@@ -30,11 +30,11 @@ void createStudent(char **inputs, char **dropDownItems) {
     student.dateOfBirth = inputs[3];
     student.socialID = inputs[4];
 
-    if (checkStudentIDExists(allData.allStudents, student.id)) {
+    if (checkStudentIDExists(GlobalVar::allData.allStudents, student.id)) {
         throw std::invalid_argument("This student already exists, please try again!");
     }
 
-    validateStudent(allData.allClasses, student);
+    validateStudent(GlobalVar::allData.allClasses, student);
     saveStudent(student);
     createStudentAccount(student);
 }

@@ -1,6 +1,6 @@
 #include "CreateSemester.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckSemester/CheckSemester.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../DateFunction/DateFunction.h"
@@ -53,12 +53,12 @@ bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &seme
 void addSemseterToList(const Semester &newSemester) {
     Node<Semester> *newNode = new Node(newSemester);
 
-    if (!allData.allSemesters) {
-        allData.allSemesters = newNode;
+    if (!GlobalVar::allData.allSemesters) {
+        GlobalVar::allData.allSemesters = newNode;
         return;
     }
 
-    Node<Semester> *cur = allData.allSemesters, *prev = nullptr;
+    Node<Semester> *cur = GlobalVar::allData.allSemesters, *prev = nullptr;
 
     while (cur && cur->data.schoolYearName < newSemester.schoolYearName) {
         prev = cur;
@@ -73,7 +73,7 @@ void addSemseterToList(const Semester &newSemester) {
 
     if (!prev) {
         newNode->next = cur;
-        allData.allSemesters = newNode;
+        GlobalVar::allData.allSemesters = newNode;
     } else {
         newNode->next = cur;
         prev->next = newNode;
@@ -103,21 +103,21 @@ Semester createSemester(char **inputs, char **dropDownItems) {
     semester.endDate = inputs[1];
 
     if (checkSemesterExists(
-            allData.allSemesters, semester.number, semester.schoolYearName
+            GlobalVar::allData.allSemesters, semester.number, semester.schoolYearName
         )) {
         throw std::invalid_argument("This semester already exists, please try again!");
     }
 
     validateSemesterDates(semester);
 
-    if (!checkDateBeforeAddToList(allData.allSemesters, semester)) {
+    if (!checkDateBeforeAddToList(GlobalVar::allData.allSemesters, semester)) {
         throw std::invalid_argument(
             "Your start/end date can't overlap other semesters, please try again!"
         );
     }
 
     addSemseterToList(semester);
-    saveSemester(allData.allSemesters);
+    saveSemester(GlobalVar::allData.allSemesters);
     saveCurrentSemester(semester);
     return semester;
 }

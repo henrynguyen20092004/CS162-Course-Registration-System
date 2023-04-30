@@ -1,5 +1,6 @@
 #include "Page.h"
 
+#include "../../GlobalVar/GlobalVar.h"
 #include "../DrawMenu/DrawMenu.h"
 #include "../TextFunction/TextFunction.h"
 
@@ -7,8 +8,8 @@ Page::Page() { menuDropDownItems = new char[MAX_INPUT_CHAR]; }
 
 void Page::mainLoop() {
     std::string currentSemesterText = "Current semester: Semester " +
-                                      std::to_string(currentSemester.number) + ", " +
-                                      currentSemester.schoolYearName;
+                                      std::to_string(GlobalVar::currentSemester.number) +
+                                      ", " + GlobalVar::currentSemester.schoolYearName;
 
     menuDropDown = DropDown(
         currentSemesterText.c_str(), "Change current semester;Change password; Log out",
@@ -18,7 +19,7 @@ void Page::mainLoop() {
 
     while (!stopLoop) {
         if (WindowShouldClose()) {
-            commandChoice = EXIT;
+            GlobalVar::commandChoice = EXIT;
             break;
         }
 
@@ -27,7 +28,7 @@ void Page::mainLoop() {
         drawPage();
         drawMenu(menuDropDown, menuDropDownItems, stopLoop);
         drawDefaultText(
-            ("Welcome, " + currentUser.username).c_str(),
+            ("Welcome, " + GlobalVar::currentUser.username).c_str(),
             {120.0f, DEFAULT_PADDING.y / 2.0f}, WHITE
         );
         EndDrawing();

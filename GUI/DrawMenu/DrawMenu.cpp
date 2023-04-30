@@ -1,6 +1,6 @@
 #include "DrawMenu.h"
 
-#include "../../Function/LogOut/LogOut.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../Button/Button.h"
 
 void drawStudentMenu(bool& stopLoop) {
@@ -20,17 +20,17 @@ void drawStudentMenu(bool& stopLoop) {
     );
 
     if (myInfoButton.drawButton()) {
-        commandChoice = VIEW_STUDENT_INFO;
+        GlobalVar::commandChoice = VIEW_STUDENT_INFO;
         stopLoop = true;
     }
 
     if (myCoursesButton.drawButton()) {
-        commandChoice = VIEW_COURSES_OF_STUDENT;
+        GlobalVar::commandChoice = VIEW_COURSES_OF_STUDENT;
         stopLoop = true;
     }
 
     if (myScoreboardButton.drawButton()) {
-        commandChoice = VIEW_SCOREBOARD_OF_STUDENT;
+        GlobalVar::commandChoice = VIEW_SCOREBOARD_OF_STUDENT;
         stopLoop = true;
     }
 }
@@ -57,32 +57,32 @@ void drawAdminMenu(bool& stopLoop) {
     );
 
     if (schoolYearButton.drawButton()) {
-        commandChoice = VIEW_SCHOOL_YEARS;
+        GlobalVar::commandChoice = VIEW_SCHOOL_YEARS;
         stopLoop = true;
     }
 
     if (semesterButton.drawButton()) {
-        commandChoice = VIEW_SEMESTERS;
+        GlobalVar::commandChoice = VIEW_SEMESTERS;
         stopLoop = true;
     }
 
     if (courseButton.drawButton()) {
-        commandChoice = VIEW_COURSES;
+        GlobalVar::commandChoice = VIEW_COURSES;
         stopLoop = true;
     }
 
     if (classButton.drawButton()) {
-        commandChoice = VIEW_CLASSES;
+        GlobalVar::commandChoice = VIEW_CLASSES;
         stopLoop = true;
     }
 }
 
 void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems, bool& stopLoop) {
     DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, MENU_HEIGHT}, {6, 57, 112, 255});
-    DrawTextureV(defaultAvatar, {5.0f, 15.0f}, WHITE);
+    DrawTextureV(GlobalVar::defaultAvatar, {5.0f, 15.0f}, WHITE);
     menuDropDown.drawDropDown(menuDropDownItems, 0.0f, WHITE);
 
-    if (currentUser.username == "admin") {
+    if (GlobalVar::currentUser.username == "admin") {
         drawAdminMenu(stopLoop);
     } else {
         drawStudentMenu(stopLoop);
@@ -90,17 +90,18 @@ void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems, bool& stopLoop) 
 
     switch (menuDropDown.activeItemIndex) {
         case 0:
-            commandChoice = CHANGE_CURRENT_SEMESTER;
+            GlobalVar::commandChoice = CHANGE_CURRENT_SEMESTER;
             stopLoop = true;
             break;
 
         case 1:
-            commandChoice = CHANGE_PASSWORD;
+            GlobalVar::commandChoice = CHANGE_PASSWORD;
             stopLoop = true;
             break;
 
         case 2:
-            logOut(currentUser);
+            GlobalVar::currentUser.username = "";
+            GlobalVar::currentUser.password = "";
             stopLoop = true;
             break;
     }

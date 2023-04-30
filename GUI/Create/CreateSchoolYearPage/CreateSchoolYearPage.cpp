@@ -1,7 +1,7 @@
 #include "CreateSchoolYearPage.h"
 
 #include "../../../Function/Create/CreateSchoolYear/CreateSchoolYear.h"
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 
 class CreateSchoolYearPage : public FormPage {

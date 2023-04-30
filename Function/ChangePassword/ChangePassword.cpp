@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include "../../Struct/Data.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../Save/SaveUser/SaveUser.h"
 
 void updateUser(Node<User> *allUsers, const User &newUser) {
@@ -24,6 +24,6 @@ void changePassword(User &currentUser, char **inputs) {
     }
 
     currentUser.password = inputs[4];
-    updateUser(allData.allUsers, currentUser);
-    saveAllUsers(allData.allUsers);
+    updateUser(GlobalVar::allData.allUsers, currentUser);
+    saveAllUsers(GlobalVar::allData.allUsers);
 }

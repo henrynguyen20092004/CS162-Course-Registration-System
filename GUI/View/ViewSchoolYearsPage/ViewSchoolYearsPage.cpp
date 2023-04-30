@@ -1,6 +1,5 @@
 #include "ViewSchoolYearsPage.h"
 
-#include "../../../Struct/Data.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewSchoolYearsPage : public TablePage<std::string> {
@@ -41,7 +40,7 @@ void ViewSchoolYearsPage::convertLinkedListToData() {
 
 void viewSchoolYearsPage() {
     ViewSchoolYearsPage viewSchoolYearsPage(
-        "List of school years", 2, 0, 1, allData.allSchoolYears
+        "List of school years", 2, 0, 1, GlobalVar::allData.allSchoolYears
     );
     viewSchoolYearsPage.mainLoop();
 }

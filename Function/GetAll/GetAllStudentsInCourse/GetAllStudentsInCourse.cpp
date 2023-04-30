@@ -1,6 +1,6 @@
 #include "GetAllStudentsInCourse.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../OpenFile/OpenFile.h"
 
 Node<Student> *getAllStudentsInCourse(const Course &course) {
@@ -21,7 +21,8 @@ Node<Student> *getAllStudentsInCourse(const Course &course) {
         getline(fin, className);
 
         if (course.id == courseID && course.className == className) {
-            for (Node<Student> *cur2 = allData.allStudents; cur2; cur2 = cur2->next) {
+            for (Node<Student> *cur2 = GlobalVar::allData.allStudents; cur2;
+                 cur2 = cur2->next) {
                 if (cur2->data.id == studentID) {
                     pushToEndLinkedList(allStudentsInCourse, cur, cur2->data);
                 }

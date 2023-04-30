@@ -1,12 +1,13 @@
 #include "DeleteCourse.h"
 
-#include "../../Struct/Data.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../Save/SaveCourse/SaveCourse.h"
 #include "../Save/SaveScore/SaveScore.h"
 #include "../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void deleteAllScoresInCourse(const std::string &id, const std::string &className) {
-    Node<Score> *allScores = new Node(allData.allScores), *cur = allScores, *tmpScore;
+    Node<Score> *allScores = new Node(GlobalVar::allData.allScores), *cur = allScores,
+                *tmpScore;
 
     while (cur->next) {
         StudentCourse tmpStudentCourse = cur->next->data.studentCourse;
@@ -20,13 +21,14 @@ void deleteAllScoresInCourse(const std::string &id, const std::string &className
         }
     }
 
-    allData.allScores = allScores->next;
-    saveScores(allData.allScores);
+    GlobalVar::allData.allScores = allScores->next;
+    saveScores(GlobalVar::allData.allScores);
     delete allScores;
 }
 
 void deleteAllStudentsInCourse(const std::string &id, const std::string &className) {
-    Node<StudentCourse> *allStudentCourses = new Node(allData.allStudentCourses),
+    Node<StudentCourse> *allStudentCourses =
+                            new Node(GlobalVar::allData.allStudentCourses),
                         *cur = allStudentCourses, *tmpStudentCourse;
 
     while (cur->next) {
@@ -39,13 +41,13 @@ void deleteAllStudentsInCourse(const std::string &id, const std::string &classNa
         }
     }
 
-    allData.allStudentCourses = allStudentCourses->next;
-    saveAllStudentCourses(allData.allStudentCourses);
+    GlobalVar::allData.allStudentCourses = allStudentCourses->next;
+    saveAllStudentCourses(GlobalVar::allData.allStudentCourses);
     delete allStudentCourses;
 }
 
 void deleteCourse(const std::string &course) {
-    Node<Course> *allCourses = new Node(allData.allCourses), *cur = allCourses,
+    Node<Course> *allCourses = new Node(GlobalVar::allData.allCourses), *cur = allCourses,
                  *tmpCourse;
 
     std::string *courseIDAndClassName = new std::string[2];
@@ -64,8 +66,8 @@ void deleteCourse(const std::string &course) {
         }
     }
 
-    allData.allCourses = allCourses->next;
-    saveAllCourses(allData.allCourses);
+    GlobalVar::allData.allCourses = allCourses->next;
+    saveAllCourses(GlobalVar::allData.allCourses);
     delete allCourses;
     delete[] courseIDAndClassName;
 }

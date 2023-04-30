@@ -7,7 +7,7 @@
 #include "../../../Function/GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
 #include "../../../Function/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 #include "../../../Function/Update/UpdateStudentResult/UpdateStudentResult.h"
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 
 class UpdateStudentResultPage : public FormPage {
@@ -36,7 +36,8 @@ UpdateStudentResultPage::UpdateStudentResultPage()
 }
 
 void UpdateStudentResultPage::initInputs() {
-    dropDowns[0] = DropDown("Course", allData.allCourses, inputPos[0], inputWidth);
+    dropDowns[0] =
+        DropDown("Course", GlobalVar::allData.allCourses, inputPos[0], inputWidth);
     textInputs[0] = TextInput("Other mark", inputs[0], inputPos[2], inputWidth);
     textInputs[1] = TextInput("Midterm mark", inputs[1], inputPos[3], inputWidth);
     textInputs[2] = TextInput("Final mark", inputs[2], inputPos[4], inputWidth);
@@ -62,7 +63,7 @@ void UpdateStudentResultPage::drawInputs() {
 
     if (dropDownItems[1][0] != '\0' &&
         strcmp(dropDownItems[1], previousStudentIDDropDownItem)) {
-        for (Node<Score> *cur = allData.allScores; cur; cur = cur->next) {
+        for (Node<Score> *cur = GlobalVar::allData.allScores; cur; cur = cur->next) {
             StudentCourse studentCourse = cur->data.studentCourse;
             if (!strcmp(studentCourse.studentID.c_str(), dropDownItems[1]) &&
                 studentCourse.courseID == course.id &&

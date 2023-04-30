@@ -1,6 +1,6 @@
 #include "AddStudentToCourse.h"
 
-#include "../../Struct/Data.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../Check/CheckStudent/CheckStudent.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
@@ -13,7 +13,7 @@ void saveStudentToCourse(const StudentCourse &studentCourse) {
     fout << studentCourse.courseID << '\n';
     fout << studentCourse.className << '\n';
     fout.close();
-    addNewItemsToOldList(allData.allStudentCourses, new Node(studentCourse));
+    addNewItemsToOldList(GlobalVar::allData.allStudentCourses, new Node(studentCourse));
 }
 
 void addStudentToCourse(char **inputs, char **dropDownItems) {
@@ -26,11 +26,11 @@ void addStudentToCourse(char **inputs, char **dropDownItems) {
     studentCourse.className = courseIDAndClassName[1];
     delete[] courseIDAndClassName;
 
-    if (!checkStudentIDExists(allData.allStudents, studentCourse.studentID)) {
+    if (!checkStudentIDExists(GlobalVar::allData.allStudents, studentCourse.studentID)) {
         throw std::invalid_argument("This student does not exist, please try again!");
     }
 
-    if (checkStudentInCourse(allData.allStudentCourses, studentCourse)) {
+    if (checkStudentInCourse(GlobalVar::allData.allStudentCourses, studentCourse)) {
         throw std::invalid_argument(
             "This student is already in the course, please try again!"
         );

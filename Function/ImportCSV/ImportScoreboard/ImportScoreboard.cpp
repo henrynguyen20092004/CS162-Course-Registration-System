@@ -3,7 +3,7 @@
 #include <cstring>
 #include <sstream>
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
@@ -34,7 +34,7 @@ void checkImportedScore(
     StudentCourse studentCourse = score.studentCourse;
 
     if (!checkStudentIDExists(allStudents, studentCourse.studentID) ||
-        !checkStudentInCourse(allData.allStudentCourses, studentCourse)) {
+        !checkStudentInCourse(GlobalVar::allData.allStudentCourses, studentCourse)) {
         throw std::invalid_argument("Invalid student ID");
     }
 
@@ -89,7 +89,9 @@ void importScoreboard(char **inputs, char **dropDownItems, const std::string &co
 
         try {
             getScoreFromLine(score, importLine);
-            checkImportedScore(score, allData.allStudents, allData.allScores);
+            checkImportedScore(
+                score, GlobalVar::allData.allStudents, GlobalVar::allData.allScores
+            );
         } catch (std::invalid_argument &error) {
             if (!strcmp(error.what(), "Duplicated record")) {
                 pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
@@ -105,7 +107,7 @@ void importScoreboard(char **inputs, char **dropDownItems, const std::string &co
     }
 
     fin.close();
-    addNewItemsToOldList(allData.allScores, newScores);
-    saveScores(allData.allScores);
+    addNewItemsToOldList(GlobalVar::allData.allScores, newScores);
+    saveScores(GlobalVar::allData.allScores);
     showCSVErrorLines(duplicateErrors, invalidErrors);
 }

@@ -1,6 +1,6 @@
 #include "CreateStudentAccount.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../OpenFile/OpenFile.h"
 
 std::string getPasswordFromDateOfBirth(const std::string &dateOfBirth) {
@@ -20,7 +20,7 @@ void saveAccount(const User &studentAccount) {
     fout << studentAccount.username << '\n';
     fout << studentAccount.password << '\n';
     fout.close();
-    addNewItemsToOldList(allData.allUsers, new Node(studentAccount));
+    addNewItemsToOldList(GlobalVar::allData.allUsers, new Node(studentAccount));
 }
 
 void createStudentAccount(const Student &student) {

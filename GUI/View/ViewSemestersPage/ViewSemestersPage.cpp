@@ -1,7 +1,6 @@
 #include "ViewSemestersPage.h"
 
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
-#include "../../../Struct/Data.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewSemestersPage : public TablePage<Semester> {
@@ -48,7 +47,7 @@ void ViewSemestersPage::convertLinkedListToData() {
 
 void viewSemestersPage() {
     ViewSemestersPage viewSemestersPage(
-        "List of semesters", 5, 0, 1, allData.allSemesters
+        "List of semesters", 5, 0, 1, GlobalVar::allData.allSemesters
     );
     viewSemestersPage.mainLoop();
 }

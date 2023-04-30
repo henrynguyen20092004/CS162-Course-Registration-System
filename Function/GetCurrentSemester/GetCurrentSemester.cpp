@@ -1,21 +1,20 @@
 #include "GetCurrentSemester.h"
 
+#include "../../GlobalVar/GlobalVar.h"
 #include "../OpenFile/OpenFile.h"
 
-Semester getCurrentSemester() {
-    Semester semester;
+void getCurrentSemester() {
     std::ifstream fin;
     readFile(fin, "Data/CurrentSemester.txt");
-    getline(fin, semester.schoolYearName);
+    getline(fin, GlobalVar::currentSemester.schoolYearName);
 
     if (fin.good()) {
         std::string semesterNumber;
         getline(fin, semesterNumber);
-        semester.number = stoi(semesterNumber);
-        getline(fin, semester.startDate);
-        getline(fin, semester.endDate);
+        GlobalVar::currentSemester.number = stoi(semesterNumber);
+        getline(fin, GlobalVar::currentSemester.startDate);
+        getline(fin, GlobalVar::currentSemester.endDate);
     }
 
     fin.close();
-    return semester;
 }

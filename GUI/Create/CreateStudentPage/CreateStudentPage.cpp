@@ -1,7 +1,7 @@
 #include "CreateStudentPage.h"
 
 #include "../../../Function/Create/CreateStudent/CreateStudent.h"
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 
 class CreateStudentPage : public FormPage {
@@ -15,7 +15,8 @@ class CreateStudentPage : public FormPage {
 
 void CreateStudentPage::initInputs() {
     textInputs[0] = TextInput("Student ID", inputs[0], inputPos[0], inputWidth);
-    dropDowns[0] = DropDown("Class name", allData.allClasses, inputPos[1], inputWidth);
+    dropDowns[0] =
+        DropDown("Class name", GlobalVar::allData.allClasses, inputPos[1], inputWidth);
     textInputs[1] = TextInput("First Name", inputs[1], inputPos[2], inputWidth);
     textInputs[2] = TextInput("Last Name", inputs[2], inputPos[3], inputWidth);
     dropDowns[1] = DropDown("Gender", "M;F", inputPos[4], inputWidth);

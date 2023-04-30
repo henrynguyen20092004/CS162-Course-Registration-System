@@ -1,6 +1,6 @@
 #include "LogIn.h"
 
-#include "../../Struct/Data.h"
+#include "../../GlobalVar/GlobalVar.h"
 
 bool checkUserExists(Node<User> *allUsers, const User &user) {
     for (; allUsers; allUsers = allUsers->next) {
@@ -15,14 +15,11 @@ bool checkUserExists(Node<User> *allUsers, const User &user) {
     return false;
 }
 
-User logIn(char **inputs) {
-    User user;
-    user.username = inputs[0];
-    user.password = inputs[2];
+void logIn(char **inputs) {
+    GlobalVar::currentUser.username = inputs[0];
+    GlobalVar::currentUser.password = inputs[2];
 
-    if (!checkUserExists(allData.allUsers, user)) {
+    if (!checkUserExists(GlobalVar::allData.allUsers, GlobalVar::currentUser)) {
         throw std::invalid_argument("Invalid credentials, please try again!");
     }
-
-    return user;
 }

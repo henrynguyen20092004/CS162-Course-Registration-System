@@ -1,6 +1,6 @@
 #include "UpdateCourse.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
@@ -22,7 +22,7 @@ void inputChanges(Course& course, char** inputs, char** dropDownItems) {
 }
 
 void updateCourse(char** inputs, char** dropDownItems) {
-    if (!allData.allCourses) {
+    if (!GlobalVar::allData.allCourses) {
         throw std::invalid_argument(
             "No course records, please create one and try again later!"
         );
@@ -32,7 +32,7 @@ void updateCourse(char** inputs, char** dropDownItems) {
     inputChanges(course, inputs, dropDownItems);
     validateOtherCourseInformation(course);
 
-    for (Node<Course>* cur = allData.allCourses; cur; cur = cur->next) {
+    for (Node<Course>* cur = GlobalVar::allData.allCourses; cur; cur = cur->next) {
         Course curCourse = cur->data;
 
         if (course.id == curCourse.id && course.className == curCourse.className) {
@@ -43,5 +43,5 @@ void updateCourse(char** inputs, char** dropDownItems) {
         }
     }
 
-    saveAllCourses(allData.allCourses);
+    saveAllCourses(GlobalVar::allData.allCourses);
 }
