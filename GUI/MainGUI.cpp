@@ -27,6 +27,8 @@ void mainWindow() {
     GlobalVar::titleFont = loadDefaultTitleFont();
     GlobalVar::textFont = loadDefaultTextFont();
     GlobalVar::defaultAvatar = LoadTexture("Pictures/DefaultAvatar.png");
+    GlobalVar::fullScreenLogo = LoadTexture("Pictures/FullScreenLogo.png");
+    GlobalVar::groupInfo = LoadTexture("Pictures/GroupInfo.png");
 
     SetWindowIcon(windowIcon);
     SetTargetFPS(60);
@@ -44,5 +46,7 @@ void mainWindow() {
     UnloadFont(GlobalVar::titleFont);
     UnloadFont(GlobalVar::textFont);
     UnloadTexture(GlobalVar::defaultAvatar);
+    UnloadTexture(GlobalVar::fullScreenLogo);
+    UnloadTexture(GlobalVar::groupInfo);
     CloseWindow();
 }

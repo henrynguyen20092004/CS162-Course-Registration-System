@@ -103,10 +103,8 @@ template <class T>
 void TablePage<T>::generateButtons() {
     for (int i = 0; i < headerButton; ++i) {
         headerButtons[i] = Button(
-            headerButtonTitles[i],
-            tablePos.x + i * (TABLE_BUTTON_WIDTH * 3.0f + DEFAULT_ITEM_MARGIN.x),
-            tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y,
-            TABLE_BUTTON_WIDTH * 3.0f
+            headerButtonTitles[i], tablePos.x + i * (250.0f + DEFAULT_ITEM_MARGIN.x),
+            tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y, 250.0f
         );
     }
 
