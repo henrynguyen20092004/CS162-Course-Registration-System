@@ -27,7 +27,7 @@ void Page::mainLoop() {
         drawPage();
         drawMenu(menuDropDown, menuDropDownItems, stopLoop);
         drawDefaultText(
-            textFont, ("Welcome, " + currentUser.username).c_str(),
+            ("Welcome, " + currentUser.username).c_str(),
             {120.0f, DEFAULT_PADDING.y / 2.0f}, WHITE
         );
         EndDrawing();

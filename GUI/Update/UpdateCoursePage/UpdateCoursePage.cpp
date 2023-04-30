@@ -15,7 +15,6 @@ class UpdateCoursePage : public FormPage {
     void submitCallBack() override;
 
    public:
-    using FormPage::FormPage;
     UpdateCoursePage();
     ~UpdateCoursePage();
 };

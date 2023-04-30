@@ -78,7 +78,7 @@ void drawAdminMenu(bool& stopLoop) {
 }
 
 void drawMenu(DropDown& menuDropDown, char*& menuDropDownItems, bool& stopLoop) {
-    DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, MENU_HEIGHT}, SECONDARY_COLOR);
+    DrawRectangleV({0.0f, 0.0f}, {SCREEN_WIDTH, MENU_HEIGHT}, {6, 57, 112, 255});
     DrawTextureV(defaultAvatar, {5.0f, 15.0f}, WHITE);
     menuDropDown.drawDropDown(menuDropDownItems, 0.0f, WHITE);
 

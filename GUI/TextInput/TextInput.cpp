@@ -40,9 +40,8 @@ bool TextInput::drawTextInput(float scrollY) {
     }
 
     drawDefaultText(
-        textFont, label,
-        {textInputBoxWithScroll.x,
-         textInputBoxWithScroll.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y}
+        label, {textInputBoxWithScroll.x,
+                textInputBoxWithScroll.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y}
     );
 
     if (!editMode && measureTextWidth(textFont, input) > width) {

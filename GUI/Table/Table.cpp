@@ -72,7 +72,7 @@ void Table::drawText(float scrollY) {
                 textPos.x += (columnWidths[j] - textSize) / 2 - TABLE_CELL_PADDING_X;
             }
 
-            drawDefaultText(textFont, tableData[i][j].c_str(), textPos, BLACK);
+            drawDefaultText(tableData[i][j].c_str(), textPos, BLACK);
             textPos.y += rowHeights[i];
 
             if (j < 2) {
@@ -96,7 +96,7 @@ void Table::drawTable(Vector2& scroll) {
         {tableWidth + DEFAULT_PADDING.x * 2, backgroundHeight}, WHITE
     );
     drawDefaultTitle(
-        titleFont, tableTitle,
+        tableTitle,
         {getCenterX(measureTextWidth(titleFont, tableTitle)), tablePos.y + scroll.y}
     );
     drawText(scroll.y);

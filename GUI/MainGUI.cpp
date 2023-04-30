@@ -29,6 +29,7 @@
 #include "View/ViewSchoolYearsPage/ViewSchoolYearsPage.h"
 #include "View/ViewScoreboardOfStudentPage/ViewScoreboardOfStudentPage.h"
 #include "View/ViewSemestersPage/ViewSemestersPage.h"
+#include "View/ViewStudentInfoPage/ViewStudentInfoPage.h"
 #include "View/ViewStudentsInClassPage/ViewStudentsInClassPage.h"
 #include "View/ViewStudentsInCoursePage/ViewStudentsInCoursePage.h"
 
@@ -41,6 +42,7 @@ Semester currentSemester = getCurrentSemester();
 
 void SetDefaultStyle() {
     GuiSetStyle(DEFAULT, TEXT_SIZE, DEFAULT_TEXT_SIZE);
+    GuiSetStyle(TEXTBOX, TEXT_COLOR_DISABLED, 0x5d6874ff);
     GuiSetStyle(DROPDOWNBOX, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
     GuiSetStyle(DROPDOWNBOX, DROPDOWN_ITEMS_SPACING, 0);
     GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, 0x063970ff);
@@ -66,7 +68,7 @@ void selectPage() {
             break;
 
         case VIEW_STUDENT_INFO:
-            temp.mainLoop();
+            viewStudentInfoPage();
             break;
 
         case VIEW_SCHOOL_YEARS:

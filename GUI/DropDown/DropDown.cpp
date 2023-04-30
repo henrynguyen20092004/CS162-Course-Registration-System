@@ -60,7 +60,7 @@ DropDown::DropDown(const char* label, const char* itemList, Vector2 pos, float w
 
 bool DropDown::drawDropDown(char*& selectedItem, float scrollY, Color labelColor) {
     drawDefaultText(
-        textFont, label,
+        label,
         {dropDownBox.x,
          dropDownBox.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y + scrollY},
         labelColor

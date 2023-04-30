@@ -30,7 +30,7 @@ FRI
 3
 2022-2023
 2
-MTH2
+MTH251
 Calculus II
 22TT2
 Nguyen Huu Nha
@@ -50,7 +50,7 @@ MON
 1
 2025-2026
 1
-MTH251
+MTH252
 Math
 22TT2
 Nlha

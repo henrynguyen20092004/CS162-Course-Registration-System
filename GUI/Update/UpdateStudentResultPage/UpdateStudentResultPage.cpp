@@ -20,7 +20,6 @@ class UpdateStudentResultPage : public FormPage {
     void submitCallBack() override;
 
    public:
-    using FormPage::FormPage;
     UpdateStudentResultPage();
     ~UpdateStudentResultPage();
 };

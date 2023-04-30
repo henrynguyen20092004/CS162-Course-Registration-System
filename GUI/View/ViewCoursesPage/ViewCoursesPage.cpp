@@ -78,7 +78,7 @@ void ViewCoursesPage::drawColumnButtons() {
             }
         }
 
-        if (columnButtons[i][2].drawButton(scroll.y)) {
+        if (columnButtons[i][buttonCol - 1].drawButton(scroll.y)) {
             deleteCourse(tableData[i + 1][1]);
             stopLoop = true;
         }
