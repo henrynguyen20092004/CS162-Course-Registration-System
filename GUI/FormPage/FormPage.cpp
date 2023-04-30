@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+#include "../../GlobalVar/GlobalVar.h"
 #include "../DrawScrollBar/DrawScrollBar.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
@@ -101,7 +102,7 @@ void FormPage::drawPage() {
     }
 
     if (backButton.drawButton(scroll.y)) {
-        commandChoice = backButtonCommand;
+        GlobalVar::commandChoice = backButtonCommand;
         stopLoop = true;
     }
 
@@ -125,7 +126,7 @@ void FormPage::drawErrorText() {
         return;
     }
 
-    errorText = clipText(textFont, errorText.c_str(), inputWidth);
+    errorText = clipText(GlobalVar::textFont, errorText.c_str(), inputWidth);
     int numberOfLines = std::count(errorText.begin(), errorText.end(), '\n') + 1;
 
     float posY = mainBoxPos.y + mainBoxSize.y - DEFAULT_PADDING.y - DEFAULT_ITEM_HEIGHT -

@@ -1,6 +1,6 @@
 #include "UpdateStudentResult.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveScore/SaveScore.h"
@@ -22,6 +22,6 @@ void updateStudentResult(char **inputs, char **dropDownItems, const Score &score
     newScore.midtermMark = checkAndConvertToScore(inputs[1], "midterm mark");
     newScore.finalMark = checkAndConvertToScore(inputs[2], "final mark");
     newScore.totalMark = checkAndConvertToScore(inputs[3], "total mark");
-    updateResult(allData.allScores, newScore);
-    saveScores(allData.allScores);
+    updateResult(GlobalVar::allData.allScores, newScore);
+    saveScores(GlobalVar::allData.allScores);
 }

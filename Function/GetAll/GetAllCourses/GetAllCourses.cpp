@@ -1,6 +1,6 @@
 #include "GetAllCourses.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 
 void readCourse(std::ifstream &fin, Course &course) {
     getline(fin, course.schoolYearName);
@@ -31,7 +31,7 @@ Node<Course> *getAllCoursesOfSemester(
     const std::string &schoolYear, const int &semesterNumber
 ) {
     Node<Course> *allCourseOfSemester = nullptr, *curCourse;
-    for (Node<Course> *cur = allData.allCourses; cur; cur = cur->next) {
+    for (Node<Course> *cur = GlobalVar::allData.allCourses; cur; cur = cur->next) {
         Course course = cur->data;
 
         if (course.schoolYearName == schoolYear &&
@@ -86,7 +86,8 @@ Node<Course> *getAllCoursesOfStudent(
     for (Node<StudentCourse> *cur1 = allCoursesIDOfStudent; cur1; cur1 = cur1->next) {
         tmpStudentCourse = cur1->data;
 
-        for (Node<Course> *cur2 = allData.allCourses; cur2; cur2 = cur2->next) {
+        for (Node<Course> *cur2 = GlobalVar::allData.allCourses; cur2;
+             cur2 = cur2->next) {
             tmpCourse = cur2->data;
 
             if (tmpCourse.id == tmpStudentCourse.courseID &&

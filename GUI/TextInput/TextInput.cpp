@@ -2,6 +2,7 @@
 
 #include <cstring>
 
+#include "../../GlobalVar/GlobalVar.h"
 #include "../TextFunction/TextFunction.h"
 
 TextInput::TextInput() {}
@@ -18,7 +19,7 @@ void TextInput::truncateInput() {
     for (int i = 0; input[i] != '\0'; ++i) {
         truncatedInput += input[i];
 
-        if (measureTextWidth(textFont, truncatedInput.c_str()) > width) {
+        if (measureTextWidth(GlobalVar::textFont, truncatedInput.c_str()) > width) {
             truncatedInput[i + 1] = '\0';
 
             for (int j = i - 2; j <= i; ++j) {
@@ -44,7 +45,7 @@ bool TextInput::drawTextInput(float scrollY) {
                 textInputBoxWithScroll.y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y}
     );
 
-    if (!editMode && measureTextWidth(textFont, input) > width) {
+    if (!editMode && measureTextWidth(GlobalVar::textFont, input) > width) {
         truncateInput();
         return GuiTextBox(
             textInputBoxWithScroll, truncatedInput.data(), MAX_INPUT_CHAR, editMode

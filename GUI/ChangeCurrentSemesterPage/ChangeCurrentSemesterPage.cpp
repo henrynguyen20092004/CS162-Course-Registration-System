@@ -1,7 +1,7 @@
 #include "ChangeCurrentSemesterPage.h"
 
 #include "../../Function/Save/SaveCurrentSemester/SaveCurrentSemester.h"
-#include "../../Struct/Data.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../FormPage/FormPage.h"
 
 class ChangeCurrentSemesterPage : public FormPage {
@@ -14,7 +14,8 @@ class ChangeCurrentSemesterPage : public FormPage {
 };
 
 void ChangeCurrentSemesterPage::initInputs() {
-    dropDowns[0] = DropDown("Semester", allData.allSemesters, inputPos[0], inputWidth);
+    dropDowns[0] =
+        DropDown("Semester", GlobalVar::allData.allSemesters, inputPos[0], inputWidth);
 }
 
 void ChangeCurrentSemesterPage::submitCallBack() {
@@ -24,13 +25,13 @@ void ChangeCurrentSemesterPage::submitCallBack() {
         schoolYearName += dropDownItems[0][i];
     }
 
-    for (Node<Semester> *cur = allData.allSemesters; cur; cur = cur->next) {
+    for (Node<Semester> *cur = GlobalVar::allData.allSemesters; cur; cur = cur->next) {
         Semester semester = cur->data;
         if (semester.schoolYearName == schoolYearName &&
             semester.number == dropDownItems[0][9] - '0') {
             saveCurrentSemester(semester);
-            currentSemester = semester;
-            commandChoice = HOME;
+            GlobalVar::currentSemester = semester;
+            GlobalVar::commandChoice = HOME;
             stopLoop = true;
         }
     }

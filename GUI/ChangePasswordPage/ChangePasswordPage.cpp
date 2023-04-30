@@ -1,6 +1,7 @@
 #include "ChangePasswordPage.h"
 
 #include "../../Function/ChangePassword/ChangePassword.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../FormPage/FormPage.h"
 #include "../HidePassword/HidePassword.h"
 
@@ -32,7 +33,9 @@ void ChangePasswordPage::drawInputs() {
     }
 }
 
-void ChangePasswordPage::submitCallBack() { changePassword(currentUser, inputs); }
+void ChangePasswordPage::submitCallBack() {
+    changePassword(GlobalVar::currentUser, inputs);
+}
 
 void changePasswordPage() {
     ChangePasswordPage changePasswordPage(

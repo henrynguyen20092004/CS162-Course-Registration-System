@@ -4,6 +4,7 @@
 #include <string>
 
 #include "../Button/Button.h"
+#include "../Command/Command.h"
 #include "../Page/Page.h"
 #include "../TextInput/TextInput.h"
 

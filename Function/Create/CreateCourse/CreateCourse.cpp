@@ -1,6 +1,6 @@
 #include "CreateCourse.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../DateFunction/DateFunction.h"
@@ -20,7 +20,7 @@ void saveCourse(const Course &course) {
     fout << course.dayOfWeek << '\n';
     fout << course.sessionNumber << '\n';
     fout.close();
-    addNewItemsToOldList(allData.allCourses, new Node(course));
+    addNewItemsToOldList(GlobalVar::allData.allCourses, new Node(course));
 }
 
 void createCourse(const Semester &semester, char **inputs, char **dropDownItems) {
@@ -40,7 +40,7 @@ void createCourse(const Semester &semester, char **inputs, char **dropDownItems)
     course.dayOfWeek = dropDownItems[0];
     course.sessionNumber = stoi(std::string(dropDownItems[1]));
 
-    if (checkCourseExists(allData.allCourses, course.id, course.className)) {
+    if (checkCourseExists(GlobalVar::allData.allCourses, course.id, course.className)) {
         throw std::invalid_argument("This course already exists, please try again!");
     }
 

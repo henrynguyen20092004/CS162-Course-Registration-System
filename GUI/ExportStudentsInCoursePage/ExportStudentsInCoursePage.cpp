@@ -1,7 +1,7 @@
 #include "ExportStudentsInCoursePage.h"
 
 #include "../../Function/ExportStudentsInCourse/ExportStudentsInCourse.h"
-#include "../../Struct/Data.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../FormPage/FormPage.h"
 #include "../OpenDialog/OpenDialog.h"
 

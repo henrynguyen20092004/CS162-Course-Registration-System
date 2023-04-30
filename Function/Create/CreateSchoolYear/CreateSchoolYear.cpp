@@ -1,6 +1,6 @@
 #include "CreateSchoolYear.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckSchoolYear/CheckSchoolYear.h"
 
 void validateSchoolYear(
@@ -20,10 +20,10 @@ void saveSchoolYear(const std::string &schoolYearName) {
     writeFile(fout, "Data/SchoolYear.txt", std::ios::app);
     fout << schoolYearName << '\n';
     fout.close();
-    addNewItemsToOldList(allData.allSchoolYears, new Node(schoolYearName));
+    addNewItemsToOldList(GlobalVar::allData.allSchoolYears, new Node(schoolYearName));
 }
 
 void createSchoolYear(char *inputtedSchoolYear) {
-    validateSchoolYear(allData.allSchoolYears, inputtedSchoolYear);
+    validateSchoolYear(GlobalVar::allData.allSchoolYears, inputtedSchoolYear);
     saveSchoolYear(inputtedSchoolYear);
 }

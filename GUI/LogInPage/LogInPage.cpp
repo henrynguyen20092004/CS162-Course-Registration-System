@@ -1,6 +1,7 @@
 #include "LogInPage.h"
 
 #include "../../Function/LogIn/LogIn.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../Button/Button.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../HidePassword/HidePassword.h"
@@ -65,7 +66,7 @@ void LogInPage::mainLoop() {
 
     while (!stopLoop) {
         if (WindowShouldClose()) {
-            commandChoice = EXIT;
+            GlobalVar::commandChoice = EXIT;
             break;
         }
 
@@ -100,7 +101,7 @@ void LogInPage::drawErrorText() {
         return;
     }
 
-    errorText = clipText(textFont, errorText.c_str(), inputWidth);
+    errorText = clipText(GlobalVar::textFont, errorText.c_str(), inputWidth);
     float posY = mainBoxPos.y + mainBoxSize.y - DEFAULT_PADDING.y - DEFAULT_ITEM_HEIGHT -
                  DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y;
 
@@ -118,8 +119,7 @@ void LogInPage::checkFilledFields() {
 void LogInPage::submit() {
     try {
         checkFilledFields();
-        currentUser = logIn(inputs);
-        commandChoice = HOME;
+        logIn(inputs);
         stopLoop = true;
     } catch (std::exception &error) {
         errorText = error.what();

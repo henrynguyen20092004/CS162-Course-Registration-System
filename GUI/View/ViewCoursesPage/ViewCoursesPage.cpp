@@ -3,7 +3,6 @@
 #include "../../../Function/DeleteCourse/DeleteCourse.h"
 #include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
-#include "../../../Struct/Data.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewCoursesPage : public TablePage<Course> {
@@ -72,8 +71,8 @@ void ViewCoursesPage::drawColumnButtons() {
     for (int i = 0; i < row - 1; ++i) {
         for (int j = 0; j < buttonCol - 1; ++j) {
             if (columnButtons[i][j].drawButton(scroll.y)) {
-                renderArgs = tableData[i + 1][1];
-                commandChoice = columnButtonCommands[j];
+                GlobalVar::renderArgs = tableData[i + 1][1];
+                GlobalVar::commandChoice = columnButtonCommands[j];
                 stopLoop = true;
             }
         }
@@ -86,6 +85,8 @@ void ViewCoursesPage::drawColumnButtons() {
 }
 
 void viewCoursesPage() {
-    ViewCoursesPage viewCoursesPage("List of courses", 8, 3, 2, allData.allCourses);
+    ViewCoursesPage viewCoursesPage(
+        "List of courses", 8, 3, 2, GlobalVar::allData.allCourses
+    );
     viewCoursesPage.mainLoop();
 }

@@ -1,6 +1,6 @@
 #include "ViewStudentInfoPage.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../GetCenterPosition/GetCenterPosition.h"
 #include "../../Page/Page.h"
 #include "../../TextFunction/TextFunction.h"
@@ -9,8 +9,8 @@
 Student getCurrentStudent() {
     Student student;
 
-    for (Node<Student> *cur = allData.allStudents; cur; cur = cur->next) {
-        if (cur->data.id == currentUser.username) {
+    for (Node<Student> *cur = GlobalVar::allData.allStudents; cur; cur = cur->next) {
+        if (cur->data.id == GlobalVar::currentUser.username) {
             student = cur->data;
             break;
         }

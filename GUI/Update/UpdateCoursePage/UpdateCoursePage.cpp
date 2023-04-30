@@ -4,7 +4,7 @@
 
 #include "../../../Function/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 #include "../../../Function/Update/UpdateCourse/UpdateCourse.h"
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 
 class UpdateCoursePage : public FormPage {
@@ -49,7 +49,8 @@ int dayOfWeekToIndex(const std::string &dayOfWeek) {
 }
 
 void UpdateCoursePage::initInputs() {
-    dropDowns[0] = DropDown("Course", allData.allCourses, inputPos[0], inputWidth);
+    dropDowns[0] =
+        DropDown("Course", GlobalVar::allData.allCourses, inputPos[0], inputWidth);
     textInputs[0] = TextInput("Course name", inputs[0], inputPos[1], inputWidth);
     textInputs[1] = TextInput("Teacher name", inputs[1], inputPos[2], inputWidth);
     textInputs[2] = TextInput("Credits", inputs[2], inputPos[3], inputWidth);
@@ -65,7 +66,7 @@ void UpdateCoursePage::drawInputs() {
         std::string *courseIDAndClassName = new std::string[2];
         splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
 
-        for (Node<Course> *cur = allData.allCourses; cur; cur = cur->next) {
+        for (Node<Course> *cur = GlobalVar::allData.allCourses; cur; cur = cur->next) {
             Course course = cur->data;
             if (course.id == courseIDAndClassName[0] &&
                 course.className == courseIDAndClassName[1]) {

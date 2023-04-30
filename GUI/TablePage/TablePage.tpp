@@ -1,5 +1,6 @@
 #include <algorithm>
 
+#include "../../GlobalVar/GlobalVar.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
 #include "TablePage.h"
@@ -43,7 +44,7 @@ void TablePage<T>::clipData() {
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
             tableData[i][j] =
-                clipText(textFont, tableData[i][j].c_str(), columnWidths[j]);
+                clipText(GlobalVar::textFont, tableData[i][j].c_str(), columnWidths[j]);
         }
     }
 }
@@ -165,7 +166,7 @@ template <class T>
 void TablePage<T>::drawButtons() {
     for (int i = 0; i < headerButton; ++i) {
         if (headerButtons[i].drawButton(scroll.y)) {
-            commandChoice = headerButtonCommands[i];
+            GlobalVar::commandChoice = headerButtonCommands[i];
             stopLoop = true;
         }
     }
@@ -191,8 +192,8 @@ void TablePage<T>::drawColumnButtons() {
     for (int i = 0; i < row - 1; ++i) {
         for (int j = 0; j < buttonCol; ++j) {
             if (columnButtons[i][j].drawButton(scroll.y)) {
-                renderArgs = tableData[i + 1][1];
-                commandChoice = columnButtonCommands[j];
+                GlobalVar::renderArgs = tableData[i + 1][1];
+                GlobalVar::commandChoice = columnButtonCommands[j];
                 stopLoop = true;
             }
         }

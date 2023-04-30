@@ -3,7 +3,7 @@
 #include <cstring>
 #include <sstream>
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
@@ -34,7 +34,7 @@ void checkImportedStudentInCourse(
     const StudentCourse &studentCourse
 ) {
     Node<StudentCourse> *newNode = new Node(studentCourse);
-    validateStudent(allData.allClasses, student);
+    validateStudent(GlobalVar::allData.allClasses, student);
 
     for (; allStudents; allStudents = allStudents->next) {
         if (allStudents->data == student) {
@@ -54,7 +54,9 @@ void checkImportedStudentInCourse(
                 throw std::runtime_error("Record added");
             }
         } else if (allStudents->data.id == student.id) {
-            updateDefaultStudentPassword(allStudents, allData.allUsers, student);
+            updateDefaultStudentPassword(
+                allStudents, GlobalVar::allData.allUsers, student
+            );
             allStudents->data = student;
 
             if (!checkStudentInCourse(allStudentCourses, studentCourse)) {
@@ -112,7 +114,8 @@ void importStudentsInCourse(
             getStudentInCourseFromLine(student, importLine);
             studentCourse.studentID = student.id;
             checkImportedStudentInCourse(
-                student, allData.allStudents, allData.allStudentCourses, studentCourse
+                student, GlobalVar::allData.allStudents,
+                GlobalVar::allData.allStudentCourses, studentCourse
             );
         } catch (std::invalid_argument &error) {
             if (!strcmp(error.what(), "Duplicated record")) {
@@ -133,11 +136,11 @@ void importStudentsInCourse(
     }
 
     fin.close();
-    addNewItemsToOldList(allData.allStudents, newStudents);
-    addNewItemsToOldList(allData.allStudentCourses, newStudentCourses);
-    addNewItemsToOldList(allData.allUsers, newUsers);
-    saveAllUsers(allData.allUsers);
-    saveAllStudents(allData.allStudents);
-    saveAllStudentCourses(allData.allStudentCourses);
+    addNewItemsToOldList(GlobalVar::allData.allStudents, newStudents);
+    addNewItemsToOldList(GlobalVar::allData.allStudentCourses, newStudentCourses);
+    addNewItemsToOldList(GlobalVar::allData.allUsers, newUsers);
+    saveAllUsers(GlobalVar::allData.allUsers);
+    saveAllStudents(GlobalVar::allData.allStudents);
+    saveAllStudentCourses(GlobalVar::allData.allStudentCourses);
     showCSVErrorLines(duplicateErrors, invalidErrors);
 }

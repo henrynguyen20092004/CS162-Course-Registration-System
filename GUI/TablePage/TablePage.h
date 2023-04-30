@@ -1,6 +1,7 @@
 #ifndef TABLE_PAGE_H
 #define TABLE_PAGE_H
 
+#include "../Command/Command.h"
 #include "../Page/Page.h"
 #include "../Table/Table.h"
 

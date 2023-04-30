@@ -3,7 +3,7 @@
 #include <cstring>
 #include <sstream>
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
@@ -29,13 +29,15 @@ void getStudentInClassFromLine(Student &student, std::string importLine) {
 }
 
 void checkImportedStudentInClass(Node<Student> *allStudents, Student &student) {
-    validateStudent(allData.allClasses, student);
+    validateStudent(GlobalVar::allData.allClasses, student);
 
     for (; allStudents; allStudents = allStudents->next) {
         if (allStudents->data == student) {
             throw std::invalid_argument("Duplicated record");
         } else if (allStudents->data.id == student.id) {
-            updateDefaultStudentPassword(allStudents, allData.allUsers, student);
+            updateDefaultStudentPassword(
+                allStudents, GlobalVar::allData.allUsers, student
+            );
             allStudents->data = student;
             throw std::runtime_error("Record updated");
         }
@@ -69,7 +71,7 @@ void importStudentsInClass(
 
         try {
             getStudentInClassFromLine(student, importLine);
-            checkImportedStudentInClass(allData.allStudents, student);
+            checkImportedStudentInClass(GlobalVar::allData.allStudents, student);
         } catch (std::invalid_argument &error) {
             if (!strcmp(error.what(), "Duplicated record")) {
                 pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
@@ -88,9 +90,9 @@ void importStudentsInClass(
     }
 
     fin.close();
-    addNewItemsToOldList(allData.allStudents, newStudents);
-    addNewItemsToOldList(allData.allUsers, newUsers);
-    saveAllUsers(allData.allUsers);
-    saveAllStudents(allData.allStudents);
+    addNewItemsToOldList(GlobalVar::allData.allStudents, newStudents);
+    addNewItemsToOldList(GlobalVar::allData.allUsers, newUsers);
+    saveAllUsers(GlobalVar::allData.allUsers);
+    saveAllStudents(GlobalVar::allData.allStudents);
     showCSVErrorLines(duplicateErrors, invalidErrors);
 }

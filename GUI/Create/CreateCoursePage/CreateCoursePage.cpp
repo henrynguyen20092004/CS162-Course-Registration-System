@@ -1,7 +1,7 @@
 #include "CreateCoursePage.h"
 
 #include "../../../Function/Create/CreateCourse/CreateCourse.h"
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 
 class CreateCoursePage : public FormPage {
@@ -27,7 +27,7 @@ void CreateCoursePage::initInputs() {
 }
 
 void CreateCoursePage::submitCallBack() {
-    createCourse(currentSemester, inputs, dropDownItems);
+    createCourse(GlobalVar::currentSemester, inputs, dropDownItems);
 }
 
 void createCoursePage() {

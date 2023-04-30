@@ -45,7 +45,7 @@ void ViewScoreboardOfStudentPage::convertLinkedListToData() {
 void viewScoreboardOfStudentPage() {
     ViewScoreboardOfStudentPage viewScoreboardOfStudentPage(
         "Your scores this semester", 6, 0, 0,
-        getAllScoresOfStudent(currentUser.username, currentSemester)
+        getAllScoresOfStudent(GlobalVar::currentUser.username, GlobalVar::currentSemester)
     );
     viewScoreboardOfStudentPage.mainLoop();
 }

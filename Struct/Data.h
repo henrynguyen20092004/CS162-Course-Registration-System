@@ -31,6 +31,4 @@ struct Data {
     }
 };
 
-extern Data allData;
-
 #endif

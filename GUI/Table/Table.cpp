@@ -1,5 +1,6 @@
 #include "Table.h"
 
+#include "../../GlobalVar/GlobalVar.h"
 #include "../DrawScrollBar/DrawScrollBar.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
 #include "../TextFunction/TextFunction.h"
@@ -66,7 +67,8 @@ void Table::drawText(float scrollY) {
         textPos.y = initialTextPos.y + scrollY;
 
         for (int i = 0; i < row; ++i) {
-            float textSize = measureTextWidth(textFont, tableData[i][j].c_str());
+            float textSize =
+                measureTextWidth(GlobalVar::textFont, tableData[i][j].c_str());
 
             if (j < 2) {
                 textPos.x += (columnWidths[j] - textSize) / 2 - TABLE_CELL_PADDING_X;
@@ -96,8 +98,8 @@ void Table::drawTable(Vector2& scroll) {
         {tableWidth + DEFAULT_PADDING.x * 2, backgroundHeight}, WHITE
     );
     drawDefaultTitle(
-        tableTitle,
-        {getCenterX(measureTextWidth(titleFont, tableTitle)), tablePos.y + scroll.y}
+        tableTitle, {getCenterX(measureTextWidth(GlobalVar::titleFont, tableTitle)),
+                     tablePos.y + scroll.y}
     );
     drawText(scroll.y);
     drawGrid(scroll.y);

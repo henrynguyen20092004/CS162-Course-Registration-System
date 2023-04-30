@@ -1,6 +1,6 @@
 #include "ExportStudentsInCourse.h"
 
-#include "../../Struct/Data.h"
+#include "../../GlobalVar/GlobalVar.h"
 #include "../Check/CheckCourse/CheckCourse.h"
 #include "../GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
 #include "../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"

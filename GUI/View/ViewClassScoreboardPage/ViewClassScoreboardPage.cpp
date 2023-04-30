@@ -6,7 +6,6 @@
 #include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
-#include "../../../Struct/Data.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewClassScoreboardPage : public TablePage<Student> {
@@ -91,7 +90,7 @@ void ViewClassScoreboardPage::convertLinkedListToData() {
                     if (tableData[0][l] == fullCourseName) {
                         double result = allScoresInClassArray[k].totalMark;
                         int credit = getCourseCredits(
-                            allData.allCourses,
+                            GlobalVar::allData.allCourses,
                             allScoresInClassArray[k].studentCourse.courseID,
                             allScoresInClassArray[k].studentCourse.className
                         );

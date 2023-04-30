@@ -49,7 +49,9 @@ void ViewCoursesOfStudentPage::convertLinkedListToData() {
 void viewCoursesOfStudentPage() {
     ViewCoursesOfStudentPage viewCoursesOfStudentPage(
         "Your courses this semester", 8, 0, 0,
-        getAllCoursesOfStudent(currentUser.username, currentSemester)
+        getAllCoursesOfStudent(
+            GlobalVar::currentUser.username, GlobalVar::currentSemester
+        )
     );
     viewCoursesOfStudentPage.mainLoop();
 }

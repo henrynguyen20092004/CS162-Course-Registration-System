@@ -1,6 +1,6 @@
 #include "GetAllScores.h"
 
-#include "../../../Struct/Data.h"
+#include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
@@ -28,8 +28,8 @@ void readScore(std::ifstream& fin, Score& score) {
 Node<Score>* getAllScores() { return getAll("Data/Score.txt", &readScore); }
 
 Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course) {
-    Node<Score>*allScoresOfStudentsInCourse = nullptr, *cur = allData.allScores,
-    *curScore;
+    Node<Score>*allScoresOfStudentsInCourse = nullptr,
+    *cur = GlobalVar::allData.allScores, *curScore;
     std::string* courseIDAndClassName = new std::string[2];
     splitCourseToIDAndClassName(courseIDAndClassName, course);
 
@@ -47,7 +47,8 @@ Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course) {
 }
 
 Node<Score>* getAllScoresOfStudentsInClass(Node<Student>* allStudentsInClass) {
-    Node<Score>*allScoresOfStudentsInClass = nullptr, *cur = allData.allScores, *curScore;
+    Node<Score>*allScoresOfStudentsInClass = nullptr, *cur = GlobalVar::allData.allScores,
+    *curScore;
 
     for (; cur; cur = cur->next) {
         Score score = cur->data;
@@ -80,7 +81,7 @@ Node<Score>* getAllScoresOfStudent(
     Node<Course>* allCoursesOfSemester =
         getAllCoursesOfSemester(currentSemester.schoolYearName, currentSemester.number);
 
-    for (Node<Score>* cur = allData.allScores; cur; cur = cur->next) {
+    for (Node<Score>* cur = GlobalVar::allData.allScores; cur; cur = cur->next) {
         Score tmpScore = cur->data;
 
         if (tmpScore.studentCourse.studentID == studentID &&
