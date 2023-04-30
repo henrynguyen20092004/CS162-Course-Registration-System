@@ -10,7 +10,7 @@ struct GlobalVar {
     static std::string renderArgs;
     static Command commandChoice;
     static Font titleFont, textFont;
-    static Texture2D defaultAvatar;
+    static Texture2D defaultAvatar, fullScreenLogo, groupInfo;
     static User currentUser;
     static Semester currentSemester;
     static Data allData;

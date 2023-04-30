@@ -120,6 +120,7 @@ void LogInPage::submit() {
     try {
         checkFilledFields();
         logIn(inputs);
+        GlobalVar::commandChoice = HOME;
         stopLoop = true;
     } catch (std::exception &error) {
         errorText = error.what();

@@ -10,10 +10,10 @@
 #include "../Create/CreateSemesterPage/CreateSemesterPage.h"
 #include "../Create/CreateStudentPage/CreateStudentPage.h"
 #include "../ExportStudentsInCoursePage/ExportStudentsInCoursePage.h"
+#include "../HomePage/HomePage.h"
 #include "../ImportCSVPage/ImportScoreboardPage/ImportScoreboardPage.h"
 #include "../ImportCSVPage/ImportStudentsInClassPage/ImportStudentsInClassPage.h"
 #include "../ImportCSVPage/ImportStudentsInCoursePage/ImportStudentsInCoursePage.h"
-#include "../Page/Page.h"
 #include "../Update/UpdateCoursePage/UpdateCoursePage.h"
 #include "../Update/UpdateStudentResultPage/UpdateStudentResultPage.h"
 #include "../View/ViewClassScoreboardPage/ViewClassScoreboardPage.h"
@@ -29,11 +29,9 @@
 #include "../View/ViewStudentsInCoursePage/ViewStudentsInCoursePage.h"
 
 void selectPage() {
-    Page temp;
-
     switch (GlobalVar::commandChoice) {
         case HOME:
-            temp.mainLoop();
+            homePage();
             break;
 
         case CHANGE_CURRENT_SEMESTER:
