@@ -18,12 +18,14 @@ void CreateSchoolYearPage::initInputs() {
         TextInput("School year (yyyy-yyyy)", inputs[0], inputPos[0], inputWidth);
 }
 
-void CreateSchoolYearPage::submitCallBack() { createSchoolYear(inputs[0]); }
+void CreateSchoolYearPage::submitCallBack() {
+    createSchoolYear(inputs[0]);
+    successText = "School year successfully created!";
+}
 
 void createSchoolYearPage() {
     CreateSchoolYearPage createSchoolYearPage(
-        "Create a school year", 1, 0, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 3.0f},
-        VIEW_SCHOOL_YEARS
+        "Create a school year", 1, 0, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 3.0f}
     );
     createSchoolYearPage.mainLoop();
 }

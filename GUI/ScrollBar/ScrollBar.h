@@ -1,5 +1,5 @@
-#ifndef DRAW_SCROLL_BAR_H
-#define DRAW_SCROLL_BAR_H
+#ifndef SCROLL_BAR_H
+#define SCROLL_BAR_H
 
 #include "../GlobalStyle.h"
 

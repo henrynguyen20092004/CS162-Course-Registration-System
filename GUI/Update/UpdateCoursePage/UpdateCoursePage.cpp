@@ -22,7 +22,7 @@ class UpdateCoursePage : public FormPage {
 UpdateCoursePage::UpdateCoursePage()
     : FormPage(
           "Update course information", 4, 3, 2,
-          {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}, VIEW_COURSES
+          {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}
       ) {
     previousCourseDropDownItem = new char[MAX_INPUT_CHAR];
     previousCourseDropDownItem[0] = '\0';
@@ -102,7 +102,10 @@ void UpdateCoursePage::drawInputs() {
     dropDowns[0].drawDropDown(dropDownItems[0], scroll.y);
 }
 
-void UpdateCoursePage::submitCallBack() { updateCourse(inputs, dropDownItems); }
+void UpdateCoursePage::submitCallBack() {
+    updateCourse(inputs, dropDownItems);
+    successText = "Course successfully updated!";
+}
 
 void updateCoursePage() {
     UpdateCoursePage updateCoursePage;

@@ -25,13 +25,13 @@ void CreateSemesterPage::initInputs() {
 }
 
 void CreateSemesterPage::submitCallBack() {
-    GlobalVar::currentSemester = createSemester(inputs, dropDownItems);
+    createSemester(inputs, dropDownItems);
+    successText = "Semester successfully created!";
 }
 
 void createSemesterPage() {
     CreateSemesterPage createSemesterPage(
-        "Create semester", 2, 2, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.35f},
-        VIEW_SEMESTERS
+        "Create semester", 2, 2, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.35f}
     );
     createSemesterPage.mainLoop();
 }

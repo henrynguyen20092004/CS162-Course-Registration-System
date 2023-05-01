@@ -1,18 +1,38 @@
 #include "CreateSchoolYear.h"
 
 #include "../../../GlobalVar/GlobalVar.h"
-#include "../../Check/CheckSchoolYear/CheckSchoolYear.h"
 
-void validateSchoolYear(
-    Node<std::string> *allSchoolYears, const std::string &schoolYearName
+bool checkSchoolYearExists(
+    Node<std::string> *allSchoolyear, const std::string &schoolYearName
 ) {
-    if (!checkValidSchoolYear(schoolYearName)) {
-        throw std::invalid_argument("Invalid school year, please try again!");
+    for (; allSchoolyear; allSchoolyear = allSchoolyear->next) {
+        if (allSchoolyear->data == schoolYearName) {
+            return true;
+        }
     }
 
-    if (checkSchoolYearExists(allSchoolYears, schoolYearName)) {
-        throw std::invalid_argument("This school year already exists, please try again!");
+    return false;
+}
+
+bool checkValidSchoolYear(const std::string &schoolYearName) {
+    int length = schoolYearName.length();
+
+    if (length != 9) {
+        return false;
     }
+
+    for (int i = 0; i < 9; ++i) {
+        if (i == 4) {
+            if (schoolYearName[i] != '-') {
+                return false;
+            }
+        } else if (!isdigit(schoolYearName[i])) {
+            return false;
+        }
+    }
+
+    int startYear = stoi(schoolYearName), endYear = stoi(schoolYearName.substr(5, 4));
+    return endYear - startYear == 1 && startYear > 999 && endYear < 10000;
 }
 
 void saveSchoolYear(const std::string &schoolYearName) {
@@ -24,6 +44,13 @@ void saveSchoolYear(const std::string &schoolYearName) {
 }
 
 void createSchoolYear(char *inputtedSchoolYear) {
-    validateSchoolYear(GlobalVar::allData.allSchoolYears, inputtedSchoolYear);
+    if (!checkValidSchoolYear(inputtedSchoolYear)) {
+        throw std::invalid_argument("Invalid school year, please try again!");
+    }
+
+    if (checkSchoolYearExists(GlobalVar::allData.allSchoolYears, inputtedSchoolYear)) {
+        throw std::invalid_argument("This school year already exists, please try again!");
+    }
+
     saveSchoolYear(inputtedSchoolYear);
 }

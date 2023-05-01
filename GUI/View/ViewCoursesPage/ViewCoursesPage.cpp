@@ -72,7 +72,8 @@ void ViewCoursesPage::drawColumnButtons() {
         for (int j = 0; j < buttonCol - 1; ++j) {
             if (columnButtons[i][j].drawButton(scroll.y)) {
                 GlobalVar::renderArgs = tableData[i + 1][1];
-                GlobalVar::commandChoice = columnButtonCommands[j];
+                GlobalVar::previousCommand = GlobalVar::currentCommand;
+                GlobalVar::currentCommand = columnButtonCommands[j];
                 stopLoop = true;
             }
         }

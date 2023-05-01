@@ -1,6 +1,6 @@
 #include "ImportStudentsInCoursePage.h"
 
-#include "../../../Function/ImportCSV/ImportStudentsInCourse/ImportStudentInCourse.h"
+#include "../../../Function/ImportCSV/ImportStudentsInCourse/ImportStudentsInCourse.h"
 #include "../ImportCSVPage.h"
 
 class ImportStudentsInCoursePage : public ImportCSVPage {
@@ -11,7 +11,7 @@ class ImportStudentsInCoursePage : public ImportCSVPage {
 void importStudentsInCoursePage(const std::string& course) {
     ImportStudentsInCoursePage importStudentsInCoursePage(
         "Import students of " + course, "StudentsInCourse.csv", course,
-        &importStudentsInCourse, VIEW_STUDENTS_IN_COURSE
+        &importStudentsInCourse
     );
     importStudentsInCoursePage.mainLoop();
 }

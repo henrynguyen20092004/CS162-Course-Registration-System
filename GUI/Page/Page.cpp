@@ -2,8 +2,8 @@
 
 #include "../../GlobalVar/GlobalVar.h"
 #include "../Button/Button.h"
-#include "../DrawMenu/DrawMenu.h"
 #include "../DropDown/DropDown.h"
+#include "../MenuBar/MenuBar.h"
 #include "../TextFunction/TextFunction.h"
 
 Page::Page() { menuDropDownItems = new char[MAX_INPUT_CHAR]; }
@@ -24,21 +24,21 @@ void Page::mainLoop() {
 
     while (!stopLoop) {
         if (WindowShouldClose()) {
-            GlobalVar::commandChoice = EXIT;
+            GlobalVar::currentCommand = EXIT;
             break;
         }
 
         BeginDrawing();
         ClearBackground(PRIMARY_COLOR);
         drawPage();
-        drawMenu(menuDropDown, menuDropDownItems, stopLoop);
+        drawMenuBar(menuDropDown, menuDropDownItems, stopLoop);
         drawDefaultText(
             ("Welcome, " + GlobalVar::currentUser.username).c_str(),
             {120.0f, DEFAULT_PADDING.y / 2.0f}, WHITE
         );
 
         if (homeButton.drawButton()) {
-            GlobalVar::commandChoice = HOME;
+            GlobalVar::currentCommand = HOME;
             stopLoop = true;
         }
 

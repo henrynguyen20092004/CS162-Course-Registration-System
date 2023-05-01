@@ -1,7 +1,7 @@
 #ifndef SEMESTER_H
 #define SEMESTER_H
 
-#include <iostream>
+#include <string>
 
 struct Semester {
     std::string schoolYearName, startDate, endDate;

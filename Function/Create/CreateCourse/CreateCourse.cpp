@@ -3,8 +3,7 @@
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
-#include "../../DateFunction/DateFunction.h"
-#include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
+#include "../../Validate/ValidateCourse/ValidateCourse.h"
 
 void saveCourse(const Course &course) {
     std::ofstream fout;
@@ -23,14 +22,10 @@ void saveCourse(const Course &course) {
     addNewItemsToOldList(GlobalVar::allData.allCourses, new Node(course));
 }
 
-void createCourse(const Semester &semester, char **inputs, char **dropDownItems) {
-    if (semester.schoolYearName == "") {
-        throw std::runtime_error("Please create a semester first!");
-    }
-
+void createCourse(char **inputs, char **dropDownItems) {
     Course course;
-    course.schoolYearName = semester.schoolYearName;
-    course.semesterNumber = semester.number;
+    course.schoolYearName = GlobalVar::currentSemester.schoolYearName;
+    course.semesterNumber = GlobalVar::currentSemester.number;
     course.id = inputs[0];
     course.className = inputs[1];
     course.name = inputs[2];
@@ -44,6 +39,6 @@ void createCourse(const Semester &semester, char **inputs, char **dropDownItems)
         throw std::invalid_argument("This course already exists, please try again!");
     }
 
-    validateOtherCourseInformation(course);
+    validateCourse(course);
     saveCourse(course);
 }

@@ -1,4 +1,4 @@
-#include "DrawScrollBar.h"
+#include "ScrollBar.h"
 
 void drawScrollBar(
     const Rectangle &bounds, const char *text, const Rectangle &content, Vector2 &scroll

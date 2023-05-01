@@ -1,6 +1,6 @@
 #include "UpdateDefaultStudentPassword.h"
 
-#include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
+#include "../../PasswordFunction/PasswordFunction.h"
 
 void updateDefaultStudentPassword(
     Node<Student> *curStudent, Node<User> *allUsers, const Student &student

@@ -4,7 +4,6 @@
 #include "../../../Struct/Student.h"
 #include "../../../Struct/User.h"
 
-std::string getPasswordFromDateOfBirth(const std::string &dateOfBirth);
 User createAccount(const Student &student);
 void createStudentAccount(const Student &student);
 

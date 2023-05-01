@@ -109,5 +109,5 @@ void importScoreboard(char **inputs, char **dropDownItems, const std::string &co
     fin.close();
     addNewItemsToOldList(GlobalVar::allData.allScores, newScores);
     saveScores(GlobalVar::allData.allScores);
-    showCSVErrorLines(duplicateErrors, invalidErrors);
+    showCSVErrorLines(duplicateErrors, invalidErrors, curLine);
 }

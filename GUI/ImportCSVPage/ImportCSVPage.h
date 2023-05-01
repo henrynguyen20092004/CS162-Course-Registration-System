@@ -19,8 +19,7 @@ class ImportCSVPage : public FormPage {
    public:
     ImportCSVPage(
         const std::string &title, const char *CSVName, const std::string &arg,
-        void (*importCallBack)(char **, char **, const std::string &arg),
-        Command backButtonCommand
+        void (*importCallBack)(char **, char **, const std::string &arg)
     );
 };
 

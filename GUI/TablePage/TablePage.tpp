@@ -164,7 +164,8 @@ template <class T>
 void TablePage<T>::drawButtons() {
     for (int i = 0; i < headerButton; ++i) {
         if (headerButtons[i].drawButton(scroll.y)) {
-            GlobalVar::commandChoice = headerButtonCommands[i];
+            GlobalVar::previousCommand = GlobalVar::currentCommand;
+            GlobalVar::currentCommand = headerButtonCommands[i];
             stopLoop = true;
         }
     }
@@ -191,7 +192,8 @@ void TablePage<T>::drawColumnButtons() {
         for (int j = 0; j < buttonCol; ++j) {
             if (columnButtons[i][j].drawButton(scroll.y)) {
                 GlobalVar::renderArgs = tableData[i + 1][1];
-                GlobalVar::commandChoice = columnButtonCommands[j];
+                GlobalVar::previousCommand = GlobalVar::currentCommand;
+                GlobalVar::currentCommand = columnButtonCommands[j];
                 stopLoop = true;
             }
         }

@@ -1,8 +1,8 @@
 #include "Table.h"
 
 #include "../../GlobalVar/GlobalVar.h"
-#include "../DrawScrollBar/DrawScrollBar.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
+#include "../ScrollBar/ScrollBar.h"
 #include "../TextFunction/TextFunction.h"
 
 Table::Table() {}

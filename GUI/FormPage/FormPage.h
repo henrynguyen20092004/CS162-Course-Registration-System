@@ -1,8 +1,6 @@
 #ifndef FORM_PAGE_H
 #define FORM_PAGE_H
 
-#include <string>
-
 #include "../Button/Button.h"
 #include "../Command/Command.h"
 #include "../DropDown/DropDown.h"
@@ -25,14 +23,14 @@ class FormPage : public Page {
     virtual void checkFilledFields();
     void drawPage() override;
     void drawErrorText();
+    void drawSuccessText();
     void dropDownLockGUI();
 
    protected:
     char **inputs, **dropDownItems = nullptr;
     int numberOfTextInputs, numberOfDropDowns;
     float inputWidth;
-    std::string errorText;
-    Command backButtonCommand;
+    std::string errorText, successText;
     TextInput *textInputs;
     DropDown *dropDowns = nullptr;
     Vector2 *inputPos, scroll{0.0f, 0.0f};
@@ -42,7 +40,7 @@ class FormPage : public Page {
    public:
     FormPage(
         const std::string &title, int numberOfTextInputs, int numberOfDropDowns,
-        int columns, Vector2 mainBoxSize, Command backButtonCommand = HOME
+        int columns, Vector2 mainBoxSize
     );
     ~FormPage();
 };

@@ -31,7 +31,7 @@ void ChangeCurrentSemesterPage::submitCallBack() {
             semester.number == dropDownItems[0][9] - '0') {
             saveCurrentSemester(semester);
             GlobalVar::currentSemester = semester;
-            GlobalVar::commandChoice = HOME;
+            GlobalVar::currentCommand = GlobalVar::previousCommand;
             stopLoop = true;
         }
     }

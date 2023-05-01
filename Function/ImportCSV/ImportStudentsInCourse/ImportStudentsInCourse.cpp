@@ -1,13 +1,11 @@
-#include "ImportStudentInCourse.h"
+#include "ImportStudentsInCourse.h"
 
 #include <cstring>
 #include <sstream>
 
 #include "../../../GlobalVar/GlobalVar.h"
-#include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
-#include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../Save/SaveStudent/SaveStudent.h"
@@ -15,6 +13,7 @@
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 #include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
+#include "../../Validate/ValidateStudent/ValidateStudent.h"
 
 void getStudentInCourseFromLine(Student &student, const std::string &importLine) {
     std::string _;
@@ -142,5 +141,5 @@ void importStudentsInCourse(
     saveAllUsers(GlobalVar::allData.allUsers);
     saveAllStudents(GlobalVar::allData.allStudents);
     saveAllStudentCourses(GlobalVar::allData.allStudentCourses);
-    showCSVErrorLines(duplicateErrors, invalidErrors);
+    showCSVErrorLines(duplicateErrors, invalidErrors, curLine);
 }

@@ -1,12 +1,25 @@
 #include "CreateSemester.h"
 
 #include "../../../GlobalVar/GlobalVar.h"
-#include "../../Check/CheckSemester/CheckSemester.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../DateFunction/DateFunction.h"
-#include "../../InputAndValidate/InputAndValidateSemester/InputAndValidateSemester.h"
 #include "../../OpenFile/OpenFile.h"
 #include "../../Save/SaveCurrentSemester/SaveCurrentSemester.h"
+
+bool checkSemesterExists(
+    Node<Semester> *allSemesters, int semesterNumber, const std::string &schoolYearName
+) {
+    for (; allSemesters; allSemesters = allSemesters->next) {
+        Semester semester = allSemesters->data;
+
+        if (semester.number == semesterNumber &&
+            semester.schoolYearName == schoolYearName) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &semester) {
     if (!allSemesters) {
@@ -48,6 +61,38 @@ bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &seme
     return curSemester.schoolYearName < semester.schoolYearName
                ? compareDate(curSemester.endDate, semester.startDate)
                : compareDate(semester.endDate, curSemester.startDate);
+}
+
+void validateSemester(const Semester &semester) {
+    if (checkSemesterExists(
+            GlobalVar::allData.allSemesters, semester.number, semester.schoolYearName
+        )) {
+        throw std::invalid_argument("This semester already exists, please try again!");
+    }
+
+    if (!checkDate(semester.startDate) ||
+        semester.startDate.substr(6) < semester.schoolYearName.substr(0, 4) ||
+        semester.startDate.substr(6) > semester.schoolYearName.substr(5)) {
+        throw std::invalid_argument("Invalid start date, please try again!");
+    }
+
+    if (!checkDate(semester.endDate) ||
+        semester.endDate.substr(6) < semester.schoolYearName.substr(0, 4) ||
+        semester.endDate.substr(6) > semester.schoolYearName.substr(5)) {
+        throw std::invalid_argument("Invalid end date, please try again!");
+    }
+
+    if (!compareDate(semester.startDate, semester.endDate)) {
+        throw std::invalid_argument(
+            "End date can't be smaller than start date, please try again!"
+        );
+    }
+
+    if (!checkDateBeforeAddToList(GlobalVar::allData.allSemesters, semester)) {
+        throw std::invalid_argument(
+            "Your start/end date can't overlap other semesters, please try again!"
+        );
+    }
 }
 
 void addSemseterToList(const Semester &newSemester) {
@@ -95,29 +140,15 @@ void saveSemester(Node<Semester> *allSemesters) {
     fout.close();
 }
 
-Semester createSemester(char **inputs, char **dropDownItems) {
+void createSemester(char **inputs, char **dropDownItems) {
     Semester semester;
     semester.schoolYearName = dropDownItems[0];
     semester.number = stoi(std::string(dropDownItems[1]));
     semester.startDate = inputs[0];
     semester.endDate = inputs[1];
-
-    if (checkSemesterExists(
-            GlobalVar::allData.allSemesters, semester.number, semester.schoolYearName
-        )) {
-        throw std::invalid_argument("This semester already exists, please try again!");
-    }
-
-    validateSemesterDates(semester);
-
-    if (!checkDateBeforeAddToList(GlobalVar::allData.allSemesters, semester)) {
-        throw std::invalid_argument(
-            "Your start/end date can't overlap other semesters, please try again!"
-        );
-    }
-
+    validateSemester(semester);
     addSemseterToList(semester);
     saveSemester(GlobalVar::allData.allSemesters);
     saveCurrentSemester(semester);
-    return semester;
+    GlobalVar::currentSemester = semester;
 }

@@ -8,7 +8,7 @@
 
 struct GlobalVar {
     static std::string renderArgs;
-    static Command commandChoice;
+    static Command currentCommand, previousCommand;
     static Font titleFont, textFont;
     static Texture2D defaultAvatar, fullScreenLogo, groupInfo;
     static User currentUser;

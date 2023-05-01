@@ -1,7 +1,7 @@
 #ifndef CHECK_CLASS_H
 #define CHECK_CLASS_H
 
-#include <iostream>
+#include <string>
 
 #include "../../../Struct/LinkedList.h"
 

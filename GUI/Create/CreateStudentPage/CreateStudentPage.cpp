@@ -25,12 +25,14 @@ void CreateStudentPage::initInputs() {
     textInputs[4] = TextInput("Social ID", inputs[4], inputPos[6], inputWidth);
 }
 
-void CreateStudentPage::submitCallBack() { createStudent(inputs, dropDownItems); }
+void CreateStudentPage::submitCallBack() {
+    createStudent(inputs, dropDownItems);
+    successText = "Student successfully added!";
+}
 
 void createStudentPage() {
     CreateStudentPage createStudentPage(
-        "Add a student to class", 5, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f},
-        VIEW_STUDENTS_IN_CLASS
+        "Add a student to class", 5, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}
     );
     createStudentPage.mainLoop();
 }

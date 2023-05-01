@@ -12,7 +12,7 @@ class ImportStudentsInClassPage : public ImportCSVPage {
 void importStudentsInClassPage(const std::string& className) {
     ImportStudentsInClassPage importStudentsInClassPage(
         "Import students of " + className, "StudentsInClass.csv", className,
-        &importStudentsInClass, VIEW_STUDENTS_IN_CLASS
+        &importStudentsInClass
     );
     importStudentsInClassPage.mainLoop();
 }

@@ -2,8 +2,8 @@
 
 #include "../../Function/ExportStudentsInCourse/ExportStudentsInCourse.h"
 #include "../../GlobalVar/GlobalVar.h"
+#include "../FileFolderDialog/FileFolderDialog.h"
 #include "../FormPage/FormPage.h"
-#include "../OpenDialog/OpenDialog.h"
 
 class ExportStudentsInCoursePage : public FormPage {
    private:
@@ -20,7 +20,7 @@ class ExportStudentsInCoursePage : public FormPage {
 ExportStudentsInCoursePage::ExportStudentsInCoursePage(const std::string &course)
     : FormPage(
           "Export students of " + course, 1, 0, 1,
-          {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 3.0f}, VIEW_STUDENTS_IN_COURSE
+          {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 3.0f}
       ),
       course(course) {}
 
@@ -48,6 +48,7 @@ void ExportStudentsInCoursePage::drawInputs() {
 
 void ExportStudentsInCoursePage::submitCallBack() {
     exportStudentsInCourse(inputs, course);
+    successText = "CSV successfully exported!";
 }
 
 void exportStudentsInCoursePage(const std::string &course) {

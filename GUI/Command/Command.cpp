@@ -1,5 +1,3 @@
-#include "Command.h"
-
 #include "../../GlobalVar/GlobalVar.h"
 #include "../AddStudentToCoursePage/AddStudentToCoursePage.h"
 #include "../ChangeCurrentSemesterPage/ChangeCurrentSemesterPage.h"
@@ -29,7 +27,7 @@
 #include "../View/ViewStudentsInCoursePage/ViewStudentsInCoursePage.h"
 
 void selectPage() {
-    switch (GlobalVar::commandChoice) {
+    switch (GlobalVar::currentCommand) {
         case HOME:
             homePage();
             break;

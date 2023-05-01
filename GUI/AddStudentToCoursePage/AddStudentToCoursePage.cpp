@@ -21,12 +21,12 @@ void AddStudentToCoursePage::initInputs() {
 
 void AddStudentToCoursePage::submitCallBack() {
     addStudentToCourse(inputs, dropDownItems);
+    successText = "Student successfully added!";
 }
 
 void addStudentToCoursePage() {
     AddStudentToCoursePage addStudentToCoursePage(
-        "Add student to course", 1, 1, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.0f},
-        VIEW_STUDENTS_IN_COURSE
+        "Add student to course", 1, 1, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.0f}
     );
     addStudentToCoursePage.mainLoop();
 }

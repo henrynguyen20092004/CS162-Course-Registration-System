@@ -1,16 +1,15 @@
 #include "ImportCSVPage.h"
 
+#include <stdexcept>
+
 #include "../../Function/DownloadTemplateCSV/DownloadTemplateCSV.h"
-#include "../OpenDialog/OpenDialog.h"
+#include "../FileFolderDialog/FileFolderDialog.h"
 
 ImportCSVPage::ImportCSVPage(
     const std::string &title, const char *CSVName, const std::string &arg,
-    void (*importCallBack)(char **, char **, const std::string &arg),
-    Command backButtonCommand
+    void (*importCallBack)(char **, char **, const std::string &arg)
 )
-    : FormPage(
-          title, 2, 1, 1, {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 1.75f}, backButtonCommand
-      ),
+    : FormPage(title, 2, 1, 1, {SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 1.75f}),
       CSVName(CSVName),
       arg(arg),
       importCallBack(importCallBack) {}
@@ -20,8 +19,8 @@ void ImportCSVPage::initInputs() {
           textInputWidth = inputWidth - DEFAULT_ITEM_MARGIN.x - browseButtonWidth,
           browseButtonPosX = inputPos[1].x + inputWidth - browseButtonWidth;
     dropDowns[0] = DropDown(
-        "What do you want to do?", "Download the template;Continue importing the CSV",
-        inputPos[0], inputWidth
+        "What do you want to do?", "Download the template;Import the CSV", inputPos[0],
+        inputWidth
     );
     textInputs[0] =
         TextInput("Download folder path", inputs[0], inputPos[1], textInputWidth);
@@ -57,6 +56,7 @@ void ImportCSVPage::drawInputs() {
     }
 
     if (dropDowns[0].drawDropDown(dropDownItems[0], scroll.y)) {
+        successText = "";
         errorText = "";
     }
 }
@@ -85,10 +85,16 @@ void ImportCSVPage::submitCallBack() {
     switch (dropDowns[0].activeItemIndex) {
         case 0: {
             downloadTemplateCSV(CSVName, inputs[0]);
+            successText = "CSV successfully downloaded!";
             break;
         }
         case 1: {
-            importCallBack(inputs, dropDownItems, arg);
+            try {
+                importCallBack(inputs, dropDownItems, arg);
+            } catch (std::runtime_error &error) {
+                successText = "CSV successfully imported!";
+                errorText = error.what();
+            }
             break;
         }
     }

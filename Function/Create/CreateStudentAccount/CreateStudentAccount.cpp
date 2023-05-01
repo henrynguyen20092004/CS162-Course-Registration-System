@@ -2,10 +2,7 @@
 
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../OpenFile/OpenFile.h"
-
-std::string getPasswordFromDateOfBirth(const std::string &dateOfBirth) {
-    return dateOfBirth.substr(0, 2) + dateOfBirth.substr(3, 2) + dateOfBirth.substr(6);
-}
+#include "../../PasswordFunction/PasswordFunction.h"
 
 User createAccount(const Student &student) {
     User studentAccount;

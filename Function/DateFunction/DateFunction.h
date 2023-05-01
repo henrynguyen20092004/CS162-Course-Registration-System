@@ -1,7 +1,7 @@
 #ifndef DATE_FUNCTION_H
 #define DATE_FUNCTION_H
 
-#include <iostream>
+#include <string>
 
 bool checkDate(const std::string &date);
 bool checkDayOfWeek(const std::string &day);
