@@ -46,7 +46,7 @@ void ViewClassScoreboardPage::initColumns() {
     columnWidths[col - 1] = 50.0f;
 
     for (int j = 3; j < col - 1; ++j) {
-        columnWidths[j] = 150.0f;
+        columnWidths[j] = 180.0f;
     }
 }
 

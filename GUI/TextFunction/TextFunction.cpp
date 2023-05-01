@@ -15,6 +15,8 @@ std::string clipText(const Font& font, const char* text, int maxWidth) {
     std::string curText, result = text;
 
     for (int i = 0; result[i] != '\0'; ++i) {
+        curText += text[i];
+
         if (result[i] == ' ') {
             curDelimiter = i;
         }
@@ -24,8 +26,6 @@ std::string clipText(const Font& font, const char* text, int maxWidth) {
             curText = "";
             i = curDelimiter + 1;
         }
-
-        curText += text[i];
     }
 
     return result;

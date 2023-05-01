@@ -1,80 +1,90 @@
-2022-2023
-2
-PH211
-GPI
-22TT2
-Nguyen Huu Nha
-5
-60
-THU
+2020-2021
 1
-2022-2023
-2
-PH212
-General Physics II
-22TT2
-Nguyen Huu Nha
-3
-60
-FRI
-2
-2022-2023
-2
-PH213
-GP III
-22TT2
-Nguyen Huu Nha
-6
-70
-FRI
-3
-2022-2023
-2
 MTH251
-Calculus II
-22TT2
-Nguyen Huu Nha
-4
-50
-WED
+Calculus I
+20CLC1
+Nguyen Le Hoang Anh
 3
+48
+TUE
+2
 2022-2023
+2
+MTH252
+Calculus II
+22APCS1
+Nguyen Manh Truong Giang
+5
+105
+MON
+4
+2022-2023
+2
+MTH253
+Calculus III
+22CLC2
+Nguyen Manh Truong Giang
+1
+95
+FRI
+3
+2021-2022
+2
+CS161
+Introduction to Computer Science I
+21CLC1
+Nguyen Le Hoang Dung
+2
+60
+SAT
+1
+2021-2022
 3
 CS162
-Introduction to computer science II
-22CLC6
-Dinh Ba Tien
+Introduction to Computer Science II
+21APCS1
+Ho Tuan Thanh
 5
-120
-MON
+57
+THU
 1
-2025-2026
-1
-MTH252
-Math
-22TT2
-Nlha
-4
-80
-MON
-4
 2021-2022
 1
-PH212
-GP2
-22TT1
-Dinh Ba Hien
+CS163
+Introduction to Computer Science III
+21APCS2
+Do Nguyen Kha
+3
+137
+TUE
 4
-69
-THU
+2020-2021
+3
+PH211
+General Physics I
+20APCS2
+Nguyen Huu Nha
+2
+85
+TUE
 2
 2022-2023
+1
+PH212
+General Physics II
+22CLC1
+Nguyen Ngoc Truong
+2
+92
+WED
+1
+2020-2021
 3
-PH215
-GENERAL PHYSCIS X
-22TT2
-Nhn
-10
-50
-MON
+PH213
+General Physics III
+20CLC2
+Nguyen Huu Nha
+1
+51
+WED
 2

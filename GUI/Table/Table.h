@@ -3,7 +3,6 @@
 
 #define TABLE_CELL_HEIGHT 40
 #define TABLE_CELL_PADDING_X 5.0f
-#define TABLE_BUTTON_WIDTH 80.0f
 #define TABLE_BUTTON_CELL_WIDTH 80.0f
 
 #include <string>

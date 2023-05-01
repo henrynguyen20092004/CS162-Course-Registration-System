@@ -1,48 +1,200 @@
-3333
-PH212
-22TT2
-Nguyen Vinh Hien
-4.6
-2.9
-7.5
-10
-4444
-PH212
-22TT2
-Ngo Thien Bao
-7.81
-9.25
-5.6
-10
-5555
-PH212
-22TT2
-Nguyen Phung Dang Hoang Trung Nghia
-7.14
-3.7
-8.3
-2.1
-6666
+20454752
 MTH251
-22TT2
-Nguyen Phan Cao Tri
-5.4
-3.6
-10
+20CLC1
+Do Hieu Liem
+2.6
+5.5
+4.4
+4.7
+20107565
+MTH251
+20CLC1
+Tran Yen Oanh
+5.3
+6.3
+4
 5
-5555
-MTH251
-22TT2
-Nguyen Phung Dang Hoang Trung Nghia
-7.8
-3.2
-9.4
-6.4
-1119
-MTH251
-22TT2
-LTL 
+22294259
+MTH252
+22APCS1
+Dang Quynh Trang
+3.3
+5.2
+3.8
+4.3
+22848445
+MTH252
+22APCS1
+Phan Minh Trieu
+7.9
+0
+6.9
+4.2
+22539476
+MTH252
+22APCS1
+Nguyen Cam Huong
+9.7
 4.6
-6.4
 7.5
+6.6
+22925271
+MTH252
+22APCS1
+Cao Minh Ky
+6.3
+6.3
+6.2
+6.3
+22975730
+MTH253
+22CLC2
+Lam Gia Nhi
+6.2
+2.8
+2.2
+2.8
+22740988
+MTH253
+22CLC2
+Truong Lap Thanh
+4.7
+1.3
+5.3
+3.6
+22848034
+MTH253
+22CLC2
+Le Kieu Nguyet
+0.9
+10
+7
+7.6
+22354886
+MTH253
+22CLC2
+Vuong Diem Phuong
+4.9
+6.5
+1.6
+3.9
+22757781
+CS161
+21CLC1
+To My Nga
+1.1
+9
+6.2
+6.8
+21916933
+CS161
+21CLC1
+Dang Ngoc Yen
+9.3
+1.8
+1
+2.2
+22106885
+CS162
+21APCS1
+Duong Tuyet Xuan
+7.4
+6
+7.4
+6.8
+21138666
+CS162
+21APCS1
+Nguyen Manh Ha
+4.6
+1.7
+0.6
+1.4
+21212018
+CS163
+21APCS2
+Phan Hoang Phat
+0
+9
+5.2
+6.2
+21775567
+CS163
+21APCS2
+Nguyen Xuan Van
+2.5
+2.7
+3.2
+2.9
+21284726
+CS163
+21APCS2
+Do Xuan Vu
+1.2
+1.5
+1.4
+1.4
+20846405
+PH211
+20APCS2
+Vu Diem Hang
+7.9
+1.6
+9.3
+6.1
+20312030
+PH211
+20APCS2
+Do Thuy Oanh
+7.8
+6.7
+9.6
+8.3
+20369015
+PH211
+20APCS2
+Vu Tung Chau
+6.9
+0.7
+1.6
+1.8
+20135361
+PH211
+20APCS2
+Phan Huy Quang
+3.5
+2.8
+2.6
+2.8
+22888272
+PH212
+22CLC1
+Nguyen Thien Manh
+6.6
+8.1
+1.7
+4.8
+22068160
+PH212
+22CLC1
+Vu Viet Huong
+4.4
+9.1
+6.7
+7.4
+22256914
+PH212
+22CLC1
+Luong Hien Mai
+7.7
+3.1
+9.9
+7
+20363556
+PH213
+20CLC2
+Cao Khanh Hoan
+7.7
+6.2
+6.8
 6.7

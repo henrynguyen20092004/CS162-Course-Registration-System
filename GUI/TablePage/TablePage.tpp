@@ -69,8 +69,7 @@ void TablePage<T>::calculateTableAndFirstRow() {
         getCenterX(tableWidth), MENU_HEIGHT + DEFAULT_ITEM_MARGIN.y + DEFAULT_PADDING.y};
 
     if (buttonCol) {
-        firstRowButtonsPosX = tablePos.x + TABLE_CELL_PADDING_X +
-                              (TABLE_BUTTON_CELL_WIDTH - TABLE_BUTTON_WIDTH) / 2.0f;
+        firstRowButtonsPosX = tablePos.x + TABLE_CELL_PADDING_X;
 
         for (int i = 0; i < col; ++i) {
             firstRowButtonsPosX += columnWidths[i];
@@ -122,9 +121,8 @@ void TablePage<T>::generateButtons() {
         columnButtonY += rowHeights[i];
 
         for (int j = 0; j < buttonCol; ++j) {
-            columnButtons[i][j] = Button(
-                firstRowButtonTitles[j], columnButtonX, columnButtonY, TABLE_BUTTON_WIDTH
-            );
+            columnButtons[i][j] =
+                Button(firstRowButtonTitles[j], columnButtonX, columnButtonY, 80.0f);
 
             columnButtonX += TABLE_BUTTON_CELL_WIDTH + TABLE_CELL_PADDING_X * 2;
         }
@@ -135,10 +133,10 @@ template <class T>
 void TablePage<T>::initComponents() {
     initColumns();
     addColumnsForButton();
-    calculateTableAndFirstRow();
-    initButtons();
     convertLinkedListToData();
     clipData();
+    calculateTableAndFirstRow();
+    initButtons();
     generateRowHeights();
     generateButtons();
     table = Table(
