@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "../../../Function/ConvertScoreToString/ConvertScoreToString.h"
+#include "../../../Function/CheckAndConvertString/CheckAndConvertString.h"
 #include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
 #include "../../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"

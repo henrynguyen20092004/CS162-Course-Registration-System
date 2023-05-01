@@ -1,7 +1,7 @@
 #ifndef COURSE_H
 #define COURSE_H
 
-#include <iostream>
+#include <string>
 
 struct Course {
     std::string id, name, className, teacherName, dayOfWeek, schoolYearName;

@@ -81,20 +81,21 @@ Node<Course> *getAllCoursesOfStudent(
     Node<StudentCourse> *allCoursesIDOfStudent = getAllCoursesIDOfStudent(studentID);
     StudentCourse tmpStudentCourse;
     Course tmpCourse;
-    Node<Course> *allCoursesOfStudent = nullptr, *curCourse;
+    Node<Course> *allCoursesOfStudent = nullptr, *curCoursesOfStudent;
 
-    for (Node<StudentCourse> *cur1 = allCoursesIDOfStudent; cur1; cur1 = cur1->next) {
-        tmpStudentCourse = cur1->data;
+    for (Node<StudentCourse> *curCourseID = allCoursesIDOfStudent; curCourseID;
+         curCourseID = curCourseID->next) {
+        tmpStudentCourse = curCourseID->data;
 
-        for (Node<Course> *cur2 = GlobalVar::allData.allCourses; cur2;
-             cur2 = cur2->next) {
-            tmpCourse = cur2->data;
+        for (Node<Course> *curCourse = GlobalVar::allData.allCourses; curCourse;
+             curCourse = curCourse->next) {
+            tmpCourse = curCourse->data;
 
             if (tmpCourse.id == tmpStudentCourse.courseID &&
                 tmpCourse.className == tmpStudentCourse.className &&
                 tmpCourse.schoolYearName == semester.schoolYearName &&
                 tmpCourse.semesterNumber == semester.number) {
-                pushToEndLinkedList(allCoursesOfStudent, curCourse, tmpCourse);
+                pushToEndLinkedList(allCoursesOfStudent, curCoursesOfStudent, tmpCourse);
             }
         }
     }

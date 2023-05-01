@@ -4,17 +4,14 @@
 #include <sstream>
 
 #include "../../../GlobalVar/GlobalVar.h"
-#include "../../Check/CheckClass/CheckClass.h"
-#include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
-#include "../../DateFunction/DateFunction.h"
-#include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
 #include "../../OpenFile/OpenFile.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveStudent/SaveStudent.h"
 #include "../../Save/SaveUser/SaveUser.h"
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
+#include "../../Validate/ValidateStudent/ValidateStudent.h"
 
 void getStudentInClassFromLine(Student &student, std::string importLine) {
     std::string _;
@@ -94,5 +91,5 @@ void importStudentsInClass(
     addNewItemsToOldList(GlobalVar::allData.allUsers, newUsers);
     saveAllUsers(GlobalVar::allData.allUsers);
     saveAllStudents(GlobalVar::allData.allStudents);
-    showCSVErrorLines(duplicateErrors, invalidErrors);
+    showCSVErrorLines(duplicateErrors, invalidErrors, curLine);
 }

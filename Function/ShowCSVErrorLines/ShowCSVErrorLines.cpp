@@ -1,16 +1,37 @@
 #include "ShowCSVErrorLines.h"
 
+#include <stdexcept>
+
 void showErrorLines(
     Node<int> *errorLines, const std::string &errorMessage, std::string &error
 ) {
-    error += '\n' + errorMessage;
+    error += errorMessage;
 
     for (; errorLines; errorLines = errorLines->next) {
         error += ' ' + std::to_string(errorLines->data);
     }
+
+    error += '\n';
 }
 
-void showCSVErrorLines(Node<int> *duplicateErrors, Node<int> *invalidErrors) {
+void showCSVErrorLines(
+    Node<int> *duplicateErrors, Node<int> *invalidErrors, int numberOfLines
+) {
+    if (numberOfLines == 1) {
+        throw std::invalid_argument("CSV is empty!");
+    }
+
+    int numberOfDuplicates = getLinkedListSize(duplicateErrors),
+        numberOfInvalids = getLinkedListSize(invalidErrors);
+
+    if (numberOfDuplicates + numberOfInvalids == numberOfLines - 1) {
+        if (numberOfDuplicates > 0) {
+            throw std::invalid_argument("CSV already imported!");
+        } else {
+            throw std::invalid_argument("CSV has only invalid records!");
+        }
+    }
+
     std::string error;
 
     if (duplicateErrors) {
@@ -25,5 +46,5 @@ void showCSVErrorLines(Node<int> *duplicateErrors, Node<int> *invalidErrors) {
         deleteLinkedList(invalidErrors);
     }
 
-    throw std::runtime_error("CSV successfully imported!" + error);
+    throw std::runtime_error(error);
 }

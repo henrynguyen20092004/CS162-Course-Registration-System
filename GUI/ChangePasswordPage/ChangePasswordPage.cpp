@@ -1,9 +1,9 @@
 #include "ChangePasswordPage.h"
 
 #include "../../Function/ChangePassword/ChangePassword.h"
+#include "../../Function/PasswordFunction/PasswordFunction.h"
 #include "../../GlobalVar/GlobalVar.h"
 #include "../FormPage/FormPage.h"
-#include "../HidePassword/HidePassword.h"
 
 class ChangePasswordPage : public FormPage {
    private:
@@ -35,6 +35,7 @@ void ChangePasswordPage::drawInputs() {
 
 void ChangePasswordPage::submitCallBack() {
     changePassword(GlobalVar::currentUser, inputs);
+    successText = "Password successfully changed!";
 }
 
 void changePasswordPage() {

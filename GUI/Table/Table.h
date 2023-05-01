@@ -9,7 +9,6 @@
 #include <string>
 
 #include "../Button/Button.h"
-#include "../GlobalStyle.h"
 
 class Table {
    private:

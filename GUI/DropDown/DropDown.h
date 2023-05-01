@@ -1,8 +1,6 @@
 #ifndef DROP_DOWN_H
 #define DROP_DOWN_H
 
-#include <string>
-
 #include "../../Struct/Course.h"
 #include "../../Struct/LinkedList.h"
 #include "../../Struct/Semester.h"

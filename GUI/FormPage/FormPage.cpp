@@ -3,13 +3,13 @@
 #include <algorithm>
 
 #include "../../GlobalVar/GlobalVar.h"
-#include "../DrawScrollBar/DrawScrollBar.h"
 #include "../GetCenterPosition/GetCenterPosition.h"
+#include "../ScrollBar/ScrollBar.h"
 #include "../TextFunction/TextFunction.h"
 
 FormPage::FormPage(
     const std::string &title, int numberOfTextInputs, int numberOfDropDowns, int columns,
-    Vector2 mainBoxSize, Command backButtonCommand
+    Vector2 mainBoxSize
 )
     : title(title),
       backButtonText("#114#Back"),
@@ -18,8 +18,7 @@ FormPage::FormPage(
       columns(columns),
       mainBoxSize(
           {mainBoxSize.x, mainBoxSize.y + (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y)}
-      ),
-      backButtonCommand(backButtonCommand) {
+      ) {
     mainBoxPos = {getCenterX(mainBoxSize.x), getCenterY(mainBoxSize.y) + 45.0f};
     inputWidth =
         (mainBoxSize.x - DEFAULT_PADDING.x * 2 - DEFAULT_ITEM_MARGIN.x * (columns - 1)) /
@@ -95,6 +94,7 @@ void FormPage::drawPage() {
     DrawRectangleV({mainBoxPos.x, mainBoxPos.y + scroll.y}, mainBoxSize, WHITE);
     drawDefaultTitle(title.c_str(), {childrenPosX, titlePosY + scroll.y});
     drawErrorText();
+    drawSuccessText();
     dropDownLockGUI();
 
     if (submitButton.drawButton(scroll.y)) {
@@ -102,7 +102,7 @@ void FormPage::drawPage() {
     }
 
     if (backButton.drawButton(scroll.y)) {
-        GlobalVar::commandChoice = backButtonCommand;
+        GlobalVar::currentCommand = GlobalVar::previousCommand;
         stopLoop = true;
     }
 
@@ -128,12 +128,22 @@ void FormPage::drawErrorText() {
 
     errorText = clipText(GlobalVar::textFont, errorText.c_str(), inputWidth);
     int numberOfLines = std::count(errorText.begin(), errorText.end(), '\n') + 1;
-
     float posY = mainBoxPos.y + mainBoxSize.y - DEFAULT_PADDING.y - DEFAULT_ITEM_HEIGHT -
                  DEFAULT_TEXT_SIZE * (numberOfLines * 1.5 - 0.5) - DEFAULT_TEXT_MARGIN.y +
                  scroll.y;
+    drawDefaultText(errorText.c_str(), {getCenterX(inputWidth), posY}, {255, 0, 0, 255});
+}
 
-    drawDefaultText(errorText.c_str(), {getCenterX(inputWidth), posY}, ERROR_TEXT_COLOR);
+void FormPage::drawSuccessText() {
+    if (successText == "") {
+        return;
+    }
+
+    float posY = mainBoxPos.y + mainBoxSize.y - DEFAULT_PADDING.y - DEFAULT_ITEM_HEIGHT -
+                 DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y + scroll.y;
+    drawDefaultText(
+        successText.c_str(), {getCenterX(inputWidth), posY}, {0, 191, 0, 255}
+    );
 }
 
 void FormPage::dropDownLockGUI() {
@@ -164,10 +174,11 @@ void FormPage::checkFilledFields() {
 void FormPage::submit() {
     try {
         checkFilledFields();
-        submitCallBack();
         errorText = "";
+        submitCallBack();
     } catch (std::exception &error) {
         errorText = error.what();
+        successText = "";
     }
 }
 

@@ -8,8 +8,6 @@
     (Color) { 165, 215, 232, 255 }
 #define NORMAL_TEXT_COLOR \
     (Color) { 11, 24, 47, 255 }
-#define ERROR_TEXT_COLOR \
-    (Color) { 255, 0, 0, 255 }
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
 #define MENU_HEIGHT 150

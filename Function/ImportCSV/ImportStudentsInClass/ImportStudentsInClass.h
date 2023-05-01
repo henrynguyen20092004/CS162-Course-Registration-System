@@ -1,5 +1,5 @@
-#ifndef IMPORT_STUDENT_INFO_H
-#define IMPORT_STUDENT_INFO_H
+#ifndef IMPORT_STUDENTS_IN_CLASS_H
+#define IMPORT_STUDENTS_IN_CLASS_H
 
 #include <string>
 

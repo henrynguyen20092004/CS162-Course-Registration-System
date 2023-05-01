@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#include <iostream>
+#include <string>
 
 struct User {
     std::string username, password;

@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include "../../../Function/ConvertScoreToString/ConvertScoreToString.h"
+#include "../../../Function/CheckAndConvertString/CheckAndConvertString.h"
 #include "../../../Function/GetAll/GetAllScores/GetAllScores.h"
 #include "../../../Function/GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
 #include "../../../Function/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
@@ -26,8 +26,7 @@ class UpdateStudentResultPage : public FormPage {
 
 UpdateStudentResultPage::UpdateStudentResultPage()
     : FormPage(
-          "Update student's result", 4, 2, 2,
-          {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.75f}, VIEW_SCOREBOARD_OF_COURSE
+          "Update student's result", 4, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.75f}
       ) {
     previousCourseDropDownItem = new char[MAX_INPUT_CHAR];
     previousCourseDropDownItem[0] = '\0';
@@ -102,6 +101,7 @@ void UpdateStudentResultPage::drawInputs() {
 
 void UpdateStudentResultPage::submitCallBack() {
     updateStudentResult(inputs, dropDownItems, score);
+    successText = "Student's result successfully updated!";
 }
 
 void updateStudentResultPage() {

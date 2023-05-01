@@ -1,6 +1,6 @@
 #include "ViewCourseScoreBoardPage.h"
 
-#include "../../../Function/ConvertScoreToString/ConvertScoreToString.h"
+#include "../../../Function/CheckAndConvertString/CheckAndConvertString.h"
 #include "../../../Function/GetAll/GetAllScores/GetAllScores.h"
 #include "../../../Function/OperatorOverload/OperatorOverload.h"
 #include "../../TablePage/TablePage.h"

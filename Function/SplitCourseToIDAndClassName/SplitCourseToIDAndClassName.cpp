@@ -1,7 +1,5 @@
 #include "SplitCourseToIDAndClassName.h"
 
-#include "../CheckAndConvertString/CheckAndConvertString.h"
-
 void splitCourseToIDAndClassName(
     std::string* courseIDAndClassName, const std::string& course
 ) {

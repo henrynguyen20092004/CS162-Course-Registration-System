@@ -27,13 +27,13 @@ void CreateCoursePage::initInputs() {
 }
 
 void CreateCoursePage::submitCallBack() {
-    createCourse(GlobalVar::currentSemester, inputs, dropDownItems);
+    createCourse(inputs, dropDownItems);
+    successText = "Course successfully created!";
 }
 
 void createCoursePage() {
     CreateCoursePage createCoursePage(
-        "Create a course", 6, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f},
-        VIEW_COURSES
+        "Create a course", 6, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}
     );
     createCoursePage.mainLoop();
 }

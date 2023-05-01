@@ -4,7 +4,6 @@
 #include "../../GetCenterPosition/GetCenterPosition.h"
 #include "../../Page/Page.h"
 #include "../../TextFunction/TextFunction.h"
-#include "../../TextInput/TextInput.h"
 
 Student getCurrentStudent() {
     Student student;
@@ -21,13 +20,11 @@ Student getCurrentStudent() {
 
 class ViewStudentInfoPage : public Page {
    private:
-    void initComponents() override;
     void drawPage() override;
     Vector2 calculateInputPos(int index);
     int numberOfFields = 7;
     const char **titles;
     char **inputs;
-    TextInput *textInputs;
     Vector2 *inputPos, mainBoxSize{SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.75f},
         mainBoxPos = getCenterPosition(mainBoxSize),
         titlePos{mainBoxPos.x + DEFAULT_PADDING.x, mainBoxPos.y + DEFAULT_PADDING.y},
@@ -48,7 +45,6 @@ ViewStudentInfoPage::ViewStudentInfoPage() {
     titles = new const char *[numberOfFields];
     inputs = new char *[numberOfFields];
     inputPos = new Vector2[numberOfFields];
-    textInputs = new TextInput[numberOfFields];
 
     inputs[0] = student.id.data();
     inputs[1] = student.className.data();
@@ -79,28 +75,25 @@ Vector2 ViewStudentInfoPage::calculateInputPos(int index) {
                         (index / 2)};
 }
 
-void ViewStudentInfoPage::initComponents() {
-    for (int i = 0; i < numberOfFields; ++i) {
-        textInputs[i] = TextInput(titles[i], inputs[i], inputPos[i], inputWidth);
-    }
-}
-
 void ViewStudentInfoPage::drawPage() {
-    GuiDisable();
     DrawRectangleV(mainBoxPos, mainBoxSize, WHITE);
     drawDefaultTitle("Your profile", titlePos);
 
     for (int i = 0; i < numberOfFields; ++i) {
-        textInputs[i].drawTextInput();
+        drawDefaultText(
+            titles[i],
+            {inputPos[i].x, inputPos[i].y - DEFAULT_TEXT_SIZE - DEFAULT_TEXT_MARGIN.y}
+        );
+        GuiTextBox(
+            {inputPos[i].x, inputPos[i].y, inputWidth, DEFAULT_ITEM_HEIGHT}, inputs[i],
+            MAX_INPUT_CHAR, false
+        );
     }
-
-    GuiEnable();
 }
 
 ViewStudentInfoPage::~ViewStudentInfoPage() {
     delete[] inputs;
     delete[] inputPos;
-    delete[] textInputs;
 }
 
 void viewStudentInfoPage() {

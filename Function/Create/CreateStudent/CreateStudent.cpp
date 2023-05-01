@@ -3,7 +3,7 @@
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckStudent/CheckStudent.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
-#include "../../InputAndValidate/InputAndValidateStudent/InputAndValidateStudent.h"
+#include "../../Validate/ValidateStudent/ValidateStudent.h"
 #include "../CreateStudentAccount/CreateStudentAccount.h"
 
 void saveStudent(const Student &student) {

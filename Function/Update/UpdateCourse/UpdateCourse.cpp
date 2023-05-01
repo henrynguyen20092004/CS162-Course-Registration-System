@@ -2,9 +2,9 @@
 
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
-#include "../../InputAndValidate/InputAndValidateCourse/InputAndValidateCourse.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
+#include "../../Validate/ValidateCourse/ValidateCourse.h"
 
 void inputChanges(Course& course, char** inputs, char** dropDownItems) {
     std::string* courseIDAndClassName = new std::string[2];
@@ -30,7 +30,7 @@ void updateCourse(char** inputs, char** dropDownItems) {
 
     Course course;
     inputChanges(course, inputs, dropDownItems);
-    validateOtherCourseInformation(course);
+    validateCourse(course);
 
     for (Node<Course>* cur = GlobalVar::allData.allCourses; cur; cur = cur->next) {
         Course curCourse = cur->data;

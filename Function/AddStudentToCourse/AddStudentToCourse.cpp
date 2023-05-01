@@ -3,7 +3,6 @@
 #include "../../GlobalVar/GlobalVar.h"
 #include "../Check/CheckStudent/CheckStudent.h"
 #include "../Check/CheckStudentInCourse/CheckStudentInCourse.h"
-#include "../InputAndValidate/InputAndValidateStudentCourse/InputAndValidateStudentCourse.h"
 #include "../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void saveStudentToCourse(const StudentCourse &studentCourse) {
