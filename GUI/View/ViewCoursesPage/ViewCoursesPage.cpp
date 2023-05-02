@@ -18,17 +18,17 @@ class ViewCoursesPage : public TablePage<Course> {
 
 void ViewCoursesPage::initColumns() {
     columnTitle =
-        new std::string[col]{"No",      "Course",           "Course name", "Teacher name",
-                             "Credits", "Maximum students", "Day",         "Session"};
+        new std::string[col]{"No",      "Course",       "Course name", "Teacher name",
+                             "Credits", "Max students", "Day",         "Session"};
     columnWidths = new float[col + buttonCol]{
         50.0f,
         180.0f,
         200.0f,
-        180.0f,
-        80.0f,
-        180.0f,
-        80.0f,
-        80.0f,
+        200.0f,
+        75.0f,
+        120.0f,
+        50.0f,
+        75.0f,
         TABLE_BUTTON_CELL_WIDTH,
         TABLE_BUTTON_CELL_WIDTH,
         TABLE_BUTTON_CELL_WIDTH};
