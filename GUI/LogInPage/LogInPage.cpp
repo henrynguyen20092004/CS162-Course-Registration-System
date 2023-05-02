@@ -111,7 +111,7 @@ void LogInPage::drawErrorText() {
 void LogInPage::checkFilledFields() {
     for (int i = 0; i < numberOfTextInputs; ++i) {
         if (inputs[i][0] == '\0') {
-            throw std::invalid_argument("Please fill all fields before submitting!");
+            throw std::invalid_argument("Please fill all fields!");
         }
     }
 }

@@ -38,7 +38,7 @@ Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course) {
 
         if (tmpStudentCourse.courseID == courseIDAndClassName[0] &&
             tmpStudentCourse.className == courseIDAndClassName[1]) {
-            pushToEndLinkedList(allScoresOfStudentsInCourse, curScore, cur->data);
+            pushToEndOfLinkedList(allScoresOfStudentsInCourse, curScore, cur->data);
         }
     }
 
@@ -54,7 +54,7 @@ Node<Score>* getAllScoresOfStudentsInClass(Node<Student>* allStudentsInClass) {
         Score score = cur->data;
 
         if (checkStudentInClass(allStudentsInClass, score.studentCourse.studentID)) {
-            pushToEndLinkedList(allScoresOfStudentsInClass, curScore, score);
+            pushToEndOfLinkedList(allScoresOfStudentsInClass, curScore, score);
         }
     }
 
@@ -86,7 +86,7 @@ Node<Score>* getAllScoresOfStudent(
 
         if (tmpScore.studentCourse.studentID == studentID &&
             checkScoreExistsInSemester(tmpScore, allCoursesOfSemester)) {
-            pushToEndLinkedList(allScoresOfStudent, curScore, tmpScore);
+            pushToEndOfLinkedList(allScoresOfStudent, curScore, tmpScore);
         }
     }
 

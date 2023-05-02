@@ -22,7 +22,7 @@ ViewStudentsInCoursePage::ViewStudentsInCoursePage(
     const std::string& course, const Course& curCourse
 )
     : TablePage(
-          "All student in course " + course, 7, 1, 2, getAllStudentsInCourse(curCourse)
+          "All student in course " + course, 7, 1, 3, getAllStudentsInCourse(curCourse)
       ),
       curCourse(curCourse) {}
 
@@ -34,11 +34,12 @@ void ViewStudentsInCoursePage::initColumns() {
         50.0f, 200.0f, 120.0f, 330.0f, 80.0f, 180.0f, 150.0f, TABLE_BUTTON_CELL_WIDTH};
 }
 void ViewStudentsInCoursePage::initButtons() {
-    headerButtonTitles[0] = "Import CSV of students";
-    headerButtonTitles[1] = "Export CSV of students";
+    headerButtonTitles[0] = "Add a student to course";
+    headerButtonTitles[1] = "Import CSV of students";
+    headerButtonTitles[2] = "Export CSV of students";
     firstRowButtonTitles[0] = "Remove";
-    headerButtonCommands =
-        new Command[headerButton]{IMPORT_STUDENTS_IN_COURSE, EXPORT_STUDENTS_IN_COURSE};
+    headerButtonCommands = new Command[headerButton]{
+        ADD_STUDENT_TO_COURSE, IMPORT_STUDENTS_IN_COURSE, EXPORT_STUDENTS_IN_COURSE};
 }
 
 void ViewStudentsInCoursePage::convertLinkedListToData() {

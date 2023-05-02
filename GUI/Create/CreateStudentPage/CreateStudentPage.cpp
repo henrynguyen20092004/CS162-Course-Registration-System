@@ -10,29 +10,33 @@ class CreateStudentPage : public FormPage {
     void submitCallBack() override;
 
    public:
-    using FormPage::FormPage;
+    CreateStudentPage(const std::string &className);
+    std::string className;
 };
+
+CreateStudentPage::CreateStudentPage(const std::string &className)
+    : FormPage(
+          "Add a student to class " + className, 5, 1, 2,
+          {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.75f}
+      ),
+      className(className) {}
 
 void CreateStudentPage::initInputs() {
     textInputs[0] = TextInput("Student ID", inputs[0], inputPos[0], inputWidth);
-    dropDowns[0] =
-        DropDown("Class name", GlobalVar::allData.allClasses, inputPos[1], inputWidth);
-    textInputs[1] = TextInput("First Name", inputs[1], inputPos[2], inputWidth);
-    textInputs[2] = TextInput("Last Name", inputs[2], inputPos[3], inputWidth);
-    dropDowns[1] = DropDown("Gender", "M;F", inputPos[4], inputWidth);
+    textInputs[1] = TextInput("First Name", inputs[1], inputPos[1], inputWidth);
+    textInputs[2] = TextInput("Last Name", inputs[2], inputPos[2], inputWidth);
+    dropDowns[0] = DropDown("Gender", "M;F", inputPos[3], inputWidth);
     textInputs[3] =
-        TextInput("Date Of birth (dd/mm/yyyy)", inputs[3], inputPos[5], inputWidth);
-    textInputs[4] = TextInput("Social ID", inputs[4], inputPos[6], inputWidth);
+        TextInput("Date Of birth (dd/mm/yyyy)", inputs[3], inputPos[4], inputWidth);
+    textInputs[4] = TextInput("Social ID", inputs[4], inputPos[5], inputWidth);
 }
 
 void CreateStudentPage::submitCallBack() {
-    createStudent(inputs, dropDownItems);
+    createStudent(inputs, dropDownItems, className);
     successText = "Student successfully added!";
 }
 
-void createStudentPage() {
-    CreateStudentPage createStudentPage(
-        "Add a student to class", 5, 2, 2, {SCREEN_WIDTH / 1.5f, SCREEN_HEIGHT / 1.35f}
-    );
+void createStudentPage(const std::string &className) {
+    CreateStudentPage createStudentPage(className);
     createStudentPage.mainLoop();
 }

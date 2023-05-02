@@ -20,7 +20,7 @@ class ExportStudentsInCoursePage : public FormPage {
 ExportStudentsInCoursePage::ExportStudentsInCoursePage(const std::string &course)
     : FormPage(
           "Export students of " + course, 1, 0, 1,
-          {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 3.0f}
+          {SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 3.0f}
       ),
       course(course) {}
 

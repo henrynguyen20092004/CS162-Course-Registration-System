@@ -1,6 +1,8 @@
 #ifndef CREATE_STUDENT_H
 #define CREATE_STUDENT_H
 
-void createStudent(char **inputs, char **dropDownItems);
+#include <string>
+
+void createStudent(char **inputs, char **dropDownItems, const std::string &className);
 
 #endif

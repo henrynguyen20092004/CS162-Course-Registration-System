@@ -12,17 +12,14 @@ void exportStudentsToFile(
 ) {
     std::ofstream fout;
     writeFile(fout, exportPath);
+    fout << "Ordinal number,Student ID,First name, Last name\n";
 
     for (int i = 0; i < arraySize; ++i) {
         Student student = allStudentsArray[i];
         fout << i + 1 << ',';
         fout << student.id << ',';
         fout << student.firstName << ',';
-        fout << student.lastName << ',';
-        fout << student.gender << ',';
-        fout << student.dateOfBirth << ',';
-        fout << student.socialID << ',';
-        fout << student.className << '\n';
+        fout << student.lastName << '\n';
     }
 
     fout.close();
@@ -50,7 +47,7 @@ void exportStudentsInCourse(char **inputs, const std::string &course) {
         exportPath += exportPath.find('\\') != std::string::npos ? '\\' : '/';
     }
 
-    exportPath += "StudentsInCourse.csv";
+    exportPath += "Students_in_course_" + course + ".csv";
     exportStudentsToFile(exportPath, allStudentsArray, arraySize);
     delete[] allStudentsArray;
     deleteLinkedList(allStudentsInCourse);
