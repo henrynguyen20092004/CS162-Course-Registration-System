@@ -8,10 +8,12 @@
 #include "../TextFunction/TextFunction.h"
 
 FormPage::FormPage(
-    const std::string &title, int numberOfTextInputs, int numberOfDropDowns, int columns,
-    Vector2 mainBoxSize
+    const std::string &formTitle, int numberOfTextInputs, int numberOfDropDowns,
+    int columns, Vector2 mainBoxSize
 )
-    : title(title),
+    : title(clipText(
+          GlobalVar::titleFont, formTitle.c_str(), mainBoxSize.x - DEFAULT_PADDING.x * 2
+      )),
       backButtonText("#114#Back"),
       numberOfTextInputs(numberOfTextInputs),
       numberOfDropDowns(numberOfDropDowns),
@@ -19,6 +21,7 @@ FormPage::FormPage(
       mainBoxSize(
           {mainBoxSize.x, mainBoxSize.y + (DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y)}
       ) {
+    int numberOfTitleLines = std::count(title.begin(), title.end(), '\n') + 1;
     mainBoxPos = {getCenterX(mainBoxSize.x), getCenterY(mainBoxSize.y) + 45.0f};
     inputWidth =
         (mainBoxSize.x - DEFAULT_PADDING.x * 2 - DEFAULT_ITEM_MARGIN.x * (columns - 1)) /
@@ -26,8 +29,8 @@ FormPage::FormPage(
     childrenPosX = mainBoxPos.x + DEFAULT_PADDING.x;
     titlePosY =
         mainBoxPos.y + DEFAULT_PADDING.y + DEFAULT_ITEM_HEIGHT + DEFAULT_ITEM_MARGIN.y;
-    firstInputPosY = titlePosY + DEFAULT_TITLE_SIZE + DEFAULT_TEXT_MARGIN.y +
-                     DEFAULT_TEXT_SIZE + DEFAULT_ITEM_MARGIN.y;
+    firstInputPosY = titlePosY + DEFAULT_TITLE_SIZE * (numberOfTitleLines * 1.5 - 0.5) +
+                     DEFAULT_TEXT_MARGIN.y + DEFAULT_TEXT_SIZE + DEFAULT_ITEM_MARGIN.y;
     inputs = new char *[numberOfTextInputs];
     textInputs = new TextInput[numberOfTextInputs];
     inputPos = new Vector2[numberOfTextInputs + numberOfDropDowns];
@@ -97,11 +100,11 @@ void FormPage::drawPage() {
     drawSuccessText();
     dropDownLockGUI();
 
-    if (submitButton.drawButton(scroll.y)) {
+    if (submitButton.drawButton(scroll)) {
         submit();
     }
 
-    if (backButton.drawButton(scroll.y)) {
+    if (backButton.drawButton(scroll)) {
         GlobalVar::currentCommand = GlobalVar::previousCommand;
         stopLoop = true;
     }

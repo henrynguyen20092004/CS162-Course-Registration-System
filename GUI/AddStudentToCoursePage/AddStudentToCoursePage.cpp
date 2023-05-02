@@ -16,7 +16,8 @@ class AddStudentToCoursePage : public FormPage {
 
 AddStudentToCoursePage::AddStudentToCoursePage(const std::string &course)
     : FormPage(
-          "Add student to " + course, 1, 0, 1, {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 3.0f}
+          "Add student to " + course, 1, 0, 1,
+          {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.25f}
       ),
       course(course) {}
 

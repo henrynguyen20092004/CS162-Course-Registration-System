@@ -9,7 +9,7 @@ ImportCSVPage::ImportCSVPage(
     const std::string &title, const char *CSVName, const std::string &arg,
     void (*importCallBack)(char **, char **, const std::string &arg)
 )
-    : FormPage(title, 2, 1, 1, {SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 1.75f}),
+    : FormPage(title, 2, 1, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.5f}),
       CSVName(CSVName),
       arg(arg),
       importCallBack(importCallBack) {}
@@ -34,7 +34,7 @@ void ImportCSVPage::initInputs() {
 void ImportCSVPage::drawInputs() {
     switch (dropDowns[0].activeItemIndex) {
         case 0: {
-            if (browseFolderButton.drawButton(scroll.y)) {
+            if (browseFolderButton.drawButton(scroll)) {
                 openFolderDialog(inputs[0]);
             }
 
@@ -45,7 +45,7 @@ void ImportCSVPage::drawInputs() {
             break;
         }
         case 1: {
-            if (browseFileButton.drawButton(scroll.y)) {
+            if (browseFileButton.drawButton(scroll)) {
                 openFileDialog(inputs[1]);
             }
 

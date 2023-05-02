@@ -66,7 +66,9 @@ void TablePage<T>::calculateTableAndFirstRow() {
     }
 
     tablePos = {
-        getCenterX(tableWidth), MENU_HEIGHT + DEFAULT_ITEM_MARGIN.y + DEFAULT_PADDING.y};
+        tableWidth > SCREEN_WIDTH - DEFAULT_PADDING.x * 4 ? DEFAULT_PADDING.x * 2
+                                                          : getCenterX(tableWidth),
+        MENU_HEIGHT + DEFAULT_ITEM_MARGIN.y + DEFAULT_PADDING.y};
 
     if (buttonCol) {
         firstRowButtonsPosX = tablePos.x + TABLE_CELL_PADDING_X;
@@ -161,7 +163,7 @@ void TablePage<T>::drawPage() {
 template <class T>
 void TablePage<T>::drawButtons() {
     for (int i = 0; i < headerButton; ++i) {
-        if (headerButtons[i].drawButton(scroll.y)) {
+        if (headerButtons[i].drawButton(scroll)) {
             GlobalVar::previousCommand = GlobalVar::currentCommand;
             GlobalVar::currentCommand = headerButtonCommands[i];
             stopLoop = true;
@@ -188,7 +190,7 @@ template <class T>
 void TablePage<T>::drawColumnButtons() {
     for (int i = 0; i < row - 1; ++i) {
         for (int j = 0; j < buttonCol; ++j) {
-            if (columnButtons[i][j].drawButton(scroll.y)) {
+            if (columnButtons[i][j].drawButton(scroll)) {
                 GlobalVar::renderArgs = tableData[i + 1][1];
                 GlobalVar::previousCommand = GlobalVar::currentCommand;
                 GlobalVar::currentCommand = columnButtonCommands[j];

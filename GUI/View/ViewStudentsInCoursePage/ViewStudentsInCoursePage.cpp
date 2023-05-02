@@ -66,7 +66,7 @@ void ViewStudentsInCoursePage::convertLinkedListToData() {
 
 void ViewStudentsInCoursePage::drawColumnButtons() {
     for (int i = 0; i < row - 1; ++i) {
-        if (columnButtons[i][0].drawButton(scroll.y)) {
+        if (columnButtons[i][0].drawButton(scroll)) {
             removeStudentFromCourse(tableData[i + 1][1], curCourse);
             stopLoop = true;
         }

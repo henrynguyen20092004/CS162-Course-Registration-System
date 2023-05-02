@@ -29,7 +29,7 @@ void ChangeCurrentSemesterPage::submitCallBack() {
 void changeCurrentSemesterPage() {
     ChangeCurrentSemesterPage changeCurrentSemesterPage(
         "Change the current semester", 0, 2, 1,
-        {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 2.0f}
+        {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 1.75f}
     );
     changeCurrentSemesterPage.mainLoop();
 }

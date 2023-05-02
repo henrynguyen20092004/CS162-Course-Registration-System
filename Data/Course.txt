@@ -1,4 +1,4 @@
-2020-2021
+2022-2023
 1
 MTH251
 Calculus I
@@ -28,7 +28,7 @@ Nguyen Manh Truong Giang
 95
 FRI
 3
-2021-2022
+2022-2023
 2
 CS161
 Introduction to Computer Science I
@@ -38,8 +38,8 @@ Nguyen Le Hoang Dung
 60
 SAT
 1
-2021-2022
-3
+2022-2023
+1
 CS162
 Introduction to Computer Science II
 21APCS1
@@ -48,7 +48,7 @@ Ho Tuan Thanh
 57
 THU
 1
-2021-2022
+2022-2023
 1
 CS163
 Introduction to Computer Science III
@@ -58,8 +58,8 @@ Do Nguyen Kha
 137
 TUE
 4
-2020-2021
-3
+2022-2023
+2
 PH211
 General Physics I
 20APCS2
@@ -78,8 +78,8 @@ Nguyen Ngoc Truong
 92
 WED
 1
-2020-2021
-3
+2022-2023
+2
 PH213
 General Physics III
 20CLC2
@@ -88,3 +88,33 @@ Nguyen Huu Nha
 51
 WED
 2
+2020-2021
+1
+CM101
+Communication Management
+19CLC1
+Duong Nguyen Vu
+3
+48
+TUE
+2
+2020-2021
+3
+CM102
+Communication Management II
+19CLC2
+Duong Nguyen Vu
+1
+95
+FRI
+3
+2020-2021
+2
+CS164
+Introduction to Computer Science IV
+19CLC1
+Dinh Ba Tien
+2
+60
+SAT
+1
