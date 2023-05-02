@@ -4,14 +4,15 @@
 #include <sstream>
 
 #include "../../../GlobalVar/GlobalVar.h"
+#include "../../Check/CheckClass/CheckClass.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
+#include "../../DateFunction/DateFunction.h"
 #include "../../OpenFile/OpenFile.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveStudent/SaveStudent.h"
 #include "../../Save/SaveUser/SaveUser.h"
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
-#include "../../Validate/ValidateStudent/ValidateStudent.h"
 
 void getStudentInClassFromLine(Student &student, std::string importLine) {
     std::string _;
@@ -23,6 +24,25 @@ void getStudentInClassFromLine(Student &student, std::string importLine) {
     getline(importStream, student.gender, ',');
     getline(importStream, student.dateOfBirth, ',');
     getline(importStream, student.socialID);
+}
+
+void validateStudent(Node<std::string> *allClasses, Student &student) {
+    if (student.gender == "M" || student.gender == "m") {
+        student.gender = "M";
+    } else if (student.gender == "F" || student.gender == "f") {
+        student.gender = "F";
+    } else {
+        throw std::invalid_argument("Invalid gender, please try again!");
+    }
+
+    if (!checkDate(student.dateOfBirth) ||
+        !compareDate(student.dateOfBirth, getToday())) {
+        throw std::invalid_argument("Invalid date of birth, please try again!");
+    }
+
+    if (!checkClassExists(allClasses, student.className)) {
+        throw std::invalid_argument("This class doesn't exists, please try again!");
+    }
 }
 
 void checkImportedStudentInClass(Node<Student> *allStudents, Student &student) {
@@ -50,12 +70,12 @@ void importStudentsInClass(
     Node<Student> *newStudents = nullptr, *curStudent;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
-    std::string importPath = inputs[1], importLine, _;
+    std::string importLine;
     student.className = className;
 
     std::ifstream fin;
-    readFile(fin, importPath);
-    getline(fin, _);
+    readFile(fin, inputs[1]);
+    getline(fin, importLine);
 
     while (fin.good()) {
         getline(fin, importLine);
@@ -71,9 +91,9 @@ void importStudentsInClass(
             checkImportedStudentInClass(GlobalVar::allData.allStudents, student);
         } catch (std::invalid_argument &error) {
             if (!strcmp(error.what(), "Duplicated record")) {
-                pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
+                pushToEndOfLinkedList(duplicateErrors, curDuplicateErrors, curLine);
             } else {
-                pushToEndLinkedList(invalidErrors, curInvalidErrors, curLine);
+                pushToEndOfLinkedList(invalidErrors, curInvalidErrors, curLine);
             }
 
             continue;
@@ -81,9 +101,9 @@ void importStudentsInClass(
             continue;
         }
 
-        pushToEndLinkedList(newStudents, curStudent, student);
+        pushToEndOfLinkedList(newStudents, curStudent, student);
         User newStudentAccount = createAccount(student);
-        pushToEndLinkedList(newUsers, curUser, newStudentAccount);
+        pushToEndOfLinkedList(newUsers, curUser, newStudentAccount);
     }
 
     fin.close();

@@ -18,7 +18,7 @@ Node<T> *getAll(const std::string &filePath, void (*readCallBack)(std::ifstream 
             break;
         }
 
-        pushToEndLinkedList(result, cur, data);
+        pushToEndOfLinkedList(result, cur, data);
     }
 
     fin.close();

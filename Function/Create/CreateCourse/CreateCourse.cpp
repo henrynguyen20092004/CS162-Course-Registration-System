@@ -3,7 +3,7 @@
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
-#include "../../Validate/ValidateCourse/ValidateCourse.h"
+#include "../../ValidateCourse/ValidateCourse.h"
 
 void saveCourse(const Course &course) {
     std::ofstream fout;

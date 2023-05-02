@@ -18,7 +18,7 @@ void showCSVErrorLines(
     Node<int> *duplicateErrors, Node<int> *invalidErrors, int numberOfLines
 ) {
     if (numberOfLines == 1) {
-        throw std::invalid_argument("CSV is empty!");
+        throw std::invalid_argument("CSV has no records, please try again!");
     }
 
     int numberOfDuplicates = getLinkedListSize(duplicateErrors),
@@ -26,9 +26,10 @@ void showCSVErrorLines(
 
     if (numberOfDuplicates + numberOfInvalids == numberOfLines - 1) {
         if (numberOfDuplicates > 0) {
-            throw std::invalid_argument("CSV already imported!");
+            throw std::invalid_argument("CSV already imported, please try again!");
         } else {
-            throw std::invalid_argument("CSV has only invalid records!");
+            throw std::invalid_argument("CSV has only invalid records, please try again!"
+            );
         }
     }
 

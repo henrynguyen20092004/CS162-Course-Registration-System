@@ -4,7 +4,7 @@
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
-#include "../../Validate/ValidateCourse/ValidateCourse.h"
+#include "../../ValidateCourse/ValidateCourse.h"
 
 void inputChanges(Course& course, char** inputs, char** dropDownItems) {
     std::string* courseIDAndClassName = new std::string[2];
@@ -22,12 +22,6 @@ void inputChanges(Course& course, char** inputs, char** dropDownItems) {
 }
 
 void updateCourse(char** inputs, char** dropDownItems) {
-    if (!GlobalVar::allData.allCourses) {
-        throw std::invalid_argument(
-            "No course records, please create one and try again later!"
-        );
-    }
-
     Course course;
     inputChanges(course, inputs, dropDownItems);
     validateCourse(course);

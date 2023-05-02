@@ -94,16 +94,16 @@ void importScoreboard(char **inputs, char **dropDownItems, const std::string &co
             );
         } catch (std::invalid_argument &error) {
             if (!strcmp(error.what(), "Duplicated record")) {
-                pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
+                pushToEndOfLinkedList(duplicateErrors, curDuplicateErrors, curLine);
             } else {
-                pushToEndLinkedList(invalidErrors, curInvalidErrors, curLine);
+                pushToEndOfLinkedList(invalidErrors, curInvalidErrors, curLine);
             }
             continue;
         } catch (...) {
             continue;
         }
 
-        pushToEndLinkedList(newScores, cur, score);
+        pushToEndOfLinkedList(newScores, cur, score);
     }
 
     fin.close();

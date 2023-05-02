@@ -5,15 +5,12 @@
 
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
-#include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
 #include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../Save/SaveStudent/SaveStudent.h"
-#include "../../Save/SaveUser/SaveUser.h"
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 #include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
-#include "../../Validate/ValidateStudent/ValidateStudent.h"
 
 void getStudentInCourseFromLine(Student &student, const std::string &importLine) {
     std::string _;
@@ -33,7 +30,6 @@ void checkImportedStudentInCourse(
     const StudentCourse &studentCourse
 ) {
     Node<StudentCourse> *newNode = new Node(studentCourse);
-    validateStudent(GlobalVar::allData.allClasses, student);
 
     for (; allStudents; allStudents = allStudents->next) {
         if (allStudents->data == student) {
@@ -83,13 +79,11 @@ void importStudentsInCourse(
     int curLine = 1;
     Student student;
     StudentCourse studentCourse;
-    Node<User> *newUsers = nullptr, *curUser;
     Node<StudentCourse> *newStudentCourses = nullptr, *curStudentCourse;
     Node<Student> *newStudents = nullptr, *curStudent;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
-    std::string *courseIDAndClassName = new std::string[2], importPath = inputs[1],
-                importLine, _;
+    std::string *courseIDAndClassName = new std::string[2], importLine;
 
     splitCourseToIDAndClassName(courseIDAndClassName, course);
     studentCourse.courseID = courseIDAndClassName[0];
@@ -97,8 +91,8 @@ void importStudentsInCourse(
     delete[] courseIDAndClassName;
 
     std::ifstream fin;
-    readFile(fin, importPath);
-    getline(fin, _);
+    readFile(fin, inputs[1]);
+    getline(fin, importLine);
 
     while (fin.good()) {
         getline(fin, importLine);
@@ -118,9 +112,9 @@ void importStudentsInCourse(
             );
         } catch (std::invalid_argument &error) {
             if (!strcmp(error.what(), "Duplicated record")) {
-                pushToEndLinkedList(duplicateErrors, curDuplicateErrors, curLine);
+                pushToEndOfLinkedList(duplicateErrors, curDuplicateErrors, curLine);
             } else {
-                pushToEndLinkedList(invalidErrors, curInvalidErrors, curLine);
+                pushToEndOfLinkedList(invalidErrors, curInvalidErrors, curLine);
             }
 
             continue;
@@ -128,17 +122,13 @@ void importStudentsInCourse(
             continue;
         }
 
-        pushToEndLinkedList(newStudentCourses, curStudentCourse, studentCourse);
-        pushToEndLinkedList(newStudents, curStudent, student);
-        User newStudentAccount = createAccount(student);
-        pushToEndLinkedList(newUsers, curUser, newStudentAccount);
+        pushToEndOfLinkedList(newStudentCourses, curStudentCourse, studentCourse);
+        pushToEndOfLinkedList(newStudents, curStudent, student);
     }
 
     fin.close();
     addNewItemsToOldList(GlobalVar::allData.allStudents, newStudents);
     addNewItemsToOldList(GlobalVar::allData.allStudentCourses, newStudentCourses);
-    addNewItemsToOldList(GlobalVar::allData.allUsers, newUsers);
-    saveAllUsers(GlobalVar::allData.allUsers);
     saveAllStudents(GlobalVar::allData.allStudents);
     saveAllStudentCourses(GlobalVar::allData.allStudentCourses);
     showCSVErrorLines(duplicateErrors, invalidErrors, curLine);

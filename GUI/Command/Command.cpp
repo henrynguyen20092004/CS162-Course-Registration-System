@@ -93,7 +93,7 @@ void selectPage() {
             break;
 
         case CREATE_STUDENT:
-            createStudentPage();
+            createStudentPage(GlobalVar::renderArgs);
             break;
 
         case CREATE_SEMESTER:
@@ -105,7 +105,7 @@ void selectPage() {
             break;
 
         case ADD_STUDENT_TO_COURSE:
-            addStudentToCoursePage();
+            addStudentToCoursePage(GlobalVar::renderArgs);
             break;
 
         case IMPORT_STUDENTS_IN_CLASS:

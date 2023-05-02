@@ -10,23 +10,26 @@ class AddStudentToCoursePage : public FormPage {
     void submitCallBack() override;
 
    public:
-    using FormPage::FormPage;
+    AddStudentToCoursePage(const std::string &course);
+    std::string course;
 };
 
+AddStudentToCoursePage::AddStudentToCoursePage(const std::string &course)
+    : FormPage(
+          "Add student to " + course, 1, 0, 1, {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 3.0f}
+      ),
+      course(course) {}
+
 void AddStudentToCoursePage::initInputs() {
-    dropDowns[0] =
-        DropDown("Course name", GlobalVar::allData.allCourses, inputPos[0], inputWidth);
-    textInputs[0] = TextInput("Student ID", inputs[0], inputPos[1], inputWidth);
+    textInputs[0] = TextInput("Student ID", inputs[0], inputPos[0], inputWidth);
 }
 
 void AddStudentToCoursePage::submitCallBack() {
-    addStudentToCourse(inputs, dropDownItems);
+    addStudentToCourse(inputs, course);
     successText = "Student successfully added!";
 }
 
-void addStudentToCoursePage() {
-    AddStudentToCoursePage addStudentToCoursePage(
-        "Add student to course", 1, 1, 1, {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.0f}
-    );
+void addStudentToCoursePage(const std::string &course) {
+    AddStudentToCoursePage addStudentToCoursePage(course);
     addStudentToCoursePage.mainLoop();
 }

@@ -15,12 +15,12 @@ void saveStudentToCourse(const StudentCourse &studentCourse) {
     addNewItemsToOldList(GlobalVar::allData.allStudentCourses, new Node(studentCourse));
 }
 
-void addStudentToCourse(char **inputs, char **dropDownItems) {
+void addStudentToCourse(char **inputs, const std::string &course) {
     StudentCourse studentCourse;
     studentCourse.studentID = inputs[0];
 
     std::string *courseIDAndClassName = new std::string[2];
-    splitCourseToIDAndClassName(courseIDAndClassName, dropDownItems[0]);
+    splitCourseToIDAndClassName(courseIDAndClassName, course);
     studentCourse.courseID = courseIDAndClassName[0];
     studentCourse.className = courseIDAndClassName[1];
     delete[] courseIDAndClassName;

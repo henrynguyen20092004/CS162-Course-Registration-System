@@ -67,11 +67,6 @@ bool checkDate(const std::string &date) {
     return checkLengthAndCharacters(date) && checkDayMonthYear(date);
 }
 
-bool checkDayOfWeek(const std::string &day) {
-    return day == "MON" || day == "TUE" || day == "WED" || day == "THU" || day == "FRI" ||
-           day == "SAT";
-}
-
 bool compareDate(const std::string &firstDate, const std::string &secondDate) {
     if (stoi(secondDate.substr(6)) != stoi(firstDate.substr(6))) {
         return stoi(secondDate.substr(6)) > stoi(firstDate.substr(6));

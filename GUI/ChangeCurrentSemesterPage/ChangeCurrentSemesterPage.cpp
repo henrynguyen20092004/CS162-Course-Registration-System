@@ -1,6 +1,6 @@
 #include "ChangeCurrentSemesterPage.h"
 
-#include "../../Function/Save/SaveCurrentSemester/SaveCurrentSemester.h"
+#include "../../Function/ChangeCurrentSemester/ChangeCurrentSemester.h"
 #include "../../GlobalVar/GlobalVar.h"
 #include "../FormPage/FormPage.h"
 
@@ -14,33 +14,22 @@ class ChangeCurrentSemesterPage : public FormPage {
 };
 
 void ChangeCurrentSemesterPage::initInputs() {
-    dropDowns[0] =
-        DropDown("Semester", GlobalVar::allData.allSemesters, inputPos[0], inputWidth);
+    dropDowns[0] = DropDown(
+        "School year", GlobalVar::allData.allSchoolYears, inputPos[0], inputWidth
+    );
+    dropDowns[1] = DropDown("Semester number", "1;2;3", inputPos[1], inputWidth);
 }
 
 void ChangeCurrentSemesterPage::submitCallBack() {
-    std::string schoolYearName;
-
-    for (int i = 12; i < 21; ++i) {
-        schoolYearName += dropDownItems[0][i];
-    }
-
-    for (Node<Semester> *cur = GlobalVar::allData.allSemesters; cur; cur = cur->next) {
-        Semester semester = cur->data;
-        if (semester.schoolYearName == schoolYearName &&
-            semester.number == dropDownItems[0][9] - '0') {
-            saveCurrentSemester(semester);
-            GlobalVar::currentSemester = semester;
-            GlobalVar::currentCommand = GlobalVar::previousCommand;
-            stopLoop = true;
-        }
-    }
+    GlobalVar::currentSemester = changeCurrentSemester(dropDownItems);
+    GlobalVar::currentCommand = GlobalVar::previousCommand;
+    stopLoop = true;
 }
 
 void changeCurrentSemesterPage() {
     ChangeCurrentSemesterPage changeCurrentSemesterPage(
-        "Change the current semester", 0, 1, 1,
-        {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 3.0f}
+        "Change the current semester", 0, 2, 1,
+        {SCREEN_WIDTH / 2.4f, SCREEN_HEIGHT / 2.0f}
     );
     changeCurrentSemesterPage.mainLoop();
 }

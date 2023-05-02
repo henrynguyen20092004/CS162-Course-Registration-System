@@ -36,7 +36,7 @@ Node<Course> *getAllCoursesOfSemester(
 
         if (course.schoolYearName == schoolYear &&
             course.semesterNumber == semesterNumber) {
-            pushToEndLinkedList(allCourseOfSemester, curCourse, course);
+            pushToEndOfLinkedList(allCourseOfSemester, curCourse, course);
         }
     }
 
@@ -64,7 +64,7 @@ Node<StudentCourse> *getAllCoursesIDOfStudent(const std::string &studentID) {
             continue;
         }
 
-        pushToEndLinkedList(allCoursesIDOfStudent, cur, studentCourse);
+        pushToEndOfLinkedList(allCoursesIDOfStudent, cur, studentCourse);
     }
 
     fin.close();
@@ -95,7 +95,9 @@ Node<Course> *getAllCoursesOfStudent(
                 tmpCourse.className == tmpStudentCourse.className &&
                 tmpCourse.schoolYearName == semester.schoolYearName &&
                 tmpCourse.semesterNumber == semester.number) {
-                pushToEndLinkedList(allCoursesOfStudent, curCoursesOfStudent, tmpCourse);
+                pushToEndOfLinkedList(
+                    allCoursesOfStudent, curCoursesOfStudent, tmpCourse
+                );
             }
         }
     }
@@ -122,7 +124,7 @@ Node<std::string> *getAllCoursesOfStudentsInClass(Node<Score> *allScoresOfClass)
                                      allScoresOfClass->data.studentCourse.className;
 
         if (!checkStudentHasCourse(allCoursesOfStudentsInClass, fullCourseName)) {
-            pushToEndLinkedList(allCoursesOfStudentsInClass, cur, fullCourseName);
+            pushToEndOfLinkedList(allCoursesOfStudentsInClass, cur, fullCourseName);
         }
     }
 

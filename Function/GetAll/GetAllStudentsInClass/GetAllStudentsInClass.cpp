@@ -3,14 +3,16 @@
 #include "../../../GlobalVar/GlobalVar.h"
 
 Node<Student> *getAllStudentsInClass(const std::string &className) {
-    Node<Student> *allClassStudents = nullptr, *curClassStudents,
+    Node<Student> *allStudentsInClass = nullptr, *curStudentsInClass,
                   *curStudent = GlobalVar::allData.allStudents;
 
     for (; curStudent; curStudent = curStudent->next) {
         if (className == curStudent->data.className) {
-            pushToEndLinkedList(allClassStudents, curClassStudents, curStudent->data);
+            pushToEndOfLinkedList(
+                allStudentsInClass, curStudentsInClass, curStudent->data
+            );
         }
     }
 
-    return allClassStudents;
+    return allStudentsInClass;
 }

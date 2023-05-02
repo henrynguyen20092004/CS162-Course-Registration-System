@@ -16,11 +16,11 @@ void updateUser(Node<User> *allUsers, const User &newUser) {
 
 void changePassword(User &currentUser, char **inputs) {
     if (strcmp(inputs[3], currentUser.password.c_str())) {
-        throw std::invalid_argument("Wrong old password, please enter again!");
+        throw std::invalid_argument("Wrong old password, please try again!");
     }
 
     if (strcmp(inputs[4], inputs[5])) {
-        throw std::invalid_argument("New password mismatch, please enter again!");
+        throw std::invalid_argument("New password mismatch, please try again!");
     }
 
     currentUser.password = inputs[4];
