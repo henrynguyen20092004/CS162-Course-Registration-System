@@ -17,8 +17,8 @@ class Table {
                          backgroundHeight = 0.0f;
     std::string **tableData = nullptr, *columnTitle = nullptr;
     Vector2 tablePos{0.0f, 0.0f}, initialTextPos{0.0f, 0.0f};
-    void drawGrid(float scrollY);
-    void drawText(float scrollY);
+    void drawGrid(const Vector2& scroll);
+    void drawText(const Vector2& scroll);
 
    public:
     Table();

@@ -37,12 +37,13 @@ Table::Table(
             (rowHeights[0] - DEFAULT_TEXT_SIZE) / 2.0f + tableOffsetY};
 }
 
-void Table::drawGrid(float scrollY) {
+void Table::drawGrid(const Vector2& scroll) {
     Vector2 cellPos = tablePos;
+    cellPos.x += scroll.x;
 
     for (int j = 0; j < col + buttonCol; ++j) {
         cellPos.y = tablePos.y + DEFAULT_TITLE_SIZE + DEFAULT_ITEM_MARGIN.y +
-                    tableOffsetY + scrollY;
+                    tableOffsetY + scroll.y;
 
         if (j > 0) {
             cellPos.x += columnWidths[j - 1];
@@ -60,11 +61,12 @@ void Table::drawGrid(float scrollY) {
     }
 }
 
-void Table::drawText(float scrollY) {
+void Table::drawText(const Vector2& scroll) {
     Vector2 textPos = initialTextPos;
+    textPos.x += scroll.x;
 
     for (int j = 0; j < col + buttonCol; ++j) {
-        textPos.y = initialTextPos.y + scrollY;
+        textPos.y = initialTextPos.y + scroll.y;
 
         for (int i = 0; i < row; ++i) {
             float textSize =
@@ -89,18 +91,20 @@ void Table::drawText(float scrollY) {
 void Table::drawTable(Vector2& scroll) {
     drawScrollBar(
         {0, MENU_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - MENU_HEIGHT}, nullptr,
-        {tablePos.x, tablePos.y, tableWidth,
+        {tablePos.x, tablePos.y, tableWidth + DEFAULT_PADDING.x * 4,
          backgroundHeight + DEFAULT_ITEM_MARGIN.y * 2},
         scroll
     );
     DrawRectangleV(
-        {tablePos.x - DEFAULT_PADDING.x, tablePos.y - DEFAULT_PADDING.y + scroll.y},
+        {tablePos.x - DEFAULT_PADDING.x + scroll.x,
+         tablePos.y - DEFAULT_PADDING.y + scroll.y},
         {tableWidth + DEFAULT_PADDING.x * 2, backgroundHeight}, WHITE
     );
     drawDefaultTitle(
-        tableTitle, {getCenterX(measureTextWidth(GlobalVar::titleFont, tableTitle)),
-                     tablePos.y + scroll.y}
+        tableTitle,
+        {getCenterX(measureTextWidth(GlobalVar::titleFont, tableTitle)) + scroll.x,
+         tablePos.y + scroll.y}
     );
-    drawText(scroll.y);
-    drawGrid(scroll.y);
+    drawText(scroll);
+    drawGrid(scroll);
 }

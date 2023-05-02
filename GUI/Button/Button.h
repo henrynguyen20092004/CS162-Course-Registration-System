@@ -11,7 +11,7 @@ class Button {
     Rectangle buttonBox{0.0f, 0.0f, 0.0f, 0.0f};
     Button();
     Button(const char *label, float posX, float posY, float width);
-    bool drawButton(float scrollY = 0.0f);
+    bool drawButton(const Vector2 &scroll = {0.0f, 0.0f});
 };
 
 #endif

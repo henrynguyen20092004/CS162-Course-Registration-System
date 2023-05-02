@@ -39,7 +39,7 @@ class FormPage : public Page {
 
    public:
     FormPage(
-        const std::string &title, int numberOfTextInputs, int numberOfDropDowns,
+        const std::string &formTitle, int numberOfTextInputs, int numberOfDropDowns,
         int columns, Vector2 mainBoxSize
     );
     ~FormPage();

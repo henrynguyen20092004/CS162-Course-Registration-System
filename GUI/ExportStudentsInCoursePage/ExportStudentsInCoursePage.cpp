@@ -20,7 +20,7 @@ class ExportStudentsInCoursePage : public FormPage {
 ExportStudentsInCoursePage::ExportStudentsInCoursePage(const std::string &course)
     : FormPage(
           "Export students of " + course, 1, 0, 1,
-          {SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 3.0f}
+          {SCREEN_WIDTH / 3.0f, SCREEN_HEIGHT / 2.25f}
       ),
       course(course) {}
 
@@ -37,7 +37,7 @@ void ExportStudentsInCoursePage::initInputs() {
 }
 
 void ExportStudentsInCoursePage::drawInputs() {
-    if (browseFolderButton.drawButton(scroll.y)) {
+    if (browseFolderButton.drawButton(scroll)) {
         openFolderDialog(inputs[0]);
     }
 

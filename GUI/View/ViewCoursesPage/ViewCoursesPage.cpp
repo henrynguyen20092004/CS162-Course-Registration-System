@@ -70,7 +70,7 @@ void ViewCoursesPage::convertLinkedListToData() {
 void ViewCoursesPage::drawColumnButtons() {
     for (int i = 0; i < row - 1; ++i) {
         for (int j = 0; j < buttonCol - 1; ++j) {
-            if (columnButtons[i][j].drawButton(scroll.y)) {
+            if (columnButtons[i][j].drawButton(scroll)) {
                 GlobalVar::renderArgs = tableData[i + 1][1];
                 GlobalVar::previousCommand = GlobalVar::currentCommand;
                 GlobalVar::currentCommand = columnButtonCommands[j];
@@ -78,7 +78,7 @@ void ViewCoursesPage::drawColumnButtons() {
             }
         }
 
-        if (columnButtons[i][buttonCol - 1].drawButton(scroll.y)) {
+        if (columnButtons[i][buttonCol - 1].drawButton(scroll)) {
             deleteCourse(tableData[i + 1][1]);
             stopLoop = true;
         }
