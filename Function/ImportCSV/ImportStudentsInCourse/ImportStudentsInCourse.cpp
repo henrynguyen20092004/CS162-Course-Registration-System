@@ -5,12 +5,9 @@
 
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
-#include "../../OperatorOverload/OperatorOverload.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
-#include "../../Save/SaveStudent/SaveStudent.h"
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
-#include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
 
 void getStudentInCourseFromLine(Student &student, const std::string &importLine) {
     std::string _;
@@ -18,21 +15,22 @@ void getStudentInCourseFromLine(Student &student, const std::string &importLine)
     getline(importStream, _, ',');
     getline(importStream, student.id, ',');
     getline(importStream, student.firstName, ',');
-    getline(importStream, student.lastName, ',');
-    getline(importStream, student.gender, ',');
-    getline(importStream, student.dateOfBirth, ',');
-    getline(importStream, student.socialID, ',');
-    getline(importStream, student.className);
+    getline(importStream, student.lastName);
 }
 
 void checkImportedStudentInCourse(
-    Student &student, Node<Student> *allStudents, Node<StudentCourse> *&allStudentCourses,
-    const StudentCourse &studentCourse
+    const Student &student, Node<Student> *allStudents,
+    Node<StudentCourse> *&allStudentCourses, const StudentCourse &studentCourse
 ) {
     Node<StudentCourse> *newNode = new Node(studentCourse);
 
     for (; allStudents; allStudents = allStudents->next) {
-        if (allStudents->data == student) {
+        if (allStudents->data.id == student.id) {
+            if (allStudents->data.firstName != student.firstName ||
+                allStudents->data.lastName != student.lastName) {
+                delete newNode;
+                throw std::invalid_argument("Invalid record");
+            }
             if (checkStudentInCourse(allStudentCourses, studentCourse)) {
                 delete newNode;
                 throw std::invalid_argument("Duplicated record");
@@ -48,39 +46,19 @@ void checkImportedStudentInCourse(
                 cur->next = newNode;
                 throw std::runtime_error("Record added");
             }
-        } else if (allStudents->data.id == student.id) {
-            updateDefaultStudentPassword(
-                allStudents, GlobalVar::allData.allUsers, student
-            );
-            allStudents->data = student;
-
-            if (!checkStudentInCourse(allStudentCourses, studentCourse)) {
-                if (!allStudentCourses) {
-                    allStudentCourses = newNode;
-                    throw std::runtime_error("Record added");
-                }
-
-                Node<StudentCourse> *cur = allStudentCourses;
-                for (; cur->next; cur = cur->next)
-                    ;
-                cur->next = newNode;
-            } else {
-                delete newNode;
-            }
-
-            throw std::runtime_error("Record added");
         }
     }
+
+    delete newNode;
+    throw std::invalid_argument("Invalid record");
 }
 
 void importStudentsInCourse(
     char **inputs, char **dropDownItems, const std::string &course
 ) {
     int curLine = 1;
-    Student student;
     StudentCourse studentCourse;
-    Node<StudentCourse> *newStudentCourses = nullptr, *curStudentCourse;
-    Node<Student> *newStudents = nullptr, *curStudent;
+    Student student;
     Node<int> *duplicateErrors = nullptr, *curDuplicateErrors, *invalidErrors = nullptr,
               *curInvalidErrors;
     std::string *courseIDAndClassName = new std::string[2], importLine;
@@ -121,15 +99,9 @@ void importStudentsInCourse(
         } catch (...) {
             continue;
         }
-
-        pushToEndOfLinkedList(newStudentCourses, curStudentCourse, studentCourse);
-        pushToEndOfLinkedList(newStudents, curStudent, student);
     }
 
     fin.close();
-    addNewItemsToOldList(GlobalVar::allData.allStudents, newStudents);
-    addNewItemsToOldList(GlobalVar::allData.allStudentCourses, newStudentCourses);
-    saveAllStudents(GlobalVar::allData.allStudents);
     saveAllStudentCourses(GlobalVar::allData.allStudentCourses);
     showCSVErrorLines(duplicateErrors, invalidErrors, curLine);
 }
