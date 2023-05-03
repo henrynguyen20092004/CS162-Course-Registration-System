@@ -1,7 +1,7 @@
 #include "ViewStudentsInClassPage.h"
 
-#include "../../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
-#include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../../API/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
+#include "../../../API/OperatorOverload/OperatorOverload.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewStudentsInClassPage : public TablePage<Student> {

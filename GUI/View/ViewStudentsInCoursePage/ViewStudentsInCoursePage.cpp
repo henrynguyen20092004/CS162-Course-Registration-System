@@ -1,9 +1,9 @@
 #include "ViewStudentsInCoursePage.h"
 
-#include "../../../Function/GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
-#include "../../../Function/OperatorOverload/OperatorOverload.h"
-#include "../../../Function/RemoveStudentFromCourse/RemoveStudentFromCourse.h"
-#include "../../../Function/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
+#include "../../../API/GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
+#include "../../../API/OperatorOverload/OperatorOverload.h"
+#include "../../../API/RemoveStudentFromCourse/RemoveStudentFromCourse.h"
+#include "../../../API/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewStudentsInCoursePage : public TablePage<Student> {

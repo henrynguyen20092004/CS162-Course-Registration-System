@@ -1,6 +1,6 @@
 #include "CreateCoursePage.h"
 
-#include "../../../Function/Create/CreateCourse/CreateCourse.h"
+#include "../../../API/Create/CreateCourse/CreateCourse.h"
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 

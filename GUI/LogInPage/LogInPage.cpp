@@ -1,7 +1,7 @@
 #include "LogInPage.h"
 
-#include "../../Function/LogIn/LogIn.h"
-#include "../../Function/PasswordFunction/PasswordFunction.h"
+#include "../../API/LogIn/LogIn.h"
+#include "../../API/PasswordFunction/PasswordFunction.h"
 #include "../../GlobalVar/GlobalVar.h"
 #include "../Button/Button.h"
 #include "../GetCenterPosition/GetCenterPosition.h"

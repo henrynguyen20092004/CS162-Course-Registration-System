@@ -2,8 +2,8 @@
 
 #include <cstring>
 
-#include "../../../Function/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
-#include "../../../Function/Update/UpdateCourse/UpdateCourse.h"
+#include "../../../API/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
+#include "../../../API/Update/UpdateCourse/UpdateCourse.h"
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 

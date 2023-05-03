@@ -1,6 +1,6 @@
 #include "ChangeCurrentSemesterPage.h"
 
-#include "../../Function/ChangeCurrentSemester/ChangeCurrentSemester.h"
+#include "../../API/ChangeCurrentSemester/ChangeCurrentSemester.h"
 #include "../../GlobalVar/GlobalVar.h"
 #include "../FormPage/FormPage.h"
 

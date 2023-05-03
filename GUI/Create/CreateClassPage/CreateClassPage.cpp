@@ -1,6 +1,6 @@
 #include "CreateClassPage.h"
 
-#include "../../../Function/Create/CreateClass/CreateClass.h"
+#include "../../../API/Create/CreateClass/CreateClass.h"
 #include "../../FormPage/FormPage.h"
 
 class CreateClassPage : public FormPage {

@@ -1,13 +1,13 @@
 #ifndef DATA_H
 #define DATA_H
 
-#include "../Function/GetAll/GetAllClasses/GetAllClasses.h"
-#include "../Function/GetAll/GetAllCourses/GetAllCourses.h"
-#include "../Function/GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
-#include "../Function/GetAll/GetAllScores/GetAllScores.h"
-#include "../Function/GetAll/GetAllSemesters/GetAllSemesters.h"
-#include "../Function/GetAll/GetAllStudents/GetAllStudents.h"
-#include "../Function/GetAll/GetAllUsers/GetAllUsers.h"
+#include "../API/GetAll/GetAllClasses/GetAllClasses.h"
+#include "../API/GetAll/GetAllCourses/GetAllCourses.h"
+#include "../API/GetAll/GetAllSchoolYears/GetAllSchoolYears.h"
+#include "../API/GetAll/GetAllScores/GetAllScores.h"
+#include "../API/GetAll/GetAllSemesters/GetAllSemesters.h"
+#include "../API/GetAll/GetAllStudents/GetAllStudents.h"
+#include "../API/GetAll/GetAllUsers/GetAllUsers.h"
 
 struct Data {
     Node<std::string> *allSchoolYears = getAllSchoolYears();

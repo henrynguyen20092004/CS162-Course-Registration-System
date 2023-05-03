@@ -1,6 +1,6 @@
 #include "ExportStudentsInCoursePage.h"
 
-#include "../../Function/ExportStudentsInCourse/ExportStudentsInCourse.h"
+#include "../../API/ExportStudentsInCourse/ExportStudentsInCourse.h"
 #include "../../GlobalVar/GlobalVar.h"
 #include "../FileFolderDialog/FileFolderDialog.h"
 #include "../FormPage/FormPage.h"

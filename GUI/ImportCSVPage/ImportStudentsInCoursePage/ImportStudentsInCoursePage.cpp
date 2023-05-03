@@ -1,6 +1,6 @@
 #include "ImportStudentsInCoursePage.h"
 
-#include "../../../Function/ImportCSV/ImportStudentsInCourse/ImportStudentsInCourse.h"
+#include "../../../API/ImportCSV/ImportStudentsInCourse/ImportStudentsInCourse.h"
 #include "../ImportCSVPage.h"
 
 class ImportStudentsInCoursePage : public ImportCSVPage {

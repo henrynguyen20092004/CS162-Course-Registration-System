@@ -1,6 +1,6 @@
 #include "ImportScoreboardPage.h"
 
-#include "../../../Function/ImportCSV/ImportScoreboard/ImportScoreboard.h"
+#include "../../../API/ImportCSV/ImportScoreboard/ImportScoreboard.h"
 #include "../ImportCSVPage.h"
 
 class ImportScoreboardPage : public ImportCSVPage {

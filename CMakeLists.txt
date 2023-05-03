@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION "3.26")
 
 project(CS162-Course-Registration-System)
 
-FILE(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS main.cpp GlobalVar/*.cpp Function/*.cpp GUI/*.cpp)
+FILE(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS main.cpp GlobalVar/*.cpp API/*.cpp GUI/*.cpp)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS OFF)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

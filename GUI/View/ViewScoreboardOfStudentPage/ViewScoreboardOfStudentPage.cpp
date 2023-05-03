@@ -1,8 +1,8 @@
 #include "ViewScoreboardOfStudentPage.h"
 
-#include "../../../Function/CheckAndConvertString/CheckAndConvertString.h"
-#include "../../../Function/GetAll/GetAllScores/GetAllScores.h"
-#include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../../API/CheckAndConvertString/CheckAndConvertString.h"
+#include "../../../API/GetAll/GetAllScores/GetAllScores.h"
+#include "../../../API/OperatorOverload/OperatorOverload.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewScoreboardOfStudentPage : public TablePage<Score> {

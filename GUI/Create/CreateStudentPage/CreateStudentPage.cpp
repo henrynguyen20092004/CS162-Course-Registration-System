@@ -1,6 +1,6 @@
 #include "CreateStudentPage.h"
 
-#include "../../../Function/Create/CreateStudent/CreateStudent.h"
+#include "../../../API/Create/CreateStudent/CreateStudent.h"
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 

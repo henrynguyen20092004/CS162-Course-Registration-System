@@ -1,6 +1,6 @@
 #include "ViewSemestersPage.h"
 
-#include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../../API/OperatorOverload/OperatorOverload.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewSemestersPage : public TablePage<Semester> {

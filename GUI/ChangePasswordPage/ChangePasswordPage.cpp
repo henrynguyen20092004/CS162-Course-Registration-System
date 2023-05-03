@@ -1,7 +1,7 @@
 #include "ChangePasswordPage.h"
 
-#include "../../Function/ChangePassword/ChangePassword.h"
-#include "../../Function/PasswordFunction/PasswordFunction.h"
+#include "../../API/ChangePassword/ChangePassword.h"
+#include "../../API/PasswordFunction/PasswordFunction.h"
 #include "../../GlobalVar/GlobalVar.h"
 #include "../FormPage/FormPage.h"
 

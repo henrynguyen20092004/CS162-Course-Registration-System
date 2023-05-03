@@ -2,7 +2,7 @@
 
 #include "MainGUI.h"
 
-#include "../Function/GetCurrentSemester/GetCurrentSemester.h"
+#include "../API/GetCurrentSemester/GetCurrentSemester.h"
 #include "../GlobalVar/GlobalVar.h"
 #include "FontFunction/FontFunction.h"
 #include "GlobalStyle.h"

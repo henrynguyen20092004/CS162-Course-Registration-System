@@ -2,10 +2,10 @@
 
 #include <cmath>
 
-#include "../../../Function/CheckAndConvertString/CheckAndConvertString.h"
-#include "../../../Function/GetAll/GetAllCourses/GetAllCourses.h"
-#include "../../../Function/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
-#include "../../../Function/OperatorOverload/OperatorOverload.h"
+#include "../../../API/CheckAndConvertString/CheckAndConvertString.h"
+#include "../../../API/GetAll/GetAllCourses/GetAllCourses.h"
+#include "../../../API/GetAll/GetAllStudentsInClass/GetAllStudentsInClass.h"
+#include "../../../API/OperatorOverload/OperatorOverload.h"
 #include "../../TablePage/TablePage.h"
 
 class ViewClassScoreboardPage : public TablePage<Student> {

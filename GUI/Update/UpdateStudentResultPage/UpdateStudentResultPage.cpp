@@ -2,11 +2,11 @@
 
 #include <cstring>
 
-#include "../../../Function/CheckAndConvertString/CheckAndConvertString.h"
-#include "../../../Function/GetAll/GetAllScores/GetAllScores.h"
-#include "../../../Function/GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
-#include "../../../Function/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
-#include "../../../Function/Update/UpdateStudentResult/UpdateStudentResult.h"
+#include "../../../API/CheckAndConvertString/CheckAndConvertString.h"
+#include "../../../API/GetAll/GetAllScores/GetAllScores.h"
+#include "../../../API/GetAll/GetAllStudentsInCourse/GetAllStudentsInCourse.h"
+#include "../../../API/SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
+#include "../../../API/Update/UpdateStudentResult/UpdateStudentResult.h"
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
 
