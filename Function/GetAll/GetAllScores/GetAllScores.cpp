@@ -46,19 +46,19 @@ Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course) {
     return allScoresOfStudentsInCourse;
 }
 
-Node<Score>* getAllScoresOfStudentsInClass(Node<Student>* allStudentsInClass) {
-    Node<Score>*allScoresOfStudentsInClass = nullptr, *cur = GlobalVar::allData.allScores,
+Node<Score>* getAllScoresOfClass(Node<Student>* allStudentsInClass) {
+    Node<Score>*allScoresOfClass = nullptr, *cur = GlobalVar::allData.allScores,
     *curScore;
 
     for (; cur; cur = cur->next) {
         Score score = cur->data;
 
         if (checkStudentInClass(allStudentsInClass, score.studentCourse.studentID)) {
-            pushToEndOfLinkedList(allScoresOfStudentsInClass, curScore, score);
+            pushToEndOfLinkedList(allScoresOfClass, curScore, score);
         }
     }
 
-    return allScoresOfStudentsInClass;
+    return allScoresOfClass;
 }
 
 bool checkScoreExistsInSemester(const Score& score, Node<Course>* allCoursesOfSemester) {
@@ -74,17 +74,14 @@ bool checkScoreExistsInSemester(const Score& score, Node<Course>* allCoursesOfSe
     return false;
 }
 
-Node<Score>* getAllScoresOfStudent(
-    const std::string& studentID, const Semester& currentSemester
-) {
+Node<Score>* getAllScoresOfCurrentStudent() {
     Node<Score>*allScoresOfStudent = nullptr, *curScore;
-    Node<Course>* allCoursesOfSemester =
-        getAllCoursesOfSemester(currentSemester.schoolYearName, currentSemester.number);
+    Node<Course>* allCoursesOfSemester = getAllCoursesOfThisSemester();
 
     for (Node<Score>* cur = GlobalVar::allData.allScores; cur; cur = cur->next) {
         Score tmpScore = cur->data;
 
-        if (tmpScore.studentCourse.studentID == studentID &&
+        if (tmpScore.studentCourse.studentID == GlobalVar::currentUser.username &&
             checkScoreExistsInSemester(tmpScore, allCoursesOfSemester)) {
             pushToEndOfLinkedList(allScoresOfStudent, curScore, tmpScore);
         }

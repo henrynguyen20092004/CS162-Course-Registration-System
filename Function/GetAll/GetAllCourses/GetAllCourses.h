@@ -7,15 +7,11 @@
 #include "../GetAll.h"
 
 Node<Course>* getAllCourses();
-Node<Course>* getAllCoursesOfSemester(
-    const std::string& schoolYear, const int& semesterNumber
-);
+Node<Course>* getAllCoursesOfThisSemester();
 Node<Course>* getAllCoursesOfStudent(
     const std::string& studentID, const Semester& semester
 );
-Node<std::string>* getAllCoursesOfStudentsInClass(Node<Score>* allScoresOfClass);
-int getCourseCredits(
-    Node<Course>* allCourses, const std::string& courseID, const std::string& className
-);
+Node<std::string>* getAllCoursesInClassThisSemester(Node<Score>* allScoresOfClass);
+int getCourseCredits(const StudentCourse& studentCourse);
 
 #endif
