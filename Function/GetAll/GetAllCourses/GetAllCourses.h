@@ -13,7 +13,9 @@ Node<Course>* getAllCoursesOfSemester(
 Node<Course>* getAllCoursesOfStudent(
     const std::string& studentID, const Semester& semester
 );
-Node<std::string>* getAllCoursesOfStudentsInClass(Node<Score>* allScoresOfClass);
+Node<std::string>* getAllCoursesInClassThisSemester(
+    Semester currentSemester, Node<Score>* allScoresOfClass
+);
 int getCourseCredits(
     Node<Course>* allCourses, const std::string& courseID, const std::string& className
 );

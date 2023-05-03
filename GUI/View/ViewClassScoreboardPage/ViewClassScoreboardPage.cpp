@@ -16,43 +16,74 @@ class ViewClassScoreboardPage : public TablePage<Student> {
    public:
     ViewClassScoreboardPage(
         const std::string& className, int col, Node<Student>* allStudentsInClass,
-        Node<std::string>* allCoursesOfStudentsInClass, Node<Score>* allScoresInClass
+        Node<std::string>* allCoursesInClassThisSemester, Node<Score>* allScoresInClass
     );
     std::string className;
-    Node<std::string>* allCoursesOfStudentsInClass;
+    Node<std::string>* allCoursesInClassThisSemester;
     Node<Score>* allScoresInClass;
 };
 
 ViewClassScoreboardPage::ViewClassScoreboardPage(
     const std::string& className, int col, Node<Student>* allStudentsInClass,
-    Node<std::string>* allCoursesOfStudentsInClass, Node<Score>* allScoresInClass
+    Node<std::string>* allCoursesInClassThisSemester, Node<Score>* allScoresInClass
 )
     : TablePage("Scoreboard of class " + className, col, 0, 0, allStudentsInClass),
       className(className),
-      allCoursesOfStudentsInClass(allCoursesOfStudentsInClass),
+      allCoursesInClassThisSemester(allCoursesInClassThisSemester),
       allScoresInClass(allScoresInClass) {}
 
 void ViewClassScoreboardPage::initColumns() {
     columnTitle = new std::string[col]{"No", "Student ID", "Full Name"};
-    Node<std::string>* cur = allCoursesOfStudentsInClass;
+    Node<std::string>* cur = allCoursesInClassThisSemester;
 
-    for (int j = 3; j < col - 1; ++j) {
+    for (int j = 3; j < col - 2; ++j) {
         columnTitle[j] = cur->data;
         cur = cur->next;
     }
 
-    columnTitle[col - 1] = "GPA";
+    columnTitle[col - 2] = "GPA this Semester";
+    columnTitle[col - 1] = "Overall GPA";
     columnWidths = new float[col]{50.0f, 200.0f, 200.0f};
-    columnWidths[col - 1] = 50.0f;
 
-    for (int j = 3; j < col - 1; ++j) {
+    for (int j = 3; j < col; ++j) {
         columnWidths[j] = 180.0f;
     }
+}
+
+double* findOverallGPAOfClass(
+    Node<Score>* allScoresInClass, Node<Course>* allCourses,
+    Student* studentsInClassArray, int numberOfStudents
+) {
+    double* overallGPA = new double[numberOfStudents];
+    for (int i = 0; i < numberOfStudents; ++i) {
+        overallGPA[i] = 0;
+    }
+
+    for (int i = 0; i < numberOfStudents; ++i) {
+        int creditSum = 0;
+        for (Node<Score>* cur = allScoresInClass; cur; cur = cur->next) {
+            if (cur->data.studentCourse.studentID == studentsInClassArray[i].id) {
+                int creditNumber = getCourseCredits(
+                    allCourses, cur->data.studentCourse.courseID,
+                    cur->data.studentCourse.className
+                );
+                creditSum += creditNumber;
+                overallGPA[i] += cur->data.totalMark * creditNumber;
+            }
+        }
+        overallGPA[i] /= creditSum;
+    }
+    return overallGPA;
 }
 
 void ViewClassScoreboardPage::convertLinkedListToData() {
     Student* allStudentsInClassArray;
     createAndSortDataArray(allStudentsInClassArray);
+    double* overallGPA = nullptr;
+    overallGPA = findOverallGPAOfClass(
+        allScoresInClass, getAllCourses(), allStudentsInClassArray,
+        getLinkedListSize(getAllStudentsInClass(className))
+    );
 
     int allScoresInClassArraySize = getLinkedListSize(allScoresInClass);
     Score* allScoresInClassArray = new Score[allScoresInClassArraySize];
@@ -76,6 +107,7 @@ void ViewClassScoreboardPage::convertLinkedListToData() {
         for (int j = 3; j < col; ++j) {
             tableData[i][j] = "x";
         }
+        tableData[i][col - 1] = convertScoreToString(overallGPA[i - 1]);
 
         double gpaComponent = 0;
         int creditSum = 0;
@@ -101,27 +133,28 @@ void ViewClassScoreboardPage::convertLinkedListToData() {
                 }
 
                 double gpa = round(gpaComponent / creditSum * 100.0f) / 100.0f;
-                tableData[i][col - 1] = convertScoreToString(gpa);
+                tableData[i][col - 2] = convertScoreToString(gpa);
             }
         }
     }
 
     deleteLinkedList(dataLinkedList);
-    deleteLinkedList(allCoursesOfStudentsInClass);
+    deleteLinkedList(allCoursesInClassThisSemester);
     deleteLinkedList(allScoresInClass);
     delete[] allStudentsInClassArray;
     delete[] allScoresInClassArray;
+    delete[] overallGPA;
 }
 
 void viewClassScoreboardPage(const std::string& className) {
     Node<Student>* allStudentsInClass = getAllStudentsInClass(className);
     Node<Score>* allScoresInClass = getAllScoresOfStudentsInClass(allStudentsInClass);
-    Node<std::string>* allCoursesOfStudentsInClass =
-        getAllCoursesOfStudentsInClass(allScoresInClass);
+    Node<std::string>* allCoursesInClassThisSemester =
+        getAllCoursesInClassThisSemester(GlobalVar::currentSemester, allScoresInClass);
 
     ViewClassScoreboardPage viewClassScoreboardPage(
-        className, getLinkedListSize(allCoursesOfStudentsInClass) + 4, allStudentsInClass,
-        allCoursesOfStudentsInClass, allScoresInClass
+        className, getLinkedListSize(allCoursesInClassThisSemester) + 5,
+        allStudentsInClass, allCoursesInClassThisSemester, allScoresInClass
     );
     viewClassScoreboardPage.mainLoop();
 }
