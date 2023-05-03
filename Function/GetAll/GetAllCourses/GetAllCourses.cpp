@@ -27,15 +27,14 @@ void readCourse(std::ifstream &fin, Course &course) {
 
 Node<Course> *getAllCourses() { return getAll("Data/Course.txt", &readCourse); }
 
-Node<Course> *getAllCoursesOfSemester(
-    const std::string &schoolYear, const int &semesterNumber
-) {
+Node<Course> *getAllCoursesOfThisSemester() {
     Node<Course> *allCourseOfSemester = nullptr, *curCourse;
+
     for (Node<Course> *cur = GlobalVar::allData.allCourses; cur; cur = cur->next) {
         Course course = cur->data;
 
-        if (course.schoolYearName == schoolYear &&
-            course.semesterNumber == semesterNumber) {
+        if (course.schoolYearName == GlobalVar::currentSemester.schoolYearName &&
+            course.semesterNumber == GlobalVar::currentSemester.number) {
             pushToEndOfLinkedList(allCourseOfSemester, curCourse, course);
         }
     }
@@ -106,7 +105,7 @@ Node<Course> *getAllCoursesOfStudent(
     return allCoursesOfStudent;
 }
 
-bool checkStudentHasCourse(Node<std::string> *allCourses, std::string fullCourseName) {
+bool listHasCourse(Node<std::string> *allCourses, const std::string &fullCourseName) {
     for (; allCourses; allCourses = allCourses->next) {
         if (allCourses->data == fullCourseName) {
             return true;
@@ -116,33 +115,30 @@ bool checkStudentHasCourse(Node<std::string> *allCourses, std::string fullCourse
     return false;
 }
 
-bool isCourseInSemester(
-    const std::string &courseID, const std::string &className,
-    const Semester &currentSemester
-) {
-    Node<Course> *allCourses = getAllCourses();
-    for (; allCourses; allCourses = allCourses->next) {
-        if (allCourses->data.id == courseID && allCourses->data.className == className) {
+bool isCourseInSemester(const StudentCourse &studentCourse) {
+    for (Node<Course> *cur = GlobalVar::allData.allCourses; cur; cur = cur->next) {
+        Course course = cur->data;
+
+        if (course.id == studentCourse.courseID &&
+            course.className == studentCourse.className &&
+            course.schoolYearName == GlobalVar::currentSemester.schoolYearName &&
+            course.semesterNumber == GlobalVar::currentSemester.number) {
             return true;
         }
     }
+
     return false;
 }
 
-Node<std::string> *getAllCoursesInClassThisSemester(
-    Semester currentSemester, Node<Score> *allScoresOfClass
-) {
+Node<std::string> *getAllCoursesInClassThisSemester(Node<Score> *allScoresOfClass) {
     Node<std::string> *allCoursesInClassThisSemester = nullptr, *cur;
 
     for (; allScoresOfClass; allScoresOfClass = allScoresOfClass->next) {
         std::string fullCourseName = allScoresOfClass->data.studentCourse.courseID + "-" +
                                      allScoresOfClass->data.studentCourse.className;
 
-        if (!checkStudentHasCourse(allCoursesInClassThisSemester, fullCourseName) &&
-            isCourseInSemester(
-                allScoresOfClass->data.studentCourse.courseID,
-                allScoresOfClass->data.studentCourse.className, GlobalVar::currentSemester
-            )) {
+        if (!listHasCourse(allCoursesInClassThisSemester, fullCourseName) &&
+            isCourseInSemester(allScoresOfClass->data.studentCourse)) {
             pushToEndOfLinkedList(allCoursesInClassThisSemester, cur, fullCourseName);
         }
     }
@@ -150,12 +146,11 @@ Node<std::string> *getAllCoursesInClassThisSemester(
     return allCoursesInClassThisSemester;
 }
 
-int getCourseCredits(
-    Node<Course> *allCourses, const std::string &courseID, const std::string &className
-) {
-    for (; allCourses; allCourses = allCourses->next) {
-        if (allCourses->data.id == courseID && allCourses->data.className == className) {
-            return allCourses->data.credits;
+int getCourseCredits(const StudentCourse &studentCourse) {
+    for (Node<Course> *cur = GlobalVar::allData.allCourses; cur; cur = cur->next) {
+        if (cur->data.id == studentCourse.courseID &&
+            cur->data.className == studentCourse.className) {
+            return cur->data.credits;
         }
     }
 

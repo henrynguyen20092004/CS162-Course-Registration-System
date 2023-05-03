@@ -8,9 +8,7 @@
 
 Node<Score>* getAllScores();
 Node<Score>* getAllScoresOfStudentsInCourse(const std::string& course);
-Node<Score>* getAllScoresOfStudentsInClass(Node<Student>* allStudentsInClass);
-Node<Score>* getAllScoresOfStudent(
-    const std::string& studentID, const Semester& currentSemester
-);
+Node<Score>* getAllScoresOfClass(Node<Student>* allStudentsInClass);
+Node<Score>* getAllScoresOfCurrentStudent();
 
 #endif
