@@ -1,5 +1,7 @@
 #include "CreateCoursePage.h"
 
+#include <cstring>
+
 #include "../../../API/Create/CreateCourse/CreateCourse.h"
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../FormPage/FormPage.h"
@@ -14,6 +16,8 @@ class CreateCoursePage : public FormPage {
 };
 
 void CreateCoursePage::initInputs() {
+    strcpy(inputs[4], "4");
+    strcpy(inputs[5], "50");
     textInputs[0] = TextInput("Course ID", inputs[0], inputPos[0], inputWidth);
     textInputs[1] = TextInput("Class Name", inputs[1], inputPos[1], inputWidth);
     textInputs[2] = TextInput("Course Name", inputs[2], inputPos[2], inputWidth);
