@@ -2,9 +2,6 @@
 
 #include <shobjidl.h>
 
-#include <cstring>
-#include <stdexcept>
-
 void showFileDialogAndGetPath(HRESULT hResult, IFileOpenDialog *iFileOpen, char *path) {
     hResult = iFileOpen->Show(nullptr);
 
@@ -19,18 +16,18 @@ void showFileDialogAndGetPath(HRESULT hResult, IFileOpenDialog *iFileOpen, char 
         throw 0;
     }
 
-    PWSTR FilePath;
-    hResult = pItem->GetDisplayName(SIGDN_FILESYSPATH, &FilePath);
+    PWSTR filePath;
+    hResult = pItem->GetDisplayName(SIGDN_FILESYSPATH, &filePath);
 
     if (FAILED(hResult)) {
         pItem->Release();
         throw 0;
     }
 
-    int count = wcslen(FilePath);
-    wcstombs(path, FilePath, count);
+    int count = wcslen(filePath);
+    wcstombs(path, filePath, count);
     path[count] = '\0';
-    CoTaskMemFree(FilePath);
+    CoTaskMemFree(filePath);
 }
 
 void openDialog(char *path, bool isFolderDialog) {

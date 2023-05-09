@@ -5,22 +5,25 @@
 
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckStudentInCourse/CheckStudentInCourse.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../Save/SaveCourse/SaveCourse.h"
 #include "../../ShowCSVErrorLines/ShowCSVErrorLines.h"
 #include "../../SplitCourseToIDAndClassName/SplitCourseToIDAndClassName.h"
 
 void getStudentInCourseFromLine(Student &student, const std::string &importLine) {
-    std::string _;
+    std::string part;
     std::istringstream importStream(importLine);
-    getline(importStream, _, ',');
+    getline(importStream, part, ',');
     getline(importStream, student.id, ',');
-    getline(importStream, student.firstName, ',');
-    getline(importStream, student.lastName);
+    getline(importStream, part, ',');
+    student.firstName = checkAndConvertToName(part, "first name");
+    getline(importStream, part, ',');
+    student.lastName = checkAndConvertToName(part, "last name");
 }
 
 void checkImportedStudentInCourse(
-    const Student &student, Node<Student> *allStudents,
-    Node<StudentCourse> *&allStudentCourses, const StudentCourse &studentCourse
+    Student &student, Node<Student> *allStudents, Node<StudentCourse> *&allStudentCourses,
+    const StudentCourse &studentCourse
 ) {
     Node<StudentCourse> *newNode = new Node(studentCourse);
 

@@ -4,7 +4,6 @@
 #include <sstream>
 
 #include "../../../GlobalVar/GlobalVar.h"
-#include "../../Check/CheckClass/CheckClass.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
 #include "../../DateFunction/DateFunction.h"
@@ -16,12 +15,14 @@
 #include "../../Update/UpdateDefaultStudentPassword/UpdateDefaultStudentPassword.h"
 
 void getStudentInClassFromLine(Student &student, std::string importLine) {
-    std::string _;
+    std::string part;
     std::istringstream importStream(importLine);
-    getline(importStream, _, ',');
+    getline(importStream, part, ',');
     getline(importStream, student.id, ',');
-    getline(importStream, student.firstName, ',');
-    getline(importStream, student.lastName, ',');
+    getline(importStream, part, ',');
+    student.firstName = checkAndConvertToName(part, "first name");
+    getline(importStream, part, ',');
+    student.lastName = checkAndConvertToName(part, "last name");
     getline(importStream, student.gender, ',');
     getline(importStream, student.dateOfBirth, ',');
     getline(importStream, student.socialID);
@@ -36,16 +37,9 @@ void validateStudent(Node<std::string> *allClasses, Student &student) {
         throw std::invalid_argument("Invalid gender, please try again!");
     }
 
-    student.firstName = checkAndConvertToName(student.firstName, "first name");
-    student.lastName = checkAndConvertToName(student.lastName, "last name");
-
     if (!checkDate(student.dateOfBirth) ||
         !compareDate(student.dateOfBirth, getToday())) {
         throw std::invalid_argument("Invalid date of birth, please try again!");
-    }
-
-    if (!checkClassExists(allClasses, student.className)) {
-        throw std::invalid_argument("This class doesn't exists, please try again!");
     }
 }
 

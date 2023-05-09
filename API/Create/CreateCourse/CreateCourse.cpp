@@ -1,6 +1,7 @@
 #include "CreateCourse.h"
 
 #include "../../../GlobalVar/GlobalVar.h"
+#include "../../Check/CheckClass/CheckClass.h"
 #include "../../Check/CheckCourse/CheckCourse.h"
 #include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../ValidateCourse/ValidateCourse.h"
@@ -24,6 +25,7 @@ void saveCourse(const Course &course) {
 
 void createCourse(char **inputs, char **dropDownItems) {
     Course course;
+
     course.schoolYearName = GlobalVar::currentSemester.schoolYearName;
     course.semesterNumber = GlobalVar::currentSemester.number;
     course.id = inputs[0];
@@ -37,6 +39,10 @@ void createCourse(char **inputs, char **dropDownItems) {
 
     if (checkCourseExists(GlobalVar::allData.allCourses, course.id, course.className)) {
         throw std::invalid_argument("This course already exists, please try again!");
+    }
+
+    if (!checkClassExists(GlobalVar::allData.allClasses, course.className)) {
+        throw std::invalid_argument("This class does not exist, please try again!");
     }
 
     validateCourse(course);

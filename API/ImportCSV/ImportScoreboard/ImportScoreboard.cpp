@@ -17,7 +17,8 @@ void getScoreFromLine(Score &score, const std::string &importLine) {
     std::istringstream importStream(importLine);
     getline(importStream, part, ',');
     getline(importStream, score.studentCourse.studentID, ',');
-    getline(importStream, score.studentFullName, ',');
+    getline(importStream, part, ',');
+    score.studentFullName = checkAndConvertToName(part, "full name");
     getline(importStream, part, ',');
     score.otherMark = checkAndConvertToScore(part, "other mark");
     getline(importStream, part, ',');
@@ -29,7 +30,7 @@ void getScoreFromLine(Score &score, const std::string &importLine) {
 }
 
 void checkImportedScore(
-    const Score &score, Node<Student> *allStudents, Node<Score> *allScores
+    Score &score, Node<Student> *allStudents, Node<Score> *allScores
 ) {
     StudentCourse studentCourse = score.studentCourse;
 

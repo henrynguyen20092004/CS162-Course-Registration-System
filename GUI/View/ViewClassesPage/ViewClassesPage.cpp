@@ -20,7 +20,7 @@ void ViewClassesPage::initColumns() {
 
 void ViewClassesPage::initButtons() {
     headerButtonTitles[0] = "Create a class";
-    firstRowButtonTitles[0] = "Student";
+    firstRowButtonTitles[0] = "Students";
     firstRowButtonTitles[1] = "Score";
     headerButtonCommands = new Command[headerButton]{CREATE_CLASS};
     columnButtonCommands =

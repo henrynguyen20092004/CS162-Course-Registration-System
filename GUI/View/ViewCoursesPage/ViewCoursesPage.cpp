@@ -37,7 +37,7 @@ void ViewCoursesPage::initColumns() {
 void ViewCoursesPage::initButtons() {
     headerButtonTitles[0] = "Create a course";
     headerButtonTitles[1] = "Update a course";
-    firstRowButtonTitles[0] = "Student";
+    firstRowButtonTitles[0] = "Students";
     firstRowButtonTitles[1] = "Score";
     firstRowButtonTitles[2] = "Delete";
     headerButtonCommands = new Command[headerButton]{CREATE_COURSE, UPDATE_COURSE};

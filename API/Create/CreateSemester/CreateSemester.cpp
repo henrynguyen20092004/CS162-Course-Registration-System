@@ -43,7 +43,7 @@ bool checkDateBeforeAddToList(Node<Semester> *allSemesters, const Semester &seme
                 allSemesters = allSemesters->next;
             }
 
-            return compareDate(curSemester.endDate, semester.startDate) &&
+            return compareDate(allSemesters->data.endDate, semester.startDate) &&
                    (allSemesters->next
                         ? compareDate(
                               semester.endDate, allSemesters->next->data.startDate

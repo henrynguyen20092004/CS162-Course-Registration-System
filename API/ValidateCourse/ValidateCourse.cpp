@@ -12,8 +12,4 @@ void validateCourse(const Course &course) {
             "Invalid maximum number of students, please try again!"
         );
     }
-
-    if (course.sessionNumber < 1 || course.sessionNumber > 4) {
-        throw std::invalid_argument("Invalid session number, please try again!");
-    }
 }

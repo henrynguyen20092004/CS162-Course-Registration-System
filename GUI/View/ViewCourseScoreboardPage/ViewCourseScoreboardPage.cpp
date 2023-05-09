@@ -24,10 +24,10 @@ void ViewCourseScoreBoardPage::initColumns() {
 }
 
 void ViewCourseScoreBoardPage::initButtons() {
-    headerButtonTitles[0] = "Update a student's result";
-    headerButtonTitles[1] = "Import CSV of scoreboard";
+    headerButtonTitles[0] = "Import CSV of scoreboard";
+    headerButtonTitles[1] = "Update a student's result";
     headerButtonCommands =
-        new Command[headerButton]{UPDATE_STUDENT_RESULT, IMPORT_SCOREBOARD};
+        new Command[headerButton]{IMPORT_SCOREBOARD, UPDATE_STUDENT_RESULT};
 }
 
 void ViewCourseScoreBoardPage::convertLinkedListToData() {
