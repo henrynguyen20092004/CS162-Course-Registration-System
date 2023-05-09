@@ -5,6 +5,7 @@
 
 #include "../../../GlobalVar/GlobalVar.h"
 #include "../../Check/CheckClass/CheckClass.h"
+#include "../../CheckAndConvertString/CheckAndConvertString.h"
 #include "../../Create/CreateStudentAccount/CreateStudentAccount.h"
 #include "../../DateFunction/DateFunction.h"
 #include "../../OpenFile/OpenFile.h"
@@ -34,6 +35,9 @@ void validateStudent(Node<std::string> *allClasses, Student &student) {
     } else {
         throw std::invalid_argument("Invalid gender, please try again!");
     }
+
+    student.firstName = checkAndConvertToName(student.firstName, "first name");
+    student.lastName = checkAndConvertToName(student.lastName, "last name");
 
     if (!checkDate(student.dateOfBirth) ||
         !compareDate(student.dateOfBirth, getToday())) {
